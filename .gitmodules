@@ -1,3 +1,6 @@
 [submodule "Core"]
 	path = Assets/Core
 	url = https://github.com/JuveNILE-games/Core
+[submodule "NetCore"]
+	path = Assets/NetCore
+	url = https://github.com/JuveNILE-games/NetCore
