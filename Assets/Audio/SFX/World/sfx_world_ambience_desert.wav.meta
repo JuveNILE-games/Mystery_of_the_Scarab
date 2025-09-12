@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: d0dfefe7c9d2e4b48ab5e993990319c2
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 226009
+  packageName: 8 bit western music pack + sound effects
+  packageVersion: 1.0.0
+  assetPath: Assets/8 bit western assets/8 bit western sound effects/sfx_ambience_desert.wav
+  uploadId: 509116

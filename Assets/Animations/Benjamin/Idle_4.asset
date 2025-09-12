@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0946d8a011141b14ba905342f5c274c0, type: 3}
+  m_Name: Idle_4
+  m_EditorClassIdentifier: 
+  _animationName: Idle_4
+  _fps: 6
+  _isLoopable: 0
+  _cycle:
+    _animation: {fileID: 11400000}
+    _frames:
+    - _sprite: {fileID: 335719215, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -363749945, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 685831265, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -279344372, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 518492289, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 1308316279, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 197360468, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 867188378, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 23108266, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 653019615, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -1215940177, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -2080838169, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -994538205, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -794592629, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: 539630791, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    - _sprite: {fileID: -579399457, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      _id: 
+    _identifiable: 1

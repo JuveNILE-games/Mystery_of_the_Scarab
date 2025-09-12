@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 87c9c533491903a4288536b5ac173db8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/UniTask.WaitUntil.cs
+  uploadId: 759611

@@ -44,6 +44,9 @@
 # *.iml
 # *.ipr
 
+#Anything else from .idea that is not explicitly ignored
+.idea/*
+
 # CMake
 cmake-build-*/
 

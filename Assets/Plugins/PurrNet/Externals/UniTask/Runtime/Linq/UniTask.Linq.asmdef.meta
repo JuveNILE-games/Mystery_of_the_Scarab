@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5c01796d064528144a599661eaab93a6
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Linq/UniTask.Linq.asmdef
+  uploadId: 759611

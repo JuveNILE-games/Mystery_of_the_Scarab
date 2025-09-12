@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8f36332c12a55cf469d866a6c3b29b2a
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/LICENSE
+  uploadId: 759611

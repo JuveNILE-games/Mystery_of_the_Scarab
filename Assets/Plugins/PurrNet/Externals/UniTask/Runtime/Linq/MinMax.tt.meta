@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 18108e9feb2ec40498df573cfef2ea15
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Linq/MinMax.tt
+  uploadId: 759611

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d882a3238d9535e4e8ce1ad3291eb7fb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Linq/Where.cs
+  uploadId: 759611

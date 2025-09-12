@@ -1,0 +1,6570 @@
+fileFormatVersion: 2
+guid: b32362e66c8250b449510adb9bb34439
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Benjamin_Death-0
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 94
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 366350de36532a94099cfbbc472ea8f1
+      internalID: 940282432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-1
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 339
+        width: 17
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5882353, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5f19c8859c5d71459e6ab5972fe061f
+      internalID: -2106742761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-2
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 339
+        width: 17
+        height: 33
+      alignment: 9
+      pivot: {x: 0.29411766, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab070f4cddd53714d807e6709f79c02c
+      internalID: -1762324753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-3
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 129
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b8cd9857de769442870146192f6245e
+      internalID: 274856691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-4
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 62
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb3ab5114dacfb346ab253e8be735394
+      internalID: 331911319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-5
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 484
+        width: 31
+        height: 27
+      alignment: 9
+      pivot: {x: 0.09677419, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3f25d1bf1696404eb5b9e94015236b7
+      internalID: -1667398698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 465
+        width: 45
+        height: 27
+      alignment: 9
+      pivot: {x: 0.31111112, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0052412330ff0447892c09ba17fc2e0
+      internalID: -128498034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-7
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 486
+        width: 47
+        height: 22
+      alignment: 9
+      pivot: {x: 0.34042552, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23c0be0dd67fc86439f8c2fe763914a4
+      internalID: -1019275025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 494
+        width: 60
+        height: 17
+      alignment: 9
+      pivot: {x: 0.48333332, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f007f752faf5af4086e0763ba11ae68
+      internalID: 245074503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Death-9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 494
+        width: 60
+        height: 17
+      alignment: 9
+      pivot: {x: 0.48333332, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe29253355adbf84881353a0891f940a
+      internalID: 416800486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-0
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 291
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3ddf51601d679a4cae5ec6dead1f8ee
+      internalID: -419938963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 374
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: -0.0625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b663e1d88d13e54489386a87d364731
+      internalID: 571714107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-10
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 436
+        width: 21
+        height: 35
+      alignment: 9
+      pivot: {x: 0.52380955, y: -0.057142857}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bc4924fc373f4741be8d657154f68aa
+      internalID: -971437276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-11
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 307
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18dbbd73f7500544f8339bc95b79aa60
+      internalID: 1604411828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-12
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 307
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9d79f1e60259e047b3112aa2a6394f1
+      internalID: -1878298932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-13
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 411
+        width: 21
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47619048, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd6ab23ce950834438e266e897890ba0
+      internalID: -542972959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-14
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 307
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e616ce7d607c056419c31eed4568cbb8
+      internalID: 1802265625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-15
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 307
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98544e5bb01e8df46ab669f37e9315b3
+      internalID: 1995766823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-16
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 372
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.6, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08bc8cecdd5b0b640a46ab3a54b57736
+      internalID: -1144165888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-17
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 341
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: -0.0625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a777b8fe50303047a22471907d4803d
+      internalID: 775952871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-18
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 348
+        width: 21
+        height: 34
+      alignment: 9
+      pivot: {x: 0.61904764, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6ea0ddccfc6c1a459581729391bfa65
+      internalID: -454295779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-19
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 384
+        width: 21
+        height: 34
+      alignment: 9
+      pivot: {x: 0.61904764, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 137f68611bd11b2409676ba903b4fcfa
+      internalID: -279104276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-2
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 276
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff2c0c864a5ec904887a0bbea3bd17ac
+      internalID: 161683773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-20
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 420
+        width: 21
+        height: 34
+      alignment: 9
+      pivot: {x: 0.61904764, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75ad1a099f04fda489cb236310570e06
+      internalID: -349608245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-21
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 347
+        width: 21
+        height: 34
+      alignment: 9
+      pivot: {x: 0.61904764, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42c22a3f490d4ff40afac9bed5030f9e
+      internalID: 128363581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-22
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 347
+        width: 21
+        height: 34
+      alignment: 9
+      pivot: {x: 0.61904764, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32a752a34bb7cd14cbe67cf772f855d4
+      internalID: 1764638152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-23
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 384
+        width: 21
+        height: 34
+      alignment: 9
+      pivot: {x: 0.61904764, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c2502c85fea0314489bd0dc8f88724a
+      internalID: 1709779474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-24
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 372
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4, y: -0.05882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c650c6ee3241c2e49a8e16db2fdaee5c
+      internalID: 1761960768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-25
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 375
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: -0.0625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b0b07a56b574534484a4967706e042e
+      internalID: -486349201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-26
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 246
+        width: 18
+        height: 29
+      alignment: 9
+      pivot: {x: 0.3888889, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10aae5dfcbeab4a4f8592d20ba3b3193
+      internalID: -1998705055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-27
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 229
+        width: 18
+        height: 29
+      alignment: 9
+      pivot: {x: 0.3888889, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 462e7ca461bae4a49a384ffaab1403e9
+      internalID: -1294436819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-28
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 196
+        width: 18
+        height: 29
+      alignment: 9
+      pivot: {x: 0.3888889, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de8f74db71073394fb2ecb335542a1aa
+      internalID: 1034566832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-29
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 226
+        width: 18
+        height: 29
+      alignment: 9
+      pivot: {x: 0.3888889, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca46c095105126445b7ef2ecd575718a
+      internalID: 1438652129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-3
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 276
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c211860422335e541a01f15c8908f7ba
+      internalID: -1745705757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-30
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 191
+        width: 18
+        height: 29
+      alignment: 9
+      pivot: {x: 0.3888889, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e6de50b542bf6c458e67d0bfc18d758
+      internalID: -1807826232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-31
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 229
+        width: 18
+        height: 29
+      alignment: 9
+      pivot: {x: 0.3888889, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89ef4779e814451498f85b9cefd3ebc5
+      internalID: 1306963125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-4
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 273
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0b8af93dcb7604e8e2c492583f6d22
+      internalID: -1797860013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 272
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a30086d1853e204d839718f4be84c0b
+      internalID: -811937310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-6
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 272
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b42605e64a1a67840a0ca6ab5cc5727e
+      internalID: 464386246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-7
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 276
+        width: 19
+        height: 29
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.06896552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8da80ea2a79d8f4791d11f46f23526e
+      internalID: 604809995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-8
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 43
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: -0.060606062}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712237c13ed6fe34581b22f23f115836
+      internalID: -574010822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_HiddenSight-9
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 375
+        width: 18
+        height: 31
+      alignment: 9
+      pivot: {x: 0.44444445, y: -0.06451613}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cf4bdcd321873046a8d1550ef3e4bc7
+      internalID: 1564981213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-0
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62e5e95ee478cb64e80f1fb984b8a645
+      internalID: -360554594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-1
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6714f0e99533bba40bce8654326fce9d
+      internalID: -295564180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-10
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 408
+        width: 17
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bffb6b9ecbbfd342b7be1ed12938237
+      internalID: 626930993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-11
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 408
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a175d326e299e344d825fd040e606fb7
+      internalID: 1878097325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-12
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 363
+        width: 21
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47619048, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06d65121b8aa96c45aff3f8c77217c2b
+      internalID: 2102241205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-13
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 443
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c766fdadda707645b70db864dd79e61
+      internalID: -1409964015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-14
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 374
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.3888889, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fdb392c83043fb4b9a80c85fd147173
+      internalID: 684296653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-15
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 409
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.3888889, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13f74403105c9c64eb820e23f5b2a7a0
+      internalID: 934548117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-16
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.42105263, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae9e5df373aa99c4d89d5bae3b049dd0
+      internalID: 1665347487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-17
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b33aa6f547551347ba465db98e51e9d
+      internalID: 404978800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-18
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 444
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c15b4837dde876341be52d1c2d261d9e
+      internalID: 1789088910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-19
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 341
+        width: 19
+        height: 31
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da87b928ead37b41be5b8d8fe534174
+      internalID: 1681673344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-2
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5818f271e9e8734a9f9a1ca7f8e2841
+      internalID: 309570330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-20
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 79
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bb615a58f1e10c47ac6f0984cb9f55e
+      internalID: -726025017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-21
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 371
+        width: 20
+        height: 23
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d548d14679a6aa489521b260afca821
+      internalID: -506675338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-22
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 106
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1864d98ead08104db908d7ccff2eb1d
+      internalID: 1564746433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-23
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 139
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a97f49e251975cd47919ea20f8222ee5
+      internalID: -182824685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-24
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 134
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78b546fc9e89ddb49a7ccb11f733683f
+      internalID: 1939695800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-25
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 215
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd54b892a4b34e4f96836c5b5c59ed7
+      internalID: -556230658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-26
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 215
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa984aaff5d9637468b4a568d029138f
+      internalID: 1706178831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-27
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 216
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad5cc3e454929cc4d8be89d4d2b630da
+      internalID: -1192116733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-28
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 196
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97b8524db87f97b43bbcdc61bcbab7ff
+      internalID: 1407793642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-29
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 216
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a55e2f1f21adae49a24c3bc29e697dc
+      internalID: -1059246452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-3
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89421c457b405884b91343c5652bcd52
+      internalID: -410551378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-30
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 169
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e14ccf8d8ef459744bffd52200d15197
+      internalID: 1118309818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-31
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 288
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53eb814f42ae19a418218e6cc83ae34b
+      internalID: -1374751908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-32
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 279
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceaa63407dcb2274b99da83e7cf930cc
+      internalID: 462409571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-33
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 313
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a948731cfdba6dc43ad2c096a6c9d24c
+      internalID: -1509083544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-34
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 131
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 594a4e81cb96d1047ab58c793ea9645f
+      internalID: -1672027915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-35
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 104
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3fde9f3e28a97143998fdd02694d2e0
+      internalID: -24190639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-36
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 72
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e0e606596a89242af3b2d302834ea3
+      internalID: 1691797414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-37
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 14
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b33cddc65111a24abad7813cbe0fb00
+      internalID: -1336377125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-38
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 38
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c91efd8ab722aea468e157d52c6acb37
+      internalID: -742575477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-39
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 221
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a32814c7cfdc6240a118704303bc59a
+      internalID: -642391517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-4
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a6c18c38ea9dc8478b190dced831821
+      internalID: 447742360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-40
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 131
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6011a4eb1b1184e8602a675a5d8134
+      internalID: 1070248496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-41
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 104
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4720edbbdd22a74783be88283e7d2ed
+      internalID: -132882287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-42
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 72
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62bb544b8522aa7478bb89832375c2f7
+      internalID: -1720832041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-43
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 251
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4af94b804b7f36a4b93e018fb5809553
+      internalID: 49934180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-44
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 14
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 815b7dc7c0256b047aebea44d002cc85
+      internalID: 1174165162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-45
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 38
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09e28ccca68d4c0419a940b3b6c19cf4
+      internalID: 1076669932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-46
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 221
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e528c2f309b7c64d9d07251b419ddfd
+      internalID: 1914407055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-47
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 131
+        width: 19
+        height: 23
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5c3546bda07a3b43b32c7b6ba0f8bf7
+      internalID: 750990970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-5
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fe47d64ae016124db4c36c9db0c671e
+      internalID: 932716760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-6
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719f0a435ea895944a0312ed34e2bf1d
+      internalID: 771381097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-7
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc021d8b07e1b0643b9ac7a9c1468349
+      internalID: 1806046108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-8
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddd7c43d4f8452441951ba8e7bb03e27
+      internalID: 1472327727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_1-9
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 443
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ff75ec07711609479323215a312cbac
+      internalID: -266945088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-0
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9383e632ae1fd7e4f924e830a6248f02
+      internalID: 1729336518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-1
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 444
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80cb4809bec89a647aadeb4ede0d1c31
+      internalID: -1168013459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 84
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99124fa4ab22dee4dbafbe599b25774b
+      internalID: -1545611569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-11
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 222
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b22cebb431a8afa4fb99cf2361938ec6
+      internalID: 1556807169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-12
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 199
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0187c174ee3f0ab44890409e6ba67917
+      internalID: -1286661236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-13
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 119
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 303a8963157d2d146a3b18cb8e796a73
+      internalID: -426936560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 154
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc2cb12b6d32cc54fb70bbe3cfed4388
+      internalID: -1026229275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 189
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45328374ee50eac4b973c2ad795a78fe
+      internalID: -549963278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 224
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c1fcf4fa7477041a29c090983f37f3
+      internalID: 1932635891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-17
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 368
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 446d4bf8d0151074f8f98e1c6ab75a3f
+      internalID: 1569895556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-18
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 403
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d991fad9adc80d4fb052ce96e337e54
+      internalID: -1704813602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-19
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 331
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba71deb253d5ba042ae08a95828815bc
+      internalID: 1855406872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-2
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 375
+        width: 19
+        height: 31
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffd942b0a7a8be84985b0cccbb1e2e8c
+      internalID: 1648287735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-20
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 260
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d05ab8fb286fc3b4488361ab11ff322e
+      internalID: -541389250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-21
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 368
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b275a2a6a51fbea488d078f76106d20c
+      internalID: 2105425331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-22
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 295
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ae434e3d1c9b4b42a5941691f8461a4
+      internalID: -61874842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-23
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 396
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a143277f1296034893880172a9818bc
+      internalID: -249842123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-24
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 164
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46f7efeffb562be4e8fb883df82415ce
+      internalID: 1995888162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-25
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 129
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0db0f1dc3e6f5e43bddf586851d514d
+      internalID: 525821615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-26
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 164
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b98ad88f13335c34f8f0a185d9321ccb
+      internalID: 266569560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-27
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 199
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fd4ba6663fc71649bb74059c587662e
+      internalID: 1423683298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-28
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 95
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f3776b105cddf449a03175c5d719c85
+      internalID: 1879518936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-29
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 130
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c4e625d92674cc42a22fa1f29bf731c
+      internalID: -352529450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-3
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 445
+        width: 19
+        height: 31
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9a61d01d1c11f64db7e06498586d4d3
+      internalID: -1021440669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-30
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 164
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd6bed9c090d184eb6083a55d09e8ff
+      internalID: 304965947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-31
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 129
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf73e93588772154b8af83c68021ead8
+      internalID: -152811909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-32
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 164
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14bb9d1e91f65304f8983e364a760838
+      internalID: 657398507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-33
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 199
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8781f3b876a6194eb0041f5a08657aa
+      internalID: 1168693179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-34
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 95
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0210c1a8f3a674782d07d29d681fad
+      internalID: -1837319709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-35
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 130
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d4e4bddb58a2f24bb22a967a0a8e515
+      internalID: -1782200136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-36
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 199
+        width: 18
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34f6b0abb57a9c34ab0c67355e2da848
+      internalID: -587702949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-37
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 396
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be4de13da99c4f84f84051ef78310055
+      internalID: -245824287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-38
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 295
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03c69d44b48a0b54f859b87b78f481e6
+      internalID: -1064450121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-39
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 368
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5650edb7a33705448a594c8b177b96d9
+      internalID: -727514758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-4
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 224
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 481336a0ddeb28f4b95be8aa5abdd874
+      internalID: -798364845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-40
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 260
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15fffb9fffdf7ec4da9398e0af90988e
+      internalID: 1784390161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-41
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 189
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 708d7e6f80ecdda42947009a78db16f0
+      internalID: -1774725274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-42
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 154
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a8ccc921941aac47acb03c9874353bc
+      internalID: -1650713607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-43
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 199
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e5ede9fd83a9c04da76d489862a3aae
+      internalID: 984672032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-44
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 222
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df8c76cd075e07241bda5620655bfaeb
+      internalID: 1733027202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-45
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 84
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ea1d5135ae47e439c7fb5360cd42ae
+      internalID: -434985180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-46
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 14
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8856005346a3f0b43b9bca974c50efef
+      internalID: 1228070823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-47
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 260
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab6a2d76b3c5f34bb92185e907b4d8d
+      internalID: -1937284409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-48
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 257
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45eb6bc5b66d8d7419c7fef2c759c4a2
+      internalID: -1055436874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-49
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d12629b6cb90cf40bb6fc5933c1819d
+      internalID: 130512666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-5
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbd1f2bb9006f554fbd2442ad0b14b22
+      internalID: 311467364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-6
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fcf79c0e0e4d7a468e028db3cf59f29
+      internalID: -2071036291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-7
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 330
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51dbbe27ae60e444ab7de9aa5c9b4252
+      internalID: 935840772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 14
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01414bd0fdf6c1048a95b4b8e0aa4e31
+      internalID: -1616372383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_2-9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 49
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41b16dcf6f5fef46a4d510a45e2c059
+      internalID: -1032690775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-0
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 478
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f10775adf247b584ba57910f4dd25b40
+      internalID: 335719215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 165
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 635955ca791ac6044ab4aef4a374bb49
+      internalID: -363749945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-10
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 410
+        width: 17
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4117647, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ea9fcff5963e824793f0dcf26deb7f7
+      internalID: -1215940177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-11
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 408
+        width: 17
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4117647, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c489017acf552f4c8207a69c89eb9aa
+      internalID: -2080838169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-12
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 444
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cbf81541dd0622428e9b203db1546c6
+      internalID: -994538205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-13
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 444
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5555556, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d93f3bdb2b9c9b4fbd35ee5366e0b8c
+      internalID: -794592629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-14
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 338
+        width: 16
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd8416e9382e06a41bbc6f45a6dba8eb
+      internalID: 539630791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-15
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 444
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efb5f829791a18a4aac338134f2b29be
+      internalID: -579399457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-2
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 445
+        width: 19
+        height: 31
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4f7d0d9f1364de48881ee142c72cf3c
+      internalID: 685831265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-3
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 295
+        width: 18
+        height: 34
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25a58d4c258fa3242b6356bcea7e394f
+      internalID: -279344372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-4
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 292
+        width: 18
+        height: 35
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a5e3243317764f48a6304d3df30f6e7
+      internalID: 518492289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-5
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 199
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 191ef5e8b7066714b8c6ceca6530cbfe
+      internalID: 1308316279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-6
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 444
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 882448a8ebd618d458ed2b7dbc418de9
+      internalID: 197360468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-7
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 410
+        width: 17
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4117647, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f95592364e57ac408bc2b32865c7bf5
+      internalID: 867188378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-8
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 408
+        width: 17
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4117647, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f227238aaf24b5a4c9962053fa74937b
+      internalID: 23108266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle_Special_3-9
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 444
+        width: 18
+        height: 32
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da01959bc5b1e9a42837944f8ac03639
+      internalID: 653019615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 78
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee56dd6caa0eb604c97f6a0de16d8392
+      internalID: 1905278158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 113
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da689062ac23f774693f524803884514
+      internalID: -1587774899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-10
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 338
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58c06d633d8a870408e28bd49203d32d
+      internalID: -1777802037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-11
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 409
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1ed40e80ff7b1948a28142fcdcd22d6
+      internalID: -1590712641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-12
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 409
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1512a2a50f16a0a4aa8cf58b29367ddd
+      internalID: 1878626133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-13
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 444
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70fe62cd7e6c6674c8390bf790f1b772
+      internalID: 1186301577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-14
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 148
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc069308f5cd93d48b1978801c5311d6
+      internalID: -1010227003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-15
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 183
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f510743ae234c343838d222380125e3
+      internalID: 738936246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-16
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 218
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24e886768eb407040a25a1179b70d2be
+      internalID: 386127643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-17
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 253
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39a920d57ddf4194aad87cc86d86d53f
+      internalID: 2075671380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-18
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 338
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: accd5edeabac9264ca03affb7a8d4bfa
+      internalID: 70737667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-19
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 338
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52519d2abdad12d45b6555be72d292b2
+      internalID: 596873148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-2
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 327
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8ae636d780e6a34e9819ee7b51f7d9f
+      internalID: -676035803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-20
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 409
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3ebf9f1694c3be49bba26e922b4893d
+      internalID: -838352277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-21
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 408
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 238025477cb1ea94a97ebd9399065cc3
+      internalID: 1170700878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-22
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 408
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c8fca6469a15dd40b7505f37f1efab7
+      internalID: -1389236484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-23
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 408
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c6884afe92abbd40bfb65acd436f7ab
+      internalID: -477709942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-3
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 268
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47f8dd436ba7b1f4f8fd8882556d46d6
+      internalID: 944711092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-4
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 268
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 581e7346d11fa5a46a0f6d84acd254ad
+      internalID: 597819976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-5
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 268
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eeb32621c896fe4785fdb1d045cda88
+      internalID: -257826585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-6
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 94
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75665e6068a7d3f4e8c06018e7028fc2
+      internalID: 2125621285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-7
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 338
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47c7c460feb7dc84ea3ef8826d647a41
+      internalID: 2051973499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-8
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 271
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d536df39aecb03444b39ff62b42b2bb4
+      internalID: -1909760404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Idle-9
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 303
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fd2ce34be7ca53419876890886df814
+      internalID: -1221701756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-0
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 291
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.6315789, y: 0.47058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffca061f1a987d3499f297e608340c51
+      internalID: -1959554921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-1
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 398
+        width: 22
+        height: 32
+      alignment: 9
+      pivot: {x: 0.54545456, y: 0.4375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60794744111f6ae408e9addbb563c779
+      internalID: -1769242772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-10
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 280
+        width: 21
+        height: 32
+      alignment: 9
+      pivot: {x: 0.52380955, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b8255ce2941b97428823f55db1736b5
+      internalID: -834096741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-11
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 395
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.36842105, y: 0.5294118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05e7d24f0d9bb124d89b449edf9fb53a
+      internalID: 194301332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-2
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 417
+        width: 23
+        height: 33
+      alignment: 9
+      pivot: {x: 0.47826087, y: 0.45454547}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 001d0cf2d76ac61458bcd2723775b343
+      internalID: -1139291425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-3
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 372
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.8, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 146962e3eea745043a908805269c6960
+      internalID: 768783862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-4
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 448
+        width: 23
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4347826, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ee52858f8310b640ab3b778c2982a09
+      internalID: 874128338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 199
+        width: 18
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0.45454547}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1622b2146e6fb744cacb59fb2fae44f1
+      internalID: 969322933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-6
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 43
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.6315789, y: 0.54545456}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5853e3019821c304b9257d23791ba443
+      internalID: 1825386240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-7
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 417
+        width: 23
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5217391, y: 0.54545456}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 672ed8ac84f085d458a244e113ceaacd
+      internalID: -1030770482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-8
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 478
+        width: 28
+        height: 33
+      alignment: 9
+      pivot: {x: 0.53571427, y: 0.5151515}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1d4b327b90069c4cb8087c909f90625
+      internalID: -1057152623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Jump-9
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 372
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.46666667, y: 0.5294118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f7998d9226661a4b8540f38ed7b4f30
+      internalID: 1584317272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-0
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 304
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5625, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5ba1ba19896d6841beb764e06295b30
+      internalID: -280183824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 288
+        width: 24
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17bb82dcc52cd094084b80eeee986b95
+      internalID: -301509529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-10
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 247
+        width: 15
+        height: 27
+      alignment: 9
+      pivot: {x: 0.46666667, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0649714dd15f7704591ab1e14bd1663e
+      internalID: -736087576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-11
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 77
+        width: 14
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 094eae9befbaba047a1ecf82382c1830
+      internalID: -1289453122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-12
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 105
+        width: 14
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c8f145f72793c142abe269a1da3d63b
+      internalID: -906671680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-13
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 444
+        width: 18
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c925bc0c69ae40499c9d16512aa3a93
+      internalID: 1964384703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-14
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 234
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb4b9d2b484f60a428ed220a10bebaf9
+      internalID: -2035654183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-15
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 338
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.375, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f5faf744fa36b54e84aabc299744413
+      internalID: -1906055469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-16
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 374
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.375, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feab3a94986d73c4db2e996ff0203975
+      internalID: -1967748708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-17
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 241
+        width: 16
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6154f05037ec7142b71eaa4c6bf5df2
+      internalID: -14234617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-18
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 196
+        width: 16
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12f6b2addefc7cf4dbf8ca8a6c0474d8
+      internalID: 958197279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-19
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 164
+        width: 16
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c15aca94cb35e5d40ab47c07b7df51ed
+      internalID: 253259019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 335
+        width: 29
+        height: 32
+      alignment: 9
+      pivot: {x: 0.44827586, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32b784389ca833648a9dd44fbfc91348
+      internalID: -1594650627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-20
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 307
+        width: 17
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb7cc7d8b10290e45accd95d8c592175
+      internalID: 2056224254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-21
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 9
+        width: 15
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76959eb5a4606d0449372b57622e764c
+      internalID: -1805940301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-22
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 327
+        width: 20
+        height: 32
+      alignment: 9
+      pivot: {x: 0.2, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98d437f34fb503241a29e2d3670b0ce7
+      internalID: 714059466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-23
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 452
+        width: 25
+        height: 32
+      alignment: 9
+      pivot: {x: 0.36, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e80bd7e3c8d354d4e86ef978a7e5ee5a
+      internalID: -821732426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-24
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 401
+        width: 32
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51eb81f1266ba2d4aaf79547ed0e00e5
+      internalID: 1808354311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-25
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 432
+        width: 31
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516129, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94555680b695b5f48907fcd25b835959
+      internalID: -1899583117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-26
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 304
+        width: 26
+        height: 28
+      alignment: 9
+      pivot: {x: 0.42307693, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57ed5b009e8409d45b9cd762b033a22e
+      internalID: 1279807522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-27
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 39
+        width: 16
+        height: 31
+      alignment: 9
+      pivot: {x: 0.3125, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65a70f32a64d1264396abc1f14e25783
+      internalID: 1285602314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 369
+        width: 31
+        height: 30
+      alignment: 9
+      pivot: {x: 0.516129, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7665a387e9c5a0445861be8e69e1587d
+      internalID: 1985974018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 259
+        width: 30
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fb8f47d92b7a2045b784d97d1ac019e
+      internalID: -1922573176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-5
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 453
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.53846157, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc6910334fa7f044aacdd1fa11b07f2b
+      internalID: -271037786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-6
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 338
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4375, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eedee6fccb74874babf633af5e091f5
+      internalID: 1689468233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-7
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 409
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72cc0852bfdd850438581ee89c6e2524
+      internalID: -339822482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-8
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 305
+        width: 17
+        height: 31
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 929acce82152b9a4c9d21b8399dd79e0
+      internalID: 1625073154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Punch-9
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 377
+        width: 17
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5294118, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9219e0d0d63f2240b4b6bea84b959dc
+      internalID: 376976862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-0
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 277
+        width: 19
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dc2af6203480634e9d443ae7bb42c68
+      internalID: -1999609508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-1
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 227
+        width: 19
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5263158, y: -0.035714287}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0463ef4ab6fd7d243b24463d3915ded2
+      internalID: -1027416833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-10
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 445
+        width: 19
+        height: 31
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89396a5c3f58cc7419b57bd13739fc71
+      internalID: 1759358773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-11
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 329
+        width: 21
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47619048, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f25ea30f65281b4479875144672a0e49
+      internalID: 1315901336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-12
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 383
+        width: 23
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47826087, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fddb804736b56f5488a21072904f04d8
+      internalID: 581142801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-13
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 402
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbaa94325e3d7004e9595c38110d052e
+      internalID: -268593843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-14
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 338
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e2a202a19908fc4b95f55964e099b5e
+      internalID: -602031835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-15
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 372
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff5699d6059147e418d96e06c94102a6
+      internalID: -1044123246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-2
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 309
+        width: 19
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a41993ef10177d428454a9a291f40f2
+      internalID: 605779578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-3
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 227
+        width: 19
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5263158, y: -0.035714287}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 997a6f471e9fef74bab0057e301174f8
+      internalID: 1342474864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-4
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 383
+        width: 23
+        height: 32
+      alignment: 9
+      pivot: {x: 0.47826087, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fc71b842924cd445aced7c22cf36bf7
+      internalID: 1126199446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-5
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 304
+        width: 22
+        height: 32
+      alignment: 9
+      pivot: {x: 0.45454547, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9016b76458f60754c9f7d6951b3a1673
+      internalID: 1013559949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-6
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 334
+        width: 22
+        height: 32
+      alignment: 9
+      pivot: {x: 0.45454547, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 795584299a1012544b8702b9f63b2d7f
+      internalID: 1276681529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-7
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 368
+        width: 22
+        height: 32
+      alignment: 9
+      pivot: {x: 0.45454547, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77d47788d84f19e49a7c1dfed185bddb
+      internalID: -816937178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-8
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 258
+        width: 21
+        height: 31
+      alignment: 9
+      pivot: {x: 0.47619048, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe7deaf74b7b02c47a990ebe0f6ad12e
+      internalID: -534849428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Push-9
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 234
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9298c79221a0a2a42b5305c180728b7d
+      internalID: -1254824867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-0
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 156
+        width: 16
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73585f5e11e42ce4d8358304b607b0ba
+      internalID: 655995000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 63
+        width: 17
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95d7d87b4f44ece4d9cc5043dcaab70f
+      internalID: 105355117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-10
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 240
+        width: 13
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a49f0a09740a1d6498e2ca1203b5abd4
+      internalID: -2007377384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-11
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 234
+        width: 19
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d45e1c9d47e6214181a2ab03ce8531b
+      internalID: 1652423335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-12
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 304
+        width: 15
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a174348f7c8dc7b479ad8b97fa153cf3
+      internalID: -522458527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-13
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 97
+        width: 16
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d6bef25c73534440a6b008110f773ec
+      internalID: -681798957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-14
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 164
+        width: 15
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6395131f8b894dd48a685612244a542e
+      internalID: 1895384044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-15
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 188
+        width: 15
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 588f934367d6af744b5bb1363cd4b71b
+      internalID: 872998320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-16
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 194
+        width: 16
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5373a012d024bb54b865321fe948c00d
+      internalID: -662471739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-17
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 159
+        width: 15
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d5cdbd009b117940b7d4d57fc1e791b
+      internalID: 774859607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-18
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 314
+        width: 23
+        height: 31
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1db2d2eb1b023e046a2d0d260cbdcdd6
+      internalID: -1463827310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-19
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 240
+        width: 13
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68f63a0239ab32242bc7fceb4d852f45
+      internalID: 1662980955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-2
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 344
+        width: 16
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a69911b0f191504282bf1354d6d86a2
+      internalID: -13848451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-20
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 165
+        width: 15
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4055e247e724ca439b029bb7dbc8438
+      internalID: 791197739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-21
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 314
+        width: 23
+        height: 31
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4af593eca6f9a9245bb815ab8e509013
+      internalID: -1212868321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-22
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 240
+        width: 13
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6c0e3fc791fd624d9cf2489dccffbd3
+      internalID: 110223912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-23
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 72
+        width: 19
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9ad319d9e02a7349a1223a1b5d5c817
+      internalID: 1371748057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-3
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 131
+        width: 16
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f33fe025f0a0b67418c7757369ea5d46
+      internalID: 209756095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 63
+        width: 17
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15150c0daa560a44c8f24bfd7cd49b65
+      internalID: -1356160420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-5
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 379
+        width: 16
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b1c493b47aebb64f9cd12d2c23af0ab
+      internalID: 696621035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-6
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 406
+        width: 23
+        height: 31
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3e60efe9d5cbb54f8e8d4f851a5fe56
+      internalID: 1670085715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-7
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 241
+        width: 13
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a5fda74570640641a31067741213dd9
+      internalID: -1134179013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-8
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 273
+        width: 15
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63f86a850b348cd4c93dd8caa40986b9
+      internalID: -542317976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Sprint-9
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 439
+        width: 23
+        height: 31
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 707ae9ca061472541bb361e65b2509e4
+      internalID: 377232451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-0
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 291
+        width: 19
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: -0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af7a4af721f33ed4e87be8fd4a90f1f2
+      internalID: 1116528242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 472
+        width: 21
+        height: 39
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a66bebde5a5e9d746bd65efc16ac9e13
+      internalID: 114685352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-10
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 43
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: -0.060606062}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d106f27b58254fd4d8fcb2489abd8e9b
+      internalID: -648299548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-11
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 473
+        width: 20
+        height: 38
+      alignment: 9
+      pivot: {x: 0.525, y: -0.02631579}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20ddaaaa84e5f0143bc1e6751374a316
+      internalID: 84232564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-12
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 174
+        width: 17
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: -0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae3d151ed060f344bb708e29d9d0da95
+      internalID: -2027451739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-13
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 210
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: -0.0625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b34bba2578093bc45aaa42650b36c1fe
+      internalID: 599633961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-14
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 244
+        width: 17
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: -0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b036b579644b3af49a12f2756e15ec7e
+      internalID: -357016566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-15
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 372
+        width: 15
+        height: 34
+      alignment: 9
+      pivot: {x: 0.36666667, y: -0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 193824ccf5c0674439cb5d177c474193
+      internalID: -773106382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-16
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 257
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: -0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b17dfefd01c0e6d4986919ee391333c6
+      internalID: 268486801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-17
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 373
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.36666667, y: -0.060606062}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bab0f2baaa9458a4da3fed765583553b
+      internalID: -1505223255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-18
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 473
+        width: 20
+        height: 38
+      alignment: 9
+      pivot: {x: 0.525, y: -0.02631579}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49cede7edf93105438bf2d28310a6726
+      internalID: 754205437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-19
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 442
+        width: 16
+        height: 34
+      alignment: 9
+      pivot: {x: 0.40625, y: -0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e392b9e324d792c49a25e984d3433841
+      internalID: -1144621532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-2
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 106
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: -0.09375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d56362dab91a97646a89c38f00dd51b5
+      internalID: -292166932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 288
+        width: 21
+        height: 39
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 263fa4a251818dd47b8afbbf67dffa92
+      internalID: 484502130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-4
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 140
+        width: 19
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: -0.09375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ac743637127bcb4e9eb98d46f88293e
+      internalID: -510771117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-5
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 432
+        width: 17
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5588235, y: -0.025641026}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1602ee53ff4dc34084cedcd45c8be83
+      internalID: -1988019378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-6
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 472
+        width: 19
+        height: 39
+      alignment: 9
+      pivot: {x: 0.4473684, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16b3b3d6797d66b4e89dd9f89e9ea785
+      internalID: 2024143077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-7
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 373
+        width: 15
+        height: 33
+      alignment: 9
+      pivot: {x: 0.56666666, y: -0.060606062}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 351acaa38a8e5de4d98c3c05708c8809
+      internalID: -1124906703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-8
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 292
+        width: 19
+        height: 33
+      alignment: 9
+      pivot: {x: 0.4473684, y: -0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5422ff6ddf97de143aae3f8e44f77cc2
+      internalID: -728835225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Benjamin_Walk-9
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 431
+        width: 17
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5588235, y: -0.025641026}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 161256aa9ba555547bd3287d12d9927d
+      internalID: 463421302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9fbacfd329c58d944974657d96d8722e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Benjamin_Death-0: 940282432
+      Benjamin_Death-1: -2106742761
+      Benjamin_Death-2: -1762324753
+      Benjamin_Death-3: 274856691
+      Benjamin_Death-4: 331911319
+      Benjamin_Death-5: -1667398698
+      Benjamin_Death-6: -128498034
+      Benjamin_Death-7: -1019275025
+      Benjamin_Death-8: 245074503
+      Benjamin_Death-9: 416800486
+      Benjamin_HiddenSight-0: -419938963
+      Benjamin_HiddenSight-1: 571714107
+      Benjamin_HiddenSight-10: -971437276
+      Benjamin_HiddenSight-11: 1604411828
+      Benjamin_HiddenSight-12: -1878298932
+      Benjamin_HiddenSight-13: -542972959
+      Benjamin_HiddenSight-14: 1802265625
+      Benjamin_HiddenSight-15: 1995766823
+      Benjamin_HiddenSight-16: -1144165888
+      Benjamin_HiddenSight-17: 775952871
+      Benjamin_HiddenSight-18: -454295779
+      Benjamin_HiddenSight-19: -279104276
+      Benjamin_HiddenSight-2: 161683773
+      Benjamin_HiddenSight-20: -349608245
+      Benjamin_HiddenSight-21: 128363581
+      Benjamin_HiddenSight-22: 1764638152
+      Benjamin_HiddenSight-23: 1709779474
+      Benjamin_HiddenSight-24: 1761960768
+      Benjamin_HiddenSight-25: -486349201
+      Benjamin_HiddenSight-26: -1998705055
+      Benjamin_HiddenSight-27: -1294436819
+      Benjamin_HiddenSight-28: 1034566832
+      Benjamin_HiddenSight-29: 1438652129
+      Benjamin_HiddenSight-3: -1745705757
+      Benjamin_HiddenSight-30: -1807826232
+      Benjamin_HiddenSight-31: 1306963125
+      Benjamin_HiddenSight-4: -1797860013
+      Benjamin_HiddenSight-5: -811937310
+      Benjamin_HiddenSight-6: 464386246
+      Benjamin_HiddenSight-7: 604809995
+      Benjamin_HiddenSight-8: -574010822
+      Benjamin_HiddenSight-9: 1564981213
+      Benjamin_Idle-0: 1905278158
+      Benjamin_Idle-1: -1587774899
+      Benjamin_Idle-10: -1777802037
+      Benjamin_Idle-11: -1590712641
+      Benjamin_Idle-12: 1878626133
+      Benjamin_Idle-13: 1186301577
+      Benjamin_Idle-14: -1010227003
+      Benjamin_Idle-15: 738936246
+      Benjamin_Idle-16: 386127643
+      Benjamin_Idle-17: 2075671380
+      Benjamin_Idle-18: 70737667
+      Benjamin_Idle-19: 596873148
+      Benjamin_Idle-2: -676035803
+      Benjamin_Idle-20: -838352277
+      Benjamin_Idle-21: 1170700878
+      Benjamin_Idle-22: -1389236484
+      Benjamin_Idle-23: -477709942
+      Benjamin_Idle-3: 944711092
+      Benjamin_Idle-4: 597819976
+      Benjamin_Idle-5: -257826585
+      Benjamin_Idle-6: 2125621285
+      Benjamin_Idle-7: 2051973499
+      Benjamin_Idle-8: -1909760404
+      Benjamin_Idle-9: -1221701756
+      Benjamin_Idle_Special_1-0: -360554594
+      Benjamin_Idle_Special_1-1: -295564180
+      Benjamin_Idle_Special_1-10: 626930993
+      Benjamin_Idle_Special_1-11: 1878097325
+      Benjamin_Idle_Special_1-12: 2102241205
+      Benjamin_Idle_Special_1-13: -1409964015
+      Benjamin_Idle_Special_1-14: 684296653
+      Benjamin_Idle_Special_1-15: 934548117
+      Benjamin_Idle_Special_1-16: 1665347487
+      Benjamin_Idle_Special_1-17: 404978800
+      Benjamin_Idle_Special_1-18: 1789088910
+      Benjamin_Idle_Special_1-19: 1681673344
+      Benjamin_Idle_Special_1-2: 309570330
+      Benjamin_Idle_Special_1-20: -726025017
+      Benjamin_Idle_Special_1-21: -506675338
+      Benjamin_Idle_Special_1-22: 1564746433
+      Benjamin_Idle_Special_1-23: -182824685
+      Benjamin_Idle_Special_1-24: 1939695800
+      Benjamin_Idle_Special_1-25: -556230658
+      Benjamin_Idle_Special_1-26: 1706178831
+      Benjamin_Idle_Special_1-27: -1192116733
+      Benjamin_Idle_Special_1-28: 1407793642
+      Benjamin_Idle_Special_1-29: -1059246452
+      Benjamin_Idle_Special_1-3: -410551378
+      Benjamin_Idle_Special_1-30: 1118309818
+      Benjamin_Idle_Special_1-31: -1374751908
+      Benjamin_Idle_Special_1-32: 462409571
+      Benjamin_Idle_Special_1-33: -1509083544
+      Benjamin_Idle_Special_1-34: -1672027915
+      Benjamin_Idle_Special_1-35: -24190639
+      Benjamin_Idle_Special_1-36: 1691797414
+      Benjamin_Idle_Special_1-37: -1336377125
+      Benjamin_Idle_Special_1-38: -742575477
+      Benjamin_Idle_Special_1-39: -642391517
+      Benjamin_Idle_Special_1-4: 447742360
+      Benjamin_Idle_Special_1-40: 1070248496
+      Benjamin_Idle_Special_1-41: -132882287
+      Benjamin_Idle_Special_1-42: -1720832041
+      Benjamin_Idle_Special_1-43: 49934180
+      Benjamin_Idle_Special_1-44: 1174165162
+      Benjamin_Idle_Special_1-45: 1076669932
+      Benjamin_Idle_Special_1-46: 1914407055
+      Benjamin_Idle_Special_1-47: 750990970
+      Benjamin_Idle_Special_1-5: 932716760
+      Benjamin_Idle_Special_1-6: 771381097
+      Benjamin_Idle_Special_1-7: 1806046108
+      Benjamin_Idle_Special_1-8: 1472327727
+      Benjamin_Idle_Special_1-9: -266945088
+      Benjamin_Idle_Special_2-0: 1729336518
+      Benjamin_Idle_Special_2-1: -1168013459
+      Benjamin_Idle_Special_2-10: -1545611569
+      Benjamin_Idle_Special_2-11: 1556807169
+      Benjamin_Idle_Special_2-12: -1286661236
+      Benjamin_Idle_Special_2-13: -426936560
+      Benjamin_Idle_Special_2-14: -1026229275
+      Benjamin_Idle_Special_2-15: -549963278
+      Benjamin_Idle_Special_2-16: 1932635891
+      Benjamin_Idle_Special_2-17: 1569895556
+      Benjamin_Idle_Special_2-18: -1704813602
+      Benjamin_Idle_Special_2-19: 1855406872
+      Benjamin_Idle_Special_2-2: 1648287735
+      Benjamin_Idle_Special_2-20: -541389250
+      Benjamin_Idle_Special_2-21: 2105425331
+      Benjamin_Idle_Special_2-22: -61874842
+      Benjamin_Idle_Special_2-23: -249842123
+      Benjamin_Idle_Special_2-24: 1995888162
+      Benjamin_Idle_Special_2-25: 525821615
+      Benjamin_Idle_Special_2-26: 266569560
+      Benjamin_Idle_Special_2-27: 1423683298
+      Benjamin_Idle_Special_2-28: 1879518936
+      Benjamin_Idle_Special_2-29: -352529450
+      Benjamin_Idle_Special_2-3: -1021440669
+      Benjamin_Idle_Special_2-30: 304965947
+      Benjamin_Idle_Special_2-31: -152811909
+      Benjamin_Idle_Special_2-32: 657398507
+      Benjamin_Idle_Special_2-33: 1168693179
+      Benjamin_Idle_Special_2-34: -1837319709
+      Benjamin_Idle_Special_2-35: -1782200136
+      Benjamin_Idle_Special_2-36: -587702949
+      Benjamin_Idle_Special_2-37: -245824287
+      Benjamin_Idle_Special_2-38: -1064450121
+      Benjamin_Idle_Special_2-39: -727514758
+      Benjamin_Idle_Special_2-4: -798364845
+      Benjamin_Idle_Special_2-40: 1784390161
+      Benjamin_Idle_Special_2-41: -1774725274
+      Benjamin_Idle_Special_2-42: -1650713607
+      Benjamin_Idle_Special_2-43: 984672032
+      Benjamin_Idle_Special_2-44: 1733027202
+      Benjamin_Idle_Special_2-45: -434985180
+      Benjamin_Idle_Special_2-46: 1228070823
+      Benjamin_Idle_Special_2-47: -1937284409
+      Benjamin_Idle_Special_2-48: -1055436874
+      Benjamin_Idle_Special_2-49: 130512666
+      Benjamin_Idle_Special_2-5: 311467364
+      Benjamin_Idle_Special_2-6: -2071036291
+      Benjamin_Idle_Special_2-7: 935840772
+      Benjamin_Idle_Special_2-8: -1616372383
+      Benjamin_Idle_Special_2-9: -1032690775
+      Benjamin_Idle_Special_3-0: 335719215
+      Benjamin_Idle_Special_3-1: -363749945
+      Benjamin_Idle_Special_3-10: -1215940177
+      Benjamin_Idle_Special_3-11: -2080838169
+      Benjamin_Idle_Special_3-12: -994538205
+      Benjamin_Idle_Special_3-13: -794592629
+      Benjamin_Idle_Special_3-14: 539630791
+      Benjamin_Idle_Special_3-15: -579399457
+      Benjamin_Idle_Special_3-2: 685831265
+      Benjamin_Idle_Special_3-3: -279344372
+      Benjamin_Idle_Special_3-4: 518492289
+      Benjamin_Idle_Special_3-5: 1308316279
+      Benjamin_Idle_Special_3-6: 197360468
+      Benjamin_Idle_Special_3-7: 867188378
+      Benjamin_Idle_Special_3-8: 23108266
+      Benjamin_Idle_Special_3-9: 653019615
+      Benjamin_Jump-0: -1959554921
+      Benjamin_Jump-1: -1769242772
+      Benjamin_Jump-10: -834096741
+      Benjamin_Jump-11: 194301332
+      Benjamin_Jump-2: -1139291425
+      Benjamin_Jump-3: 768783862
+      Benjamin_Jump-4: 874128338
+      Benjamin_Jump-5: 969322933
+      Benjamin_Jump-6: 1825386240
+      Benjamin_Jump-7: -1030770482
+      Benjamin_Jump-8: -1057152623
+      Benjamin_Jump-9: 1584317272
+      Benjamin_Punch-0: -280183824
+      Benjamin_Punch-1: -301509529
+      Benjamin_Punch-10: -736087576
+      Benjamin_Punch-11: -1289453122
+      Benjamin_Punch-12: -906671680
+      Benjamin_Punch-13: 1964384703
+      Benjamin_Punch-14: -2035654183
+      Benjamin_Punch-15: -1906055469
+      Benjamin_Punch-16: -1967748708
+      Benjamin_Punch-17: -14234617
+      Benjamin_Punch-18: 958197279
+      Benjamin_Punch-19: 253259019
+      Benjamin_Punch-2: -1594650627
+      Benjamin_Punch-20: 2056224254
+      Benjamin_Punch-21: -1805940301
+      Benjamin_Punch-22: 714059466
+      Benjamin_Punch-23: -821732426
+      Benjamin_Punch-24: 1808354311
+      Benjamin_Punch-25: -1899583117
+      Benjamin_Punch-26: 1279807522
+      Benjamin_Punch-27: 1285602314
+      Benjamin_Punch-3: 1985974018
+      Benjamin_Punch-4: -1922573176
+      Benjamin_Punch-5: -271037786
+      Benjamin_Punch-6: 1689468233
+      Benjamin_Punch-7: -339822482
+      Benjamin_Punch-8: 1625073154
+      Benjamin_Punch-9: 376976862
+      Benjamin_Push-0: -1999609508
+      Benjamin_Push-1: -1027416833
+      Benjamin_Push-10: 1759358773
+      Benjamin_Push-11: 1315901336
+      Benjamin_Push-12: 581142801
+      Benjamin_Push-13: -268593843
+      Benjamin_Push-14: -602031835
+      Benjamin_Push-15: -1044123246
+      Benjamin_Push-2: 605779578
+      Benjamin_Push-3: 1342474864
+      Benjamin_Push-4: 1126199446
+      Benjamin_Push-5: 1013559949
+      Benjamin_Push-6: 1276681529
+      Benjamin_Push-7: -816937178
+      Benjamin_Push-8: -534849428
+      Benjamin_Push-9: -1254824867
+      Benjamin_Sprint-0: 655995000
+      Benjamin_Sprint-1: 105355117
+      Benjamin_Sprint-10: -2007377384
+      Benjamin_Sprint-11: 1652423335
+      Benjamin_Sprint-12: -522458527
+      Benjamin_Sprint-13: -681798957
+      Benjamin_Sprint-14: 1895384044
+      Benjamin_Sprint-15: 872998320
+      Benjamin_Sprint-16: -662471739
+      Benjamin_Sprint-17: 774859607
+      Benjamin_Sprint-18: -1463827310
+      Benjamin_Sprint-19: 1662980955
+      Benjamin_Sprint-2: -13848451
+      Benjamin_Sprint-20: 791197739
+      Benjamin_Sprint-21: -1212868321
+      Benjamin_Sprint-22: 110223912
+      Benjamin_Sprint-23: 1371748057
+      Benjamin_Sprint-3: 209756095
+      Benjamin_Sprint-4: -1356160420
+      Benjamin_Sprint-5: 696621035
+      Benjamin_Sprint-6: 1670085715
+      Benjamin_Sprint-7: -1134179013
+      Benjamin_Sprint-8: -542317976
+      Benjamin_Sprint-9: 377232451
+      Benjamin_Walk-0: 1116528242
+      Benjamin_Walk-1: 114685352
+      Benjamin_Walk-10: -648299548
+      Benjamin_Walk-11: 84232564
+      Benjamin_Walk-12: -2027451739
+      Benjamin_Walk-13: 599633961
+      Benjamin_Walk-14: -357016566
+      Benjamin_Walk-15: -773106382
+      Benjamin_Walk-16: 268486801
+      Benjamin_Walk-17: -1505223255
+      Benjamin_Walk-18: 754205437
+      Benjamin_Walk-19: -1144621532
+      Benjamin_Walk-2: -292166932
+      Benjamin_Walk-3: 484502130
+      Benjamin_Walk-4: -510771117
+      Benjamin_Walk-5: -1988019378
+      Benjamin_Walk-6: 2024143077
+      Benjamin_Walk-7: -1124906703
+      Benjamin_Walk-8: -728835225
+      Benjamin_Walk-9: 463421302
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

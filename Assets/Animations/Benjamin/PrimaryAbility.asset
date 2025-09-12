@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62b2c2d3619abe46a824e3cde55a939, type: 3}
+  m_Name: PrimaryAbility
+  m_EditorClassIdentifier: 
+  _animationName: PrimaryAbility
+  _fps: 6
+  _isLoopable: 0
+  _cycles:
+    _keyData: 04000000020000000000000006000000
+    _valueData:
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -419938963, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 571714107, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 161683773, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1745705757, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1797860013, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -811937310, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 464386246, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 604809995, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -1144165888, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 775952871, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -454295779, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -279104276, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -349608245, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 128363581, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1764638152, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1709779474, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -574010822, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1564981213, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -971437276, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1604411828, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1878298932, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -542972959, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1802265625, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1995766823, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 1761960768, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -486349201, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1998705055, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1294436819, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1034566832, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1438652129, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1807826232, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 1306963125, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0

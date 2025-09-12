@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ef2840a2586894741a0ae211b8fd669b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Triggers/AsyncAwakeTrigger.cs
+  uploadId: 759611

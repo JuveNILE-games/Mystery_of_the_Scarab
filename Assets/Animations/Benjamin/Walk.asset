@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62b2c2d3619abe46a824e3cde55a939, type: 3}
+  m_Name: Walk
+  m_EditorClassIdentifier: 
+  _animationName: Walk
+  _fps: 4
+  _isLoopable: 1
+  _cycles:
+    _keyData: 04000000020000000000000006000000
+    _valueData:
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 114685352, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -292166932, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 484502130, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -510771117, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 2024143077, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1124906703, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -728835225, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 463421302, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 84232564, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -2027451739, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 599633961, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -357016566, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 268486801, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1505223255, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 754205437, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1144621532, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0

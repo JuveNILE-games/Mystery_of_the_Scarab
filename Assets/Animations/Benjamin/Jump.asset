@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62b2c2d3619abe46a824e3cde55a939, type: 3}
+  m_Name: Jump
+  m_EditorClassIdentifier: 
+  _animationName: Jump
+  _fps: 4
+  _isLoopable: 0
+  _cycles:
+    _keyData: 04000000020000000000000006000000
+    _valueData:
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -1959554921, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1769242772, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1139291425, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 768783862, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 874128338, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 969322933, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 1825386240, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1030770482, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -1057152623, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 1584317272, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: -834096741, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      - _sprite: {fileID: 194301332, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+        _id: 
+      _identifiable: 0

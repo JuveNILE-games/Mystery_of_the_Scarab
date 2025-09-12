@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: dc47925d1a5fa2946bdd37746b2b5d48
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/External/TextMeshPro/UniTask.TextMeshPro.asmdef
+  uploadId: 759611

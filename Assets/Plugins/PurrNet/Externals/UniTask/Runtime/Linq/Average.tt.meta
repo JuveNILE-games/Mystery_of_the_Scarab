@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 84bce45768c171d4490153eb08630a98
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Linq/Average.tt
+  uploadId: 759611

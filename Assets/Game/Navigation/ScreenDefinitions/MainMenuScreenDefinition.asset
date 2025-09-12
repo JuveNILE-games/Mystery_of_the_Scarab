@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe27c16f3634ad2aaf9b3598f5412f1, type: 3}
+  m_Name: MainMenuScreenDefinition
+  m_EditorClassIdentifier: 
+  document: {fileID: 0}
+  screenListMode: 0
+  incomingScreens: []
+  screenTransitionEffect: {fileID: 11400000, guid: ae13a976ea70e9a43b06765f443ac3df, type: 2}
+  screenConditions: []
+  screenOnEscape: {fileID: 0}
+  showConfirmPopup: 0
+  confirmTitle: 
+  confirmMessage: 
+  onOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  onClose:
+    m_PersistentCalls:
+      m_Calls: []

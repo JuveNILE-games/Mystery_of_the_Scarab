@@ -1,0 +1,16 @@
+{
+    "name": "NewInputByReference.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b1d49d8297559c14d8edd2659cb1357b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f51ebe6a0ceec4240a699833d6309b23
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/UniTask.asmdef
+  uploadId: 759611

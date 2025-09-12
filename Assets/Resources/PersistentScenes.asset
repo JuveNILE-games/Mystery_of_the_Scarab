@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047da710e78df424d82d5a6c1a5db21c, type: 3}
+  m_Name: PersistentScenes
+  m_EditorClassIdentifier: 
+  scenes:
+  - asset: {fileID: 102900000, guid: 53b1a106086b88d46bea25b9e51870b1, type: 3}
+    guid: 53b1a106086b88d46bea25b9e51870b1
+  - asset: {fileID: 102900000, guid: 4debfac05b26c5f4f9f6a766e2962f8b, type: 3}
+    guid: 4debfac05b26c5f4f9f6a766e2962f8b

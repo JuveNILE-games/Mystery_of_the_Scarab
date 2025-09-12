@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e891aaac17b933a47a9d7fa3b8e1226f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/CompilerServices/AsyncUniTaskVoidMethodBuilder.cs
+  uploadId: 759611

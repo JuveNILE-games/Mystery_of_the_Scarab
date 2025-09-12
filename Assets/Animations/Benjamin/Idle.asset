@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62b2c2d3619abe46a824e3cde55a939, type: 3}
+  m_Name: Idle
+  m_EditorClassIdentifier: 
+  _animationName: Idle
+  _fps: 5
+  _isLoopable: 1
+  _cycles:
+    _keyData: 04000000020000000000000006000000
+    _valueData:
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -235019388, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -2127860316, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1333058153, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -31517980, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 1578562254, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 1682333642, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -1689022139, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1760574254, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1017854672, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 303243520, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 2005730660, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 130629720, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -714659925, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 375694810, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -529152942, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1136961715, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -533684151, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -659935742, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: -844089912, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1447123449, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1671518967, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: 2071597865, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -982011257, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      - _sprite: {fileID: -1592989795, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
+        _id: 
+      _identifiable: 0

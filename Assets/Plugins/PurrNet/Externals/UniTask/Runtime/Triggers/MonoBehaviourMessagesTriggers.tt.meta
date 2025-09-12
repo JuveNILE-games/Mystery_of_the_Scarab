@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3ca26d0cd9373354c8cd147490f32c8e
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Triggers/MonoBehaviourMessagesTriggers.tt
+  uploadId: 759611

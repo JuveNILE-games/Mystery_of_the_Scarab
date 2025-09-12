@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b1b8cfa9d17af814a971ee2224aaaaa2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 297320
+  packageName: 'PurrNet: Multiplayer Networking'
+  packageVersion: v1.11.1
+  assetPath: Assets/PurrNet/Externals/UniTask/Runtime/Linq/CombineLatest.tt
+  uploadId: 759611
