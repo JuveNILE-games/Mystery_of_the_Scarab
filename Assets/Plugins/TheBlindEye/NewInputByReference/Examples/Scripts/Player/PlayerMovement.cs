@@ -18,6 +18,13 @@ namespace NewInputByReference.Examples
         private Transform _transform;
         private Vector3 _velocity;
         private bool _isGrounded;
+        private bool _wasGrounded;
+
+        // Event for when player lands
+        public System.Action OnLanded;
+
+        // Property to check if player is grounded
+        public bool IsGrounded => _isGrounded;
 
         private void Awake()
         {
@@ -27,7 +34,19 @@ namespace NewInputByReference.Examples
 
         private void Update()
         {
+            // Store previous grounded state
+            _wasGrounded = _isGrounded;
+            
+            // Check if player is grounded
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            
+            // Trigger landed event if player just landed
+            if (!_wasGrounded && _isGrounded)
+            {
+                OnLanded?.Invoke();
+            }
+            
+            // Reset vertical velocity when grounded
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = -2f;
  
@@ -43,6 +62,12 @@ namespace NewInputByReference.Examples
             move = Vector3.ClampMagnitude(move, 1);
             
             _controller.Move((_velocity * Time.deltaTime) + (move * moveSpeed * Time.deltaTime));
+        }
+
+        // Method to add vertical velocity (for double jump)
+        public void AddVerticalVelocity(float force)
+        {
+            _velocity.y += force;
         }
     }
 }
