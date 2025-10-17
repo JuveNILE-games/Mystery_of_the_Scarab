@@ -17,13 +17,6 @@
       "dependencies": {},
       "hash": "83f85ab6da982b4adbc65fbb8aa58afc784b4dc5"
     },
-    "com.loophouse.scriptable-states": {
-      "version": "https://github.com/luisoliveiras/scriptable-states.git#0.4.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "65787458dcbd7e25ef56caba501385f655003c20"
-    },
     "com.no-slopes.sprite-animations": {
       "version": "2.3.5",
       "depth": 0,

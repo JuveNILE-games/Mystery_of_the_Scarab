@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Core.Systems.Runner; // Added TaskRunner namespace
 using Core.Systems.SceneManagement;
@@ -11,6 +12,8 @@ namespace MultiPlayer.SceneManagement
 {
     public class NetworkedSceneLoader : NetworkBehaviour
     {
+        private readonly TaskRunner _taskRunner;
+        
         [Header("Scriptable Events")]
         [SerializeField] private ScriptableEventString onSceneLoaded;
         [SerializeField] private ScriptableEventString onSceneUnloaded;
@@ -27,6 +30,10 @@ namespace MultiPlayer.SceneManagement
         private bool isLoading;
         
         public NetworkedSceneGroupManager Manager;
+        
+        public NetworkedSceneLoader(TaskRunner taskRunner){
+            this._taskRunner = taskRunner;
+        }
 
         protected override void OnSpawned(){
             EnableLoadingCanvas(false);
@@ -63,13 +70,13 @@ namespace MultiPlayer.SceneManagement
             ResetProgressBar();
             EnableLoadingCanvas(true);
 
-            var progress = new LoadingProgress(value => targetProgress = Mathf.Max(value, targetProgress));
-            
+            LoadingProgress progress = new LoadingProgress(value => targetProgress = Mathf.Max(value, targetProgress));
+            CancellationToken cancellationToken;
             // Use TaskRunner to track this networked scene loading task
-            var sceneLoadingTask = TaskRunner.Instance.AddTask(
+            var sceneLoadingTask = _taskRunner.AddTask<bool, NetworkedSceneLoader>(
                 $"Loading networked scene group {sceneGroups[index].GroupName}",
-                async () => {
-                    await Manager.LoadScenes(sceneGroups[index], progress);
+                async (_,_) => {
+                    await Manager.LoadScenes(sceneGroups[index], progress, cancellationToken);
                     return TaskResult<bool>.ForSuccess(true);
                 },
                 isBackground: false
@@ -118,13 +125,13 @@ namespace MultiPlayer.SceneManagement
         // New method to get the current number of running networked scene loading tasks
         public int GetRunningNetworkedSceneLoadingTasks()
         {
-            return TaskRunner.Instance.GetRunningTaskCount();
+            return _taskRunner.GetRunningTaskCount();
         }
         
         // New method to wait for all networked scene loading tasks to complete
         public async Task WaitForAllNetworkedSceneLoadingTasks()
         {
-            await TaskRunner.Instance.WaitForAllTasksAsync();
+            await _taskRunner.WaitForAllTasksAsync();
         }
     }
 

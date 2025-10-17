@@ -12,8 +12,19 @@ namespace Game.Navigation.Views.MainMenu{
             SoundManager.Instance.CreateSound()
                 .WithSoundData(themeMusic)
                 .Play();
+            
+            InitMenu(definition.document.rootVisualElement);
+            
             base.OnOpen();
         }
+
+        private void InitMenu(VisualElement root){
+            Button startButton = root.Q<Button>("StartButton");
+            startButton.clicked += () => {
+                Debug.Log("Start");
+            };
+        }
+
         public override void OnClose(){
             base.OnClose();
         }

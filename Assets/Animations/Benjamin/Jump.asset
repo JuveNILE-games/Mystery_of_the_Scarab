@@ -13,18 +13,36 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   _animationName: Jump
-  _fps: 4
-  _isLoopable: 0
+  _fps: 8
+  _isLoopable: 1
   _cycles:
     _keyData: 04000000020000000000000006000000
     _valueData:
     - _animation: {fileID: 11400000}
       _frames:
-      - _sprite: {fileID: -1959554921, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -1832192888, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
         _id: 
-      - _sprite: {fileID: -1769242772, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -1788888770, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
         _id: 
-      - _sprite: {fileID: -1139291425, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 788036794, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: 1447454670, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: -113840536, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: 1063406795, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: -168375676, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: 1770241148, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: 616967620, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: -1032155051, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: -12550052, guid: fd9c3eee60438c042b4809c2d1c706c6, type: 3}
+        _id: 
+      - _sprite: {fileID: -235019388, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
         _id: 
       _identifiable: 0
     - _animation: {fileID: 11400000}

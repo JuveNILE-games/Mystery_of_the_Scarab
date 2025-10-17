@@ -7,11 +7,11 @@ public class SceneBootstrapper : MonoBehaviour, IRequireServices
 
     void Awake()
     {
-        var core = FindFirstObjectByType<CoreBootstrapper>();
+        var core = FindFirstObjectByType<Core.Bootstrapper>();
         if (core == null)
         {
-            Debug.LogWarning("[SceneBootstrapper] No CoreBootstrapper found. Creating scene-local service locator (editor override).");
-            sceneLocator = new SimpleServiceLocator();
+            Debug.LogWarning("[SceneBootstrapper] No Bootstrapper found. Creating scene-local service locator (editor override).");
+            sceneLocator = new SimpleServiceLocator(createScope: true); // Create scoped locator
             sceneLocator.Register<IGameStateManager>(new GameStateManagerImpl(GameState.SinglePlayer));
             sceneLocator.Register<IControllableRegistry>(new ControllableRegistry());
             sceneLocator.Register<LocalEventBusImpl>(new LocalEventBusImpl());

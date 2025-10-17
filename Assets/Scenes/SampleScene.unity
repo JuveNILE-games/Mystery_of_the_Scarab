@@ -440,7 +440,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2545725099360330263, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1801741193}
+    - targetCorrespondingSourceObject: {fileID: 2545725099360330263, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1801741192}
   m_SourcePrefab: {fileID: 100100000, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
 --- !u!1 &832575517
 GameObject:
@@ -491,6 +497,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1801741185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2545725099360330263, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+  m_PrefabInstance: {fileID: 721389175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1801741192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801741185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee438f8ba3ec164f8480d791c359ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody2D: {fileID: 0}
+  animator: {fileID: 0}
+  inputManager: {fileID: 2112408580}
+  moveSpeed: 5
+  jumpForce: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheck: {fileID: 0}
+  groundCheckRadius: 0.2
+--- !u!114 &1801741193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801741185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c12784169c892446a080851d3ff36ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2112408580 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7507739401897577786, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+  m_PrefabInstance: {fileID: 721389175}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55052df5834d21469581e95fb061d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

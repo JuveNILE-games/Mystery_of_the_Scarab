@@ -10,5 +10,6 @@ AssetOrigin:
   productId: 301430
   packageName: Easy Cutscene (Dialogue and Cutscene Creator)
   packageVersion: 1.0
-  assetPath: Assets/Easy Cutscene/Demo/Prefabs/Props/Cloud Panel/Cloud Hisa 4.prefab
+  assetPath: Assets/Plugins/Easy Cutscene/Demo/Prefabs/Props/Cloud Panel/Cloud Hisa
+    4.prefab
   uploadId: 734189

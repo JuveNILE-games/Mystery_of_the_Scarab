@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Idle
   m_EditorClassIdentifier: 
   _animationName: Idle
-  _fps: 5
+  _fps: 4
   _isLoopable: 1
   _cycles:
     _keyData: 04000000020000000000000006000000

@@ -13,52 +13,68 @@ MonoBehaviour:
   m_Name: Walk
   m_EditorClassIdentifier: 
   _animationName: Walk
-  _fps: 4
+  _fps: 6
   _isLoopable: 1
   _cycles:
     _keyData: 04000000020000000000000006000000
     _valueData:
     - _animation: {fileID: 11400000}
       _frames:
-      - _sprite: {fileID: 114685352, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -705073813, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -292166932, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -999769815, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: 484502130, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 2124117394, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -510771117, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 1194972648, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      _identifiable: 0
-    - _animation: {fileID: 11400000}
-      _frames:
-      - _sprite: {fileID: 2024143077, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 947663651, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -1124906703, guid: b32362e66c8250b449510adb9bb34439, type: 3}
-        _id: 
-      - _sprite: {fileID: -728835225, guid: b32362e66c8250b449510adb9bb34439, type: 3}
-        _id: 
-      - _sprite: {fileID: 463421302, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -1697636523, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
       _identifiable: 0
     - _animation: {fileID: 11400000}
       _frames:
-      - _sprite: {fileID: 84232564, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 343478336, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -2027451739, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -402973284, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: 599633961, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 724001181, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -357016566, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -724319496, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: 445669650, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: -1464844535, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
       _identifiable: 0
     - _animation: {fileID: 11400000}
       _frames:
-      - _sprite: {fileID: 268486801, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -885491044, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -1505223255, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -933356294, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: 754205437, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: 876592686, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
-      - _sprite: {fileID: -1144621532, guid: b32362e66c8250b449510adb9bb34439, type: 3}
+      - _sprite: {fileID: -1193546650, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: -1472002993, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: 1805074512, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      _identifiable: 0
+    - _animation: {fileID: 11400000}
+      _frames:
+      - _sprite: {fileID: 1214423631, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: 809996970, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: -796531758, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: -1187960770, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: -847393427, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
+        _id: 
+      - _sprite: {fileID: -520693717, guid: 64cf035159de7284686d44a08ffad0e2, type: 3}
         _id: 
       _identifiable: 0
