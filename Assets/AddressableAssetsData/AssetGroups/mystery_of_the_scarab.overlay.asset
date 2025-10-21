@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: mystery_of_the_scarab.overlay
+  m_EditorClassIdentifier: 
+  m_GroupName: mystery_of_the_scarab.overlay
+  m_GUID: 7ab31899ad3c2154999efaae1bfd83bc
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4e0b482d26ef17a488bc651b29281542, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ee146eecacfbfe54eaad2b9e93b449c7, type: 2}
+    - {fileID: 11400000, guid: d4459fd332465e14a9934f19f74f23ea, type: 2}

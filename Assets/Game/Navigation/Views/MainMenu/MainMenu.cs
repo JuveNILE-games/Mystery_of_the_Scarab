@@ -4,18 +4,20 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Game.Navigation.Views.MainMenu{
-    public class MainMenu : ScreenComponent
+    public class MainMenu : MonoBehaviour
     {
         [SerializeField] private SoundData themeMusic;
-        public override void OnOpen(){
-            definition.document.rootVisualElement.Q("container").style.opacity = 1f;
+        [SerializeField] private UIDocument document;
+        public void OnOpen(){
+            
+            
+            
+            document.rootVisualElement.Q("container").style.opacity = 1f;
             SoundManager.Instance.CreateSound()
                 .WithSoundData(themeMusic)
                 .Play();
             
-            InitMenu(definition.document.rootVisualElement);
-            
-            base.OnOpen();
+            InitMenu(document.rootVisualElement);
         }
 
         private void InitMenu(VisualElement root){
@@ -25,8 +27,7 @@ namespace Game.Navigation.Views.MainMenu{
             };
         }
 
-        public override void OnClose(){
-            base.OnClose();
+        public void OnClose(){
         }
     }
 }

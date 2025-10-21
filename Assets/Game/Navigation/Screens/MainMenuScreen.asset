@@ -9,18 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfe27c16f3634ad2aaf9b3598f5412f1, type: 3}
-  m_Name: MainMenuScreenDefinition
+  m_Script: {fileID: 11500000, guid: 98f2c19b67133a24493562628bc8b240, type: 3}
+  m_Name: MainMenuScreen
   m_EditorClassIdentifier: 
-  document: {fileID: 0}
-  screenListMode: 0
+  allowedMode: 1
   incomingScreens: []
-  screenTransitionEffect: {fileID: 11400000, guid: ae13a976ea70e9a43b06765f443ac3df, type: 2}
-  screenConditions: []
-  screenOnEscape: {fileID: 0}
-  showConfirmPopup: 0
-  confirmTitle: 
-  confirmMessage: 
+  conditions: []
+  allowedOverlays: []
   onOpen:
     m_PersistentCalls:
       m_Calls: []
