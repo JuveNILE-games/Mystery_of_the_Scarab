@@ -1,5 +1,6 @@
 ﻿using Core.Systems.AudioSystem;
 using Core.Systems.Navigation;
+using Core.Systems.PopUp;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,7 @@ namespace Game.Navigation.Views.MainMenu{
     {
         [SerializeField] private SoundData themeMusic;
         [SerializeField] private UIDocument document;
+        private Button startButton;
         public void OnOpen(){
             
             
@@ -21,13 +23,12 @@ namespace Game.Navigation.Views.MainMenu{
         }
 
         private void InitMenu(VisualElement root){
-            Button startButton = root.Q<Button>("StartButton");
-            startButton.clicked += () => {
-                Debug.Log("Start");
-            };
+            startButton = root.Q<Button>("StartButton");
+            startButton.clicked += PopupRegistrar.TestPopups;
         }
 
         public void OnClose(){
+            startButton.clicked -= PopupRegistrar.TestPopups;
         }
     }
 }

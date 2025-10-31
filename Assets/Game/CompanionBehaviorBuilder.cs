@@ -22,7 +22,7 @@ public class CompanionBehaviorBuilder : MonoBehaviour
         var find = new Action_FindClosestInteractable(assistRadius);
         var move = new Action_MoveToPosition(1.2f);
         var interact = new Action_InteractTarget();
-        var seqAssist = new Sequence(find, move, interact);
+        var seqAssist = new SequenceNode(find, move, interact);
         var follow = new Action_FollowPlayer(2f);
         runner.root = new Selector(seqAssist, follow);
         runner.tickInterval = 0.2f;
