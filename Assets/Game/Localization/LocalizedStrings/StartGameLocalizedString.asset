@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881bac1d12cc43f1aad8ed6ce40bb18d, type: 3}
-  m_Name: SoundManager
+  m_Script: {fileID: 11500000, guid: 6941b0767cd342df8edd8680bb342c1d, type: 3}
+  m_Name: StartGameLocalizedString
   m_EditorClassIdentifier: 
-  soundEmitterPrefab: {fileID: -8936678578939012605, guid: 8fb55e4a8e89b664087e58ab210e5be9, type: 3}
-  collectionCheck: 1
-  defaultCapacity: 10
-  maxPoolSize: 100
-  maxSoundInstances: 30
+  key: MAINMENU_StartGame
+  fallbackText: 
+  supportsFormatting: 0

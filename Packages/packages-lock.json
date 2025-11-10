@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.bgtools.playerprefseditor": {
+      "version": "1.2.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.eflatun.scenereference": {
       "version": "4.1.1",
       "depth": 0,
@@ -15,7 +22,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "83f85ab6da982b4adbc65fbb8aa58afc784b4dc5"
+      "hash": "af213d3b9e6ff3cb7e862c519f666b686f66a8ea"
     },
     "com.no-slopes.sprite-animations": {
       "version": "2.3.5",

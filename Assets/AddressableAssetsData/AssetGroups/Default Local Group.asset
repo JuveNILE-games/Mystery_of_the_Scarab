@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Screen
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21ec86790ceec9e4fbf3e78dd679957f
+    m_Address: Assets/Core/Systems/Navigation/Overlays/DebugConsole.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Overlay
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 23afe8f86af174246ac586a1b1b3ee24
     m_Address: Assets/Game/Navigation/Overlays/InfoPopUp.asset
     m_ReadOnly: 0
