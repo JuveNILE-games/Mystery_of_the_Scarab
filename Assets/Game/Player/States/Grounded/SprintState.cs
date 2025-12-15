@@ -1,36 +1,31 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Player.States.Grounded
-{
-    [CreateAssetMenu(fileName = "SprintState", menuName = "State Machine/States/Sprint State")]
+namespace Game.Player.States.Grounded{
     public class SprintState : PlayerState
     {
-        [SerializeField] private float sprintMultiplier = 1.5f;
+        private float sprintSpeed = 6f;
+        
+        public SprintState() : base("Sprint") { }
         
         public override void OnEnter()
         {
             base.OnEnter();
-            if (StateComponent != null)
-            {
-                StateComponent.PlayAnimation("Sprint");
-            }
+            Animator?.Play("Sprint");
         }
         
         public override void OnUpdate()
         {
             base.OnUpdate();
             
-            if (StateComponent != null)
+            Vector3 moveDir = GetMoveDirection();
+            if (Rigidbody != null && moveDir != Vector3.zero)
             {
-                Vector2 movement = StateComponent.GetMovementDirection();
-                if (movement.magnitude > 0.1f && StateComponent.IsSprintPressed())
-                {
-                    StateComponent.SetMovement(movement * sprintMultiplier);
-                }
-                else
-                {
-                    // Transition back to walk or idle handled by conditions
-                }
+                Vector3 targetVel = moveDir * sprintSpeed;
+                targetVel.y = Rigidbody.linearVelocity.y;
+                Rigidbody.linearVelocity = Vector3.Lerp(Rigidbody.linearVelocity, targetVel, Time.deltaTime * 8f);
+                
+                // Rotate towards movement
+                Transform.forward = Vector3.Slerp(Transform.forward, moveDir, Time.deltaTime * 12f);
             }
         }
     }

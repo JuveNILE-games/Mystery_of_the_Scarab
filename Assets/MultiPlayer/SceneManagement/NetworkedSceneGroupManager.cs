@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Core.Systems.SceneManagement;
+using Cysharp.Threading.Tasks;
 using Obvious.Soap;
 using PurrNet.Modules;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace MultiPlayer.SceneManagement
             _scenesModule = scenesModule;
         }
         
-        protected override async Task LoadSceneAsync(SceneData sceneData, IProgress<float> progress, LoadSceneMode mode = LoadSceneMode.Additive)
+        protected override async UniTask LoadSceneAsync(SceneData sceneData, IProgress<float> progress, LoadSceneMode mode = LoadSceneMode.Additive)
         {
             var sceneSettings = new PurrSceneSettings 
             { 
@@ -36,11 +37,11 @@ namespace MultiPlayer.SceneManagement
             while (!operation.isDone)
             {
                 progress?.Report(operation.progress);
-                await Task.Yield();
+                await UniTask.Yield();
             }
         }
         
-        protected override async Task UnloadSceneAsync(string sceneName)
+        protected override async UniTask UnloadSceneAsync(string sceneName)
         {
             // Network-specific unload logic
             var operation = _scenesModule.UnloadSceneAsync(sceneName);

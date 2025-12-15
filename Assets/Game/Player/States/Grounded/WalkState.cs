@@ -1,34 +1,31 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Player.States.Grounded
-{
-    [CreateAssetMenu(fileName = "WalkState", menuName = "State Machine/States/Walk State")]
+namespace Game.Player.States.Grounded{
     public class WalkState : PlayerState
     {
+        private float walkSpeed = 3f;
+        
+        public WalkState() : base("Walk") { }
+        
         public override void OnEnter()
         {
             base.OnEnter();
-            if (StateComponent != null)
-            {
-                StateComponent.PlayAnimation("Walk");
-            }
+            Animator?.Play("Walk");
         }
         
         public override void OnUpdate()
         {
             base.OnUpdate();
             
-            if (StateComponent != null)
+            Vector3 moveDir = GetMoveDirection();
+            if (Rigidbody != null && moveDir != Vector3.zero)
             {
-                Vector2 movement = StateComponent.GetMovementDirection();
-                if (movement.magnitude > 0.1f)
-                {
-                    StateComponent.SetMovement(movement);
-                }
-                else
-                {
-                    // Transition back to idle handled by conditions
-                }
+                Vector3 targetVel = moveDir * walkSpeed;
+                targetVel.y = Rigidbody.linearVelocity.y;
+                Rigidbody.linearVelocity = Vector3.Lerp(Rigidbody.linearVelocity, targetVel, Time.deltaTime * 10f);
+                
+                // Rotate towards movement
+                Transform.forward = Vector3.Slerp(Transform.forward, moveDir, Time.deltaTime * 10f);
             }
         }
     }

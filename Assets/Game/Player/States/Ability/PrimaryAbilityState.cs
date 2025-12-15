@@ -1,25 +1,41 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Player.States.Ability
-{
-    [CreateAssetMenu(fileName = "PrimaryAbilityState", menuName = "State Machine/States/Primary Ability State")]
-    public class PrimaryAbilityState : AbilityState
-    {
-        public override void OnEnter()
-        {
+namespace Game.Player.States.Ability{
+    public class PrimaryAbilityState : PlayerState{
+        private float abilityDuration = 0.5f;
+        private float startTime;
+
+        public PrimaryAbilityState() : base("PrimaryAbility"){
+        }
+
+        public override void OnEnter(){
             base.OnEnter();
-            if (StateComponent != null)
+            startTime = Time.time;
+
+            Animator?.Play("PrimaryAbility");
+            Debug.Log("[PlayerSM] Executing Primary Ability");
+
+            // Execute ability logic here
+            ExecutePrimaryAbility();
+        }
+
+        public override void OnUpdate(){
+            base.OnUpdate();
+
+            // Mark as finished after duration
+            if (Time.time - startTime >= abilityDuration)
             {
-                StateComponent.PlayAnimation("PrimaryAbility");
-                StateComponent.UsePrimaryAbility();
+                Owner?.MarkPrimaryAbilityFinished();
             }
         }
-        
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-            
-            // Handle primary ability logic
+
+        private void ExecutePrimaryAbility(){
+            // Example: Apply forward force
+            if (Rigidbody != null)
+            {
+                Vector3 dashDir = Transform.forward;
+                Rigidbody.AddForce(dashDir * 10f, ForceMode.Impulse);
+            }
         }
     }
 }

@@ -1,24 +1,51 @@
-using Core.Systems.StateMachine.Components;
-using Core.Systems.StateMachine.Core;
+using Core.Systems.StateMachine;
+using SpriteAnimations;
 using UnityEngine;
 
 namespace Game.Player.States
 {
-    [CreateAssetMenu(fileName = "PlayerState", menuName = "State Machine/States/Player State")]
-    public class PlayerState : State
+    /// <summary>
+    /// Base state for the player state machine.
+    /// Provides common functionality and access to player components.
+    /// </summary>
+    public abstract class PlayerState : BaseState<PlayerStateMachine, PlayerState>
     {
-        protected IStateMachineComponent StateComponent => StateMachine.Context as IStateMachineComponent;
+
+        // Common player references (cached for performance)
+        protected Rigidbody Rigidbody => Owner?.Rigidbody;
+        protected SpriteAnimator Animator => Owner?.Animator;
+        protected Transform Transform => Owner?.transform;
         
-        public override void OnEnter()
+        // Common player data
+        protected Vector3 Velocity => Rigidbody != null ? Rigidbody.linearVelocity : Vector3.zero;
+        protected bool IsGrounded => Owner != null && Owner.IsGrounded;
+        
+        protected PlayerState(string name = null) : base(name) { }
+        
+        /// <summary>
+        /// Helper to check if player input is active
+        /// </summary>
+        protected bool HasInput()
         {
-            base.OnEnter();
-            Debug.Log($"Entering Player State: {name}");
+            return Owner != null && Owner.MoveInput.sqrMagnitude > 0.01f;
         }
         
-        public override void OnExit()
+        /// <summary>
+        /// Helper to get normalized move direction
+        /// </summary>
+        protected Vector3 GetMoveDirection()
         {
-            base.OnExit();
-            Debug.Log($"Exiting Player State: {name}");
+            if (Owner == null) return Vector3.zero;
+            
+            Vector3 forward = Camera.main != null ? Camera.main.transform.forward : Transform.forward;
+            Vector3 right = Camera.main != null ? Camera.main.transform.right : Transform.right;
+            
+            forward.y = 0;
+            right.y = 0;
+            forward.Normalize();
+            right.Normalize();
+            
+            return (forward * Owner.MoveInput.y + right * Owner.MoveInput.x).normalized;
         }
     }
 }

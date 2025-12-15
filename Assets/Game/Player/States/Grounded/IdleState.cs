@@ -1,30 +1,27 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Player.States.Grounded
-{
-    [CreateAssetMenu(fileName = "IdleState", menuName = "State Machine/States/Idle State")]
+namespace Game.Player.States.Grounded{
     public class IdleState : PlayerState
     {
+        public IdleState() : base("Idle") { }
+        
         public override void OnEnter()
         {
             base.OnEnter();
-            if (StateComponent != null)
-            {
-                StateComponent.PlayAnimation("Idle");
-            }
+            Animator?.Play("Idle");
         }
         
         public override void OnUpdate()
         {
             base.OnUpdate();
             
-            if (StateComponent != null)
+            // Apply light damping
+            if (Rigidbody != null)
             {
-                Vector2 movement = StateComponent.GetMovementDirection();
-                if (movement.magnitude > 0.1f)
-                {
-                    // Transition handled by conditions/transitions
-                }
+                Vector3 vel = Rigidbody.linearVelocity;
+                vel.x *= 0.9f;
+                vel.z *= 0.9f;
+                Rigidbody.linearVelocity = vel;
             }
         }
     }

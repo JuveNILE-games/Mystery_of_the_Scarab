@@ -1,12 +1,15 @@
 {
   "dependencies": {
+    "com.bgtools.playerprefseditor": "1.2.4",
     "com.eflatun.scenereference": "4.1.1",
     "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git",
+    "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui",
     "com.no-slopes.sprite-animations": "2.3.5",
     "com.nobi.roundedcorners": "https://github.com/kirevdokimov/Unity-UI-Rounded-Corners.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "2.2.2",
     "com.unity.ai.navigation": "2.0.9",
+    "com.unity.behavior": "1.0.13",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.ide.rider": "3.0.36",
     "com.unity.ide.visualstudio": "2.0.22",
@@ -51,8 +54,7 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.bgtools.playerprefseditor": "1.2.4"
+    "com.unity.modules.xr": "1.0.0"
   },
   "scopedRegistries": [
     {

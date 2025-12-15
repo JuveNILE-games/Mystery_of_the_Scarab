@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Systems.Runner; // Added TaskRunner namespace
 using Core.Systems.SceneManagement;
+using Cysharp.Threading.Tasks;
 using Obvious.Soap;
 using PurrNet;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace MultiPlayer.SceneManagement
             progressBar.fillAmount = Mathf.Lerp(currentFill, targetProgress, Time.deltaTime * dynamicSpeed);
         }
 
-        private async Task LoadSceneGroup(int index)
+        private async UniTask LoadSceneGroup(int index)
         {
             if (!IsValidSceneGroup(index)) return;
 
@@ -73,7 +74,7 @@ namespace MultiPlayer.SceneManagement
             LoadingProgress progress = new LoadingProgress(value => targetProgress = Mathf.Max(value, targetProgress));
             CancellationToken cancellationToken;
             // Use TaskRunner to track this networked scene loading task
-            var sceneLoadingTask = _taskRunner.AddTask<bool, NetworkedSceneLoader>(
+            var sceneLoadingTask = _taskRunner.AddTask(
                 $"Loading networked scene group {sceneGroups[index].GroupName}",
                 async (_,_) => {
                     await Manager.LoadScenes(sceneGroups[index], progress, cancellationToken);
@@ -129,7 +130,7 @@ namespace MultiPlayer.SceneManagement
         }
         
         // New method to wait for all networked scene loading tasks to complete
-        public async Task WaitForAllNetworkedSceneLoadingTasks()
+        public async UniTask WaitForAllNetworkedSceneLoadingTasks()
         {
             await _taskRunner.WaitForAllTasksAsync();
         }

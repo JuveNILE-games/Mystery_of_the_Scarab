@@ -1,25 +1,40 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Player.States.Ability
-{
-    [CreateAssetMenu(fileName = "SecondaryAbilityState", menuName = "State Machine/States/Secondary Ability State")]
-    public class SecondaryAbilityState : AbilityState
-    {
-        public override void OnEnter()
-        {
+namespace Game.Player.States.Ability{
+    public class SecondaryAbilityState : PlayerState{
+        private float abilityDuration = 0.8f;
+        private float startTime;
+
+        public SecondaryAbilityState() : base("SecondaryAbility"){
+        }
+
+        public override void OnEnter(){
             base.OnEnter();
-            if (StateComponent != null)
+            startTime = Time.time;
+
+            Animator?.Play("SecondaryAbility");
+            Debug.Log("[PlayerSM] Executing Secondary Ability");
+
+            // Execute ability logic here
+            ExecuteSecondaryAbility();
+        }
+
+        public override void OnUpdate(){
+            base.OnUpdate();
+
+            // Mark as finished after duration
+            if (Time.time - startTime >= abilityDuration)
             {
-                StateComponent.PlayAnimation("SecondaryAbility");
-                StateComponent.UseSecondaryAbility();
+                Owner?.MarkSecondaryAbilityFinished();
             }
         }
-        
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-            
-            // Handle secondary ability logic
+
+        private void ExecuteSecondaryAbility(){
+            // Example: Apply upward force
+            if (Rigidbody != null)
+            {
+                Rigidbody.AddForce(Vector3.up * 8f, ForceMode.Impulse);
+            }
         }
     }
 }
