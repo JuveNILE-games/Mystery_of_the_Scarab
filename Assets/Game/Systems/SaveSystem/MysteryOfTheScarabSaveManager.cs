@@ -3,6 +3,8 @@ using Core.Systems.SaveSystem.Interfaces;
 using Core.Systems.SaveSystem.Persisters;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Core.Systems.Logging;
+using Core.Systems.Services.Interfaces;
 
 namespace Game.Systems.SaveSystem
 {
@@ -15,8 +17,8 @@ namespace Game.Systems.SaveSystem
         // TODO: Add reference to game state when available
         // private GameState gameState;
 
-        public MysteryOfTheScarabSaveManager(IPersister persister) 
-            : base(persister)
+        public MysteryOfTheScarabSaveManager(IPersister persister, ILoggerService logger = null) 
+            : base(persister, logger)
         {
             // TODO: Inject game state or other dependencies
         }
@@ -26,7 +28,7 @@ namespace Game.Systems.SaveSystem
         /// </summary>
         protected override void BeforeLoad()
         {
-            Debug.Log("[MysteryOfTheScarabSaveManager] BeforeLoad - Preparing to load save data");
+            _logger?.Log(this, "BeforeLoad - Preparing to load save data");
             
             // TODO: Clear current game state
             // Example:
@@ -40,7 +42,7 @@ namespace Game.Systems.SaveSystem
         /// </summary>
         protected override async UniTask CustomLoad()
         {
-            Debug.Log("[MysteryOfTheScarabSaveManager] CustomLoad - Applying loaded data to game state");
+            _logger?.Log(this, "CustomLoad - Applying loaded data to game state");
             
             // TODO: Load game-specific data from persister
             // Example:
@@ -60,7 +62,7 @@ namespace Game.Systems.SaveSystem
         /// </summary>
         protected override void InitializeVarListeners()
         {
-            Debug.Log("[MysteryOfTheScarabSaveManager] InitializeVarListeners - Setting up auto-save listeners");
+            _logger?.Log(this, "InitializeVarListeners - Setting up auto-save listeners");
             
             // TODO: Set up listeners for game state changes
             // Example:
