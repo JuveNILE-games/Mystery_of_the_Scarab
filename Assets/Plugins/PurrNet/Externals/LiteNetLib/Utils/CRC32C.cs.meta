@@ -1,9 +1,0 @@
-fileFormatVersion: 2
-guid: ea0ab15ee97606745ba544c33bdc34ad
-AssetOrigin:
-  serializedVersion: 1
-  productId: 297320
-  packageName: 'PurrNet: Multiplayer Networking'
-  packageVersion: v1.15.0
-  assetPath: Assets/Plugins/PurrNet/Externals/LiteNetLib/Utils/CRC32C.cs
-  uploadId: 782191

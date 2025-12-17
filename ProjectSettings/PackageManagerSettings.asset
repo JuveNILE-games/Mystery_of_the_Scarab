@@ -34,6 +34,7 @@ MonoBehaviour:
     - com.bgtools.playerprefseditor
     - com.eflatun.scenereference
     - com.no-slopes.sprite-animations
+    - dev.purrnet.purrnet
     m_IsDefault: 0
     m_Capabilities: 0
     m_ConfigSource: 4

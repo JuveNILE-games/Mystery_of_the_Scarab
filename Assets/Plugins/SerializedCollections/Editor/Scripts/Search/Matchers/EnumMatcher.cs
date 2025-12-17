@@ -1,5 +1,6 @@
 using System;
 using UnityEditor;
+using AYellowpaper.SerializedCollections.Editor;
 
 namespace AYellowpaper.SerializedCollections.Editor.Search
 {

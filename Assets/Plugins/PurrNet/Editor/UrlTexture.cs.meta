@@ -1,9 +1,0 @@
-fileFormatVersion: 2
-guid: 4c2d818850798224d80069f7e413747d
-AssetOrigin:
-  serializedVersion: 1
-  productId: 297320
-  packageName: 'PurrNet: Multiplayer Networking'
-  packageVersion: v1.15.0
-  assetPath: Assets/Plugins/PurrNet/Editor/UrlTexture.cs
-  uploadId: 782191

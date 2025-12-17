@@ -271,7 +271,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 11
+  serializedVersion: 12
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -429,6 +429,19 @@ Mesh:
     offset: 0
     size: 0
     path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!114 &1028496825 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
@@ -551,7 +564,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 11
+  serializedVersion: 12
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -709,6 +722,19 @@ Mesh:
     offset: 0
     size: 0
     path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1 &1630984413
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,12 +783,14 @@ MonoBehaviour:
   injectionRoot: {fileID: 1841142282}
   sceneLoader: {fileID: 1028496825}
   dialogueManager: {fileID: 1328367257}
+  saveSystemConfig: {fileID: 0}
   audioServiceSettings:
     SoundEmitterPrefab: {fileID: -8936678578939012605, guid: 8fb55e4a8e89b664087e58ab210e5be9, type: 3}
     DefaultCapacity: 10
     MaxPoolSize: 100
     MaxSoundInstances: 30
   inputReader: {fileID: 11400000, guid: 911c536129671d446adce40a23429918, type: 2}
+  editorEnvironmentOverride: {fileID: 0}
 --- !u!1 &1813951827
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +999,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 11
+  serializedVersion: 12
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -1129,6 +1157,19 @@ Mesh:
     offset: 0
     size: 0
     path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1001 &2039940732
 PrefabInstance:
   m_ObjectHideFlags: 0

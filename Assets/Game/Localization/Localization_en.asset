@@ -19,3 +19,9 @@ MonoBehaviour:
     _serializedList:
     - Key: MAINMENU_StartGame
       Value: Start
+    - Key: MAINMENU_Options
+      Value: Options
+    - Key: MAINMENU_Credits
+      Value: Credits
+    - Key: MAINMENU_Quit
+      Value: Quit

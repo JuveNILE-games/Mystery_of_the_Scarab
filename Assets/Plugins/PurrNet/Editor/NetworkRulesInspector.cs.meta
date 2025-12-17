@@ -1,9 +1,0 @@
-fileFormatVersion: 2
-guid: 356444146945ec144bab326f4ad5b1b1
-AssetOrigin:
-  serializedVersion: 1
-  productId: 297320
-  packageName: 'PurrNet: Multiplayer Networking'
-  packageVersion: v1.15.0
-  assetPath: Assets/Plugins/PurrNet/Editor/NetworkRulesInspector.cs
-  uploadId: 782191
