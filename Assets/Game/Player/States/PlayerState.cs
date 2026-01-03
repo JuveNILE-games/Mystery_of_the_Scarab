@@ -12,12 +12,12 @@ namespace Game.Player.States
     {
 
         // Common player references (cached for performance)
-        protected Rigidbody Rigidbody => Owner?.Rigidbody;
+        protected CharacterController Controller => Owner?.Controller;
         protected SpriteAnimator Animator => Owner?.Animator;
         protected Transform Transform => Owner?.transform;
         
         // Common player data
-        protected Vector3 Velocity => Rigidbody != null ? Rigidbody.linearVelocity : Vector3.zero;
+        protected Vector3 Velocity => Controller != null ? Controller.velocity : Vector3.zero;
         protected bool IsGrounded => Owner != null && Owner.IsGrounded;
         
         protected PlayerState(string name = null) : base(name) { }

@@ -9,61 +9,87 @@ using UnityEngine;
     /// </summary>
     public class AirborneState : HierarchicalState<PlayerStateMachine, PlayerState>
     {
-        private FallingState fallingState;
-        
-        public AirborneState() : base("Airborne") { }
-        
-        protected override void Initialize()
-        {
-            fallingState = AddChildState(new FallingState());
-            SetInitialChildState(fallingState);
-        }
-        
+        private Vector3 currentVelocity;
+
         public override void OnEnter()
         {
             base.OnEnter();
             Debug.Log("[PlayerSM] Entered Airborne state");
+            
+            // Inherit velocity from controller (if any) or start fresh 
+            currentVelocity = Owner.Controller != null ? Owner.Controller.velocity : Vector3.zero;
         }
-        
+
         public override void OnUpdate()
         {
             base.OnUpdate();
             
-            // Allow air control
+            // 1. Apply Gravity
+            ApplyGravity();
+            
+            // 2. Apply Air Control (modify horizontal velocity)
             ApplyAirControl();
+            
+            // 3. Move Controller
+            if (Owner.Controller != null)
+            {
+                Owner.Controller.Move(currentVelocity * Time.deltaTime);
+            }
+        }
+
+        private void ApplyGravity()
+        {
+            if (Owner.Data.Value == null) return;
+            
+            float gravityMult = Owner.Data.Value.GravityMultiplier;
+            float maxFall = Owner.Data.Value.MaxFallSpeed;
+            
+            // Standard gravity
+            float gravity = Physics.gravity.y * (gravityMult > 0 ? gravityMult : 1f);
+            
+            currentVelocity.y += gravity * Time.deltaTime;
+            
+            // Clamp fall speed
+            if (currentVelocity.y < -maxFall)
+            {
+                currentVelocity.y = -maxFall;
+            }
         }
         
         private void ApplyAirControl()
         {
-            if (Owner == null || Rigidbody == null) return;
+            if (Owner == null) return;
             
             Vector3 moveDir = GetMoveDirection();
             if (moveDir != Vector3.zero)
             {
-                float airControlForce = 2f;
-                Rigidbody.AddForce(moveDir * airControlForce, ForceMode.Force);
+                float airControlForce = Owner.Data.Value != null ? Owner.Data.Value.AirControl : 2f;
+                
+                // Add horizontal acceleration
+                // Note: With CharacterController, we manipulate velocity directly.
+                // We'll treat airControlForce as an acceleration here.
+                Vector3 targetAccel = moveDir * airControlForce * Time.deltaTime; // Simple accumulation
+                
+                currentVelocity.x += targetAccel.x;
+                currentVelocity.z += targetAccel.z;
                 
                 // Clamp horizontal speed
-                Vector3 vel = Rigidbody.linearVelocity;
-                Vector3 horizontalVel = new Vector3(vel.x, 0, vel.z);
+                Vector3 horizontalVel = new Vector3(currentVelocity.x, 0, currentVelocity.z);
                 if (horizontalVel.magnitude > 6f)
                 {
                     horizontalVel = horizontalVel.normalized * 6f;
-                    vel.x = horizontalVel.x;
-                    vel.z = horizontalVel.z;
-                    Rigidbody.linearVelocity = vel;
+                    currentVelocity.x = horizontalVel.x;
+                    currentVelocity.z = horizontalVel.z;
                 }
             }
         }
-        
-        private bool HasInput() => Owner?.MoveInput.sqrMagnitude > 0.01f;
-        
-        protected Vector3 GetMoveDirection()
+
+        private Vector3 GetMoveDirection()
         {
             if (Owner == null) return Vector3.zero;
             
-            Vector3 forward = Camera.main != null ? Camera.main.transform.forward : Transform.forward;
-            Vector3 right = Camera.main != null ? Camera.main.transform.right : Transform.right;
+            Vector3 forward = Camera.main != null ? Camera.main.transform.forward : Owner.transform.forward;
+            Vector3 right = Camera.main != null ? Camera.main.transform.right : Owner.transform.right;
             
             forward.y = 0;
             right.y = 0;
@@ -72,7 +98,4 @@ using UnityEngine;
             
             return (forward * Owner.MoveInput.y + right * Owner.MoveInput.x).normalized;
         }
-        
-        protected Transform Transform => Owner?.transform;
-        protected Rigidbody Rigidbody => Owner?.Rigidbody;
     }

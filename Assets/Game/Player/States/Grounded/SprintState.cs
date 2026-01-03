@@ -1,16 +1,22 @@
 ﻿using UnityEngine;
 
+using SpriteAnimations;
+
 namespace Game.Player.States.Grounded{
     public class SprintState : PlayerState
     {
-        private float sprintSpeed = 6f;
+        private WindroseAnimator _windroseAnimator;
         
         public SprintState() : base("Sprint") { }
         
         public override void OnEnter()
         {
             base.OnEnter();
-            Animator?.Play("Sprint");
+            if (Animator != null)
+            {
+                _windroseAnimator = Animator.Play<WindroseAnimator>("Sprint");
+                if (Owner != null) _windroseAnimator?.SetDirection(Owner.LastMoveDirection);
+            }
         }
         
         public override void OnUpdate()
@@ -18,15 +24,29 @@ namespace Game.Player.States.Grounded{
             base.OnUpdate();
             
             Vector3 moveDir = GetMoveDirection();
-            if (Rigidbody != null && moveDir != Vector3.zero)
+            if (Controller != null)
             {
-                Vector3 targetVel = moveDir * sprintSpeed;
-                targetVel.y = Rigidbody.linearVelocity.y;
-                Rigidbody.linearVelocity = Vector3.Lerp(Rigidbody.linearVelocity, targetVel, Time.deltaTime * 8f);
+                // Update animation direction
+                if (Owner != null && _windroseAnimator != null && Owner.MoveInput.sqrMagnitude > 0.01f)
+                {
+                    _windroseAnimator.SetDirection(Owner.GetCardinalDirection(Owner.MoveInput));
+                }
+
+                float speed = Owner.Data.Value != null ? Owner.Data.Value.SprintSpeed : 6f;
+                Vector3 moveVelocity = moveDir * speed;
                 
-                // Rotate towards movement
-                Transform.forward = Vector3.Slerp(Transform.forward, moveDir, Time.deltaTime * 12f);
+                // Stick to ground
+                moveVelocity.y = -2f;
+
+                Controller.Move(moveVelocity * Time.deltaTime);
+                
+                if (moveDir != Vector3.zero)
+                {
+                    // Rotate towards movement
+                    Transform.forward = Vector3.Slerp(Transform.forward, moveDir, Time.deltaTime * 15f);
+                }
             }
+                
         }
     }
 }

@@ -1,4 +1,6 @@
+using Core.Systems.Bindables;
 using Core.Systems.StateMachine;
+using Game.Player.Data;
 using Game.Player.States;
 using Game.Player.States.Ability;
 using Game.Player.States.Grounded;
@@ -14,17 +16,19 @@ namespace Game.Player
     /// - Airborne (Falling)
     /// - Ability (PrimaryAbility, SecondaryAbility)
     /// </summary>
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CharacterController))]
     public class PlayerStateMachine : StateMachineComponent<PlayerStateMachine, BaseState<PlayerStateMachine, PlayerState>>
     {
         [Header("Component References")]
-        [SerializeField] private Rigidbody rb;
+        [SerializeField] private CharacterController controller;
         [SerializeField] private SpriteAnimator anim;
+        
+        [Header("Data")]
+        [SerializeField] private CharacterData initialCharacterData;
         
         [Header("Ground Detection")]
         [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float groundCheckDistance = 0.3f;
-        [SerializeField] private Vector3 groundCheckOffset = Vector3.zero;
+        [SerializeField] private float groundCheckDistance = 0.2f;
         
         [Header("Input (Connect from InputSystem)")]
         [SerializeField] private Vector2 moveInput;
@@ -47,7 +51,7 @@ namespace Game.Player
         
         #region Public Properties (accessed by states)
         
-        public Rigidbody Rigidbody => rb;
+        public CharacterController Controller => controller;
         public SpriteAnimator Animator => anim;
         public Vector2 MoveInput => moveInput;
         public bool IsGrounded => isGrounded;
@@ -56,6 +60,10 @@ namespace Game.Player
         public bool IsPrimaryAbilityPressed => primaryAbilityPressed;
         public bool IsSecondaryAbilityPressed => secondaryAbilityPressed;
         
+        public Bindable<CharacterData> Data { get; private set; } = new();
+        
+        public Vector2 LastMoveDirection { get; private set; } = Vector2.down;
+        
         #endregion
         
         #region Unity Lifecycle
@@ -63,15 +71,20 @@ namespace Game.Player
         protected override void Awake()
         {
             // Cache components
-            if (rb == null) rb = GetComponent<Rigidbody>();
+            if (controller == null) controller = GetComponent<CharacterController>();
             if (anim == null) anim = GetComponentInChildren<SpriteAnimator>();
+            
+            if (initialCharacterData != null)
+            {
+                Data.Value = initialCharacterData;
+            }
             
             base.Awake();
         }
         
         private void OnValidate()
         {
-            if (rb == null) rb = GetComponent<Rigidbody>();
+            if (controller == null) controller = GetComponent<CharacterController>();
             if (anim == null) anim = GetComponentInChildren<SpriteAnimator>();
         }
         
@@ -121,7 +134,7 @@ namespace Game.Player
             
             // Airborne → Grounded (when grounded and falling)
             airborneState
-                .When(() => isGrounded && rb.linearVelocity.y <= 0.1f, groundedState, priority: 10, name: "Landed");
+                .When(() => isGrounded && controller.velocity.y <= 0.1f, groundedState, priority: 10, name: "Landed");
             
             // Ability → Grounded (when finished and grounded)
             abilityState
@@ -138,17 +151,75 @@ namespace Game.Player
         
         private void CheckGrounded()
         {
-            Vector3 origin = transform.position + groundCheckOffset;
-            isGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDistance, groundLayer);
+            if (controller == null) return;
+            
+            // SphereCast Logic:
+            // We want to cast a sphere from the bottom of the controller downwards.
+            // Problem: SphereCast won't detect colliders it starts INSIDE. CharacterController often sinks slightly (SkinWidth).
+            // Fix: Start the cast slightly HIGHER (retreat up) and increase the distance to compensate.
+            
+            float radius = controller.radius * 0.9f;
+            float castRetreat = 0.1f; // Move start point up by this much
+            
+            // Calculate standard bottom sphere center
+            Vector3 centerOffset = Vector3.down * (controller.height * 0.5f - radius);
+            Vector3 bottomCenter = transform.position + controller.center + centerOffset;
+            
+            // Move origin UP
+            Vector3 origin = bottomCenter + Vector3.up * castRetreat;
+            
+            // Increase max distance
+            float actualDistance = groundCheckDistance + castRetreat;
+            
+            // SphereCast
+            if (Physics.SphereCast(origin, radius, Vector3.down, out RaycastHit hit, actualDistance, groundLayer))
+            {
+                // Validate Slope
+                float angle = Vector3.Angle(Vector3.up, hit.normal);
+                if (angle <= controller.slopeLimit) // Default is usually 45
+                {
+                    isGrounded = true;
+                }
+                else
+                {
+                    // Too steep! Treat as wall/air.
+                    // Debug.Log($"[PlayerSM] Too steep: {angle} deg on {hit.collider.name}");
+                    isGrounded = false;
+                }
+            }
+            else
+            {
+                isGrounded = false;
+            }
+            
+            // Debugging collision with Controller fallback (Be careful with this on walls)
+            if (!isGrounded && controller.isGrounded)
+            {
+                 // Controller says grounded. Trust it? 
+                 // It might also be sliding down a wall if slope limit isn't configured right on the CC.
+                 // Let's trust it but only if velocity is low? No, safer to just trust it for now.
+                 isGrounded = true; 
+            }
         }
         
         private void OnDrawGizmosSelected()
         {
-            // Visualize ground check
-            Vector3 origin = transform.position + groundCheckOffset;
-            Gizmos.color = isGrounded ? Color.green : Color.red;
-            Gizmos.DrawLine(origin, origin + Vector3.down * groundCheckDistance);
-            Gizmos.DrawWireSphere(origin + Vector3.down * groundCheckDistance, 0.1f);
+             if (controller == null) controller = GetComponent<CharacterController>();
+             if (controller == null) return;
+
+             float radius = controller.radius * 0.9f;
+             float castRetreat = 0.1f;
+             
+             Vector3 centerOffset = Vector3.down * (controller.height * 0.5f - radius);
+             Vector3 bottomCenter = transform.position + controller.center + centerOffset;
+             Vector3 origin = bottomCenter + Vector3.up * castRetreat;
+             float actualDistance = groundCheckDistance + castRetreat;
+             
+             Gizmos.color = isGrounded ? Color.green : Color.red;
+             // Draw start
+             Gizmos.DrawWireSphere(origin, radius); 
+             // Draw end
+             Gizmos.DrawWireSphere(origin + Vector3.down * actualDistance, radius);
         }
         
         #endregion
@@ -202,7 +273,12 @@ namespace Game.Player
         
         public void OnMove(Vector2 input)
         {
+            Debug.Log($"[PlayerSM] OnMove: {input}");
             moveInput = input;
+            if (moveInput.sqrMagnitude > 0.01f)
+            {
+                LastMoveDirection = GetCardinalDirection(moveInput);
+            }
         }
         
         public void OnJump(bool pressed)
@@ -230,6 +306,23 @@ namespace Game.Player
             {
                 secondaryAbilityPressed = true;
                 secondaryAbilityFinished = false;
+            }
+        }
+
+        public Vector2 GetCardinalDirection(Vector2 input)
+        {
+            if (input == Vector2.zero) return Vector2.down;
+
+            // Determine dominant axis
+            if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
+            {
+                // Horizontal is dominant
+                return input.x > 0 ? Vector2.right : Vector2.left;
+            }
+            else
+            {
+                // Vertical is dominant
+                return input.y > 0 ? Vector2.up : Vector2.down;
             }
         }
         

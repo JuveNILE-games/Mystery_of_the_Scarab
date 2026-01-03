@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using SpriteAnimations;
 
 namespace Game.Player.States.Grounded{
     public class IdleState : PlayerState
@@ -8,20 +9,22 @@ namespace Game.Player.States.Grounded{
         public override void OnEnter()
         {
             base.OnEnter();
-            Animator?.Play("Idle");
+            if (Animator != null)
+            {
+                var windrose = Animator.Play<WindroseAnimator>("Idle");
+                if (Owner != null) windrose?.SetDirection(Owner.LastMoveDirection);
+            }
         }
         
         public override void OnUpdate()
         {
             base.OnUpdate();
             
-            // Apply light damping
-            if (Rigidbody != null)
+            // Apply simple gravity/stick force to ensure CharacterController updates isGrounded
+            // and we don't float off slopes.
+            if (Controller != null)
             {
-                Vector3 vel = Rigidbody.linearVelocity;
-                vel.x *= 0.9f;
-                vel.z *= 0.9f;
-                Rigidbody.linearVelocity = vel;
+                Controller.Move(Vector3.down * 4f * Time.deltaTime);
             }
         }
     }

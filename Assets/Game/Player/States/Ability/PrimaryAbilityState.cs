@@ -27,15 +27,26 @@ namespace Game.Player.States.Ability{
             {
                 Owner?.MarkPrimaryAbilityFinished();
             }
+            else
+            {
+                // Simple Dash logic
+                if (Controller != null)
+                {
+                    Controller.Move(Transform.forward * 20f * Time.deltaTime);
+                }
+            }
         }
 
         private void ExecutePrimaryAbility(){
             // Example: Apply forward force
-            if (Rigidbody != null)
-            {
-                Vector3 dashDir = Transform.forward;
-                Rigidbody.AddForce(dashDir * 10f, ForceMode.Impulse);
-            }
+            // Example: Move forward manually
+             if (Controller != null)
+             {
+                 // This is just a one-frame push, which might be subtle.
+                 // Ideally, we'd apply velocity over the duration in Update.
+                 // For now, let's just log it.
+                 Debug.Log("Dash!");
+             }
         }
     }
 }
