@@ -27,13 +27,21 @@ namespace Game.Player.States.Ability{
             {
                 Owner?.MarkSecondaryAbilityFinished();
             }
+            else
+            {
+                if (Controller != null)
+                {
+                    Controller.Move(Vector3.up * 10f * Time.deltaTime);
+                }
+            }
         }
 
         private void ExecuteSecondaryAbility(){
             // Example: Apply upward force
-            if (Rigidbody != null)
+            if (Controller != null)
             {
-                Rigidbody.AddForce(Vector3.up * 8f, ForceMode.Impulse);
+                // Applying upward burst
+                 Debug.Log("Upward Burst!");
             }
         }
     }

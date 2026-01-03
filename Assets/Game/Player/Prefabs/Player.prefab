@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 878239643227192520}
   - component: {fileID: 7444016716175382408}
   - component: {fileID: 5650686287504423242}
+  - component: {fileID: 9031815850338151245}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -133,13 +134,14 @@ MonoBehaviour:
   currentStateName: 
   previousStateName: 
   timeInCurrentState: 0
-  rb: {fileID: 5650686287504423242}
+  controller: {fileID: 7444016716175382408}
   anim: {fileID: 878239643227192520}
+  initialCharacterData: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   groundCheckDistance: 0.3
-  groundCheckOffset: {x: 0, y: 0, z: 0}
+  groundCheckOffset: {x: 0, y: -0.1, z: 0}
   moveInput: {x: 0, y: 0}
   jumpPressed: 0
   sprintPressed: 0
@@ -158,9 +160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 7507739401897577786}
+  stateMachine: {fileID: 0}
   enableActions: 1
 --- !u!212 &8941140104563416523
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -179,6 +183,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -200,9 +206,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -235019388, guid: e4714ab165bbdee48a2f52dcda823824, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -212,7 +220,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &878239643227192520
 MonoBehaviour:
@@ -221,7 +228,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2545725099360330263}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6b4ec038abdaa94a83d3a771917f137, type: 3}
   m_Name: 
@@ -266,7 +273,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.9
+  m_Height: 1
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -280,10 +287,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2545725099360330263}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -300,3 +307,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &9031815850338151245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb42314615cf06a47a597367ca1451d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Systems.AnimationEvents.SpriteAnimatorWithEvents
+  _spriteRenderer: {fileID: 8941140104563416523}
+  _updateMode: 0
+  _playOnStart: 1
+  _defaultAnimation: {fileID: 11400000, guid: e45388d68cc789447b5eccc7a3fce279, type: 2}
+  _spriteAnimations:
+  - {fileID: 11400000, guid: e45388d68cc789447b5eccc7a3fce279, type: 2}
+  - {fileID: 11400000, guid: 9c699b9643e28ce44812180dc8315fad, type: 2}
+  - {fileID: 11400000, guid: b3e1a12791e63fe4fb0bcd5737febbbf, type: 2}
+  - {fileID: 11400000, guid: 6909515bf0d50da45908e79893f77cc9, type: 2}
+  - {fileID: 11400000, guid: 19fc03c24fd51c5459327b01b8408d28, type: 2}
+  - {fileID: 11400000, guid: c17e3c0f3490b9749ae79d94f8ca6658, type: 2}
+  - {fileID: 11400000, guid: 630357c17b716514e9b627db94fc896b, type: 2}
+  - {fileID: 11400000, guid: 82e55ebb4e5148342b7ea1b7d060051b, type: 2}
+  - {fileID: 11400000, guid: 5a3f8e049b8f28145a0528652641b8fc, type: 2}
+  - {fileID: 11400000, guid: c3d4354ed4187b14a99704fd72068e50, type: 2}
+  - {fileID: 11400000, guid: 0e226f9ac0ed6a64fa77740c3f3d5255, type: 2}
+  _animationChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _stateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _inspectorBindings: []
+  _eventProfile: {fileID: 0}

@@ -75,6 +75,11 @@ namespace Game.Player.States.Grounded
             base.OnExit();
         }
         
-        private bool HasInput() => Owner?.MoveInput.sqrMagnitude > 0.01f;
+        private bool HasInput()
+        {
+            bool has = Owner?.MoveInput.sqrMagnitude > 0.01f;
+            if (has) Debug.Log($"[GroundedState] HasInput: {has}, Val: {Owner.MoveInput}");
+            return has;
+        }
     }
 }
