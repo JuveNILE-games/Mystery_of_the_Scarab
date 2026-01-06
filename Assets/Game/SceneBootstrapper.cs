@@ -1,8 +1,10 @@
 using UnityEngine;
 
+using Core.Systems.Services;
+
 public class SceneBootstrapper : MonoBehaviour, IRequireServices
 {
-    private SimpleServiceLocator sceneLocator;
+    private IServiceLocator sceneLocator;
     private bool injectedByCore = false;
 
     void Awake()
@@ -11,11 +13,9 @@ public class SceneBootstrapper : MonoBehaviour, IRequireServices
         if (core == null)
         {
             Debug.LogWarning("[SceneBootstrapper] No Bootstrapper found. Creating scene-local service locator (editor override).");
-            sceneLocator = new SimpleServiceLocator(createScope: true); // Create scoped locator
+            sceneLocator = new ServiceLocator(); // Create isolated locator
             sceneLocator.Register<IGameStateManager>(new GameStateManagerImpl(GameState.SinglePlayer));
             sceneLocator.Register<IControllableRegistry>(new ControllableRegistry());
-            sceneLocator.Register<LocalEventBusImpl>(new LocalEventBusImpl());
-            sceneLocator.Register<IInputService>(new InputServiceImpl());
             OnInitialize(sceneLocator);
         }
     }
@@ -23,11 +23,31 @@ public class SceneBootstrapper : MonoBehaviour, IRequireServices
     public void InjectServices(IServiceLocator locator)
     {
         injectedByCore = true;
-        sceneLocator = locator as SimpleServiceLocator;
+        
+        // Create a scope from the global locator to allow local overrides
+        if (locator is ServiceLocator concrete)
+        {
+            var scope = concrete.CreateScope();
+            
+            // Register Game/Scene specific services
+            // These override or augment global services for this scene
+            scope.Register<IGameStateManager>(new GameStateManagerImpl(GameState.SinglePlayer));
+            scope.Register<IControllableRegistry>(new ControllableRegistry());
+            // Add SceneLoader if needed locally, though checks suggested it was unused globally.
+            // scope.Register<ISceneLoaderService>(new SceneLoaderService()); 
+            
+            sceneLocator = (IServiceLocator)scope; // ServiceScope implements IServiceLocator now
+        }
+        else
+        {
+            Debug.LogError("[SceneBootstrapper] Injected locator is not ServiceLocator! Cannot create scope.");
+            sceneLocator = locator;
+        }
+
         OnInitialize(sceneLocator);
     }
 
-    protected virtual void OnInitialize(SimpleServiceLocator locator)
+    protected virtual void OnInitialize(IServiceLocator locator)
     {
         // Scene-specific services
         Debug.Log("[SceneBootstrapper] Scene services initialized.");
@@ -35,6 +55,14 @@ public class SceneBootstrapper : MonoBehaviour, IRequireServices
 
     void OnDestroy()
     {
-        if (!injectedByCore && sceneLocator != null) sceneLocator.Clear();
+        // If we created a scope (even if injected), we own it and should dispose it.
+        // If injectedByCore is true, sceneLocator is likely a Scope.
+        // If not, it's a standalone Locator. Both are IDisposable.
+        
+        if (sceneLocator != null) 
+        {
+            sceneLocator.Clear();
+            if(sceneLocator is System.IDisposable d) d.Dispose();
+        }
     }
 }

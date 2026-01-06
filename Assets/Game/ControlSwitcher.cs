@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Game.Events;
 
 public class ControlSwitcher : MonoBehaviour, IRequireServices
 {
+    [SerializeField] private ScriptableEventControlChanged onControlChanged;
+
     IServiceLocator locator;
     IControllableRegistry registry;
     IGameStateManager gameState;
@@ -45,9 +48,10 @@ public class ControlSwitcher : MonoBehaviour, IRequireServices
     {
         var all = registry.GetAll();
         var tf = all[currentIndex].GetTransform();
-        if (locator.TryGet<LocalEventBusImpl>(out var bus))
-            bus.Publish(new ControlChanged { newIndex = currentIndex, newTransform = tf });
+        
+        if (onControlChanged != null)
+        {
+            onControlChanged.Raise(new ControlChanged { newIndex = currentIndex, newTransform = tf });
+        }
     }
 }
-
-public struct ControlChanged { public int newIndex; public UnityEngine.Transform newTransform; }
