@@ -1,6 +1,6 @@
 using Core.Systems.Bindables;
 using Core.Systems.StateMachine;
-using Game.Player.Data;
+using Core.Definitions.Character;
 using Game.Player.States;
 using Game.Player.States.Ability;
 using Game.Player.States.Grounded;
@@ -273,7 +273,7 @@ namespace Game.Player
         
         public void OnMove(Vector2 input)
         {
-            Debug.Log($"[PlayerSM] OnMove: {input}");
+            // Debug.Log($"[PlayerSM] OnMove: {input}");
             moveInput = input;
             if (moveInput.sqrMagnitude > 0.01f)
             {

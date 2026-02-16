@@ -34,7 +34,7 @@ namespace Game.Player.States.Grounded{
                 }
 
                 float speed = Owner.Data.Value != null ? Owner.Data.Value.WalkSpeed : 3f;
-                Debug.Log($"[WalkState] MoveDir: {moveDir}, Speed: {speed}, Input: {Owner.MoveInput}");
+                //Debug.Log($"[WalkState] MoveDir: {moveDir}, Speed: {speed}, Input: {Owner.MoveInput}");
                 Vector3 moveVelocity = moveDir * speed;
                 
                 // Preserve vertical velocity (gravity handling is typically in a separate system or Airborne state, 

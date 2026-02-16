@@ -1,39 +1,54 @@
-﻿using Core.Systems.AudioSystem;
+﻿using System;
+using System.Collections.Generic;
+using Core.Systems.AudioSystem;
 using Core.Systems.Localization.Definitions;
 using Core.Systems.PopUp;
+using Core.Systems.Theming;
 using Core.Utility.Attributes;
 using Core.Utility.FluentUI;
 using Core.UI;
 using Core.Utility.FluentUI.Icons.Lucide;
 using FluentUI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Game.UI.Views.MainMenu{
     public class MainMenu : MonoBehaviour
     {
+        [Inject] private IThemeService _themeService;
         [Inject] private AudioService _audioService;
         [SerializeField] private SoundData themeMusic;
         [SerializeField] private UIDocument document;
-        [SerializeField] private ThemeConfig theme;
+        //[SerializeField] private ThemeConfig theme; // Deprecated
         
-        [System.Serializable]
+        private SoundEmitter _activeTheme;
+        
+        [Serializable]
         public struct MainMenuItem
         {
             public LocalizedString Text;
             public LucideIconName Icon;
-            public UnityEngine.Events.UnityEvent OnClick;
+            public UnityEvent OnClick;
         }
 
         [Header("Menu Configuration")]
-        [SerializeField] private System.Collections.Generic.List<MainMenuItem> menuItems;
+        [SerializeField] private List<MainMenuItem> menuItems;
         
         public void OnOpen(){
             var root = document.rootVisualElement;
             root.Clear();
             
             // Apply theme
-            theme?.ApplyTo(root);
+            // Apply theme via service
+            if (_themeService != null)
+            {
+                _themeService.ApplyTheme(root);
+            }
+            else
+            {
+                Debug.LogWarning("[MainMenu] ThemeService not injected!");
+            }
 
             // Build UI with new simplified Layout syntax
             var column = Layout.Column("MainMenu")
@@ -55,7 +70,7 @@ namespace Game.UI.Views.MainMenu{
             // Fade in animation
             root.Q(className: "menu-container").style.opacity = 1f;
             
-            _audioService.CreateSound()
+            _activeTheme = _audioService.CreateSound()
                 .WithSoundData(themeMusic)
                 .Play();
         }
@@ -88,6 +103,25 @@ namespace Game.UI.Views.MainMenu{
         public void OnClose(){
             // Clear the UI to clean up elements and listeners
             document.rootVisualElement.Clear();
+
+            if (_activeTheme != null)
+            {
+                _activeTheme.Stop();
+                _activeTheme = null;
+            }
+        }
+
+        public void Settings(){
+            throw new Exception("Testing exception for ErrorHandler");
+        }
+
+        public void Quit(){
+            Popup.ShowConfirmPopup(
+                message: "Are you sure you want to quit?",
+                onYes: Application.Quit,
+                onNo: () => {},
+                title: "Quit Game"
+            );
         }
     }
 }

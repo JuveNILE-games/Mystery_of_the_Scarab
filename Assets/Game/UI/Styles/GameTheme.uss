@@ -1,0 +1,65 @@
+/* Game Specific Overrides for Mystery of the Scarab */
+:root {
+    /* Palette extracted from juvenile.games & itch.io - Warm/Earthy Egyptian Tomb */
+
+    /* Brand Colors */
+    --color-primary: #E9B541; /* "JuVE NILE Gold" - Buttons/Accents */
+    --color-primary-hover: #FFE762; /* Bright Gold/Yellow - Hover/Headings */
+    --color-secondary: #341E1C; /* Dark Maroon/Brown - Footers/Contrast */
+    --color-secondary-hover: #4A2B28; /* Lighter Maroon */
+    
+    /* Status Colors */
+    --color-danger: #B22222; /* Firebrick - Retained */
+    --color-danger-hover: #D02020;
+    --color-success: #2E8B57; /* Sea Green - Retained */
+    --color-warning: #FF8C00; /* Dark Orange - Retained */
+
+    /* Backgrounds */
+    --bg-card: rgba(52, 30, 28, 0.95); /* Deep Maroon wrapper */
+    --bg-modal: #1A0F0E; /* Very dark brown/black */
+    --bg-modal-overlay: rgba(0, 0, 0, 0.85);
+    
+    --bg-panel: rgba(119, 48, 17, 0.8); /* Terracotta/Brick - Main Background */
+    --bg-panel-header: rgba(233, 181, 65, 0.2); /* Gold Tint */
+    
+    --bg-input: rgba(20, 10, 5, 0.6); /* Dark Recess */
+
+    /* Text */
+    --text-color-default: #EEEEEE; /* Creamy Off-White */
+    --text-color-muted: #EEC76F; /* Muted Gold */
+    --text-color-disabled: #8D6E63; /* Brownish Grey */
+
+    /* Borders */
+    --border-color-default: #EEC76F; /* Gold Border */
+    --border-color-strong: #FFE762; /* Bright Gold */
+    
+    /* Metrics Override */
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 0px; /* Sharp corners for stone tablet feel */
+    --radius-xl: 4px;
+    
+    --font-size-md: 16px; 
+    
+    /* Font Family Fallbacks (If assets available) */
+    /* -unity-font-definition: url("project://database/Assets/Core/UI/Fonts/VT323-Regular.ttf"); */
+}
+
+/* Specific Component Overrides */
+
+.menu-button {
+    border-width: 2px;
+    border-color: transparent; /* Invisible border by default */
+}
+
+.menu-button:hover {
+    border-color: var(--color-primary); /* Gold border on hover */
+    background-color: var(--color-secondary); /* Dark Maroon background on hover */
+}
+
+.unity-button.primary {
+    background-color: var(--color-primary);
+    color: var(--color-secondary); /* Dark text on Gold button */
+    border-color: var(--color-primary-hover);
+    border-width: 2px;
+}

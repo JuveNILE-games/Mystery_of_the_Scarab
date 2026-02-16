@@ -5,6 +5,8 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Core.Systems.Logging;
 using Core.Systems.Services.Interfaces;
+using System;
+using Core; // For IGameStateManager
 
 namespace Game.Systems.SaveSystem
 {
@@ -14,89 +16,107 @@ namespace Game.Systems.SaveSystem
     /// </summary>
     public class MysteryOfTheScarabSaveManager : SaveService
     {
-        // TODO: Add reference to game state when available
-        // private GameState gameState;
+        private IGameStateManager _gameStateManager;
+
+        // Public API for other systems
+        public event Action OnGameLoaded;
 
         public MysteryOfTheScarabSaveManager(IPersister persister, ILoggerService logger = null) 
             : base(persister, logger)
         {
-            // TODO: Inject game state or other dependencies
+        }
+        
+        /// <summary>
+        /// Inject dependencies that weren't available at construction time if needed, 
+        /// or use a Setup method.
+        /// </summary>
+        public void BindGameStateManager(IGameStateManager gameStateManager)
+        {
+            _gameStateManager = gameStateManager;
+            if (isInitialized)
+            {
+                // If we're already initialized, hook up listeners now
+                HookGameStateListeners();
+            }
         }
 
-        /// <summary>
-        /// Called before loading begins. Clear current game state here.
-        /// </summary>
         protected override void BeforeLoad()
         {
             _logger?.Log(this, "BeforeLoad - Preparing to load save data");
-            
-            // TODO: Clear current game state
-            // Example:
-            // gameState?.Reset();
-            // currentLevel = null;
-            // playerInventory?.Clear();
+            // Clear any runtime cache here if we had one
         }
 
-        /// <summary>
-        /// Called after persister loads data. Apply loaded data to game state here.
-        /// </summary>
         protected override async UniTask CustomLoad()
         {
             _logger?.Log(this, "CustomLoad - Applying loaded data to game state");
             
-            // TODO: Load game-specific data from persister
-            // Example:
-            // var currentLevel = persister.GetProgressElement("currentLevel") ?? 1;
-            // var completedPuzzles = persister.GetChildProgressElements("puzzles");
-            // var musicVolume = persister.GetPreference("musicVolume") ?? "0.8";
-            
-            // TODO: Apply to game state
-            // gameState.CurrentLevel = currentLevel;
-            // gameState.MusicVolume = float.Parse(musicVolume);
+            // In a real scenario, we would push data TO the game systems here.
+            // Since we don't have those systems centrally, we dispatch an event.
+            OnGameLoaded?.Invoke();
             
             await UniTask.CompletedTask;
         }
 
-        /// <summary>
-        /// Initialize listeners for auto-save when game data changes.
-        /// </summary>
         protected override void InitializeVarListeners()
         {
             _logger?.Log(this, "InitializeVarListeners - Setting up auto-save listeners");
-            
-            // TODO: Set up listeners for game state changes
-            // Example:
-            // gameState.OnLevelChanged += (newLevel) =>
-            // {
-            //     persister.SetProgressElement("currentLevel", newLevel);
-            //     SaveNow().Forget(); // Auto-save
-            // };
-            
-            // gameState.OnPuzzleCompleted += (puzzleId) =>
-            // {
-            //     persister.SetProgressElement("puzzles", puzzleId, 1);
-            //     SaveNow().Forget();
-            // };
-            
-            // gameState.OnSettingsChanged += (settings) =>
-            // {
-            //     persister.SetPreference("musicVolume", settings.MusicVolume.ToString());
-            //     persister.SetPreference("sfxVolume", settings.SfxVolume.ToString());
-            //     SaveNow().Forget();
-            // };
+            HookGameStateListeners();
         }
 
-        // TODO: Add game-specific helper methods
-        // Example:
-        // public void SavePlayerProgress(int level, int stars)
-        // {
-        //     persister.SetProgressElement("level", level.ToString(), "stars", stars);
-        //     SaveNow().Forget();
-        // }
+        private void HookGameStateListeners()
+        {
+            if (_gameStateManager != null)
+            {
+                _gameStateManager.OnStateChanged -= OnGameStateChanged;
+                _gameStateManager.OnStateChanged += OnGameStateChanged;
+            }
+        }
+
+        private void OnGameStateChanged(GameState newState)
+        {
+            // Auto-save when returning to menu
+            if (newState == GameState.Menu && isLoaded)
+            {
+                 SaveNow().Forget();
+            }
+        }
         
-        // public int? GetLevelStars(int level)
-        // {
-        //     return persister.GetProgressElement("level", level.ToString(), "stars");
-        // }
+        public override void Dispose()
+        {
+            if (_gameStateManager != null)
+            {
+                _gameStateManager.OnStateChanged -= OnGameStateChanged;
+            }
+            base.Dispose();
+        }
+
+        // --- Public API for Game Systems ---
+
+        public void SaveLevelProgress(string levelId, int stars)
+        {
+            if (!isLoaded) return;
+            persister.SetProgressElement("levels", levelId, "stars", stars);
+            // Optional: Auto-save on major progress
+            SaveNow().Forget();
+        }
+        
+        public int GetLevelStars(string levelId)
+        {
+             if (!isLoaded) return 0;
+             return persister.GetProgressElement("levels", levelId, "stars") ?? 0;
+        }
+
+        public void SavePreference(string key, string value)
+        {
+            if (!isLoaded) return;
+            persister.SetPreference(key, value);
+            SaveNow().Forget();
+        }
+
+        public string GetPreference(string key, string defaultValue = "")
+        {
+            if (!isLoaded) return defaultValue;
+            return persister.GetPreference(key) ?? defaultValue;
+        }
     }
 }

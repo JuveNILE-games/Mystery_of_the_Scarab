@@ -12,16 +12,8 @@ public class PlayerAbilities : MonoBehaviour
     public void OnControlGained() { /* update UI */ }
     public void OnControlLost() { /* maybe disable passive abilities */ }
 
-    void Update()
-    {
-        // Example: primary ability button
-        if (!interactor.IsControlled) return;
-        if (Input.GetButtonDown("Fire1"))
-        {
-            var a = GetContextualAbility();
-            if (a != null) a.TryUse();
-        }
-    }
+    // Logic moved to explicit methods called by Input System
+    // void Update() removed to prevent double input handling
 
     public AbilityBehaviour GetContextualAbility()
     {

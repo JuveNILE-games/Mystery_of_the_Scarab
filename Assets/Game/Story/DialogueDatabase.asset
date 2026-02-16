@@ -13,13 +13,58 @@ MonoBehaviour:
   m_Name: DialogueDatabase
   m_EditorClassIdentifier: 
   sequences:
-  - id: 
-    name: 
-    cutsceneId: 
+  - id: Test
+    name: Test
+    cutsceneId: Test
     lines:
-    - speakerName: 
-      text: 
+    - speakerSide: 0
+      character: {fileID: 11400000, guid: f7045a2961394e244892fe5abfc4748a, type: 2}
+      emotion: 1
+      speakerName: Benjamin
+      text:
+        Key: 
+        FallbackText: this is a test
       speakerSprite: {fileID: 0}
+      voiceData:
+        clip: {fileID: 0}
+        mixerGroup: {fileID: 0}
+        Volume: 1
+        Pitch: 1
+        SpatialBlend: 1
+        isFrequentlyPlayed: 0
+        loop: 0
+        playOnAwake: 0
+      voiceClip: {fileID: 0}
+      choices: []
+      cutsceneData:
+        characterUpdates: []
+        propUpdates: []
+        cutsceneEvent:
+          m_PersistentCalls:
+            m_Calls: []
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    - speakerSide: 1
+      character: {fileID: 0}
+      emotion: 0
+      speakerName: Carol
+      text:
+        Key: 
+        FallbackText: this is a test 2
+      speakerSprite: {fileID: 0}
+      voiceData:
+        clip: {fileID: 0}
+        mixerGroup: {fileID: 0}
+        Volume: 1
+        Pitch: 1
+        SpatialBlend: 1
+        isFrequentlyPlayed: 0
+        loop: 0
+        playOnAwake: 0
       voiceClip: {fileID: 0}
       choices: []
       cutsceneData:

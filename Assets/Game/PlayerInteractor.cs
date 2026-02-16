@@ -9,15 +9,8 @@ public class PlayerInteractor : MonoBehaviour
     private bool acceptInput = true;
     public bool IsControlled => acceptInput;
 
-    void Update()
-    {
-        if (!acceptInput) return;
-        if (nearbyInteractables.Count > 0 && GetInteractPressed())
-        {
-            Interactable target = nearbyInteractables.OrderBy(i => Vector3.Distance(transform.position, i.transform.position)).First();
-            target.Interact(this.GetComponent<PlayerInteractor>());
-        }
-    }
+    // Logic moved to explicit methods called by Input System
+    // void Update() removed to prevent double input handling
 
     public void RegisterInteractable(Interactable interactable)
     {
@@ -57,11 +50,6 @@ public class PlayerInteractor : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    bool GetInteractPressed()
-    {
-        return UnityEngine.Input.GetButtonDown("Submit");
     }
 
     void ClearTargetOnLoseControl()
