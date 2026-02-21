@@ -38,8 +38,10 @@ namespace Game.UI.Views.MainMenu{
         public void OnOpen(){
             var root = document.rootVisualElement;
             root.Clear();
+            root.RegisterCallback<NavigationMoveEvent>(evt => {
+                Debug.Log($"[MainMenu] NavigationMove fired | Direction: {evt.direction} | Target: {(evt.target as VisualElement)?.name}");
+            }, TrickleDown.TrickleDown); // TrickleDown catches it before anything swallows it
             
-            // Apply theme
             // Apply theme via service
             if (_themeService != null)
             {
@@ -52,7 +54,7 @@ namespace Game.UI.Views.MainMenu{
 
             // Build UI with new simplified Layout syntax
             var column = Layout.Column("MainMenu")
-                .Classes("menu-container") // defined in MainMenu.uss
+                .Classes("menu-container")
                 .Grow()
                 .Opacity(0); // Start invisible for fade-in
 
@@ -62,7 +64,30 @@ namespace Game.UI.Views.MainMenu{
                 var item = menuItems[i];
                 // Select the first item by default
                 bool isSelected = (i == 0);
-                column.Add(CreateMenuButton(item.Text, item.Icon, isSelected, () => item.OnClick?.Invoke()));
+                Button btn = CreateMenuButton(item.Text, item.Icon, isSelected, () => item.OnClick?.Invoke());
+                btn.name = $"MenuButton_{i}_{item.Text?.Key ?? "Unassigned"}"; // Assign name for debug
+                column.Add(btn);
+
+                // Button is already focusable by default — these are not needed
+                btn.focusable = true;
+                // btn.tabIndex = i; // Interferes with directional (D-pad/arrow) navigation
+
+                if (isSelected)
+                {
+                    // One-shot callback: focus once layout is ready, then unregister
+                    // so future geometry changes on this button don't steal focus back
+                    EventCallback<GeometryChangedEvent> onGeometry = null;
+                    onGeometry = evt =>
+                    {
+                        if (btn.layout.width > 0 && btn.layout.height > 0)
+                        {
+                            btn.UnregisterCallback<GeometryChangedEvent>(onGeometry);
+                            btn.Focus();
+                            Debug.Log($"[MainMenu] Focused button after layout. Rect: {btn.worldBound}");
+                        }
+                    };
+                    btn.RegisterCallback<GeometryChangedEvent>(onGeometry);
+                }
             }
 
             root.Add(column);
@@ -75,15 +100,15 @@ namespace Game.UI.Views.MainMenu{
                 .Play();
         }
 
-        private VisualElement CreateMenuButton(LocalizedString text, LucideIconName icon, bool isSelected, System.Action onClick)
+        private Button CreateMenuButton(LocalizedString text, LucideIconName icon, bool isSelected, System.Action onClick)
         {
             var btn = new Button(onClick)
                 .Classes("menu-button");
 
-            if (isSelected)
-            {
-                btn.AddToClassList("menu-button--selected");
-            }
+            // if (isSelected)
+            // {
+            //    btn.AddToClassList("menu-button--selected");
+            // }
 
             // Icon
             btn.Add(

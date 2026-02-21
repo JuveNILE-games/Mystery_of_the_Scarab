@@ -52,7 +52,10 @@ namespace Game.Player
                 SubscribeToInput();
                 if (enableActions)
                 {
-                    _playerInputReader.Actions.Enable();
+                    // Use SetInputMode to ensure:
+                    // 1. Only 'Player' map is enabled (exclusive)
+                    // 2. InputReader.CurrentMode is updated to 'Gameplay'
+                    _playerInputReader.SetInputMode(InputReader.InputMode.Gameplay);
                 }
             }
         }

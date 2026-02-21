@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f2c19b67133a24493562628bc8b240, type: 3}
   m_Name: MainMenuScreen
   m_EditorClassIdentifier: 
+  inputMode: 1
   allowedMode: 1
   incomingScreens: []
   conditions: []

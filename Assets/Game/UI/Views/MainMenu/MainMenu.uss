@@ -30,21 +30,26 @@
 }
 
 /* Hover State */
-.menu-button:hover {
+/* Hover and Focus States */
+.menu-button:hover,
+.menu-button:focus {
     scale: 1.05;
 }
 
-.menu-button:hover > .unity-text-element {
+.menu-button:hover > .unity-text-element,
+.menu-button:focus > .unity-text-element {
     color: var(--color-primary);
     text-shadow: 0 0 10px var(--color-primary-hover);
 }
 
-/* Selected State (e.g. Start Game) */
-.menu-button--selected {
+/* Selected State (e.g. Start Game) - KEEP for manual selection if needed, but extend to focus */
+.menu-button--selected,
+.menu-button:focus {
     opacity: 1;
 }
 
-.menu-button--selected > .unity-text-element {
+.menu-button--selected > .unity-text-element,
+.menu-button:focus > .unity-text-element {
     color: var(--text-color-default);
     text-shadow: 0 0 15px var(--text-color-default);
 }
@@ -59,6 +64,7 @@
     -unity-background-image-tint-color: var(--color-primary);
 }
 
-.menu-button--selected .menu-button__icon {
+.menu-button--selected .menu-button__icon,
+.menu-button:focus .menu-button__icon {
     display: flex;
 }

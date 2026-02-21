@@ -15,6 +15,7 @@ MonoBehaviour:
   allowedForAllScreens: 1
   opensAutomatically: 0
   canBeClosedByUser: 1
+  inputMode: 1
   conditions: []
   openTransition: {fileID: 0}
   closeTransition: {fileID: 0}
