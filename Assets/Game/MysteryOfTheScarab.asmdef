@@ -1,0 +1,27 @@
+{
+    "name": "MysteryOfTheScarab",
+    "rootNamespace": "Game",
+    "references": [
+        "GUID:8411a964f908abf4a8401bafc804a395",
+        "GUID:ee6885eba12e50742b62b156919effa1",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:6528b5066ff785c4980e366b93b15e2d",
+        "GUID:1eec203dae1a1c544b9d21bdd1fc2a05",
+        "GUID:69db3fb8a2a6be04bb2904dcc16d9322",
+        "GUID:4f76f464792a1ad4999743c1ea47fb4b",
+        "GUID:ee6baafdecd94804a8714654c4bd097f",
+        "GUID:b1d49d8297559c14d8edd2659cb1357b",
+        "GUID:3582e78b510a5b3458f3ca7e9c763219"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
