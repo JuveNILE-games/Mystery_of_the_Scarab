@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using Core.Installers;
 using Core.Systems.Services.Interfaces;
@@ -39,7 +40,7 @@ namespace Game.Installers
             
             // 3. Register
             locator.Register<ISaveService>(saveManager);
-            locator.Register<MysteryOfTheScarabSaveManager>(saveManager); // Register concrete too if needed
+            locator.Register(saveManager); // Register concrete too if needed
             
             logger?.Log(this, "MysteryOfTheScarabSaveManager registered.");
         }
@@ -65,7 +66,7 @@ namespace Game.Installers
                  default:
                       string dir = string.IsNullOrEmpty(profile.localDiskSettings.saveDirectory) 
                           ? null 
-                          : System.IO.Path.Combine(Application.persistentDataPath, profile.localDiskSettings.saveDirectory);
+                          : Path.Combine(Application.persistentDataPath, profile.localDiskSettings.saveDirectory);
                       return new SecureLocalDiskPersister(dir, profile.localDiskSettings.fileExtension, profile.localDiskSettings.useEncryption, logger);
              }
         }
