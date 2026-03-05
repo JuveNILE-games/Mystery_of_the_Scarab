@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d012395b47d86c4bb8388483f0d0b75, type: 3}
+  m_Name: Mystery_of_the_Scarab_palette
+  m_EditorClassIdentifier: PrefabBrush.Editor::JuveNILE.PrefabBrush.Editor.PrefabPalette
+  Entries:
+  - Prefab: {fileID: 1684034975780219703, guid: 291887dbe0bffe34fa90b0bed0472b6c, type: 3}
+    Weight: 1
+    Label: Door
+    IsSelected: 1
+  - Prefab: {fileID: 3421911423723917284, guid: 217151ea4462886419dd4f6ecccd7fd4, type: 3}
+    Weight: 1
+    Label: PushBlock
+    IsSelected: 1

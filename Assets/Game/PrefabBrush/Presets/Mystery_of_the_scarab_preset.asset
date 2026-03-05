@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429f53095a3f1a840b504f5101a21328, type: 3}
+  m_Name: Mystery_of_the_scarab_preset
+  m_EditorClassIdentifier: PrefabBrush.Editor::JuveNILE.PrefabBrush.Editor.BrushPreset
+  PresetName: Mystery_of_the_scarab_preset
+  Settings:
+    ActiveMode: 0
+    Prefabs:
+    - Prefab: {fileID: 1684034975780219703, guid: 291887dbe0bffe34fa90b0bed0472b6c, type: 3}
+      Weight: 1
+      Label: Door
+      IsSelected: 1
+    - Prefab: {fileID: 3421911423723917284, guid: 217151ea4462886419dd4f6ecccd7fd4, type: 3}
+      Weight: 1
+      Label: PushBlock
+      IsSelected: 1
+    PaletteToLoad: {fileID: 11400000, guid: 23a43fdb6b721f14d8e5a63b7a30f18e, type: 2}
+    BrushRadius: 5
+    Density: 10
+    GridSpacing: 1
+    GridPlacementMode: 0
+    LineSpacing: 2
+    OrientToLine: 1
+    AlignToSurface: 1
+    AlignmentStrength: 1
+    UseRules: 0
+    ActiveRuleSet: {fileID: 0}
+    UseRandomization: 0
+    ScaleRange: {x: 0.8, y: 1.2}
+    RotationYRange: {x: 0, y: 360}
+    OffsetRange: {x: 0, y: 0, z: 0}
+    SlopeRange: {x: 0, y: 90}
+    CheckForClipping: 1
+    AllowedTerrainLayers: 
+    TextureFilterThreshold: 0.5
+    CreateGroupFolders: 1
+    GroupUnderHit: 0
+    UsePhysicsPlacement: 0
+    PhysicsDropHeight: 0.5
+    PhysicsIterations: 100
