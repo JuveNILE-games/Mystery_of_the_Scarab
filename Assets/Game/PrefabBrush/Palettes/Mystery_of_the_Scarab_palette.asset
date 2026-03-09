@@ -21,3 +21,11 @@ MonoBehaviour:
     Weight: 1
     Label: PushBlock
     IsSelected: 1
+  - Prefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+    Weight: 1
+    Label: WallStraightPrefab
+    IsSelected: 1
+  - Prefab: {fileID: 7063282029781281995, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+    Weight: 1
+    Label: WallCornerPrefab
+    IsSelected: 1

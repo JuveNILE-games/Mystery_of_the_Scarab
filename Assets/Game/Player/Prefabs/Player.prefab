@@ -30,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6200019809783842893}
+  - {fileID: 7656124934325807981}
   m_Father: {fileID: 4081627251559586505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2243251971993043603
@@ -141,7 +142,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckDistance: 0.3
-  groundCheckOffset: {x: 0, y: -0.1, z: 0}
   moveInput: {x: 0, y: 0}
   jumpPressed: 0
   sprintPressed: 0
@@ -161,6 +161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 7507739401897577786}
   stateMachine: {fileID: 0}
+  interactor: {fileID: 0}
+  abilities: {fileID: 0}
   enableActions: 1
 --- !u!212 &8941140104563416523
 SpriteRenderer:
@@ -343,3 +345,34 @@ MonoBehaviour:
       m_Calls: []
   _inspectorBindings: []
   _eventProfile: {fileID: 0}
+--- !u!1 &7368463949552807098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7656124934325807981}
+  m_Layer: 0
+  m_Name: CameraLock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7656124934325807981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368463949552807098}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4291121530354048106}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
