@@ -28,6 +28,7 @@ using Game.Systems.SaveSystem;
 
 namespace Game.Installers
 {
+    [System.Serializable]
     public class MysteryOfTheScarabInstaller : IGameServiceInstaller
     {
         public void Install(IServiceLocator locator)
