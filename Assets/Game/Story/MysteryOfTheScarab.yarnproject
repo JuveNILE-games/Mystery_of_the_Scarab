@@ -1,0 +1,18 @@
+{
+  "projectFileVersion": 3,
+  "sourceFiles": [
+    "Game/Story/Dialogue/**/*.yarn",
+    "Game/Story/Dialogue/*.yarn",
+    "Assets/Game/Story/Dialogue/*.yarn",
+    "Assets/Game/Story/Dialogue/**/*.yarn",
+    "**/*.yarn"
+  ],
+  "excludeFiles": [
+    "**/*~/*",
+    "./Samples/Yarn Spinner*/*"
+  ],
+  "localisation": {},
+  "baseLanguage": "en",
+  "compilerOptions": {},
+  "definitionsFiles": []
+}

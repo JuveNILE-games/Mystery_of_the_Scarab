@@ -1,0 +1,21 @@
+title: Start
+---
+// Set character and emotion via metadata
+Player: Hello! This is a test. #portrait:Happy #side:Left
+
+// Trigger a cutscene command
+<<expression NPC Neutral>>
+NPC: I hear you loud and clear. #portrait:Neutral #side:Right
+
+// Play a sound from your SoundRegistry
+<<play_audio TestClick>>
+
+// Branching logic
+-> This is amazing!
+    Player: I'm really impressed. #portrait:Surprised
+-> Can we do more?
+    Player: What else can this do? #portrait:Thinking
+
+NPC: Endless possibilities!
+<<stop_audio>>
+===

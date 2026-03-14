@@ -561,7 +561,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skip",
+                    "name": "AdvanceDialogue",
                     "type": "Button",
                     "id": "3f3a58b1-1d51-4072-99a7-145d39ce6baa",
                     "expectedControlType": "",
@@ -934,7 +934,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Skip",
+                    "action": "AdvanceDialogue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
