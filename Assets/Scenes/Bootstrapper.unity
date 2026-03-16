@@ -486,12 +486,36 @@ MonoBehaviour:
     DefaultCapacity: 10
     MaxPoolSize: 100
     MaxSoundInstances: 30
-    MainMixer: {fileID: 0}
+    MainMixer: {fileID: 24100000, guid: 5cac997a0359d5749b2b252be18de732, type: 2}
     MasterVolumeParam: MasterVolume
     MusicVolumeParam: MusicVolume
     SfxVolumeParam: SFXVolume
   inputReader: {fileID: 11400000, guid: 911c536129671d446adce40a23429918, type: 2}
   editorEnvironmentOverride: {fileID: 0}
+  installers:
+  - rid: 2843327476332232792
+  - rid: 2843327476332232793
+  - rid: 2843327476332232794
+  - rid: 2843327476332232795
+  - rid: 2843327476332232796
+  references:
+    version: 2
+    RefIds:
+    - rid: 2843327476332232792
+      type: {class: CoreServicesInstaller, ns: , asm: JuveNILE.Core}
+      data: 
+    - rid: 2843327476332232793
+      type: {class: NavigationInstaller, ns: Core.Installers, asm: JuveNILE.Core}
+      data: 
+    - rid: 2843327476332232794
+      type: {class: GameServicesInstaller, ns: Core.Installers, asm: JuveNILE.Core}
+      data: 
+    - rid: 2843327476332232795
+      type: {class: CommandInstaller, ns: Core.Installers, asm: JuveNILE.Core}
+      data: 
+    - rid: 2843327476332232796
+      type: {class: NavigationInstaller, ns: Core.Installers, asm: JuveNILE.Core}
+      data: 
 --- !u!1 &1813951827
 GameObject:
   m_ObjectHideFlags: 0
