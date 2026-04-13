@@ -498,6 +498,7 @@ MonoBehaviour:
   - rid: 2843327476332232794
   - rid: 2843327476332232795
   - rid: 2843327476332232796
+  gameAssemblyName: MysteryOfTheScarab
   references:
     version: 2
     RefIds:
