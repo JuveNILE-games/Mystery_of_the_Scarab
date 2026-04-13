@@ -3,6 +3,7 @@
     "rootNamespace": "Game",
     "references": [
         "GUID:8411a964f908abf4a8401bafc804a395",
+        "GUID:caca889fed6088d40b22c2d7e2909c31",
         "GUID:ee6885eba12e50742b62b156919effa1",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:75469ad4d38634e559750d17036d5f7c",
