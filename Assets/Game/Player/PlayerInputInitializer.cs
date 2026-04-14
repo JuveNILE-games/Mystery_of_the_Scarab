@@ -65,6 +65,19 @@ namespace Game.Player
             if (_playerInputReader != null)
             {
                 UnsubscribeFromInput();
+                ClearInputState();
+            }
+        }
+
+        public void ClearInputState()
+        {
+            if (stateMachine != null)
+            {
+                stateMachine.OnMove(Vector2.zero);
+                stateMachine.OnJump(false);
+                stateMachine.OnSprint(false);
+                stateMachine.OnPrimaryAbility(false);
+                stateMachine.OnSecondaryAbility(false);
             }
         }
 

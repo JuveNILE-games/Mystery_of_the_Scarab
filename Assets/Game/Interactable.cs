@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using Core.Systems.Interaction;
 
 [System.Serializable]
 public class PlayerInteractEvent : UnityEvent<PlayerInteractor> { }
 
 [RequireComponent(typeof(Collider))]
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, IInteractable
 {
     public static readonly List<Interactable> All = new List<Interactable>();
 
@@ -43,13 +44,40 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Legacy interact call used by PlayerInteractor and CompanionAI.
+    /// </summary>
     public void Interact(PlayerInteractor interactor)
     {
         OnInteract?.Invoke(interactor);
+    }
+
+    /// <summary>
+    /// IInteractable.Interact implementation — bridges the Core interaction system
+    /// with the Game-layer PlayerInteractor pattern.
+    /// </summary>
+    public bool Interact(GameObject interactor)
+    {
+        var playerInteractor = interactor.GetComponent<PlayerInteractor>();
+        if (playerInteractor != null)
+        {
+            OnInteract?.Invoke(playerInteractor);
+            return true;
+        }
+        // Fallback: invoke with null if no PlayerInteractor found
+        OnInteract?.Invoke(null);
+        return true;
     }
 
     public void SetFocus(bool state)
     {
         // highlight
     }
+
+    #region IInteractable Implementation
+
+    string IInteractable.InteractionPrompt => interactionPrompt;
+    bool IInteractable.IsInteractable => enabled && gameObject.activeInHierarchy;
+
+    #endregion
 }

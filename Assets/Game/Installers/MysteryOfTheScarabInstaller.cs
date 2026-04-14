@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using Obvious.Soap;
 using Core.Installers;
@@ -40,6 +41,10 @@ namespace Game.Installers
 
             logger?.Log(this, "Installing Game-Specific Services for Mystery of the Scarab...");
 
+            // ── Core Game Services ────────────────────────────────────────────────
+            locator.Register<IGameStateManager>(new GameStateManagerImpl(GameState.SinglePlayer));
+            locator.Register<IControllableRegistry>(new ControllableRegistry());
+
             // ── Save System ───────────────────────────────────────────────────────
             var env      = envService.Current;
             var profile  = config.GetProfileForEnvironment(env);
@@ -47,9 +52,14 @@ namespace Game.Installers
             var saveManager = new MysteryOfTheScarabSaveManager(persister, logger);
 
             locator.Register<ISaveService>(saveManager);
-            locator.Register(saveManager);
-
-            logger?.Log(this, "MysteryOfTheScarabSaveManager registered.");
+            
+            // ── Control Switching ────────────────────────────────────────────────
+            var switcher = UnityEngine.Object.FindFirstObjectByType<ControlSwitcher>();
+            if (switcher != null)
+            {
+                locator.Register<IControlSwitcher>(switcher);
+                logger?.Log(this, "ControlSwitcher registered as IControlSwitcher.");
+            }
 
             // ── Dialogue System ───────────────────────────────────────────────────
             InstallDialogue(locator, logger);
@@ -92,20 +102,9 @@ namespace Game.Installers
             var dialogueService = new DialogueService(
                 logger, inputReader, eventBus, signalsBus, commandRegistry);
 
-            // Register under both interfaces so [Inject] fields on MonoBehaviours
-            // (DialogueBoxPresenterAdapter, DialogueBox) can receive what they need.
             locator.Register<IDialogueService>(dialogueService);
             locator.Register<IDialogueServiceConfig>(dialogueService);
-
-            // ── Store the resolver so the adapter can fetch it on self-registration ──
-            // The adapter is a scene MonoBehaviour — it calls SetPresenter/SetRunner itself
-            // in Start() via its [Inject] IDialogueServiceConfig. We expose the resolver
-            // the same way so it can call Configure(lineResolver).
             locator.Register<ILineResolver>(lineResolver);
-
-            // ── TypewriterEffect for DialogueBox.Configure() ──────────────────────
-            // DialogueBox only needs the typewriter injected (nav/theme come from [Inject]).
-            // We register it so any scene component can pull it if needed.
             locator.Register<ITypewriterEffect>(typewriter);
             
             // ── Participant & Player Provider ─────────────────────────────────────

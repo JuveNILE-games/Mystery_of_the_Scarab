@@ -30,7 +30,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6200019809783842893}
-  - {fileID: 7656124934325807981}
   m_Father: {fileID: 4081627251559586505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2243251971993043603
@@ -93,7 +92,14 @@ GameObject:
   - component: {fileID: 878239643227192520}
   - component: {fileID: 7444016716175382408}
   - component: {fileID: 5650686287504423242}
+  - component: {fileID: 4203259420145405231}
   - component: {fileID: 9031815850338151245}
+  - component: {fileID: 2046670349178058408}
+  - component: {fileID: -598102136007462339}
+  - component: {fileID: 2853038577904381732}
+  - component: {fileID: 7154600553087900425}
+  - component: {fileID: -5208957104539809424}
+  - component: {fileID: 1000003}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -137,7 +143,7 @@ MonoBehaviour:
   timeInCurrentState: 0
   controller: {fileID: 7444016716175382408}
   anim: {fileID: 878239643227192520}
-  initialCharacterData: {fileID: 0}
+  initialCharacterData: {fileID: 11400000, guid: f7045a2961394e244892fe5abfc4748a, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -160,9 +166,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 7507739401897577786}
-  stateMachine: {fileID: 0}
-  interactor: {fileID: 0}
-  abilities: {fileID: 0}
+  stateMachine: {fileID: 4095327181172430929}
+  interactor: {fileID: 7154600553087900425}
+  abilities: {fileID: -5208957104539809424}
   enableActions: 1
 --- !u!212 &8941140104563416523
 SpriteRenderer:
@@ -309,6 +315,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &4203259420145405231
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9031815850338151245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,34 +374,134 @@ MonoBehaviour:
       m_Calls: []
   _inspectorBindings: []
   _eventProfile: {fileID: 0}
---- !u!1 &7368463949552807098
-GameObject:
+--- !u!114 &2046670349178058408
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7656124934325807981}
-  m_Layer: 0
-  m_Name: CameraLock
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7656124934325807981
-Transform:
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
+  m_Graph: {fileID: -359581984033190941, guid: be6656370c90b964cbdf4295d995536e, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 1075032407982997677
+  - rid: 1075032407982997744
+  - rid: 1075032407982997745
+  - rid: 1075032407982997746
+  m_OriginalGraph: {fileID: 0}
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 1075032407982997677
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 2545725099360330263}
+    - rid: 1075032407982997744
+      type: {class: 'BlackboardVariable`1[[PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10640889365225066479
+          m_Value1: 14823991233567839807
+        Name: Abilities
+        m_Value: {fileID: -5208957104539809424}
+    - rid: 1075032407982997745
+      type: {class: 'BlackboardVariable`1[[PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 848870189693822947
+          m_Value1: 3753154221857369063
+        Name: Interactor
+        m_Value: {fileID: 7154600553087900425}
+    - rid: 1075032407982997746
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12501652866766924775
+          m_Value1: 6271422207882155894
+        Name: Agent
+        m_Value: {fileID: -598102136007462339}
+--- !u!195 &-598102136007462339
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7368463949552807098}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4291121530354048106}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &2853038577904381732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952cd1d27d11b9d47a239d88998682c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.AI.CompanionAIAdapter
+--- !u!114 &7154600553087900425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09beedb975ced0244a383499beada42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::PlayerInteractor
+--- !u!114 &-5208957104539809424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc444d4877fc90945bd4e800c2aab562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::PlayerAbilities
+  abilities: []
+--- !u!114 &1000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1d1a383ac332b4ea296513e5216c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 2327800527177361339}
+  agent: {fileID: -598102136007462339}
+  interactor: {fileID: 7154600553087900425}
+  abilities: {fileID: -5208957104539809424}
