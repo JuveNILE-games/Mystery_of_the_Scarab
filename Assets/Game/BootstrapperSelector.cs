@@ -1,39 +1,61 @@
 using UnityEngine;
+using Core.Systems.Session;
 
+/// <summary>
+/// Selects and instantiates the appropriate bootstrapper based on the desired session type.
+/// Updated to use the unified SessionType enum.
+/// </summary>
 public class BootstrapperSelector : MonoBehaviour
 {
-    public enum Mode { Auto, ForceSingle, ForceLocal, ForceOnline }
+    [Header("Bootstrapper Prefabs")]
     public GameObject singlePlayerBootstrapperPrefab;
     public GameObject localMultiplayerBootstrapperPrefab;
     public GameObject onlineMultiplayerBootstrapperPrefab;
-    public Mode mode = Mode.Auto;
 
-    void Start()
+    [Header("Test Settings")]
+    public bool forceSessionType = false;
+    public SessionType forcedType = SessionType.Solo;
+
+    private void Start()
     {
-        Mode chosen = ChooseMode();
+        SessionType chosen = ChooseSessionType();
         InstantiateBootstrapper(chosen);
     }
 
-    Mode ChooseMode()
+    private SessionType ChooseSessionType()
     {
-        if (mode == Mode.ForceSingle) return Mode.ForceSingle;
-        if (mode == Mode.ForceLocal) return Mode.ForceLocal;
-        if (mode == Mode.ForceOnline) return Mode.ForceOnline;
-        // Auto: default to Single for safety
-        return Mode.ForceSingle;
+        if (forceSessionType) return forcedType;
+        
+        // Auto logic: default to Solo unless a session has been prepared
+        // (This will be expanded in Phase 1 when ISessionService is implemented)
+        return SessionType.Solo;
     }
 
-    void InstantiateBootstrapper(Mode chosen)
+    private void InstantiateBootstrapper(SessionType type)
     {
         GameObject prefab = null;
-        switch (chosen)
+        switch (type)
         {
-            case Mode.ForceSingle: prefab = singlePlayerBootstrapperPrefab; break;
-            case Mode.ForceLocal: prefab = localMultiplayerBootstrapperPrefab; break;
-            case Mode.ForceOnline: prefab = onlineMultiplayerBootstrapperPrefab; break;
+            case SessionType.Solo:
+                prefab = singlePlayerBootstrapperPrefab;
+                break;
+            case SessionType.SplitScreen:
+            case SessionType.LAN:
+                prefab = localMultiplayerBootstrapperPrefab;
+                break;
+            case SessionType.Online:
+                prefab = onlineMultiplayerBootstrapperPrefab;
+                break;
         }
-        if (prefab == null) { Debug.LogError($"[BootstrapperSelector] Prefab for {chosen} not assigned."); return; }
+
+        if (prefab == null)
+        {
+            Debug.LogError($"[BootstrapperSelector] Prefab for {type} not assigned.");
+            return;
+        }
+
         var go = Instantiate(prefab);
-        Debug.Log($"[BootstrapperSelector] Instantiated {prefab.name} (mode: {chosen}).");
+        go.name = $"[Bootstrapper] {type}";
+        Debug.Log($"[BootstrapperSelector] Instantiated {prefab.name} for {type} session.");
     }
 }

@@ -41,8 +41,7 @@ public class SceneBootstrapper : MonoBehaviour, IRequireServices
     // Single place for scene service registrations — fixes the DRY issue from the plan
     protected virtual void RegisterSceneServices(IServiceScope scope)
     {
-        scope.Register<IGameStateManager>(new GameStateManagerImpl(GameState.SinglePlayer));
-        scope.Register<IControllableRegistry>(new ControllableRegistry());
+        // Global services (GameStateManager, ControllableRegistry) are now handled by MysteryOfTheScarabInstaller
     }
 
     protected virtual void OnInitialize(IServiceScope scope)
