@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 7154600553087900425}
   - component: {fileID: -5208957104539809424}
   - component: {fileID: 1000003}
+  - component: {fileID: 2120222826471210667}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckDistance: 0.3
+  groundCheckDistance: 0.1
   moveInput: {x: 0, y: 0}
   jumpPressed: 0
   sprintPressed: 0
@@ -464,6 +465,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952cd1d27d11b9d47a239d88998682c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MysteryOfTheScarab::Game.AI.CompanionAIAdapter
+  _navAgent: {fileID: -598102136007462339}
+  _behaviorAgent: {fileID: 2046670349178058408}
+  _interactor: {fileID: 7154600553087900425}
+  _abilities: {fileID: -5208957104539809424}
+  _movementBridge: {fileID: 2120222826471210667}
 --- !u!114 &7154600553087900425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,3 +511,17 @@ MonoBehaviour:
   agent: {fileID: -598102136007462339}
   interactor: {fileID: 7154600553087900425}
   abilities: {fileID: -5208957104539809424}
+--- !u!114 &2120222826471210667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef528c8383ae3d45b6ddee244c82d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.AI.AIMovementBridge
+  agent: {fileID: -598102136007462339}
+  autoFindReferences: 1

@@ -25,6 +25,7 @@ using Core.Systems.Dialogue.Effects;
 using Core.Systems.Dialogue.Installer;
 using Core.Systems.Dialogue.Trigger;
 using Core.Systems.Signals;
+using Core.Systems.AgentNavigation;
 using Game.Systems.SaveSystem;
 
 namespace Game.Installers
@@ -59,6 +60,31 @@ namespace Game.Installers
             {
                 locator.Register<IControlSwitcher>(switcher);
                 logger?.Log(this, "ControlSwitcher registered as IControlSwitcher.");
+            }
+
+            // ── Dynamic NavMesh Surface (SinglePlayer only) ──────────────────────
+            var currentState = locator.Get<IGameStateManager>();
+            if (currentState?.CurrentState == GameState.SinglePlayer)
+            {
+                var navMeshPrefab = Resources.Load<GameObject>("Prefabs/AI/DynamicNavMeshSurface");
+                if (navMeshPrefab != null)
+                {
+                    var go = UnityEngine.Object.Instantiate(navMeshPrefab);
+                    UnityEngine.Object.DontDestroyOnLoad(go);
+                    var service = go.GetComponent<DynamicNavMeshSurfaceService>();
+                    locator.Register<INavMeshSurfaceService>(service);
+                    locator.Register<INavMeshReadinessProvider>(service);
+                    logger?.Log(this, "DynamicNavMeshSurfaceService registered for SinglePlayer.");
+                }
+                else
+                {
+                    logger?.LogWarning(this, "DynamicNavMeshSurface prefab not found in Resources/Prefabs/. " +
+                                             "NavMesh will not be available for companion AI.");
+                }
+            }
+            else
+            {
+                logger?.Log(this, $"NavMesh surface registration skipped — GameState is {currentState?.CurrentState}.");
             }
 
             // ── Dialogue System ───────────────────────────────────────────────────

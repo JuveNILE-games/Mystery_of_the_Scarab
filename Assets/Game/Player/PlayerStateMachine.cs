@@ -6,6 +6,7 @@ using Game.Player.States.Ability;
 using Game.Player.States.Grounded;
 using SpriteAnimations;
 using UnityEngine;
+using Game.AI;
 
 namespace Game.Player
 {
@@ -17,7 +18,7 @@ namespace Game.Player
     /// - Ability (PrimaryAbility, SecondaryAbility)
     /// </summary>
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerStateMachine : StateMachineComponent<PlayerStateMachine, BaseState<PlayerStateMachine, PlayerState>>
+    public class PlayerStateMachine : StateMachineComponent<PlayerStateMachine, BaseState<PlayerStateMachine, PlayerState>>, IMovementControllable
     {
         [Header("Component References")]
         [SerializeField] private CharacterController controller;

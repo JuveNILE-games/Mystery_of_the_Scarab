@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 using Game.Events;
 using Core.Utility.Attributes;
 using Core;
+using Core.Utility;
+using Core.Systems.AgentNavigation;
+using Core.Systems.Services;
 
 public class ControlSwitcher : MonoBehaviour, IControlSwitcher
 {
@@ -48,12 +51,23 @@ public class ControlSwitcher : MonoBehaviour, IControlSwitcher
         
         for (int i = 0; i < all.Count; i++) ApplyState(all[i], i == currentIndex);
         
-        // Ensure AI companions know who to follow from the start
-        var playerTransform = all[currentIndex].GetTransform();
-        foreach (var x in all)
+        // Ensure reactive systems (Camera, AI) know who to follow from the start
+        if (SceneCamera.Instance != null)
         {
-            var ai = x.GetTransform().GetComponentInChildren<IAIController>();
-            if (ai != null) ai.UpdateBlackboardPlayer(playerTransform);
+            SceneCamera.Instance.TrackingTarget.Value = all[currentIndex].GetTransform();
+        }
+
+        // Initialize the dynamic NavMesh surface around the AI companion (inactive player)
+        if (ServiceLocator.Global.TryGet<INavMeshSurfaceService>(out var navMeshService))
+        {
+            for (int j = 0; j < all.Count; j++)
+            {
+                if (j != currentIndex)
+                {
+                    navMeshService.InitializeSurface(all[j].GetTransform());
+                    break;
+                }
+            }
         }
     }
 
@@ -61,20 +75,24 @@ public class ControlSwitcher : MonoBehaviour, IControlSwitcher
     {
         var all = registry.GetAll();
         if (newIndex < 0 || newIndex >= all.Count || newIndex == currentIndex) return;
-        
+
+        // 1. Publish the new target to the global reactive system (Camera and AI will react automatically)
+        if (SceneCamera.Instance != null)
+        {
+            SceneCamera.Instance.TrackingTarget.Value = all[newIndex].GetTransform();
+        }
+
+        // 2. Re-anchor the NavMesh surface on the AI companion (the previously active player)
+        if (ServiceLocator.Global.TryGet<INavMeshSurfaceService>(out var navMeshService))
+        {
+            navMeshService.InitializeSurface(all[currentIndex].GetTransform());
+        }
+
+        // 3. Then apply control states
         ApplyState(all[currentIndex], false);
         ApplyState(all[newIndex], true);
         
         currentIndex = newIndex;
-        
-        // Update all AI companions to follow the new active player
-        var playerTransform = all[currentIndex].GetTransform();
-        foreach (var x in all)
-        {
-            var ai = x.GetTransform().GetComponent<IAIController>();
-            if (ai != null) ai.UpdateBlackboardPlayer(playerTransform);
-        }
-        
         BroadcastControlChanged();
     }
 

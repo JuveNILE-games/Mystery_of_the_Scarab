@@ -45,14 +45,14 @@ MonoBehaviour:
           rid: 1075032407982997600
         BlackboardGroupReferences: []
         Root:
-          rid: 1075032407982997737
+          rid: 1075032492553011313
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
           rid: 1075032407982997602
         m_EndedNodes:
           rid: 1075032407982997603
-        m_VersionTimestamp: 639116936023462371
+        m_VersionTimestamp: 639120608439574240
     - rid: 1075032407982997600
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -69,52 +69,12 @@ MonoBehaviour:
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 1075032407982997717
-        - rid: 1075032407982997718
-        - rid: 1075032407982997719
-        - rid: 1075032407982997720
-        - rid: 1075032407982997721
-    - rid: 1075032407982997717
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 0}
-    - rid: 1075032407982997718
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 496160777022005051
-          m_Value1: 15737229314432867350
-        Name: Player
-        m_Value: {fileID: 0}
-    - rid: 1075032407982997719
-      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 12501652866766924775
-          m_Value1: 6271422207882155894
-        Name: Agent
-        m_Value: {fileID: 0}
-    - rid: 1075032407982997720
-      type: {class: 'BlackboardVariable`1[[PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 848870189693822947
-          m_Value1: 3753154221857369063
-        Name: Interactor
-        m_Value: {fileID: 0}
-    - rid: 1075032407982997721
-      type: {class: 'BlackboardVariable`1[[PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 10640889365225066479
-          m_Value1: 14823991233567839807
-        Name: Abilities
-        m_Value: {fileID: 0}
-    - rid: 1075032407982997737
+        - rid: 1075032492553011315
+        - rid: 1075032492553011316
+        - rid: 1075032492553011317
+        - rid: 1075032492553011318
+        - rid: 1075032492553011319
+    - rid: 1075032492553011313
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -125,10 +85,10 @@ MonoBehaviour:
         m_Parent:
           rid: -2
         m_Child:
-          rid: 1075032407982997738
+          rid: 1075032492553011314
         Repeat: 1
         AllowMultipleRepeatsPerTick: 0
-    - rid: 1075032407982997738
+    - rid: 1075032492553011314
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -137,10 +97,50 @@ MonoBehaviour:
         Graph:
           rid: 1075032407982997599
         m_Parent:
-          rid: 1075032407982997737
+          rid: 1075032492553011313
         m_Children:
-        - rid: 1075032407982997739
-    - rid: 1075032407982997739
+        - rid: 1075032492553011320
+    - rid: 1075032492553011315
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 1075032492553011316
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 496160777022005051
+          m_Value1: 15737229314432867350
+        Name: Player
+        m_Value: {fileID: 0}
+    - rid: 1075032492553011317
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12501652866766924775
+          m_Value1: 6271422207882155894
+        Name: Agent
+        m_Value: {fileID: 0}
+    - rid: 1075032492553011318
+      type: {class: 'BlackboardVariable`1[[PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 848870189693822947
+          m_Value1: 3753154221857369063
+        Name: Interactor
+        m_Value: {fileID: 0}
+    - rid: 1075032492553011319
+      type: {class: 'BlackboardVariable`1[[PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10640889365225066479
+          m_Value1: 14823991233567839807
+        Name: Abilities
+        m_Value: {fileID: 0}
+    - rid: 1075032492553011320
       type: {class: FollowPlayerAction, ns: Game.AI, asm: MysteryOfTheScarab}
       data:
         ID:
@@ -149,14 +149,16 @@ MonoBehaviour:
         Graph:
           rid: 1075032407982997599
         m_Parent:
-          rid: 1075032407982997738
+          rid: 1075032492553011314
         Agent:
-          rid: 1075032407982997740
+          rid: 1075032492553011321
         Player:
-          rid: 1075032407982997741
+          rid: 1075032492553011322
         FollowDistance:
-          rid: 1075032407982997742
-    - rid: 1075032407982997740
+          rid: 1075032492553011323
+        StartFollowDistance:
+          rid: 1075032492553011324
+    - rid: 1075032492553011321
       type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -164,7 +166,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: {fileID: 0}
-    - rid: 1075032407982997741
+    - rid: 1075032492553011322
       type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -172,7 +174,15 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: {fileID: 0}
-    - rid: 1075032407982997742
+    - rid: 1075032492553011323
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 1075032492553011324
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -198,7 +208,7 @@ MonoBehaviour:
   - rid: 1075032407982997606
   - rid: 1075032407982997722
   - rid: 1075032407982997728
-  m_VersionTimestamp: 639116936023462371
+  m_VersionTimestamp: 639120608439574240
   m_SerializedVersion: 1
   m_DebugInfo: {fileID: -4216498078924025478}
   m_RuntimeGraph: {fileID: -359581984033190941}
@@ -249,6 +259,11 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     - Name: FollowDistance
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: StartFollowDistance
       Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
@@ -356,6 +371,7 @@ MonoBehaviour:
         - rid: 1075032407982997731
         - rid: 1075032407982997732
         - rid: 1075032407982997733
+        - rid: 1075032492553011310
     - rid: 1075032407982997729
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -425,6 +441,25 @@ MonoBehaviour:
         Name: 
         m_Value: {fileID: 0}
     - rid: 1075032407982997736
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 1075032492553011310
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: StartFollowDistance
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032492553011311
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032492553011311
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -512,8 +547,8 @@ MonoBehaviour:
   m_Name: CompanionBehaviorGraph Blackboard
   m_EditorClassIdentifier: Unity.Behavior.Authoring::Unity.Behavior.BehaviorBlackboardAuthoringAsset
   AssetID:
-    m_Value0: 0
-    m_Value1: 0
+    m_Value0: 7257990656626681534
+    m_Value1: 7949862528983687115
   m_Variables:
   - rid: 1075032407982997609
   - rid: 1075032407982997678
