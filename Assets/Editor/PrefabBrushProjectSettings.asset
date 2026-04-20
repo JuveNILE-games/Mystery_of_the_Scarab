@@ -11,5 +11,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25591851bfa4b4a47b23274311ea79ba, type: 3}
   m_Name: PrefabBrushProjectSettings
-  m_EditorClassIdentifier: PrefabBrush.Editor::JuveNILE.PrefabBrush.Editor.PrefabBrushProjectSettings
+  m_EditorClassIdentifier: JuveNILE.Core.Editor::Core.Editor.Tools.PrefabBrush.Core.PrefabBrushProjectSettings
   PresetSavePath: Assets/Game/PrefabBrush/Presets
+

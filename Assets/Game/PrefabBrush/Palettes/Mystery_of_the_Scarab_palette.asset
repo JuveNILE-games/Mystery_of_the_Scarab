@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d012395b47d86c4bb8388483f0d0b75, type: 3}
   m_Name: Mystery_of_the_Scarab_palette
-  m_EditorClassIdentifier: PrefabBrush.Editor::JuveNILE.PrefabBrush.Editor.PrefabPalette
+  m_EditorClassIdentifier: JuveNILE.Core.Editor::Core.Editor.Tools.PrefabBrush.Presets.PrefabPalette
   Entries:
   - Prefab: {fileID: 1684034975780219703, guid: 291887dbe0bffe34fa90b0bed0472b6c, type: 3}
     Weight: 1
@@ -29,3 +29,4 @@ MonoBehaviour:
     Weight: 1
     Label: WallCornerPrefab
     IsSelected: 1
+
