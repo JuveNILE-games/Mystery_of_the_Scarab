@@ -16,6 +16,10 @@ namespace Game.Player
         [SerializeField] private bool enableActions = true;
 
         private InputReader _playerInputReader;
+        // Cached camera reference for world-space projection. The camera is looked up once in
+        // Awake and re-cached on first use if it somehow changes (e.g. scene load). All input
+        // events run through ProjectToWorldSpace() so states never need Camera.main.
+        private Camera _camera;
         
         public InputReader PlayerInputReader => _playerInputReader;
         public InputManager PlayerInputManager => manager;
@@ -41,6 +45,9 @@ namespace Game.Player
             
             Debug.Log($"Linking InputReader: {_playerInputReader.name}");
             
+            // Cache camera once. Re-cached lazily in ProjectToWorldSpace if null.
+            _camera = Camera.main;
+
             // Ensure it's initialized
             _playerInputReader.Initialize();
         }
@@ -73,7 +80,7 @@ namespace Game.Player
         {
             if (stateMachine != null)
             {
-                stateMachine.OnMove(Vector2.zero);
+                stateMachine.OnMoveWorldSpace(Vector3.zero);
                 stateMachine.OnJump(false);
                 stateMachine.OnSprint(false);
                 stateMachine.OnPrimaryAbility(false);
@@ -141,12 +148,48 @@ namespace Game.Player
 
         private void OnMove(InputAction.CallbackContext ctx)
         {
-            stateMachine.OnMove(ctx.ReadValue<Vector2>());
+            var raw = ctx.ReadValue<Vector2>();
+            stateMachine.OnMoveWorldSpace(ProjectToWorldSpace(raw));
         }
 
         private void OnMoveCanceled(InputAction.CallbackContext ctx)
         {
-            stateMachine.OnMove(Vector2.zero);
+            stateMachine.OnMoveWorldSpace(Vector3.zero);
+        }
+
+        /// <summary>
+        /// Projects a camera-relative 2D input vector (WASD / left stick) onto the world XZ
+        /// plane aligned with the current camera's facing direction. This is the single location
+        /// where camera space is converted to world space for human player movement.
+        ///
+        /// Called only on input events (Started / Performed / Canceled), NOT every frame.
+        /// When the camera rotates 45 degrees, the next input event automatically picks up the
+        /// new orientation because _camera is re-queried lazily.
+        /// </summary>
+        private Vector3 ProjectToWorldSpace(Vector2 input)
+        {
+            if (input.sqrMagnitude < 0.01f) return Vector3.zero;
+
+            // Lazy re-cache in case the camera was swapped (e.g. after a scene transition).
+            if (_camera == null) _camera = Camera.main;
+
+            Vector3 camForward = _camera != null ? _camera.transform.forward : Vector3.forward;
+            Vector3 camRight   = _camera != null ? _camera.transform.right   : Vector3.right;
+
+            // Flatten to XZ — we don't want camera pitch to affect ground movement direction.
+            camForward.y = 0f;
+            camRight.y   = 0f;
+            camForward.Normalize();
+            camRight.Normalize();
+
+            // input.y = forward axis (W/S / stick up-down)
+            // input.x = lateral axis (A/D / stick left-right)
+            Vector3 worldDir = camForward * input.y + camRight * input.x;
+
+            // Normalize so diagonal movement isn't faster.
+            // Analog sticks: raw magnitude represents push intensity; normalize so
+            // walk speed is consistent. Analog sensitivity can be added to CharacterData later.
+            return worldDir.sqrMagnitude > 0.01f ? worldDir.normalized : Vector3.zero;
         }
 
         private void OnJumpStarted(InputAction.CallbackContext ctx) => stateMachine.OnJump(true);

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 using SpriteAnimations;
 
@@ -27,25 +27,25 @@ namespace Game.Player.States.Grounded{
             Vector3 moveDir = GetMoveDirection();
             if (Controller != null)
             {
-                // Update animation direction
-                if (Owner != null && _windroseAnimator != null && Owner.MoveInput.sqrMagnitude > 0.01f)
+                // Update animation direction from world XZ — works for both human input
+                // (already projected to world space by PlayerInputInitializer) and AI input
+                // (NavMesh desiredVelocity, inherently world-space).
+                if (Owner != null && _windroseAnimator != null && Owner.WorldMoveInput.sqrMagnitude > 0.01f)
                 {
-                    _windroseAnimator.SetDirection(Owner.GetCardinalDirection(Owner.MoveInput));
+                    _windroseAnimator.SetDirection(Owner.GetCardinalDirection(
+                        new Vector2(Owner.WorldMoveInput.x, Owner.WorldMoveInput.z)));
                 }
 
                 float speed = Owner.Data.Value != null ? Owner.Data.Value.WalkSpeed : 3f;
-                //Debug.Log($"[WalkState] MoveDir: {moveDir}, Speed: {speed}, Input: {Owner.MoveInput}");
                 Vector3 moveVelocity = moveDir * speed;
-                
-                // Preserve vertical velocity (gravity handling is typically in a separate system or Airborne state, 
-                // but for grounded movement we might want to stick to ground or just move horizontally)
-                // For a simple walk, we move horizontally. Gravity is applied if we are not grounded or simply by the CC.
-                // However, Custom gravity logic is needed.
-                // Let's ensure we move.
-                
-                // NOTE: We need to handle gravity even when walking to stick to slopes? 
-                // A simple way is to apply a small downward force if grounded.
-                moveVelocity.y = -2f; // simple stick-to-ground force
+
+                // Stick-to-ground force. -2f was too weak for a dynamic NavMesh surface that
+                // has slight height variation between bakes — the companion flickered into
+                // AirborneState for 1-2 frames at a time, switching from Walk (direct velocity)
+                // to Air Control (acceleration-based) and killing its momentum. -5f keeps the
+                // CharacterController firmly pressed against the surface across all slope angles
+                // within the NavMesh's bake tolerance.
+                moveVelocity.y = -5f;
 
                 Controller.Move(moveVelocity * Time.deltaTime);
 

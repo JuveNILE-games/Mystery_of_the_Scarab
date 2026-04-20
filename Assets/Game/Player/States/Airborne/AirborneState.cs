@@ -59,16 +59,17 @@ using UnityEngine;
         private void ApplyAirControl()
         {
             if (Owner == null) return;
-            
-            Vector3 moveDir = GetMoveDirection();
-            if (moveDir != Vector3.zero)
+
+            // WorldMoveInput is already in world space (projected at input boundary by
+            // PlayerInputInitializer, or supplied directly by AIMovementBridge). No camera
+            // math needed here.
+            Vector3 moveDir = new Vector3(Owner.WorldMoveInput.x, 0f, Owner.WorldMoveInput.z);
+            if (moveDir.sqrMagnitude > 0.01f)
             {
+                moveDir.Normalize();
                 float airControlForce = Owner.Data.Value != null ? Owner.Data.Value.AirControl : 2f;
                 
-                // Add horizontal acceleration
-                // Note: With CharacterController, we manipulate velocity directly.
-                // We'll treat airControlForce as an acceleration here.
-                Vector3 targetAccel = moveDir * airControlForce * Time.deltaTime; // Simple accumulation
+                Vector3 targetAccel = moveDir * airControlForce * Time.deltaTime;
                 
                 currentVelocity.x += targetAccel.x;
                 currentVelocity.z += targetAccel.z;
@@ -82,20 +83,5 @@ using UnityEngine;
                     currentVelocity.z = horizontalVel.z;
                 }
             }
-        }
-
-        private Vector3 GetMoveDirection()
-        {
-            if (Owner == null) return Vector3.zero;
-            
-            Vector3 forward = Camera.main != null ? Camera.main.transform.forward : Owner.transform.forward;
-            Vector3 right = Camera.main != null ? Camera.main.transform.right : Owner.transform.right;
-            
-            forward.y = 0;
-            right.y = 0;
-            forward.Normalize();
-            right.Normalize();
-            
-            return (forward * Owner.MoveInput.y + right * Owner.MoveInput.x).normalized;
         }
     }

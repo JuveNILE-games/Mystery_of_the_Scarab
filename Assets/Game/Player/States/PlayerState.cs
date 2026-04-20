@@ -7,45 +7,41 @@ namespace Game.Player.States
     /// <summary>
     /// Base state for the player state machine.
     /// Provides common functionality and access to player components.
+    ///
+    /// Movement direction is sourced from Owner.WorldMoveInput — world-space XZ that was
+    /// already projected from camera-relative input by PlayerInputInitializer (human) or
+    /// supplied directly by AIMovementBridge (AI). No Camera.main access happens here.
     /// </summary>
     public abstract class PlayerState : BaseState<PlayerStateMachine, PlayerState>
     {
-
         // Common player references (cached for performance)
         protected CharacterController Controller => Owner?.Controller;
         protected SpriteAnimator Animator => Owner?.Animator;
         protected Transform Transform => Owner?.transform;
-        
+
         // Common player data
         protected Vector3 Velocity => Controller != null ? Controller.velocity : Vector3.zero;
         protected bool IsGrounded => Owner != null && Owner.IsGrounded;
-        
+
         protected PlayerState(string name = null) : base(name) { }
-        
-        /// <summary>
-        /// Helper to check if player input is active
-        /// </summary>
+
+        /// <summary>Returns true when there is meaningful movement input this frame.</summary>
         protected bool HasInput()
         {
-            return Owner != null && Owner.MoveInput.sqrMagnitude > 0.01f;
+            return Owner != null && Owner.WorldMoveInput.sqrMagnitude > 0.01f;
         }
-        
+
         /// <summary>
-        /// Helper to get normalized move direction
+        /// Returns the world-space XZ movement direction for this frame.
+        /// Already in world space — no camera projection needed.
         /// </summary>
         protected Vector3 GetMoveDirection()
         {
             if (Owner == null) return Vector3.zero;
-            
-            Vector3 forward = Camera.main != null ? Camera.main.transform.forward : Transform.forward;
-            Vector3 right = Camera.main != null ? Camera.main.transform.right : Transform.right;
-            
-            forward.y = 0;
-            right.y = 0;
-            forward.Normalize();
-            right.Normalize();
-            
-            return (forward * Owner.MoveInput.y + right * Owner.MoveInput.x).normalized;
+            // WorldMoveInput.y is always 0 (enforced by PlayerStateMachine.OnMoveWorldSpace).
+            // Normalize defensively; it should already be unit length from the input boundary.
+            Vector3 dir = Owner.WorldMoveInput;
+            return dir.sqrMagnitude > 0.01f ? dir.normalized : Vector3.zero;
         }
     }
 }

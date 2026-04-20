@@ -26,17 +26,19 @@ namespace Game.Player.States.Grounded{
             Vector3 moveDir = GetMoveDirection();
             if (Controller != null)
             {
-                // Update animation direction
-                if (Owner != null && _windroseAnimator != null && Owner.MoveInput.sqrMagnitude > 0.01f)
+                // Update animation direction from world XZ — works for both human and AI input.
+                if (Owner != null && _windroseAnimator != null && Owner.WorldMoveInput.sqrMagnitude > 0.01f)
                 {
-                    _windroseAnimator.SetDirection(Owner.GetCardinalDirection(Owner.MoveInput));
+                    _windroseAnimator.SetDirection(Owner.GetCardinalDirection(
+                        new Vector2(Owner.WorldMoveInput.x, Owner.WorldMoveInput.z)));
                 }
 
                 float speed = Owner.Data.Value != null ? Owner.Data.Value.SprintSpeed : 6f;
                 Vector3 moveVelocity = moveDir * speed;
                 
-                // Stick to ground
-                moveVelocity.y = -2f;
+                // Stick to ground — raised to match WalkState (-5f). The shallower -2f caused
+                // airborne flickers on dynamic NavMesh surface height variation.
+                moveVelocity.y = -5f;
 
                 Controller.Move(moveVelocity * Time.deltaTime);
                 

@@ -29,10 +29,15 @@ namespace Game.Player
         
         [Header("Ground Detection")]
         [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float groundCheckDistance = 0.2f;
+        // 0.2f was too shallow for a dynamic NavMesh: micro-gaps between bakes caused 1-2 frame
+        // airborne flickers, switching the companion into air-control movement and killing speed.
+        [SerializeField] private float groundCheckDistance = 0.3f;
         
         [Header("Input (Connect from InputSystem)")]
-        [SerializeField] private Vector2 moveInput;
+        // World-space XZ movement direction (magnitude 0-1). Set by PlayerInputInitializer
+        // (after camera projection) or AIMovementBridge (NavMesh desiredVelocity.xz directly).
+        // Never set from camera-relative 2D inside a state.
+        [SerializeField] private Vector3 worldMoveInput;
         [SerializeField] private bool jumpPressed;
         [SerializeField] private bool sprintPressed;
         [SerializeField] private bool primaryAbilityPressed;
@@ -54,7 +59,16 @@ namespace Game.Player
         
         public CharacterController Controller => controller;
         public SpriteAnimator Animator => anim;
-        public Vector2 MoveInput => moveInput;
+
+        /// <summary>World-space XZ movement direction (magnitude 0–1). Y is always 0.</summary>
+        public Vector3 WorldMoveInput => worldMoveInput;
+
+        /// <summary>
+        /// Convenience XZ projection of WorldMoveInput as Vector2 (x→x, z→y).
+        /// Used by GroundedState.HasInput() checks and cardinal direction animation mapping.
+        /// </summary>
+        public Vector2 MoveInput => new Vector2(worldMoveInput.x, worldMoveInput.z);
+
         public bool IsGrounded => isGrounded;
         public bool IsJumpPressed => jumpPressed;
         public bool IsSprintPressed => sprintPressed;
@@ -63,6 +77,7 @@ namespace Game.Player
         
         public Bindable<CharacterData> Data { get; private set; } = new();
         
+        /// <summary>Last non-zero cardinal direction for sprite animation on state entry.</summary>
         public Vector2 LastMoveDirection { get; private set; } = Vector2.down;
         
         #endregion
@@ -270,15 +285,20 @@ namespace Game.Player
         
         #endregion
         
-        #region Input Methods (Call from Input System)
-        
-        public void OnMove(Vector2 input)
+        #region Input Methods
+
+        /// <summary>
+        /// Receive world-space movement direction. Called by PlayerInputInitializer (human) and
+        /// AIMovementBridge (AI). Camera projection must already be applied by the caller.
+        /// </summary>
+        public void OnMoveWorldSpace(Vector3 worldDir)
         {
-            // Debug.Log($"[PlayerSM] OnMove: {input}");
-            moveInput = input;
-            if (moveInput.sqrMagnitude > 0.01f)
+            worldMoveInput = new Vector3(worldDir.x, 0f, worldDir.z); // enforce Y=0
+            if (worldMoveInput.sqrMagnitude > 0.01f)
             {
-                LastMoveDirection = GetCardinalDirection(moveInput);
+                // Derive cardinal direction from world XZ — correct for both human and AI
+                // because human input has already been projected to world space by caller.
+                LastMoveDirection = GetCardinalDirection(new Vector2(worldMoveInput.x, worldMoveInput.z));
             }
         }
         
@@ -317,13 +337,13 @@ namespace Game.Player
             // Determine dominant axis
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
             {
-                // Horizontal is dominant
-                return input.x > 0 ? Vector2.right : Vector2.left;
+                // West/East - Inverted to match animator
+                return input.x > 0 ? Vector2.left : Vector2.right;
             }
             else
             {
-                // Vertical is dominant
-                return input.y > 0 ? Vector2.up : Vector2.down;
+                // North/South - Inverted to match animator
+                return input.y > 0 ? Vector2.down : Vector2.up;
             }
         }
         
