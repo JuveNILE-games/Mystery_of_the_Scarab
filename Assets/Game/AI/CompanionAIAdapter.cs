@@ -5,6 +5,8 @@ using Core.Utility.Attributes;
 using Core.Systems.AgentNavigation;
 using Core.Utility;
 using System;
+using Core;
+using Core.Systems.Logging;
 
 namespace Game.AI
 {
@@ -23,13 +25,9 @@ namespace Game.AI
         [SerializeField] private PlayerAbilities _abilities;
         [SerializeField] private AIMovementBridge _movementBridge;
 
-        /// <summary>
-        /// Optional — only registered in SinglePlayer mode.
-        /// When present, the adapter waits for the NavMesh to be ready before enabling movement.
-        /// </summary>
         [Inject] private INavMeshSurfaceService _navMeshService;
+        [Inject] private ILoggerService _logger;
 
-        /// <summary>Whether ControlSwitcher has requested AI to be enabled.</summary>
         private bool _aiRequested;
         private IDisposable _targetSubscription;
 
@@ -44,7 +42,6 @@ namespace Game.AI
 
         private void OnEnable()
         {
-            // Subscribe to the global tracking target reactively
             if (SceneCamera.Instance != null)
             {
                 _targetSubscription = SceneCamera.Instance.TrackingTarget.Bind(OnTrackingTargetChanged);
@@ -58,11 +55,9 @@ namespace Game.AI
 
         private void Start()
         {
+            SubscribeToNavMeshReady();
             if (_navMeshService != null)
             {
-                if (_navMeshService.IsReady) OnNavMeshReady();
-                else _navMeshService.OnNavMeshReady += OnNavMeshReady;
-
                 _navMeshService.OnNavMeshDestroyed += OnNavMeshLost;
             }
         }
@@ -75,128 +70,145 @@ namespace Game.AI
             }
         }
 
-        public void EnableAI(bool enabled)
+        public void EnableAI(bool enable)
         {
-            _aiRequested = enabled;
-            
-            if (!enabled)
+            _aiRequested = enable;
+            if (enable)
             {
-                // Disable AI
-                if (_behaviorAgent != null) _behaviorAgent.enabled = false;
-                
-                if (_navAgent != null)
-                {
-                    if (_navAgent.enabled && _navAgent.isOnNavMesh) _navAgent.isStopped = true;
-                    _navAgent.enabled = false;
-                    _navAgent.updatePosition = true; // Restore defaults
-                    _navAgent.updateRotation = true;
-                }
-                
-                if (_movementBridge != null) _movementBridge.SetAiControlled(false);
-                return;
-            }
-
-            // Enable AI
-            if (_movementBridge != null) _movementBridge.SetAiControlled(true);
-
-            if (_navMeshService != null)
-            {
-                // Wait for NavMesh service
-                if (_behaviorAgent != null) _behaviorAgent.enabled = false;
-                if (_navAgent != null) _navAgent.enabled = false;
-
-                if (_navMeshService.IsReady) OnNavMeshReady();
-                else _navMeshService.OnNavMeshReady += OnNavMeshReady;
+                SubscribeToNavMeshReady();
             }
             else
             {
-                // Fallback (e.g. static NavMesh)
-                SnapAndEnable();
+                DisableAI();
             }
+        }
+
+        private void DisableAI()
+        {
+            if (_behaviorAgent != null) _behaviorAgent.enabled = false;
+            
+            if (_navAgent != null)
+            {
+                if (_navAgent.enabled && _navAgent.isOnNavMesh) _navAgent.isStopped = true;
+                _navAgent.enabled = false;
+                _navAgent.updatePosition = true;
+                _navAgent.updateRotation = true;
+            }
+            
+            if (_movementBridge != null) _movementBridge.SetAiControlled(false);
+        }
+
+        private void SubscribeToNavMeshReady()
+        {
+            if (_navMeshService == null)
+            {
+                if (_aiRequested) SnapAndEnable();
+                return;
+            }
+            _navMeshService.OnNavMeshReady -= OnNavMeshReady;
+            _navMeshService.OnNavMeshReady += OnNavMeshReady;
+            
+            if (_navMeshService.IsReady) OnNavMeshReady();
         }
 
         private void OnNavMeshReady()
         {
             if (_navMeshService != null) _navMeshService.OnNavMeshReady -= OnNavMeshReady;
-
-            if (_aiRequested)
-            {
-                SnapAndEnable();
-            }
+            if (_aiRequested) SnapAndEnable();
         }
 
         private void SnapAndEnable()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            _logger?.Log(this, $"[Companion] Snapping and enabling AI. Target: {_aiRequested}");
+#endif
+            if (!_aiRequested) return;
             if (_navAgent == null) return;
 
-            // Snap agent to the NavMesh
+            // IMPORTANT: Disable automatic position/rotation sync before enabling the agent.
+            // The companion uses a CharacterController driven by PlayerStateMachine for actual
+            // movement. If updatePosition is left true (the default), the NavMeshAgent AND
+            // CharacterController.Move() both write to transform.position every frame, causing
+            // a tug-of-war that manifests as stuttering/drag. We use the "Agent as Advisor"
+            // pattern instead: the agent calculates desiredVelocity, AIMovementBridge reads it
+            // and feeds it to the state machine, and we sync nextPosition back each frame so
+            // the agent's internal pathfinding ghost stays aligned with the real position.
+            _navAgent.updatePosition = false;
+            _navAgent.updateRotation = false;
+
             if (NavMesh.SamplePosition(transform.position, out var hit, 3.0f, NavMesh.AllAreas))
             {
                 _navAgent.enabled = true;
                 _navAgent.Warp(hit.position);
                 _navAgent.isStopped = false;
-                
-                // Once agent is snapped, handle blackboard and enable behavior
+
                 SyncLocalBlackboard();
                 if (_behaviorAgent != null) _behaviorAgent.enabled = true;
-                
-                Debug.Log($"[CompanionAIAdapter] NavMesh ready — Agent snapped and enabled on '{gameObject.name}' at {hit.position}.", this);
+                if (_movementBridge != null) _movementBridge.SetAiControlled(true);
             }
             else
             {
-                // Fallback: Enable anyway if surface is ready
-                _navAgent.enabled = true;
-                SyncLocalBlackboard();
-                if (_behaviorAgent != null) _behaviorAgent.enabled = true;
-                
-                Debug.LogWarning($"[CompanionAIAdapter] NavMesh built, but could not find a valid point near {gameObject.name}. Attempting raw enable.", this);
+                // No valid NavMesh surface found within 3m. Enabling the agent here would put it
+                // off-mesh, causing FollowPlayerAction to immediately return PathInvalid and the
+                // companion to stand frozen with no error. Wait for the next OnNavMeshReady event
+                // instead, which fires once DynamicNavMeshSurfaceService finishes a bake.
+                Debug.LogWarning("[CompanionAIAdapter] SnapAndEnable: no NavMesh found within 3m of " +
+                                 $"{transform.position}. Waiting for next NavMesh ready event.", this);
+                SubscribeToNavMeshReady();
+            }
+        }
+
+        private void Update()
+        {
+            // Keep the NavMeshAgent's internal simulation ghost aligned with where the
+            // CharacterController actually moved us. Without this, the agent's pathfinding
+            // drifts away from the real position and it starts re-routing incorrectly.
+            if (_navAgent != null && _navAgent.enabled && _navAgent.isOnNavMesh)
+            {
+                _navAgent.nextPosition = transform.position;
             }
         }
 
         private void SyncLocalBlackboard()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            _logger?.Log(this, "[Companion] Syncing Blackboard...");
+#endif
             if (_behaviorAgent == null) return;
 
-            // Ensure the behavior script is restarted to pick up new values
             _behaviorAgent.End();
 
-            // Push current components into blackboard
             SetVariableSafe("Self", gameObject);
             SetVariableSafe("Agent", _navAgent);
             SetVariableSafe("Interactor", _interactor);
             SetVariableSafe("Abilities", _abilities);
             
-            // Note: The "Player" variable is now handled reactively by OnTrackingTargetChanged
             if (SceneCamera.Instance != null && SceneCamera.Instance.TrackingTarget.Value != null)
             {
                 SetVariableSafe("Player", SceneCamera.Instance.TrackingTarget.Value);
             }
             
             _behaviorAgent.Start();
-            
-            Debug.Log($"[CompanionAIAdapter] Blackboard synced for '{gameObject.name}'.", this);
         }
 
-        private void SetVariableSafe(string varName, object value)
+        private void SetVariableSafe<T>(string varName, T value)
         {
             if (value == null) return;
             _behaviorAgent.SetVariableValue(varName, value);
         }
 
-        public void UpdateBlackboardPlayer(Transform playerTransform)
-        {
-            // Deprecated: Now using reactive TrackingTarget from SceneCamera
-        }
-
         private void OnNavMeshLost()
         {
+            if (_behaviorAgent != null) _behaviorAgent.enabled = false;
+            if (_movementBridge != null) _movementBridge.SetAiControlled(false);
+
             if (_navAgent != null && _navAgent.enabled)
             {
                 if (_navAgent.isOnNavMesh) _navAgent.isStopped = true;
                 _navAgent.enabled = false;
             }
 
-            if (_navMeshService != null) _navMeshService.OnNavMeshReady += OnNavMeshReady;
+            SubscribeToNavMeshReady();
         }
 
         private void OnDestroy()
@@ -206,7 +218,6 @@ namespace Game.AI
                 _navMeshService.OnNavMeshReady -= OnNavMeshReady;
                 _navMeshService.OnNavMeshDestroyed -= OnNavMeshLost;
             }
-            _targetSubscription?.Dispose();
         }
     }
 }

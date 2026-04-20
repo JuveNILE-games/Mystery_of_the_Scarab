@@ -16,8 +16,8 @@ namespace Game.AI
         category: "Companion")]
     public class IsPlayerInRangeCondition : Condition
     {
-        [SerializeReference] public BlackboardVariable<Transform> Player = new();
-        [SerializeReference] public BlackboardVariable<Transform> Self = new();
+        [SerializeReference] public BlackboardVariable<Transform> Player;
+        [SerializeReference] public BlackboardVariable<Transform> Self;
         [SerializeReference] public BlackboardVariable<float> Range = new(10f);
 
         public override bool IsTrue()
@@ -39,14 +39,13 @@ namespace Game.AI
         id: "companion_move_to_position")]
     public class MoveToPositionAction : Action
     {
-        [SerializeReference] public BlackboardVariable<NavMeshAgent> Agent = new();
-        [SerializeReference] public BlackboardVariable<Vector3> TargetPosition = new();
+        [SerializeReference] public BlackboardVariable<NavMeshAgent> Agent;
+        [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
         [SerializeReference] public BlackboardVariable<float> StopDistance = new(1.2f);
 
         protected override Status OnStart()
         {
             if (Agent.Value == null) return Status.Failure;
-            Debug.Log($"[MoveToPositionAction] Moving {Agent.Value.name} to {TargetPosition.Value}.");
             Agent.Value.isStopped = false;
             Agent.Value.SetDestination(TargetPosition.Value);
             return Status.Running;
@@ -87,12 +86,12 @@ namespace Game.AI
         id: "companion_find_closest_interactable")]
     public class FindClosestInteractableAction : Action
     {
-        [SerializeReference] public BlackboardVariable<Transform> Self = new();
+        [SerializeReference] public BlackboardVariable<Transform> Self;
         [SerializeReference] public BlackboardVariable<float> SearchRadius = new(12f);
 
         // Outputs
-        [SerializeReference] public BlackboardVariable<GameObject> TargetInteractable = new();
-        [SerializeReference] public BlackboardVariable<Vector3> TargetPosition = new();
+        [SerializeReference] public BlackboardVariable<GameObject> TargetInteractable;
+        [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
 
         protected override Status OnStart()
         {
@@ -134,8 +133,8 @@ namespace Game.AI
         id: "companion_interact_with_target")]
     public class InteractWithTargetAction : Action
     {
-        [SerializeReference] public BlackboardVariable<GameObject> Target = new();
-        [SerializeReference] public BlackboardVariable<PlayerInteractor> Interactor = new();
+        [SerializeReference] public BlackboardVariable<GameObject> Target;
+        [SerializeReference] public BlackboardVariable<PlayerInteractor> Interactor;
 
         protected override Status OnStart()
         {
@@ -151,115 +150,103 @@ namespace Game.AI
     }
 
     /// <summary>
-    /// Unity Behavior action: follows the player by navigating toward them,
-    /// stopping at a specified follow distance.
+    /// Unity Behavior action: follows the player with a "leash" buffer to prevent twitchy movement.
     /// </summary>
     [Serializable]
     [NodeDescription(
         name: "Follow Player",
-        story: "[Agent] follows [Player] at [FollowDistance]",
+        story: "[Agent] follows [Player] at [FollowDistance] Start: [StartDistance] Stop: [StopDistance]",
         category: "Companion",
         id: "companion_follow_player")]
     public class FollowPlayerAction : Action
     {
+        [Header("Distances")]
+        [SerializeReference] public BlackboardVariable<float> StartDistance = new(4f);
+        [SerializeReference] public BlackboardVariable<float> FollowDistance = new(2f);
+        [SerializeReference] public BlackboardVariable<float> StopDistance = new(1.5f);
+
+        [Header("References")]
         [SerializeReference] public BlackboardVariable<NavMeshAgent> Agent = new();
         [SerializeReference] public BlackboardVariable<Transform> Player = new();
-        [SerializeReference] public BlackboardVariable<float> FollowDistance = new(2f);
-        [SerializeReference] public BlackboardVariable<float> StartFollowDistance = new(4f);
 
+        // Resolved once in OnStart and cached for the lifetime of this action execution.
+        // TryResolveRefs was previously called every OnUpdate tick, which triggered an
+        // expensive BehaviorGraphAgent.GetComponent lookup whenever either ref was null.
+        private NavMeshAgent _agent;
+        private Transform _player;
         private bool _isFollowing;
 
         protected override Status OnStart()
         {
-            _isFollowing = false;
-            var agentValue = Agent.Value;
-            var playerValue = Player.Value;
+            _agent = Agent.Value;
+            _player = Player.Value;
 
-            // Fallback: If links are broken, look up directly from the agent's blackboard
-            var behaviorAgent = GameObject.GetComponent<BehaviorGraphAgent>();
-            if (behaviorAgent != null)
+            // Fallback: pull from the blackboard via the BehaviorGraphAgent if not wired directly.
+            if (_agent == null || _player == null)
             {
-                if (agentValue == null)
+                var bg = GameObject.GetComponent<BehaviorGraphAgent>();
+                if (bg != null)
                 {
-                    if (behaviorAgent.GetVariable<NavMeshAgent>("Agent", out var bbAgent))
-                        agentValue = bbAgent.Value;
-                }
-                
-                if (playerValue == null)
-                {
-                    if (behaviorAgent.GetVariable<Transform>("Player", out var bbPlayer))
-                        playerValue = bbPlayer.Value;
+                    if (_agent == null && bg.GetVariable<NavMeshAgent>("Agent", out var bbAgent))
+                        _agent = bbAgent.Value;
+                    if (_player == null && bg.GetVariable<Transform>("Player", out var bbPlayer))
+                        _player = bbPlayer.Value;
                 }
             }
 
-            if (agentValue == null || playerValue == null) 
+            if (_agent == null || _player == null)
             {
-                Debug.LogWarning($"[FollowPlayerAction] Failed to start: Agent is {(agentValue == null ? "NULL" : "READY")}, Player is {(playerValue == null ? "NULL" : "READY")}");
+                Debug.LogWarning("[FollowPlayerAction] OnStart: could not resolve Agent or Player. " +
+                                 "Ensure the Blackboard variables are populated before this node runs.");
                 return Status.Failure;
             }
 
+            _isFollowing = false;
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            var agentValue = Agent.Value;
-            var playerValue = Player.Value;
+            // Refs are guaranteed non-null if OnStart returned Running.
+            if (_agent.pathPending) return Status.Running;
+            if (_agent.pathStatus == NavMeshPathStatus.PathInvalid) return Status.Failure;
 
-            // Fallback during update if needed
-            if (agentValue == null || playerValue == null)
-            {
-                var behaviorAgent = GameObject.GetComponent<BehaviorGraphAgent>();
-                if (behaviorAgent != null)
-                {
-                    if (agentValue == null && behaviorAgent.GetVariable<NavMeshAgent>("Agent", out var bbAgent))
-                        agentValue = bbAgent.Value;
-
-                    if (playerValue == null && behaviorAgent.GetVariable<Transform>("Player", out var bbPlayer))
-                        playerValue = bbPlayer.Value;
-                }
-            }
-
-            if (agentValue == null || playerValue == null) return Status.Failure;
-
-            float dist = Vector3.Distance(agentValue.transform.position, playerValue.position);
+            float dist = Vector3.Distance(_agent.transform.position, _player.position);
 
             if (!_isFollowing)
             {
-                // We are idle. Only start following if the player gets too far away (Deadzone threshold).
-                if (dist > StartFollowDistance.Value)
+                if (dist > StartDistance.Value)
                 {
                     _isFollowing = true;
-                    agentValue.SetDestination(playerValue.position);
-                    return Status.Running;
+                    _agent.isStopped = false;
+                    _agent.SetDestination(_player.position);
                 }
-
-                // Otherwise, stay in Idle
-                agentValue.ResetPath();
-                return Status.Running;
             }
             else
             {
-                // We are moving. Only stop when we hit the target FollowDistance.
-                if (dist <= FollowDistance.Value)
+                if (dist <= StopDistance.Value)
                 {
                     _isFollowing = false;
-                    agentValue.ResetPath();
-                    return Status.Success; // Reached target!
+                    _agent.isStopped = true;
+                    _agent.ResetPath();
                 }
-
-                // Keep moving
-                agentValue.SetDestination(playerValue.position);
-                return Status.Running;
+                else
+                {
+                    _agent.SetDestination(_player.position);
+                }
             }
+
+            return Status.Running;
         }
 
         protected override void OnEnd()
         {
-            if (Agent.Value != null)
+            if (_agent != null)
             {
-                Agent.Value.isStopped = true;
+                _agent.isStopped = true;
+                _agent.ResetPath();
             }
+            _isFollowing = false;
         }
     }
 
