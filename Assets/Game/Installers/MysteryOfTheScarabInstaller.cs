@@ -5,7 +5,10 @@ using Core;
 using UnityEngine;
 using Obvious.Soap;
 using Core.Installers;
+using Core.Systems.AgentNavigation;
 using Core.Systems.Configuration;
+using Core.Systems.Dialogue;
+using Core.Systems.Dialogue.Commands;
 using Core.Systems.Services.Interfaces;
 using Core.Systems.Services;
 using Core.Systems.SaveSystem.Configuration;
@@ -15,17 +18,12 @@ using Core.Systems.Logging;
 using Core.Systems.Environment;
 using Core.Systems.SaveSystem.Interfaces;
 using Core.Systems.InputManagement;
-using Core.Systems.Navigation;
-using Core.Systems.Theming;
-using Core.Systems.Dialogue;
-using Core.Systems.Dialogue.Events;
-using Core.Systems.Dialogue.Resolver;
-using Core.Systems.Dialogue.Commands;
 using Core.Systems.Dialogue.Effects;
+using Core.Systems.Dialogue.Events;
 using Core.Systems.Dialogue.Installer;
+using Core.Systems.Dialogue.Resolver;
 using Core.Systems.Dialogue.Trigger;
 using Core.Systems.Signals;
-using Core.Systems.AgentNavigation;
 using Game.Systems.SaveSystem;
 
 namespace Game.Installers
@@ -54,13 +52,6 @@ namespace Game.Installers
 
             locator.Register<ISaveService>(saveManager);
             
-            // ── Control Switching ────────────────────────────────────────────────
-            var switcher = UnityEngine.Object.FindFirstObjectByType<ControlSwitcher>();
-            if (switcher != null)
-            {
-                locator.Register<IControlSwitcher>(switcher);
-                logger?.Log(this, "ControlSwitcher registered as IControlSwitcher.");
-            }
 
             // ── Dynamic NavMesh Surface (SinglePlayer only) ──────────────────────
             var currentState = locator.Get<IGameStateManager>();
@@ -73,7 +64,8 @@ namespace Game.Installers
                     UnityEngine.Object.DontDestroyOnLoad(go);
                     var service = go.GetComponent<DynamicNavMeshSurfaceService>();
                     locator.Register<INavMeshSurfaceService>(service);
-                    locator.Register<INavMeshReadinessProvider>(service);
+                    locator.Register(scope =>
+                        scope.Get<INavMeshSurfaceService>() as INavMeshReadinessProvider);
                     logger?.Log(this, "DynamicNavMeshSurfaceService registered for SinglePlayer.");
                 }
                 else

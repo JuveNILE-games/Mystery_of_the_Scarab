@@ -1,60 +1,84 @@
-using Core.Utility.Attributes;
-using Game.Player;
 using UnityEngine;
-using UnityEngine.AI;
+using Core;
+using Core.Utility.Attributes;
 
-[RequireComponent(typeof(PlayerInteractor))]
-public class PlayerAdapter : MonoBehaviour, IControllable
+namespace Game.Player
 {
-    public PlayerInputInitializer input;
-    public NavMeshAgent agent;
-    public PlayerInteractor interactor;
-    public PlayerAbilities abilities;
-    [Inject] private IControllableRegistry _registry;
-
-    private void Start()
+    /// <summary>
+    /// Adapter for the player character that allows it to be switched between 
+    /// direct player control and AI companion control.
+    /// </summary>
+    [DefaultExecutionOrder(-10)]
+    public class PlayerAdapter : MonoBehaviour, IControllable
     {
-        _registry?.Register(this);
-    }
-
-    private void OnDisable()
-    {
-        _registry?.Unregister(this);
-    }
-
-    public Transform GetTransform() => transform;
-
-    public void OnControlGained()
-    {
-        var ai = GetComponentInChildren<IAIController>();
-        if (ai != null) ai.EnableAI(false);
+        [Header("Components")]
+        [SerializeField] private PlayerInputInitializer _input;
+        [SerializeField] private PlayerInteractor _interactor;
+        [SerializeField] private PlayerAbilities _abilities;
         
-        if (input == null) input = GetComponentInChildren<PlayerInputInitializer>();
-        if (input != null) input.enabled = true;
+        private IAIController _aiController;
 
-        if (interactor != null) interactor.SetControlled(true);
-        if (abilities != null) abilities.OnControlGained();
-    }
+        [Inject] private IControllableRegistry _registry;
 
-    public void OnControlLost()
-    {
-        var ai = GetComponentInChildren<IAIController>();
-        if (ai != null) ai.EnableAI(true);
-
-        if (input == null) input = GetComponentInChildren<PlayerInputInitializer>();
-        if (input != null)
+        private void Awake()
         {
-            input.ClearInputState();
-            input.enabled = false;
+            if (_input == null) _input = GetComponent<PlayerInputInitializer>();
+            if (_interactor == null) _interactor = GetComponent<PlayerInteractor>();
+            if (_abilities == null) _abilities = GetComponent<PlayerAbilities>();
+            if (_aiController == null) _aiController = GetComponent<IAIController>();
         }
 
-        if (interactor != null) interactor.SetControlled(false);
-        if (abilities != null) abilities.OnControlLost();
-    }
+        private void Start()
+        {
+            // Initial registration - runs after framework injection pass
+            _registry?.Register(this);
+        }
 
-    public void UpdateAIPlayerReference(Transform player)
-    {
-        var ai = GetComponentInChildren<IAIController>();
-        if (ai != null) ai.UpdateBlackboardPlayer(player);
+        private void OnEnable()
+        {
+            // Subsequent enable cycles - _registry is already set by this point
+            _registry?.Register(this);
+        }
+
+        private void OnDisable()
+        {
+            _registry?.Unregister(this);
+        }
+
+        public Transform GetTransform() => transform;
+
+        public void OnControlGained()
+        {
+            // Enable direct player input
+            if (_input != null) _input.enabled = true;
+            
+            // Disable AI behavior
+            if (_aiController != null) _aiController.EnableAI(false);
+
+            // Update interactor and abilities
+            if (_interactor != null) _interactor.SetControlled(true);
+            if (_abilities != null) _abilities.OnControlGained();
+            
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log($"[PlayerAdapter] Direct control gained for {gameObject.name}");
+#endif
+        }
+
+        public void OnControlLost()
+        {
+            // Disable direct player input
+            if (_input != null) _input.enabled = false;
+            
+            // Enable AI behavior (companion mode)
+            if (_aiController != null) _aiController.EnableAI(true);
+
+            // Update interactor and abilities
+            if (_interactor != null) _interactor.SetControlled(false);
+            if (_abilities != null) _abilities.OnControlLost();
+            
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log($"[PlayerAdapter] Direct control lost for {gameObject.name} (AI enabled)");
+#endif
+        }
     }
 }

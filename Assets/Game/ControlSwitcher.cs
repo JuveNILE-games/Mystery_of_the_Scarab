@@ -7,108 +7,144 @@ using Core;
 using Core.Utility;
 using Core.Systems.AgentNavigation;
 using Core.Systems.Services;
+using Core.Systems.InputManagement;
 
-public class ControlSwitcher : MonoBehaviour, IControlSwitcher
+namespace Game
 {
-    [SerializeField] private ScriptableEventControlChanged onControlChanged;
-
-    [Inject] private IControllableRegistry registry;
-    [Inject] private IGameStateManager gameState;
-    
-    int currentIndex = 0;
-
-    private bool _isInitialized = false;
-
-    void Start()
+    /// <summary>
+    /// Manages character switching in single player mode.
+    /// Toggles input control and AI behavior for registered characters.
+    /// </summary>
+    [DefaultExecutionOrder(10)]
+    public class ControlSwitcher : MonoBehaviour, IControlSwitcher
     {
-        if (gameState == null || gameState.CurrentState != GameState.SinglePlayer) { enabled = false; return; }
-    }
+        [SerializeField] private ScriptableEventControlChanged onControlChanged;
 
-    void Update()
-    {
-        if (!_isInitialized)
+        [Inject] private IControllableRegistry _registry;
+        [Inject] private IGameStateManager _gameState;
+        [Inject] private InputReader _inputReader;
+        [Inject] private INavMeshSurfaceService _navMeshService;
+
+        private int _currentIndex = 0;
+
+        private void Start()
         {
+            if (_gameState == null || _gameState.CurrentState != GameState.SinglePlayer)
+            {
+                enabled = false;
+                return;
+            }
+
+            // Subscribe here, after [Inject] has populated _inputReader.
+            if (_inputReader != null)
+            {
+                _inputReader.SubscribeStarted("SwitchCharacter", OnSwitchCharacter);
+            }
+            else
+            {
+                Debug.LogError("[ControlSwitcher] _inputReader is null after injection — SwitchCharacter will not work!", this);
+            }
+
+            // Self-register as IControlSwitcher
+            ServiceLocator.Global.Register<IControlSwitcher>(this);
+            
             InitializeSwitching();
-            _isInitialized = true;
-            return;
         }
 
-        if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
+        // NOTE: Subscription happens in Start(), not OnEnable(), because [Inject] fields
+        // (_inputReader, _gameState, etc.) are populated by the service locator during the
+        // Start phase. OnEnable fires before injection is complete, so _inputReader is null
+        // at that point and the SubscribeStarted call would silently do nothing.
+        private void OnDisable()
         {
-            var all = registry.GetAll();
-            if (all.Count > 0)
+            if (_inputReader != null)
             {
-                int nextIndex = (currentIndex + 1) % all.Count;
+                _inputReader.UnsubscribeStarted("SwitchCharacter", OnSwitchCharacter);
+            }
+        }
+
+        private void OnSwitchCharacter(InputAction.CallbackContext context)
+        {
+            var all = _registry.GetAll();
+            if (all.Count > 1)
+            {
+                int nextIndex = (_currentIndex + 1) % all.Count;
                 SwitchTo(nextIndex);
             }
         }
-    }
 
-    private void InitializeSwitching()
-    {
-        var all = registry.GetAll();
-        if (all.Count == 0) return;
-        
-        for (int i = 0; i < all.Count; i++) ApplyState(all[i], i == currentIndex);
-        
-        // Ensure reactive systems (Camera, AI) know who to follow from the start
-        if (SceneCamera.Instance != null)
+        private void InitializeSwitching()
         {
-            SceneCamera.Instance.TrackingTarget.Value = all[currentIndex].GetTransform();
-        }
-
-        // Initialize the dynamic NavMesh surface around the AI companion (inactive player)
-        if (ServiceLocator.Global.TryGet<INavMeshSurfaceService>(out var navMeshService))
-        {
-            for (int j = 0; j < all.Count; j++)
+            var all = _registry.GetAll();
+            if (all.Count == 0) return;
+            
+            for (int i = 0; i < all.Count; i++)
             {
-                if (j != currentIndex)
+                ApplyState(all[i], i == _currentIndex);
+            }
+            
+            // Ensure reactive systems (Camera, AI) know who to follow from the start
+            if (SceneCamera.Instance != null)
+            {
+                SceneCamera.Instance.TrackingTarget.Value = all[_currentIndex].GetTransform();
+            }
+
+            // Initialize the dynamic NavMesh surface around the AI companion (inactive player)
+            if (_navMeshService != null)
+            {
+                for (int j = 0; j < all.Count; j++)
                 {
-                    navMeshService.InitializeSurface(all[j].GetTransform());
-                    break;
+                    if (j != _currentIndex)
+                    {
+                        _navMeshService.InitializeSurface(all[j].GetTransform());
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    public void SwitchTo(int newIndex)
-    {
-        var all = registry.GetAll();
-        if (newIndex < 0 || newIndex >= all.Count || newIndex == currentIndex) return;
-
-        // 1. Publish the new target to the global reactive system (Camera and AI will react automatically)
-        if (SceneCamera.Instance != null)
+        public void SwitchTo(int newIndex)
         {
-            SceneCamera.Instance.TrackingTarget.Value = all[newIndex].GetTransform();
+            var all = _registry.GetAll();
+            if (newIndex < 0 || newIndex >= all.Count || newIndex == _currentIndex) return;
+
+            // 1. Publish the new target to the global reactive system (Camera and AI will react automatically)
+            if (SceneCamera.Instance != null)
+            {
+                SceneCamera.Instance.TrackingTarget.Value = all[newIndex].GetTransform();
+            }
+
+            // 2. Re-anchor the NavMesh surface on the AI companion (the previously active player)
+            if (_navMeshService != null)
+            {
+                _navMeshService.InitializeSurface(all[_currentIndex].GetTransform());
+            }
+
+            // 3. Then apply control states
+            ApplyState(all[_currentIndex], false);
+            ApplyState(all[newIndex], true);
+            
+            _currentIndex = newIndex;
+            BroadcastControlChanged();
         }
 
-        // 2. Re-anchor the NavMesh surface on the AI companion (the previously active player)
-        if (ServiceLocator.Global.TryGet<INavMeshSurfaceService>(out var navMeshService))
+        private void ApplyState(IControllable c, bool isControlled)
         {
-            navMeshService.InitializeSurface(all[currentIndex].GetTransform());
+            if (isControlled) c.OnControlGained();
+            else c.OnControlLost();
         }
 
-        // 3. Then apply control states
-        ApplyState(all[currentIndex], false);
-        ApplyState(all[newIndex], true);
-        
-        currentIndex = newIndex;
-        BroadcastControlChanged();
-    }
-
-    void ApplyState(IControllable c, bool isControlled)
-    {
-        if (isControlled) c.OnControlGained(); else c.OnControlLost();
-    }
-
-    void BroadcastControlChanged()
-    {
-        var all = registry.GetAll();
-        var tf = all[currentIndex].GetTransform();
-        
-        if (onControlChanged != null)
+        private void BroadcastControlChanged()
         {
-            onControlChanged.Raise(new ControlChanged { newIndex = currentIndex, newTransform = tf });
+            var all = _registry.GetAll();
+            if (all.Count == 0) return;
+            
+            var tf = all[_currentIndex].GetTransform();
+            
+            if (onControlChanged != null)
+            {
+                onControlChanged.Raise(new ControlChanged { newIndex = _currentIndex, newTransform = tf });
+            }
         }
     }
 }
