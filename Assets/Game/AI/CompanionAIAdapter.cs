@@ -7,6 +7,7 @@ using Core.Utility;
 using System;
 using Core;
 using Core.Systems.Logging;
+using Game.Systems.LevelSystem.Runtime;
 
 namespace Game.AI
 {
@@ -24,9 +25,11 @@ namespace Game.AI
         [SerializeField] private PlayerInteractor _interactor;
         [SerializeField] private PlayerAbilities _abilities;
         [SerializeField] private AIMovementBridge _movementBridge;
+        [SerializeField] private CompanionPuzzleObserver _puzzleObserver;
 
         [Inject] private INavMeshSurfaceService _navMeshService;
         [Inject] private ILoggerService _logger;
+        [Inject] private IGameStateManager _gameState;
 
         private bool _aiRequested;
         private IDisposable _targetSubscription;
@@ -38,6 +41,7 @@ namespace Game.AI
             if (_interactor == null) _interactor = GetComponent<PlayerInteractor>();
             if (_abilities == null) _abilities = GetComponent<PlayerAbilities>();
             if (_movementBridge == null) _movementBridge = GetComponent<AIMovementBridge>();
+            if (_puzzleObserver == null) _puzzleObserver = GetComponent<CompanionPuzzleObserver>();
         }
 
         private void OnEnable()
@@ -55,10 +59,24 @@ namespace Game.AI
 
         private void Start()
         {
+            if (_gameState != null && _gameState.CurrentState != GameState.SinglePlayer)
+            {
+                DisableAI();
+                enabled = false;
+                return;
+            }
+
             SubscribeToNavMeshReady();
             if (_navMeshService != null)
             {
                 _navMeshService.OnNavMeshDestroyed += OnNavMeshLost;
+            }
+
+            // Subscribe to room changes
+            var levelController = FindFirstObjectByType<LevelController>();
+            if (levelController != null)
+            {
+                levelController.OnRoomChanged += OnRoomChanged;
             }
         }
 
@@ -75,11 +93,26 @@ namespace Game.AI
             _aiRequested = enable;
             if (enable)
             {
+                OnControlLost();
                 SubscribeToNavMeshReady();
             }
             else
             {
                 DisableAI();
+            }
+        }
+
+        public void OnControlLost()
+        {
+            // Called when AI resumes control
+            _puzzleObserver?.OnPlayerReleasedControl();
+        }
+
+        private void OnRoomChanged(RoomController from, RoomController to)
+        {
+            if (to is PuzzleRoomController puzzleRoom)
+            {
+                _puzzleObserver?.OnRoomEntered(puzzleRoom);
             }
         }
 
@@ -217,6 +250,12 @@ namespace Game.AI
             {
                 _navMeshService.OnNavMeshReady -= OnNavMeshReady;
                 _navMeshService.OnNavMeshDestroyed -= OnNavMeshLost;
+            }
+            
+            var levelController = FindFirstObjectByType<LevelController>();
+            if (levelController != null)
+            {
+                levelController.OnRoomChanged -= OnRoomChanged;
             }
         }
     }

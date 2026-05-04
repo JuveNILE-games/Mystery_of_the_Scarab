@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Game.Systems.PuzzleSystem.Interfaces;
 using UnityEngine;
 
@@ -15,6 +15,10 @@ public abstract class PuzzleComponent : MonoBehaviour, IPuzzleCondition
     [SerializeField] private string _conditionId;
     [SerializeField] private bool _startsActive = true;
 
+    [Header("AI Interaction")]
+    [SerializeField] private bool _availableToAI = true;
+    [SerializeField] private bool _requiresHolding = false;
+
     // ── IPuzzleCondition ─────────────────────────────────────────────
     public string ConditionId => _conditionId;
     public bool IsMet => _isMet;
@@ -24,6 +28,14 @@ public abstract class PuzzleComponent : MonoBehaviour, IPuzzleCondition
     protected bool _isMet;
     protected bool _isLocked;
     protected bool _isActive;
+
+    // ── AI ───────────────────────────────────────────────────────────
+    /// <summary>
+    /// Returns true when this component can be targeted by the companion AI.
+    /// Set to false for components that the player must activate (narrative gates, etc.)
+    /// </summary>
+    public virtual bool IsAvailableForAI() => _availableToAI && _isActive && !_isLocked;
+    public bool RequiresHolding => _requiresHolding;
 
     // ── Lifecycle ────────────────────────────────────────────────────
     protected virtual void Awake()

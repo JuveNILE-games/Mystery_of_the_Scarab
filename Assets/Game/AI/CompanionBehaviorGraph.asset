@@ -45,14 +45,14 @@ MonoBehaviour:
           rid: 1075032407982997600
         BlackboardGroupReferences: []
         Root:
-          rid: 1075032527590916222
+          rid: 8089672224646627598
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
           rid: 1075032407982997602
         m_EndedNodes:
           rid: 1075032407982997603
-        m_VersionTimestamp: 639121582404626840
+        m_VersionTimestamp: 639132293305305083
     - rid: 1075032407982997600
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -69,52 +69,162 @@ MonoBehaviour:
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 1075032527590916224
-        - rid: 1075032527590916225
-        - rid: 1075032527590916226
-        - rid: 1075032527590916227
-        - rid: 1075032527590916228
-    - rid: 1075032527590916209
+        - rid: 1075032652250874539
+        - rid: 1075032652250874540
+        - rid: 1075032652250874541
+        - rid: 1075032652250874542
+        - rid: 1075032652250874543
+        - rid: 1075032652250874544
+        - rid: 1075032652250874545
+        - rid: 1075032652250874546
+        - rid: 1075032652250874547
+        - rid: 1075032652250874548
+        - rid: 1075032652250874549
+    - rid: 1075032652250874539
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874540
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 496160777022005051
+          m_Value1: 15737229314432867350
+        Name: Player
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874541
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12501652866766924775
+          m_Value1: 6271422207882155894
+        Name: Agent
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874542
+      type: {class: 'BlackboardVariable`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 848870189693822947
+          m_Value1: 3753154221857369063
+        Name: Interactor
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874543
+      type: {class: 'BlackboardVariable`1[[Game.PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10640889365225066479
+          m_Value1: 14823991233567839807
+        Name: Abilities
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874544
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12345
+          m_Value1: 67890
+        Name: DeferenceTimer
+        m_Value: 0
+    - rid: 1075032652250874545
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12346
+          m_Value1: 67891
+        Name: HasActionablePuzzleTarget
+        m_Value: 0
+    - rid: 1075032652250874546
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12347
+          m_Value1: 67892
+        Name: TargetComponent
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874547
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12348
+          m_Value1: 67893
+        Name: TargetPosition
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 1075032652250874548
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12349
+          m_Value1: 67894
+        Name: IsHolding
+        m_Value: 0
+    - rid: 1075032652250874549
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12350
+          m_Value1: 67895
+        Name: HoldTarget
+        m_Value: {fileID: 0}
+    - rid: 8089672224646627470
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8089672224646627478
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
           m_Value1: 0
         Name: 
-        m_Value: 1.5
-    - rid: 1075032527590916210
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0.5
-    - rid: 1075032527590916211
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+        m_Value: 0.8
+    - rid: 8089672224646627479
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 1075032527590916212
-      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 8089672224646627480
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0.4
+    - rid: 8089672224646627481
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1.6
+    - rid: 8089672224646627482
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1.2
+    - rid: 8089672224646627483
+      type: {class: 'BlackboardVariable`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
           m_Value1: 0
         Name: 
         m_Value: {fileID: 0}
-    - rid: 1075032527590916213
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: {fileID: 0}
-    - rid: 1075032527590916222
+    - rid: 8089672224646627598
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -125,63 +235,38 @@ MonoBehaviour:
         m_Parent:
           rid: -2
         m_Child:
-          rid: 1075032527590916223
+          rid: 8089672224646627599
         Repeat: 1
         AllowMultipleRepeatsPerTick: 0
-    - rid: 1075032527590916223
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 8089672224646627599
+      type: {class: ParallelAnySuccess, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
-          m_Value0: 12179959143553127530
-          m_Value1: 5117837404805178315
+          m_Value0: 48168611467643892
+          m_Value1: 5725937368775068070
         Graph:
           rid: 1075032407982997599
         m_Parent:
-          rid: 1075032527590916222
+          rid: 8089672224646627598
         m_Children:
-        - rid: 1075032527590916229
-    - rid: 1075032527590916224
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+        - rid: 8089672224646627600
+        - rid: 8089672224646627601
+    - rid: 8089672224646627600
+      type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 0}
-    - rid: 1075032527590916225
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 496160777022005051
-          m_Value1: 15737229314432867350
-        Name: Player
-        m_Value: {fileID: 0}
-    - rid: 1075032527590916226
-      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 12501652866766924775
-          m_Value1: 6271422207882155894
-        Name: Agent
-        m_Value: {fileID: 0}
-    - rid: 1075032527590916227
-      type: {class: 'BlackboardVariable`1[[PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 848870189693822947
-          m_Value1: 3753154221857369063
-        Name: Interactor
-        m_Value: {fileID: 0}
-    - rid: 1075032527590916228
-      type: {class: 'BlackboardVariable`1[[PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 10640889365225066479
-          m_Value1: 14823991233567839807
-        Name: Abilities
-        m_Value: {fileID: 0}
-    - rid: 1075032527590916229
-      type: {class: FollowPlayerAction, ns: Game.AI, asm: MysteryOfTheScarab}
+        ID:
+          m_Value0: 11629306865076713639
+          m_Value1: 4518675737668774381
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627599
+        m_Children:
+        - rid: 8089672224646627602
+        - rid: 8089672224646627603
+        - rid: 8089672224646627604
+    - rid: 8089672224646627601
+      type: {class: FollowPlayerAction, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
       data:
         ID:
           m_Value0: 11331813676406678805
@@ -189,17 +274,258 @@ MonoBehaviour:
         Graph:
           rid: 1075032407982997599
         m_Parent:
-          rid: 1075032527590916223
+          rid: 8089672224646627599
         StartDistance:
-          rid: 1075032527590916209
+          rid: 8089672224646627605
         FollowDistance:
-          rid: 1075032527590916210
+          rid: 8089672224646627606
         StopDistance:
-          rid: 1075032527590916211
+          rid: 8089672224646627607
         Agent:
-          rid: 1075032527590916212
+          rid: 1075032652250874541
         Player:
-          rid: 1075032527590916213
+          rid: 1075032652250874540
+    - rid: 8089672224646627602
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 2378186311558089372
+          m_Value1: 13377313351052865483
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627600
+        m_Children:
+        - rid: 8089672224646627608
+        - rid: 8089672224646627609
+    - rid: 8089672224646627603
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 13544763139888187203
+          m_Value1: 5820564887523832934
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627600
+        m_Children:
+        - rid: 8089672224646627610
+        - rid: 8089672224646627611
+    - rid: 8089672224646627604
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 12419022044086649245
+          m_Value1: 4697382003090077409
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627600
+        m_Children:
+        - rid: 8089672224646627612
+        - rid: 8089672224646627613
+    - rid: 8089672224646627605
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1.5
+    - rid: 8089672224646627606
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0.5
+    - rid: 8089672224646627607
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 8089672224646627608
+      type: {class: ConditionalGuardAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 2378186311558089372
+          m_Value1: 13377313351052865483
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627602
+        m_Conditions:
+        - rid: 8089672224646627614
+        m_RequiresAllConditions: 0
+    - rid: 8089672224646627609
+      type: {class: WaitInPlaceAction, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        ID:
+          m_Value0: 15253170716663831673
+          m_Value1: 15126435871951632615
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627602
+        Agent:
+          rid: 1075032652250874541
+    - rid: 8089672224646627610
+      type: {class: ConditionalGuardAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 13544763139888187203
+          m_Value1: 5820564887523832934
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627603
+        m_Conditions:
+        - rid: 8089672224646627615
+        m_RequiresAllConditions: 0
+    - rid: 8089672224646627611
+      type: {class: HoldPositionAction, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        ID:
+          m_Value0: 4590643765730673386
+          m_Value1: 7187827044832334175
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627603
+        Agent:
+          rid: 1075032652250874541
+        HoldTarget:
+          rid: 1075032652250874549
+        ShouldRelease:
+          rid: 8089672224646627470
+    - rid: 8089672224646627612
+      type: {class: ConditionalGuardAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 12419022044086649245
+          m_Value1: 4697382003090077409
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627604
+        m_Conditions:
+        - rid: 8089672224646627616
+        m_RequiresAllConditions: 0
+    - rid: 8089672224646627613
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 14870561602319367560
+          m_Value1: 8380997566044763710
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627604
+        m_Children:
+        - rid: 8089672224646627617
+    - rid: 8089672224646627614
+      type: {class: IsDeferringCondition, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        Graph:
+          rid: 1075032407982997599
+        DeferenceTimer:
+          rid: 1075032652250874544
+    - rid: 8089672224646627615
+      type: {class: IsHoldingCondition, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        Graph:
+          rid: 1075032407982997599
+        IsHolding:
+          rid: 8089672224646627618
+    - rid: 8089672224646627616
+      type: {class: HasTargetCondition, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        Graph:
+          rid: 1075032407982997599
+        HasTarget:
+          rid: 8089672224646627619
+    - rid: 8089672224646627617
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 6658718659952510128
+          m_Value1: 16636171207368958573
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627613
+        m_Children:
+        - rid: 8089672224646627620
+        - rid: 8089672224646627621
+        - rid: 8089672224646627622
+    - rid: 8089672224646627618
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8089672224646627619
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8089672224646627620
+      type: {class: ReactionDelayAction, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        ID:
+          m_Value0: 11236183620311635812
+          m_Value1: 16535211504471244218
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627617
+        Duration:
+          rid: 8089672224646627478
+        Randomize:
+          rid: 8089672224646627479
+        RandomMin:
+          rid: 8089672224646627480
+        RandomMax:
+          rid: 8089672224646627481
+    - rid: 8089672224646627621
+      type: {class: MoveToPositionAction, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        ID:
+          m_Value0: 13906573449644628486
+          m_Value1: 5051460141239653477
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627617
+        Agent:
+          rid: 1075032652250874541
+        TargetPosition:
+          rid: 1075032652250874547
+        StopDistance:
+          rid: 8089672224646627482
+    - rid: 8089672224646627622
+      type: {class: InteractWithTargetAction, ns: Game.AI.Nodes, asm: MysteryOfTheScarab}
+      data:
+        ID:
+          m_Value0: 10201821859875239698
+          m_Value1: 7242043685403949307
+        Graph:
+          rid: 1075032407982997599
+        m_Parent:
+          rid: 8089672224646627617
+        Target:
+          rid: 1075032652250874546
+        Interactor:
+          rid: 8089672224646627483
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,9 +542,20 @@ MonoBehaviour:
   m_Description: 
   m_Nodes:
   - rid: 1075032407982997606
-  - rid: 1075032407982997722
   - rid: 1075032407982997728
-  m_VersionTimestamp: 639121582404626840
+  - rid: 1075032652250873976
+  - rid: 1075032652250874071
+  - rid: 1075032652250874216
+  - rid: 1075032652250874245
+  - rid: 1075032652250874264
+  - rid: 1075032652250874377
+  - rid: 1075032652250874393
+  - rid: 1075032652250874422
+  - rid: 1075032652250874446
+  - rid: 1075032652250874494
+  - rid: 1075032652250874650
+  - rid: 8089672224646627529
+  m_VersionTimestamp: 639132293305305083
   m_SerializedVersion: 1
   m_DebugInfo: {fileID: -4216498078924025478}
   m_RuntimeGraph: {fileID: -359581984033190941}
@@ -240,20 +577,10 @@ MonoBehaviour:
     Variables: []
     NamedChildren: []
     IsPlaceholder: 0
-  - Name: Sequence
-    Story: 
-    RuntimeTypeString: Unity.Behavior.SequenceComposite, Unity.Behavior, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-    RuntimeTypeID:
-      m_Value0: 10181448252506100447
-      m_Value1: 8737116843063128493
-    Variables: []
-    NamedChildren: []
-    IsPlaceholder: 0
   - Name: Follow Player
     Story: '[Agent] follows [Player] at [FollowDistance] Start: [StartDistance] Stop:
       [StopDistance]'
-    RuntimeTypeString: Game.AI.FollowPlayerAction, MysteryOfTheScarab, Version=0.0.0.0,
+    RuntimeTypeString: Game.AI.Nodes.FollowPlayerAction, MysteryOfTheScarab, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 263882801152192
@@ -286,6 +613,161 @@ MonoBehaviour:
       Tooltip: 
     NamedChildren: []
     IsPlaceholder: 0
+  - Name: Try In Order
+    Story: 
+    RuntimeTypeString: Unity.Behavior.SelectorComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 11477120919463386923
+      m_Value1: 7730102824742023565
+    Variables: []
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Conditional Guard
+    Story: 
+    RuntimeTypeString: Unity.Behavior.ConditionalGuardAction, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 10845871997924083670
+      m_Value1: 4041440894818793834
+    Variables: []
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Wait In Place
+    Story: '[Agent] stands still and waits'
+    RuntimeTypeString: Game.AI.Nodes.WaitInPlaceAction, MysteryOfTheScarab, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 10995126763712
+      m_Value1: 11272192
+    Variables:
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Hold Position
+    Story: '[Agent] holds position at [HoldTarget]'
+    RuntimeTypeString: Game.AI.Nodes.HoldPositionAction, MysteryOfTheScarab, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 3659174707724480
+      m_Value1: 0
+    Variables:
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: HoldTarget
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: ShouldRelease
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Sequence
+    Story: 
+    RuntimeTypeString: Unity.Behavior.SequenceComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 10181448252506100447
+      m_Value1: 8737116843063128493
+    Variables: []
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Companion Reaction Delay
+    Story: Pause [Duration] seconds before acting (reaction simulation)
+    RuntimeTypeString: Game.AI.Nodes.ReactionDelayAction, MysteryOfTheScarab, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 48429089167507648
+      m_Value1: 2699037952
+    Variables:
+    - Name: Duration
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: Randomize
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: RandomMin
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: RandomMax
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Move To Position
+    Story: 'Move [Agent] to [TargetPosition]'
+    RuntimeTypeString: Game.AI.Nodes.MoveToPositionAction, MysteryOfTheScarab, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 3940649684435136
+      m_Value1: 0
+    Variables:
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: TargetPosition
+      Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: StopDistance
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Interact With Target
+    Story: 'Interact with [Target] using [Interactor]'
+    RuntimeTypeString: Game.AI.Nodes.InteractWithTargetAction, MysteryOfTheScarab,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 724516590063714496
+      m_Value1: 63050437732860096
+    Variables:
+    - Name: Target
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Interactor
+      Type:
+        m_SerializableType: Game.PlayerInteractor, MysteryOfTheScarab, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
+  - Name: Run In Parallel Until Any Succeeds
+    Story: 
+    RuntimeTypeString: Unity.Behavior.ParallelAnySuccess, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 3118052729764074030
+      m_Value1: 1388175790504016299
+    Variables: []
+    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: 8659437382572964735}
   m_CommandBuffer:
@@ -302,7 +784,7 @@ MonoBehaviour:
     - rid: 1075032407982997606
       type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: 0, y: 0}
+        Position: {x: 237.91844, y: -68.336716}
         ID:
           m_Value0: 14113917216960322917
           m_Value1: 2333550272056365891
@@ -327,49 +809,11 @@ MonoBehaviour:
         m_NodeModel:
           rid: 1075032407982997606
         m_Connections:
-        - rid: 1075032407982997723
-    - rid: 1075032407982997722
-      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
-      data:
-        Position: {x: -0.5000082, y: 106.89998}
-        ID:
-          m_Value0: 12179959143553127530
-          m_Value1: 5117837404805178315
-        Parents: []
-        PortModels:
-        - rid: 1075032407982997723
-        - rid: 1075032407982997724
-        NodeType:
-          m_SerializableType: Unity.Behavior.SequenceComposite, Unity.Behavior, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        NodeTypeID:
-          m_Value0: 10181448252506100447
-          m_Value1: 8737116843063128493
-        m_FieldValues: []
-    - rid: 1075032407982997723
-      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        m_Name: InputPort
-        m_PortDataFlowType: 0
-        m_IsFloating: 0
-        m_NodeModel:
-          rid: 1075032407982997722
-        m_Connections:
-        - rid: 1075032407982997607
-    - rid: 1075032407982997724
-      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        m_Name: OutputPort
-        m_PortDataFlowType: 1
-        m_IsFloating: 0
-        m_NodeModel:
-          rid: 1075032407982997722
-        m_Connections:
-        - rid: 1075032407982997729
+        - rid: 8089672224646627530
     - rid: 1075032407982997728
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -1.3000104, y: 210.10008}
+        Position: {x: 656.736, y: 153.34383}
         ID:
           m_Value0: 11331813676406678805
           m_Value1: 16921648906706574872
@@ -378,8 +822,8 @@ MonoBehaviour:
         - rid: 1075032407982997729
         - rid: 1075032407982997730
         NodeType:
-          m_SerializableType: Game.AI.FollowPlayerAction, MysteryOfTheScarab, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
+          m_SerializableType: Game.AI.Nodes.FollowPlayerAction, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 263882801152192
           m_Value1: 920064
@@ -398,7 +842,7 @@ MonoBehaviour:
         m_NodeModel:
           rid: 1075032407982997728
         m_Connections:
-        - rid: 1075032407982997724
+        - rid: 8089672224646627531
     - rid: 1075032407982997730
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -418,7 +862,7 @@ MonoBehaviour:
         LocalValue:
           rid: 1075032407982997734
         LinkedVariable:
-          rid: -2
+          rid: 1075032652250874819
     - rid: 1075032407982997732
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -429,7 +873,7 @@ MonoBehaviour:
         LocalValue:
           rid: 1075032407982997735
         LinkedVariable:
-          rid: -2
+          rid: 1075032652250874820
     - rid: 1075032407982997733
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -503,6 +947,861 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
+    - rid: 1075032652250873976
+      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 236.92131, y: 159.77502}
+        ID:
+          m_Value0: 11629306865076713639
+          m_Value1: 4518675737668774381
+        Parents: []
+        PortModels:
+        - rid: 1075032652250873977
+        - rid: 1075032652250873978
+        NodeType:
+          m_SerializableType: Unity.Behavior.SelectorComposite, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 11477120919463386923
+          m_Value1: 7730102824742023565
+        m_FieldValues: []
+    - rid: 1075032652250873977
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250873976
+        m_Connections:
+        - rid: 8089672224646627531
+    - rid: 1075032652250873978
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250873976
+        m_Connections:
+        - rid: 1075032652250874072
+        - rid: 1075032652250874246
+        - rid: 1075032652250874651
+    - rid: 1075032652250874071
+      type: {class: ConditionalGuardNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -163.16245, y: 271.01804}
+        ID:
+          m_Value0: 2378186311558089372
+          m_Value1: 13377313351052865483
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874072
+        - rid: 1075032652250874073
+        NodeType:
+          m_SerializableType: Unity.Behavior.ConditionalGuardAction, Unity.Behavior,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10845871997924083670
+          m_Value1: 4041440894818793834
+        m_FieldValues: []
+        <ConditionModels>k__BackingField:
+        - rid: 1075032652250874082
+        <RequiresAllConditionsTrue>k__BackingField: 0
+        <ShouldTruncateNodeUI>k__BackingField: 0
+    - rid: 1075032652250874072
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874071
+        m_Connections:
+        - rid: 1075032652250873978
+    - rid: 1075032652250874073
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874071
+        m_Connections:
+        - rid: 1075032652250874217
+    - rid: 1075032652250874082
+      type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        ConditionType:
+          m_SerializableType: Game.AI.Nodes.IsDeferringCondition, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        ConditionTypeID:
+          m_Value0: 17225424149772501184
+          m_Value1: 224
+        NodeModel:
+          rid: 1075032652250874071
+        m_FieldValues:
+        - rid: 1075032652250874083
+        OperatorFieldModel:
+          rid: -2
+    - rid: 1075032652250874083
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: DeferenceTimer
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874084
+        LinkedVariable:
+          rid: 1075032652250874168
+    - rid: 1075032652250874084
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 1075032652250874168
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12345
+          m_Value1: 67890
+        Name: DeferenceTimer
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 1075032652250874184
+      type: {class: 'TypedVariableModel`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12501652866766924775
+          m_Value1: 6271422207882155894
+        Name: Agent
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874216
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -164.4941, y: 343.5027}
+        ID:
+          m_Value0: 15253170716663831673
+          m_Value1: 15126435871951632615
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874217
+        - rid: 1075032652250874218
+        NodeType:
+          m_SerializableType: Game.AI.Nodes.WaitInPlaceAction, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10995126763712
+          m_Value1: 11272192
+        m_FieldValues:
+        - rid: 1075032652250874219
+    - rid: 1075032652250874217
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874216
+        m_Connections:
+        - rid: 1075032652250874073
+    - rid: 1075032652250874218
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874216
+        m_Connections: []
+    - rid: 1075032652250874219
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874220
+        LinkedVariable:
+          rid: 1075032652250874184
+    - rid: 1075032652250874220
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874245
+      type: {class: ConditionalGuardNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 76.727875, y: 266.71933}
+        ID:
+          m_Value0: 13544763139888187203
+          m_Value1: 5820564887523832934
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874246
+        - rid: 1075032652250874247
+        NodeType:
+          m_SerializableType: Unity.Behavior.ConditionalGuardAction, Unity.Behavior,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10845871997924083670
+          m_Value1: 4041440894818793834
+        m_FieldValues: []
+        <ConditionModels>k__BackingField:
+        - rid: 1075032652250874255
+        <RequiresAllConditionsTrue>k__BackingField: 0
+        <ShouldTruncateNodeUI>k__BackingField: 0
+    - rid: 1075032652250874246
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874245
+        m_Connections:
+        - rid: 1075032652250873978
+    - rid: 1075032652250874247
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874245
+        m_Connections:
+        - rid: 1075032652250874265
+    - rid: 1075032652250874255
+      type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        ConditionType:
+          m_SerializableType: Game.AI.Nodes.IsHoldingCondition, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        ConditionTypeID:
+          m_Value0: 10485952
+          m_Value1: 208
+        NodeModel:
+          rid: 1075032652250874245
+        m_FieldValues: []
+        OperatorFieldModel:
+          rid: -2
+    - rid: 1075032652250874264
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 76.72788, y: 371.44196}
+        ID:
+          m_Value0: 4590643765730673386
+          m_Value1: 7187827044832334175
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874265
+        - rid: 1075032652250874266
+        NodeType:
+          m_SerializableType: Game.AI.Nodes.HoldPositionAction, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3659174707724480
+          m_Value1: 0
+        m_FieldValues:
+        - rid: 1075032652250874267
+        - rid: 1075032652250874268
+        - rid: 1075032652250874269
+    - rid: 1075032652250874265
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874264
+        m_Connections:
+        - rid: 1075032652250874247
+    - rid: 1075032652250874266
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874264
+        m_Connections: []
+    - rid: 1075032652250874267
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874270
+        LinkedVariable:
+          rid: 1075032652250874184
+    - rid: 1075032652250874268
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: HoldTarget
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874271
+        LinkedVariable:
+          rid: 1075032652250874272
+    - rid: 1075032652250874269
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: ShouldRelease
+        Type:
+          m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874273
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874270
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874271
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874272
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12350
+          m_Value1: 67895
+        Name: HoldTarget
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874273
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 1075032652250874377
+      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 314.2714, y: 356.2279}
+        ID:
+          m_Value0: 14870561602319367560
+          m_Value1: 8380997566044763710
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874378
+        - rid: 1075032652250874379
+        NodeType:
+          m_SerializableType: Unity.Behavior.SequenceComposite, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10181448252506100447
+          m_Value1: 8737116843063128493
+        m_FieldValues: []
+    - rid: 1075032652250874378
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874377
+        m_Connections:
+        - rid: 1075032652250874652
+    - rid: 1075032652250874379
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874377
+        m_Connections:
+        - rid: 1075032652250874447
+    - rid: 1075032652250874393
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 271.5573, y: 618.0186}
+        ID:
+          m_Value0: 11236183620311635812
+          m_Value1: 16535211504471244218
+        Parents:
+        - rid: 1075032652250874446
+        PortModels:
+        - rid: 1075032652250874394
+        - rid: 1075032652250874395
+        NodeType:
+          m_SerializableType: Game.AI.Nodes.ReactionDelayAction, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 48429089167507648
+          m_Value1: 2699037952
+        m_FieldValues:
+        - rid: 1075032652250874396
+        - rid: 1075032652250874397
+        - rid: 1075032652250874398
+        - rid: 1075032652250874399
+    - rid: 1075032652250874394
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874393
+        m_Connections: []
+    - rid: 1075032652250874395
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874393
+        m_Connections: []
+    - rid: 1075032652250874396
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Duration
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874400
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874397
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Randomize
+        Type:
+          m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874401
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874398
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: RandomMin
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874402
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874399
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: RandomMax
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874403
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874400
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0.8
+    - rid: 1075032652250874401
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 1075032652250874402
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0.4
+    - rid: 1075032652250874403
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1.6
+    - rid: 1075032652250874422
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 272.32187, y: 628.262}
+        ID:
+          m_Value0: 13906573449644628486
+          m_Value1: 5051460141239653477
+        Parents:
+        - rid: 1075032652250874446
+        PortModels:
+        - rid: 1075032652250874423
+        - rid: 1075032652250874424
+        NodeType:
+          m_SerializableType: Game.AI.Nodes.MoveToPositionAction, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3940649684435136
+          m_Value1: 0
+        m_FieldValues:
+        - rid: 1075032652250874425
+        - rid: 1075032652250874426
+        - rid: 1075032652250874427
+    - rid: 1075032652250874423
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874422
+        m_Connections: []
+    - rid: 1075032652250874424
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874422
+        m_Connections: []
+    - rid: 1075032652250874425
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874428
+        LinkedVariable:
+          rid: 1075032652250874184
+    - rid: 1075032652250874426
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: TargetPosition
+        Type:
+          m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874429
+        LinkedVariable:
+          rid: 1075032652250874430
+    - rid: 1075032652250874427
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: StopDistance
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 1075032652250874431
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874428
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874429
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 1075032652250874430
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12348
+          m_Value1: 67893
+        Name: TargetPosition
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 1075032652250874431
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1.2
+    - rid: 1075032652250874446
+      type: {class: SequenceNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        Position: {x: 313.43286, y: 448.77185}
+        ID:
+          m_Value0: 6658718659952510128
+          m_Value1: 16636171207368958573
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874447
+        - rid: 1075032652250874448
+        Nodes:
+        - rid: 1075032652250874393
+        - rid: 1075032652250874422
+        - rid: 1075032652250874494
+    - rid: 1075032652250874447
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874446
+        m_Connections:
+        - rid: 1075032652250874379
+    - rid: 1075032652250874448
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874446
+        m_Connections: []
+    - rid: 1075032652250874494
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 299.67023, y: 706.74774}
+        ID:
+          m_Value0: 10201821859875239698
+          m_Value1: 7242043685403949307
+        Parents:
+        - rid: 1075032652250874446
+        PortModels:
+        - rid: 1075032652250874495
+        - rid: 1075032652250874496
+        NodeType:
+          m_SerializableType: Game.AI.Nodes.InteractWithTargetAction, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 724516590063714496
+          m_Value1: 63050437732860096
+        m_FieldValues:
+        - rid: 1075032652250874497
+        - rid: 1075032652250874498
+    - rid: 1075032652250874495
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874494
+        m_Connections: []
+    - rid: 1075032652250874496
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874494
+        m_Connections: []
+    - rid: 1075032652250874497
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Target
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874499
+        LinkedVariable:
+          rid: 1075032652250874536
+    - rid: 1075032652250874498
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Interactor
+        Type:
+          m_SerializableType: Game.PlayerInteractor, MysteryOfTheScarab, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 1075032652250874500
+        LinkedVariable:
+          rid: -2
+    - rid: 1075032652250874499
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874500
+      type: {class: 'BlackboardVariable`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874536
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12347
+          m_Value1: 67892
+        Name: TargetComponent
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874650
+      type: {class: ConditionalGuardNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 314.7094, y: 267.79306}
+        ID:
+          m_Value0: 12419022044086649245
+          m_Value1: 4697382003090077409
+        Parents: []
+        PortModels:
+        - rid: 1075032652250874651
+        - rid: 1075032652250874652
+        NodeType:
+          m_SerializableType: Unity.Behavior.ConditionalGuardAction, Unity.Behavior,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10845871997924083670
+          m_Value1: 4041440894818793834
+        m_FieldValues: []
+        <ConditionModels>k__BackingField:
+        - rid: 1075032652250874664
+        <RequiresAllConditionsTrue>k__BackingField: 0
+        <ShouldTruncateNodeUI>k__BackingField: 0
+    - rid: 1075032652250874651
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874650
+        m_Connections:
+        - rid: 1075032652250873978
+    - rid: 1075032652250874652
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 1075032652250874650
+        m_Connections:
+        - rid: 1075032652250874378
+    - rid: 1075032652250874664
+      type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        ConditionType:
+          m_SerializableType: Game.AI.Nodes.HasTargetCondition, MysteryOfTheScarab,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        ConditionTypeID:
+          m_Value0: 720586935506043072
+          m_Value1: 57344
+        NodeModel:
+          rid: 1075032652250874650
+        m_FieldValues: []
+        OperatorFieldModel:
+          rid: -2
+    - rid: 1075032652250874819
+      type: {class: 'TypedVariableModel`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12501652866766924775
+          m_Value1: 6271422207882155894
+        Name: Agent
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874820
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 496160777022005051
+          m_Value1: 15737229314432867350
+        Name: Player
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8089672224646627529
+      type: {class: RunInParallelNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 237.41988, y: 45.719154}
+        ID:
+          m_Value0: 48168611467643892
+          m_Value1: 5725937368775068070
+        Parents: []
+        PortModels:
+        - rid: 8089672224646627530
+        - rid: 8089672224646627531
+        NodeType:
+          m_SerializableType: Unity.Behavior.ParallelAnySuccess, Unity.Behavior,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3118052729764074030
+          m_Value1: 1388175790504016299
+        m_FieldValues: []
+        m_Mode: 2
+    - rid: 8089672224646627530
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8089672224646627529
+        m_Connections:
+        - rid: 1075032407982997607
+    - rid: 8089672224646627531
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8089672224646627529
+        m_Connections:
+        - rid: 1075032652250873977
+        - rid: 1075032407982997729
 --- !u!114 &6773818810466443154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,10 +1814,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: CompanionBehaviorGraph Blackboard
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
-  VersionTimestamp: 639116933738682866
+  VersionTimestamp: 639126283720611524
   AssetID:
-    m_Value0: 0
-    m_Value1: 0
+    m_Value0: 7257990656626681534
+    m_Value1: 7949862528983687115
   m_Blackboard:
     m_Variables:
     - rid: 1075032407982997608
@@ -526,6 +1825,12 @@ MonoBehaviour:
     - rid: 1075032407982997691
     - rid: 1075032407982997702
     - rid: 1075032407982997715
+    - rid: 1075032652250874145
+    - rid: 1075032652250874146
+    - rid: 1075032652250874147
+    - rid: 1075032652250874148
+    - rid: 1075032652250874149
+    - rid: 1075032652250874150
   m_SharedBlackboardVariableGuids: []
   references:
     version: 2
@@ -555,7 +1860,7 @@ MonoBehaviour:
         Name: Agent
         m_Value: {fileID: 0}
     - rid: 1075032407982997702
-      type: {class: 'BlackboardVariable`1[[PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 848870189693822947
@@ -563,12 +1868,60 @@ MonoBehaviour:
         Name: Interactor
         m_Value: {fileID: 0}
     - rid: 1075032407982997715
-      type: {class: 'BlackboardVariable`1[[PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[Game.PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 10640889365225066479
           m_Value1: 14823991233567839807
         Name: Abilities
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874145
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12345
+          m_Value1: 67890
+        Name: DeferenceTimer
+        m_Value: 0
+    - rid: 1075032652250874146
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12346
+          m_Value1: 67891
+        Name: HasActionablePuzzleTarget
+        m_Value: 0
+    - rid: 1075032652250874147
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12347
+          m_Value1: 67892
+        Name: TargetComponent
+        m_Value: {fileID: 0}
+    - rid: 1075032652250874148
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12348
+          m_Value1: 67893
+        Name: TargetPosition
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 1075032652250874149
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12349
+          m_Value1: 67894
+        Name: IsHolding
+        m_Value: 0
+    - rid: 1075032652250874150
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12350
+          m_Value1: 67895
+        Name: HoldTarget
         m_Value: {fileID: 0}
 --- !u!114 &8659437382572964735
 MonoBehaviour:
@@ -591,7 +1944,13 @@ MonoBehaviour:
   - rid: 1075032407982997686
   - rid: 1075032407982997696
   - rid: 1075032407982997708
-  m_VersionTimestamp: 639116933738682866
+  - rid: 1075032407982997800
+  - rid: 1075032407982997801
+  - rid: 1075032407982997802
+  - rid: 1075032407982997803
+  - rid: 1075032407982997804
+  - rid: 1075032407982997805
+  m_VersionTimestamp: 639126283720611524
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: 6773818810466443154}
@@ -629,7 +1988,7 @@ MonoBehaviour:
         m_IsShared: 0
         m_Value: {fileID: 0}
     - rid: 1075032407982997696
-      type: {class: 'TypedVariableModel`1[[PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 848870189693822947
@@ -639,12 +1998,72 @@ MonoBehaviour:
         m_IsShared: 0
         m_Value: {fileID: 0}
     - rid: 1075032407982997708
-      type: {class: 'TypedVariableModel`1[[PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[Game.PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 10640889365225066479
           m_Value1: 14823991233567839807
         Name: Abilities
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1075032407982997800
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12345
+          m_Value1: 67890
+        Name: DeferenceTimer
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 1075032407982997801
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12346
+          m_Value1: 67891
+        Name: HasActionablePuzzleTarget
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 1075032407982997802
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12347
+          m_Value1: 67892
+        Name: TargetComponent
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1075032407982997803
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12348
+          m_Value1: 67893
+        Name: TargetPosition
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 1075032407982997804
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12349
+          m_Value1: 67894
+        Name: IsHolding
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 1075032407982997805
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 12350
+          m_Value1: 67895
+        Name: HoldTarget
         IsExposed: 1
         m_IsShared: 0
         m_Value: {fileID: 0}

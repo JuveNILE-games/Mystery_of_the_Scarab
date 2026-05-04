@@ -14,7 +14,7 @@ namespace Game.AI
     {
         /// <summary>
         /// Set the world-space movement direction. Y component is ignored — vertical movement
-        /// is handled internally by each state (gravity, jump, etc.).
+        /// is handled centrally by PlayerStateMachine runtime motion (gravity, jump, etc.).
         /// <para>
         /// For human players: called by PlayerInputInitializer after projecting stick/WASD input
         /// onto the current camera's XZ plane.
