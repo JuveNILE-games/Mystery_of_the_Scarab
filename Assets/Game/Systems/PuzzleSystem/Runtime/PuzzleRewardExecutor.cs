@@ -4,6 +4,7 @@ using Core.Systems.Services.Interfaces;
 using Game.Systems.PuzzleSystem.Definitions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Core.Utility.Attributes;
 
 namespace Game.Systems.PuzzleSystem.Runtime
 {
@@ -13,10 +14,7 @@ namespace Game.Systems.PuzzleSystem.Runtime
     /// </summary>
     public class PuzzleRewardExecutor : MonoBehaviour
     {
-        private IDialogueService _dialogueService;
-
-        public void SetDialogueService(IDialogueService service)
-            => _dialogueService = service;
+        [Inject] private IDialogueService _dialogueService;
 
         public void Execute(IReadOnlyList<PuzzleReward> rewards)
         {

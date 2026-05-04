@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Systems.LogicSystem;
 using Game.Systems.LogicSystem.Interfaces;
 using Game.Systems.PuzzleSystem.Definitions;
@@ -21,6 +22,7 @@ namespace Game.Systems.PuzzleSystem.Runtime{
     public event Action<PuzzleController> OnReset;
 
     private readonly List<IPuzzleCondition> _resolvedConditions = new();
+    private Action<IPuzzleCondition> _evaluateHandler;
     private Coroutine _timerRoutine;
 
     private void Start() => Initialize();
@@ -35,8 +37,15 @@ namespace Game.Systems.PuzzleSystem.Runtime{
     {
         if (_definition == null) return;
 
-        // Check prerequisite
-        // (PuzzleRoomController handles locking until prerequisite is met)
+        // Unsubscribe old handler before clearing to prevent double-subscription (§1)
+        if (_evaluateHandler != null)
+        {
+            foreach (var c in _resolvedConditions)
+                c.OnConditionChanged -= _evaluateHandler;
+        }
+
+        _resolvedConditions.Clear();
+        _evaluateHandler = _ => Evaluate();
 
         // Walk the conditionDescriptors list and resolve each one.
         foreach (var descriptor in _definition.conditionDescriptors)
@@ -44,14 +53,14 @@ namespace Game.Systems.PuzzleSystem.Runtime{
             if (PuzzleComponentRegistry.TryGet(descriptor.ConditionId, out var condition))
             {
                 _resolvedConditions.Add(condition);
-                condition.OnConditionChanged += _ => Evaluate();
+                condition.OnConditionChanged += _evaluateHandler;
             }
             // InlineConditionDescriptor: the condition is already inline, register it too.
             if (descriptor is InlineConditionDescriptor inl && inl.condition != null)
             {
                 PuzzleComponentRegistry.Register(inl.condition);
                 _resolvedConditions.Add(inl.condition);
-                inl.condition.OnConditionChanged += _ => Evaluate();
+                inl.condition.OnConditionChanged += _evaluateHandler;
             }
         }
 
@@ -89,7 +98,6 @@ namespace Game.Systems.PuzzleSystem.Runtime{
     {
         IsSolved = true;
         if (_timerRoutine != null) { StopCoroutine(_timerRoutine); _timerRoutine = null; }
-        // TODO: fire rewards, dialogue, SFX via a PuzzleRewardExecutor
         OnSolved?.Invoke(this);
     }
 
@@ -115,5 +123,8 @@ namespace Game.Systems.PuzzleSystem.Runtime{
         yield return new WaitForSeconds(_definition.timeLimit);
         if (!IsSolved) Fail();
     }
+
+    public IEnumerable<IPuzzleCondition> GetUnmetConditions()
+        => _resolvedConditions.Where(c => !c.IsMet);
 }
 }

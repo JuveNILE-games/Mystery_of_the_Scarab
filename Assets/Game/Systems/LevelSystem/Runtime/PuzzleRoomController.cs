@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Systems.LevelSystem.Definitions;
@@ -11,15 +11,19 @@ namespace Game.Systems.LevelSystem.Runtime{
     /// Attached to the room root GameObject. Owns all PuzzleControllers in the room.
     /// Reads PuzzleRoomDefinition at runtime; at design-time the definition is assigned in Inspector.
     /// </summary>
-    public class PuzzleRoomController : MonoBehaviour{
-        [SerializeField] private PuzzleRoomDefinition _definition;
+    public class PuzzleRoomController : RoomController{
+        [SerializeField] private new PuzzleRoomDefinition _definition;
 
         public bool IsRoomSolved { get; private set; }
         public event Action<PuzzleRoomController> OnRoomSolved;
+        public event Action<PuzzleController> OnPuzzleUnlocked;
 
         private readonly List<PuzzleController> _puzzleControllers = new();
+        private PuzzleRewardExecutor _rewardExecutor;
 
         private void Awake(){
+            _rewardExecutor = FindFirstObjectByType<PuzzleRewardExecutor>();
+
             // Find or create PuzzleControllers for each PuzzleDefinition.
             foreach (var puzzleDef in _definition.puzzles)
             {
@@ -30,12 +34,11 @@ namespace Game.Systems.LevelSystem.Runtime{
                     var go = new GameObject($"Puzzle_{puzzleDef.puzzleId}");
                     go.transform.SetParent(transform);
                     existing = go.AddComponent<PuzzleController>();
-                    // Assign via reflection or expose a public Init method:
-                    existing.Initialize(puzzleDef); // see note below
+                    existing.Initialize(puzzleDef);
                 }
 
                 _puzzleControllers.Add(existing);
-                existing.OnSolved += _ => EvaluateRoomSolved();
+                existing.OnSolved += OnPuzzleSolved;
             }
 
             HandlePrerequisites();
@@ -48,10 +51,25 @@ namespace Game.Systems.LevelSystem.Runtime{
                 {
                     var prereq = _puzzleControllers.Find(p => p.Definition == pc.Definition.prerequisite);
                     if (prereq != null)
-                        prereq.OnSolved += _ => pc.Initialize();
-                    // Lock the dependent puzzle until prereq fires
+                    {
+                        prereq.OnSolved += _ => {
+                            pc.Initialize();
+                            OnPuzzleUnlocked?.Invoke(pc);
+                        };
+                    }
                 }
             }
+        }
+
+        private void OnPuzzleSolved(PuzzleController puzzle)
+        {
+            // Fire rewards
+            if (_rewardExecutor != null)
+            {
+                _rewardExecutor.Execute(puzzle.Definition.onSolvedRewards);
+            }
+
+            EvaluateRoomSolved();
         }
 
         private void EvaluateRoomSolved(){
@@ -76,5 +94,8 @@ namespace Game.Systems.LevelSystem.Runtime{
         private PuzzleController FindPuzzleController(PuzzleDefinition def)
             => GetComponentsInChildren<PuzzleController>()
                 .FirstOrDefault(pc => pc.Definition == def);
+
+        public IEnumerable<PuzzleController> GetUnsolvedPuzzles()
+            => _puzzleControllers.Where(p => !p.IsSolved && !p.IsFailed);
     }
 }
