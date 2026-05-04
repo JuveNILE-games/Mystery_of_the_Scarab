@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 64cf035159de7284686d44a08ffad0e2
+guid: 524c434f0da19084ba1b7d916d3b897c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -94,6 +94,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -107,24 +120,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -136,529 +136,529 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: benjamin_walk_0
+      name: benjamin sprint_0
       rect:
         serializedVersion: 2
-        x: 12
+        x: 0
         y: 144
-        width: 23
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca3f3964e12e25f4b86cff2961b4528d
-      internalID: -705073813
+      spriteID: d28e64b3f1a7ae74c9359d1f004179bf
+      internalID: -770854054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_1
+      name: benjamin sprint_1
       rect:
         serializedVersion: 2
-        x: 61
+        x: 48
         y: 144
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 815bad7ded5bac047b598f52ce535b3d
-      internalID: -999769815
+      spriteID: e8c24767f7be9b149b340b3f746488fb
+      internalID: -1874940325
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_2
+      name: benjamin sprint_2
       rect:
         serializedVersion: 2
-        x: 108
+        x: 96
         y: 144
-        width: 23
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07e42a660fb972244a4f6beb60110d27
-      internalID: 2124117394
+      spriteID: 6e6c8e8217dff774fbe14cdc3718dde7
+      internalID: 1073758223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_3
+      name: benjamin sprint_3
       rect:
         serializedVersion: 2
-        x: 157
+        x: 144
         y: 144
-        width: 23
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d507c8c7f57df04fafd21380b44ce9f
-      internalID: 1194972648
+      spriteID: cdd645b3f38dee446a070dd99a3eec22
+      internalID: 1070219444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_4
+      name: benjamin sprint_4
       rect:
         serializedVersion: 2
-        x: 205
+        x: 192
         y: 144
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70beaa1978a0a01428cd7ef557f999ff
-      internalID: 947663651
+      spriteID: 43b1d891cdc2b59469875f0ad6d877a0
+      internalID: -14144421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_5
+      name: benjamin sprint_5
       rect:
         serializedVersion: 2
-        x: 253
+        x: 240
         y: 144
-        width: 23
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f73454587bc5cda4da1efb9e0de7b719
-      internalID: -1697636523
+      spriteID: 381ad849ca3c025469918386bda01e38
+      internalID: 765403934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_6
+      name: benjamin sprint_6
       rect:
         serializedVersion: 2
-        x: 14
+        x: 0
         y: 96
-        width: 21
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de597ad11d9d9c34ebb8ec8c143266c6
-      internalID: 1214423631
+      spriteID: 51bc71e8837581048ace69552738ee66
+      internalID: -219370389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_7
+      name: benjamin sprint_7
       rect:
         serializedVersion: 2
-        x: 61
+        x: 48
         y: 96
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7480a291ed2c81d429a4df26dd28b47c
-      internalID: 809996970
+      spriteID: 8bb3354b810f3634b86e2c2254a3d75e
+      internalID: -1474845302
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_8
+      name: benjamin sprint_8
       rect:
         serializedVersion: 2
-        x: 110
+        x: 96
         y: 96
-        width: 21
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b9d8b76c3016734384ae2eda324f865
-      internalID: -796531758
+      spriteID: 0818a90fe82615241be9ea30164278ba
+      internalID: -1374518598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_9
+      name: benjamin sprint_9
       rect:
         serializedVersion: 2
-        x: 158
+        x: 144
         y: 96
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d5193787e42a2f41a0b6ee1c10ba5cd
-      internalID: -1187960770
+      spriteID: 86d2b3d0d20d68249a4b523565d2c1c9
+      internalID: -2030742722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_10
+      name: benjamin sprint_10
       rect:
         serializedVersion: 2
-        x: 205
+        x: 192
         y: 96
-        width: 24
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9827427e0dee9914d8812d6311fb93a7
-      internalID: -847393427
+      spriteID: 5e13c4087f1d75647849df0dff0f9314
+      internalID: -1602566406
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_11
+      name: benjamin sprint_11
       rect:
         serializedVersion: 2
-        x: 254
+        x: 240
         y: 96
-        width: 22
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6960c99dd1237744490c5bd3cb01624c
-      internalID: -520693717
+      spriteID: 5902f39f5432c3d49a93323d9cac969d
+      internalID: 167630912
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_12
+      name: benjamin sprint_12
       rect:
         serializedVersion: 2
-        x: 12
+        x: 0
         y: 48
-        width: 23
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ede2f813e99c3444b68a88bb67efbf8
-      internalID: -885491044
+      spriteID: d7c202835d83f8a44ae6fcc383f94f87
+      internalID: 115290336
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_13
+      name: benjamin sprint_13
       rect:
         serializedVersion: 2
-        x: 61
+        x: 48
         y: 48
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d29e3090f38190f4e98a2492a929d888
-      internalID: -933356294
+      spriteID: eaa348c4da183524c9ce1601161d7943
+      internalID: -1565159642
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_14
+      name: benjamin sprint_14
       rect:
         serializedVersion: 2
-        x: 108
+        x: 96
         y: 48
-        width: 23
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b621ee0c4334e8f4fb426b27e8e75f96
-      internalID: 876592686
+      spriteID: 3d92a683d97919f40b31882d20c29d69
+      internalID: -1136250648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_15
+      name: benjamin sprint_15
       rect:
         serializedVersion: 2
-        x: 157
+        x: 144
         y: 48
-        width: 23
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b61b17761ef8786449f5fc97cdd228b0
-      internalID: -1193546650
+      spriteID: 316972a7cf07d3e4fb5430afde97517d
+      internalID: 560933021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_16
+      name: benjamin sprint_16
       rect:
         serializedVersion: 2
-        x: 205
+        x: 192
         y: 48
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ced3f0203e8214c4da9283bd9ed8677d
-      internalID: -1472002993
+      spriteID: bea871477f7fcd94b980fcb7eb3d1be0
+      internalID: -1649943047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_17
+      name: benjamin sprint_17
       rect:
         serializedVersion: 2
-        x: 253
+        x: 240
         y: 48
-        width: 23
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ec92519d44496d47bc5ba5af9c55aae
-      internalID: 1805074512
+      spriteID: fcd2e3934ebefe04cbc5a4ceebcd3454
+      internalID: 174180581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_18
+      name: benjamin sprint_18
       rect:
         serializedVersion: 2
-        x: 13
+        x: 0
         y: 0
-        width: 21
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e675afb7fe80874c97f58c108e67fcf
-      internalID: 343478336
+      spriteID: 5812534ae9b034746a7e6633ef29385c
+      internalID: 1808456079
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_19
+      name: benjamin sprint_19
       rect:
         serializedVersion: 2
-        x: 61
+        x: 48
         y: 0
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ded93cfc2cd56a4f90daafabe5f8fb2
-      internalID: -402973284
+      spriteID: 974bde93f52f6eb4cb7b294ad643124e
+      internalID: -1451138853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_20
+      name: benjamin sprint_20
       rect:
         serializedVersion: 2
-        x: 109
+        x: 96
         y: 0
-        width: 21
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 045c9c5b7b6e4ba45a4ac35fb47ce689
-      internalID: 724001181
+      spriteID: 53a775c2e7dd04c428c342d61cb3248f
+      internalID: -1121463476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_21
+      name: benjamin sprint_21
       rect:
         serializedVersion: 2
-        x: 156
+        x: 144
         y: 0
-        width: 22
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 030f08efbe5666645b7452c3a1c13c4e
-      internalID: -724319496
+      spriteID: 2a4b418596c64024bae4cb577acd35b8
+      internalID: 1796779211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_22
+      name: benjamin sprint_22
       rect:
         serializedVersion: 2
-        x: 203
+        x: 192
         y: 0
-        width: 24
-        height: 40
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f567970620f2a9942b7333c61fd2df44
-      internalID: 445669650
+      spriteID: 20d4291beccc471468ede55f1c1f442a
+      internalID: 1075467675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: benjamin_walk_23
+      name: benjamin sprint_23
       rect:
         serializedVersion: 2
-        x: 252
+        x: 240
         y: 0
-        width: 22
-        height: 39
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70f1104e7e1942b4ea7df54f33eeb6d8
-      internalID: -1464844535
+      spriteID: a9fa307b36700964ca970e63555ba172
+      internalID: -1025078200
       vertices: []
       indices: 
       edges: []
@@ -667,7 +667,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 17d4fb125374a9b4da8796d01bb4c215
+    spriteID: 89011a93bace9b848b3f732bd5b60b20
     internalID: 0
     vertices: []
     indices: 
@@ -675,32 +675,34 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      benjamin_walk_0: -705073813
-      benjamin_walk_1: -999769815
-      benjamin_walk_10: -847393427
-      benjamin_walk_11: -520693717
-      benjamin_walk_12: -885491044
-      benjamin_walk_13: -933356294
-      benjamin_walk_14: 876592686
-      benjamin_walk_15: -1193546650
-      benjamin_walk_16: -1472002993
-      benjamin_walk_17: 1805074512
-      benjamin_walk_18: 343478336
-      benjamin_walk_19: -402973284
-      benjamin_walk_2: 2124117394
-      benjamin_walk_20: 724001181
-      benjamin_walk_21: -724319496
-      benjamin_walk_22: 445669650
-      benjamin_walk_23: -1464844535
-      benjamin_walk_3: 1194972648
-      benjamin_walk_4: 947663651
-      benjamin_walk_5: -1697636523
-      benjamin_walk_6: 1214423631
-      benjamin_walk_7: 809996970
-      benjamin_walk_8: -796531758
-      benjamin_walk_9: -1187960770
+      benjamin sprint_0: -770854054
+      benjamin sprint_1: -1874940325
+      benjamin sprint_10: -1602566406
+      benjamin sprint_11: 167630912
+      benjamin sprint_12: 115290336
+      benjamin sprint_13: -1565159642
+      benjamin sprint_14: -1136250648
+      benjamin sprint_15: 560933021
+      benjamin sprint_16: -1649943047
+      benjamin sprint_17: 174180581
+      benjamin sprint_18: 1808456079
+      benjamin sprint_19: -1451138853
+      benjamin sprint_2: 1073758223
+      benjamin sprint_20: -1121463476
+      benjamin sprint_21: 1796779211
+      benjamin sprint_22: 1075467675
+      benjamin sprint_23: -1025078200
+      benjamin sprint_3: 1070219444
+      benjamin sprint_4: -14144421
+      benjamin sprint_5: 765403934
+      benjamin sprint_6: -219370389
+      benjamin sprint_7: -1474845302
+      benjamin sprint_8: -1374518598
+      benjamin sprint_9: -2030742722
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
