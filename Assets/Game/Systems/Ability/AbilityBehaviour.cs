@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using Game;
 
 [RequireComponent(typeof(PlayerInteractor))]
 public abstract class AbilityBehaviour : MonoBehaviour

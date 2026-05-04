@@ -1,3 +1,4 @@
+using Game;
 using UnityEngine;
 
 // tiny example of hooking a RequiresAbility to a door
