@@ -42,6 +42,9 @@ namespace Game.Player
         [SerializeField] private bool sprintPressed;
         [SerializeField] private bool primaryAbilityPressed;
         [SerializeField] private bool secondaryAbilityPressed;
+
+        [Header("Runtime Motion")]
+        [SerializeField] private Vector3 additionalVelocity;
         
         // State management
         private GroundedState groundedState;
@@ -76,6 +79,14 @@ namespace Game.Player
         public bool IsSecondaryAbilityPressed => secondaryAbilityPressed;
         
         public Bindable<CharacterData> Data { get; private set; } = new();
+        public float VerticalVelocity { get; set; }
+        public Vector3 HorizontalVelocity { get; set; }
+        public float SpeedMultiplier { get; set; } = 1f;
+        public Vector3 AdditionalVelocity
+        {
+            get => additionalVelocity;
+            set => additionalVelocity = value;
+        }
         
         /// <summary>Last non-zero cardinal direction for sprite animation on state entry.</summary>
         public Vector2 LastMoveDirection { get; private set; } = Vector2.down;
@@ -106,13 +117,10 @@ namespace Game.Player
         
         protected override void Update()
         {
-            base.Update();
-            
-            // Update grounded state
             CheckGrounded();
-            
-            // Handle top-level state transitions
             HandleMainStateTransitions();
+            base.Update();
+            ApplyMovement();
         }
         
         #endregion
@@ -140,17 +148,17 @@ namespace Game.Player
         
         private void SetupMainTransitions()
         {
-            // Grounded → Airborne (when not grounded)
+            // Grounded → Airborne (jump started or no longer grounded)
             groundedState
-                .When(() => !isGrounded && !IsInAbilityState(), airborneState, priority: 10, name: "Not Grounded");
+                .When(() => (!isGrounded || VerticalVelocity > 0f) && !IsInAbilityState(), airborneState, priority: 10, name: "Not Grounded");
             
             // Grounded → Ability (when ability pressed)
             groundedState
                 .When(() => primaryAbilityPressed, abilityState, priority: 20, name: "Ability Pressed");
             
-            // Airborne → Grounded (when grounded and falling)
+            // Airborne → Grounded (when grounded and descending)
             airborneState
-                .When(() => isGrounded && controller.velocity.y <= 0.1f, groundedState, priority: 10, name: "Landed");
+                .When(() => isGrounded && VerticalVelocity <= 0f, groundedState, priority: 10, name: "Landed");
             
             // Ability → Grounded (when finished and grounded)
             abilityState
@@ -246,6 +254,35 @@ namespace Game.Player
         {
             // This runs in addition to automatic transitions
             // You can add manual state switching logic here if needed
+        }
+
+        private void ApplyMovement()
+        {
+            if (controller == null)
+            {
+                additionalVelocity = Vector3.zero;
+                return;
+            }
+
+            CharacterData data = Data.Value;
+            float gravity = data != null ? data.Gravity : Physics.gravity.y * 2f;
+            float groundStickForce = data != null ? data.GroundStickForce : -5f;
+            float moveSpeed = data != null ? data.MoveSpeed : 3f;
+
+            if (!isGrounded)
+            {
+                VerticalVelocity += gravity * Time.deltaTime;
+            }
+            else if (VerticalVelocity < 0f)
+            {
+                VerticalVelocity = groundStickForce;
+            }
+
+            HorizontalVelocity = worldMoveInput * moveSpeed * SpeedMultiplier;
+            Vector3 velocity = HorizontalVelocity + (Vector3.up * VerticalVelocity) + additionalVelocity;
+            controller.Move(velocity * Time.deltaTime);
+
+            additionalVelocity = Vector3.zero;
         }
         
         private bool IsInAbilityState()

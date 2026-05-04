@@ -29,9 +29,9 @@ namespace Game.Player.States.Ability{
             }
             else
             {
-                if (Controller != null)
+                if (Owner != null)
                 {
-                    Controller.Move(Vector3.up * 10f * Time.deltaTime);
+                    Owner.AdditionalVelocity = Vector3.up * 10f;
                 }
             }
         }

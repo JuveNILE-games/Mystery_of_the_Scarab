@@ -19,8 +19,6 @@ namespace Game.Player.States
         protected SpriteAnimator Animator => Owner?.Animator;
         protected Transform Transform => Owner?.transform;
 
-        // Common player data
-        protected Vector3 Velocity => Controller != null ? Controller.velocity : Vector3.zero;
         protected bool IsGrounded => Owner != null && Owner.IsGrounded;
 
         protected PlayerState(string name = null) : base(name) { }

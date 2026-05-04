@@ -29,10 +29,9 @@ namespace Game.Player.States.Ability{
             }
             else
             {
-                // Simple Dash logic
-                if (Controller != null)
+                if (Owner != null && Transform != null)
                 {
-                    Controller.Move(Transform.forward * 20f * Time.deltaTime);
+                    Owner.AdditionalVelocity = Transform.forward * 20f;
                 }
             }
         }

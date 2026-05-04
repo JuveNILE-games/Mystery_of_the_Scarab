@@ -6,6 +6,10 @@
         public override void OnEnter()
         {
             base.OnEnter();
+            if (Owner != null)
+            {
+                Owner.VerticalVelocity = Owner.Data.Value != null ? Owner.Data.Value.GroundStickForce : -5f;
+            }
             Animator?.Play("Land");
         }
     }

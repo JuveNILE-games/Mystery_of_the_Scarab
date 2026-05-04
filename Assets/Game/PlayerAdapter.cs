@@ -1,6 +1,7 @@
 using UnityEngine;
 using Core;
 using Core.Utility.Attributes;
+using NetCore.Abstractions;
 
 namespace Game.Player
 {
@@ -15,8 +16,10 @@ namespace Game.Player
         [SerializeField] private PlayerInputInitializer _input;
         [SerializeField] private PlayerInteractor _interactor;
         [SerializeField] private PlayerAbilities _abilities;
+        [SerializeField] private GameObject _networkingGameObject;
         
         private IAIController _aiController;
+        private INetworkOwnershipGate _ownershipGate;
 
         [Inject] private IControllableRegistry _registry;
 
@@ -26,6 +29,7 @@ namespace Game.Player
             if (_interactor == null) _interactor = GetComponent<PlayerInteractor>();
             if (_abilities == null) _abilities = GetComponent<PlayerAbilities>();
             if (_aiController == null) _aiController = GetComponent<IAIController>();
+            if (_ownershipGate == null) _ownershipGate = _networkingGameObject.GetComponent<INetworkOwnershipGate>();
         }
 
         private void Start()
@@ -49,6 +53,14 @@ namespace Game.Player
 
         public void OnControlGained()
         {
+            if (!CanAcceptLocalControl())
+            {
+                if (_input != null) _input.enabled = false;
+                if (_interactor != null) _interactor.SetControlled(false);
+                if (_abilities != null) _abilities.OnControlLost();
+                return;
+            }
+
             // Enable direct player input
             if (_input != null) _input.enabled = true;
             
@@ -79,6 +91,11 @@ namespace Game.Player
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[PlayerAdapter] Direct control lost for {gameObject.name} (AI enabled)");
 #endif
+        }
+
+        private bool CanAcceptLocalControl()
+        {
+            return _ownershipGate == null || _ownershipGate.CanAcceptLocalControl;
         }
     }
 }

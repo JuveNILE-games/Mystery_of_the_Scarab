@@ -66,6 +66,10 @@ namespace Game.Player.States.Grounded
         public override void OnEnter()
         {
             base.OnEnter();
+            if (Owner != null && Owner.VerticalVelocity < 0f)
+            {
+                Owner.VerticalVelocity = Owner.Data.Value != null ? Owner.Data.Value.GroundStickForce : -5f;
+            }
             Debug.Log("[PlayerSM] Entered Grounded state");
         }
         

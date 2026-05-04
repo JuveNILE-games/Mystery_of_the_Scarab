@@ -19,13 +19,6 @@ namespace Game.Player.States.Grounded{
         public override void OnUpdate()
         {
             base.OnUpdate();
-            
-            // Apply simple gravity/stick force to ensure CharacterController updates isGrounded
-            // and we don't float off slopes.
-            if (Controller != null)
-            {
-                Controller.Move(Vector3.down * 4f * Time.deltaTime);
-            }
         }
     }
 }
