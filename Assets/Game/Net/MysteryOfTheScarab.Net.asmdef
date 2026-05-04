@@ -1,0 +1,19 @@
+{
+    "name": "MysteryOfTheScarab.Net",
+    "rootNamespace": "Game.Net",
+    "references": [
+        "GUID:8411a964f908abf4a8401bafc804a395",
+        "GUID:ee6885eba12e50742b62b156919effa1",
+        "GUID:06c0659c2dccc864291e6c6587f9e0da",
+        "GUID:6e20f757a1bae164fa42750dd2b27dcb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

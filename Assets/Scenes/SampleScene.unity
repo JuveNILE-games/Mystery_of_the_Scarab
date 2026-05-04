@@ -653,14 +653,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.06157407
+    width: 0.35234377
+    height: 0.16666666
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 20
   orthographic: 0
-  orthographic size: 2.4107144
+  orthographic size: 2.8125
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1602,6 +1602,60 @@ PrefabInstance:
       propertyPath: _playOnStart
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'managedReferences[1075032652250873946]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[Game.PlayerAbilities,
+        MysteryOfTheScarab]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'managedReferences[1075032652250873947]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[Game.PlayerInteractor,
+        MysteryOfTheScarab]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873946].Name
+      value: Abilities
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873947].Name
+      value: Interactor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873946].m_Value
+      value: 
+      objectReference: {fileID: 721389177}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873947].m_Value
+      value: 
+      objectReference: {fileID: 721389176}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 1075032652250873946
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[3]'
+      value: 1075032652250873947
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873946].GUID.m_Value0
+      value: 10640889365225066479
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873946].GUID.m_Value1
+      value: 14823991233567839807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873947].GUID.m_Value0
+      value: 848870189693822947
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873947].GUID.m_Value1
+      value: 3753154221857369063
+      objectReference: {fileID: 0}
     - target: {fileID: 2120222826471210667, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
       propertyPath: autoFindReferences
       value: 1
@@ -1699,6 +1753,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+--- !u!114 &721389176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7154600553087900425, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+  m_PrefabInstance: {fileID: 721389175}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09beedb975ced0244a383499beada42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::PlayerInteractor
+--- !u!114 &721389177 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5208957104539809424, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+  m_PrefabInstance: {fileID: 721389175}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc444d4877fc90945bd4e800c2aab562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::PlayerAbilities
 --- !u!4 &724649140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4081627251559586505, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
@@ -1945,6 +2021,60 @@ PrefabInstance:
       propertyPath: _playOnStart
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'managedReferences[1075032652250873944]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[Game.PlayerInteractor,
+        MysteryOfTheScarab]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'managedReferences[1075032652250873945]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[Game.PlayerAbilities,
+        MysteryOfTheScarab]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873944].Name
+      value: Interactor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873945].Name
+      value: Abilities
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873944].m_Value
+      value: 
+      objectReference: {fileID: 823379561}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873945].m_Value
+      value: 
+      objectReference: {fileID: 823379560}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 1075032652250873944
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[3]'
+      value: 1075032652250873945
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873944].GUID.m_Value0
+      value: 848870189693822947
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873944].GUID.m_Value1
+      value: 3753154221857369063
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873945].GUID.m_Value0
+      value: 10640889365225066479
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046670349178058408, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+      propertyPath: managedReferences[1075032652250873945].GUID.m_Value1
+      value: 14823991233567839807
+      objectReference: {fileID: 0}
     - target: {fileID: 2120222826471210667, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
       propertyPath: autoFindReferences
       value: 1
@@ -2038,6 +2168,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+--- !u!114 &823379560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5208957104539809424, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+  m_PrefabInstance: {fileID: 823379559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc444d4877fc90945bd4e800c2aab562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::PlayerAbilities
+--- !u!114 &823379561 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7154600553087900425, guid: 31dbcf5c740563d4fb1648d25497cf04, type: 3}
+  m_PrefabInstance: {fileID: 823379559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09beedb975ced0244a383499beada42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::PlayerInteractor
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -4959,4 +5111,3 @@ SceneRoots:
   - {fileID: 419489008}
   - {fileID: 867082000}
   - {fileID: 471708580}
-
