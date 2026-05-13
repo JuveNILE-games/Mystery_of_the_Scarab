@@ -10,6 +10,7 @@ namespace Game.Player
     /// direct player control and AI companion control.
     /// </summary>
     [DefaultExecutionOrder(-10)]
+    [RequireComponent(typeof(Game.DialogueParticipant))]
     public class PlayerAdapter : MonoBehaviour, IControllable
     {
         [Header("Components")]

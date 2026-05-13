@@ -14,6 +14,9 @@ namespace Game.Systems.PuzzleSystem.Runtime
     /// </summary>
     public class PuzzleRewardExecutor : MonoBehaviour
     {
+        // [Inject] fields are filled by MonoBehaviourInjection.InjectAllMonoBehaviours,
+        // called by Bootstrapper.OnSceneLoaded. Attach this component to a GameObject
+        // that is present in a scene loaded after the service bootstrapper.
         [Inject] private IDialogueService _dialogueService;
 
         public void Execute(IReadOnlyList<PuzzleReward> rewards)

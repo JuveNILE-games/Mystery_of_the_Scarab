@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using Core;
 using Core.Systems.Interaction;
 
 namespace Game
@@ -15,6 +16,7 @@ namespace Game
 
         [Header("Interaction Settings")]
         public string interactionPrompt = "Press interact";
+        [SerializeField] private bool isInteractableByCompanion = false;
         public PlayerInteractEvent OnInteract;
 
         private void OnEnable() { if (!All.Contains(this)) All.Add(this); }
@@ -60,6 +62,12 @@ namespace Game
         /// </summary>
         public bool Interact(GameObject interactor)
         {
+            // If the interactor is an AI companion, check the companion gate first.
+            if (interactor != null && interactor.GetComponent<IAIController>() != null)
+            {
+                if (!isInteractableByCompanion) return false;
+            }
+
             var playerInteractor = interactor.GetComponent<PlayerInteractor>();
             if (playerInteractor != null)
             {
@@ -70,7 +78,7 @@ namespace Game
             OnInteract?.Invoke(null);
             return true;
         }
-
+        
         public void SetFocus(bool state)
         {
             // highlight
@@ -78,8 +86,9 @@ namespace Game
 
         #region IInteractable Implementation
 
-        string IInteractable.InteractionPrompt => interactionPrompt;
-        bool IInteractable.IsInteractable => enabled && gameObject.activeInHierarchy;
+        public string InteractionPrompt => interactionPrompt;
+        public bool IsInteractable => enabled && gameObject.activeInHierarchy;
+        public bool IsInteractableByCompanion => isInteractableByCompanion;
 
         #endregion
     }
