@@ -114,7 +114,10 @@ namespace Game.Installers
                     if (!string.IsNullOrEmpty(e.Name) && e.Event != null)
                         eventsDict[e.Name] = e.Event;
 
-            var commandRegistry = new DialogueCommandRegistry(logger, eventsDict, typewriter);
+            var commandRegistry = new DialogueCommandRegistry(
+                logger, eventsDict, typewriter, eventBus,
+                locator.TryGet<Core.Systems.AudioSystem.AudioService>(out var audioService) ? audioService : null,
+                cfg.SoundRegistry);
 
             // ── DialogueService ───────────────────────────────────────────────────
             var dialogueService = new DialogueService(
@@ -128,6 +131,11 @@ namespace Game.Installers
             // ── Participant & Player Provider ─────────────────────────────────────
             var playerProvider = new TaggedLocalPlayerProvider("Player");
             locator.Register<ILocalPlayerProvider>(playerProvider);
+
+            // ── Player Slot Provider (multiplayer-aware) ─────────────────────────
+            var controllableRegistry = locator.Get<IControllableRegistry>();
+            var slotProvider = new PlayerSlotProvider(controllableRegistry);
+            locator.Register<IPlayerSlotProvider>(slotProvider);
 
             logger?.Log(null, "[Dialogue] Dialogue system registered. Adapter will self-register on scene start.");
         }

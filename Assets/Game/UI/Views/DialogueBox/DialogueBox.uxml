@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi:schemaLocation="UnityEngine.UIElements ../../../UIElementsSchema/UnityEngine.UIElements.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ui:VisualElement name="dialogue-overlay-container" class="dialogue-overlay-container">
         <ui:VisualElement name="dialogue-layout-row" class="dialogue-layout-row">
-            <!-- Left Side Area (hidden by default; shown when active speaker is on left) -->
-            <ui:VisualElement name="dialogue-left-area" class="dialogue-left-area" style="visibility: hidden;">
+            <!-- Left Side Area (hidden by default via display:none; shown when active speaker is on left) -->
+            <ui:VisualElement name="dialogue-left-area" class="dialogue-left-area" style="display: none;">
                 <ui:VisualElement name="portrait-left" class="dialogue-portrait dialogue-left-portrait" />
                 <ui:Label name="name-left" class="dialogue-name dialogue-left-name" />
             </ui:VisualElement>
@@ -13,8 +13,8 @@
                 <ui:VisualElement name="choices-row" class="dialogue-choices" />
             </ui:VisualElement>
 
-            <!-- Right Side Area (hidden by default; shown when active speaker is on right) -->
-            <ui:VisualElement name="dialogue-right-area" class="dialogue-right-area" style="visibility: hidden;">
+            <!-- Right Side Area (hidden by default via display:none; shown when active speaker is on right) -->
+            <ui:VisualElement name="dialogue-right-area" class="dialogue-right-area" style="display: none;">
                 <ui:VisualElement name="portrait-right" class="dialogue-portrait dialogue-right-portrait" />
                 <ui:Label name="name-right" class="dialogue-name dialogue-right-name" />
             </ui:VisualElement>
