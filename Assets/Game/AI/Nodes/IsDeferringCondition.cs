@@ -13,6 +13,6 @@ namespace Game.AI.Nodes
     public class IsDeferringCondition : Condition
     {
         [SerializeReference] public BlackboardVariable<float> DeferenceTimer = new();
-        public override bool IsTrue() => DeferenceTimer != null && DeferenceTimer.Value > 0f;
+        public override bool IsTrue() => DeferenceTimer != null && DeferenceTimer.Value > 0.01f;
     }
 }

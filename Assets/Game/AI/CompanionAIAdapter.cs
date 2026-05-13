@@ -32,6 +32,7 @@ namespace Game.AI
         [Inject] private IGameStateManager _gameState;
 
         private bool _aiRequested;
+        private bool _isFirstEnable = true;
         private IDisposable _targetSubscription;
 
         private void Awake()
@@ -93,11 +94,16 @@ namespace Game.AI
             _aiRequested = enable;
             if (enable)
             {
-                OnControlLost();
+                if (!_isFirstEnable)
+                {
+                    OnControlLost();
+                }
+                _isFirstEnable = false;
                 SubscribeToNavMeshReady();
             }
             else
             {
+                _isFirstEnable = false; // Next enable should trigger deference if switched from player
                 DisableAI();
             }
         }

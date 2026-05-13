@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Unity.Behavior;
 using UnityEngine;
+using Core.Systems.Interaction;
 using Action = Unity.Behavior.Action;
 
 namespace Game.AI.Nodes{
@@ -23,8 +24,11 @@ namespace Game.AI.Nodes{
             if (Target.Value == null || Interactor.Value == null)
                 return Status.Failure;
 
-            var interactable = Target.Value.GetComponent<Interactable>();
+            Interactable interactable = Target.Value.GetComponent<Interactable>();
             if (interactable == null) return Status.Failure;
+
+            // Check the companion gate via the IInteractable interface.
+            if (!interactable.IsInteractableByCompanion) return Status.Failure;
 
             interactable.Interact(Interactor.Value);
             return Status.Success;

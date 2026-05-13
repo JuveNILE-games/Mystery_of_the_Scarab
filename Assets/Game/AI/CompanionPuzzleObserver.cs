@@ -44,6 +44,12 @@ namespace Game.AI
         {
             _behaviorAgent = GetComponent<BehaviorGraphAgent>();
             _abilities = GetComponent<PlayerAbilities>();
+
+            // Explicitly initialize the blackboard variable to 0
+            if (_behaviorAgent != null)
+            {
+                _behaviorAgent.SetVariableValue("DeferenceTimer", 0f);
+            }
         }
 
         // ── Control events from CompanionAIAdapter ──────────────────────
@@ -82,11 +88,10 @@ namespace Game.AI
         {
             if (_deferenceTimer > 0f)
             {
-                _deferenceTimer -= Time.deltaTime;
+                _deferenceTimer = Mathf.Max(0f, _deferenceTimer - Time.deltaTime);
                 if (_behaviorAgent != null)
                 {
-                    _behaviorAgent.SetVariableValue("DeferenceTimer",
-                        Mathf.Max(0f, _deferenceTimer));
+                    _behaviorAgent.SetVariableValue("DeferenceTimer", _deferenceTimer);
                 }
             }
         }
