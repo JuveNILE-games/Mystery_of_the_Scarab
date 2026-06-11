@@ -35,13 +35,16 @@ jobs:
           sudo docker image prune --all --force
           df -h /
 
+      # Activate using a version that unity-activate@v2 understands.
+      # The license itself is not version-specific.
       - name: Activate Unity license
         uses: game-ci/unity-activate@v2
         with:
-          unityVersion: ${{ steps.read.outputs.version }}
+          unityVersion: 2022.3.61f1
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
+      # Builder uses the real project version from ProjectVersion.txt
       - name: Generate solution
         uses: game-ci/unity-builder@v4
         env:
@@ -52,7 +55,7 @@ jobs:
           buildMethod: UnityEditor.SyncVS.SyncSolution
           allowDirtyBuild: true
           versioning: None
-          customImage: unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3
+          customImage: unityci/editor:ubuntu-2022.3.61f1-base-3
 
       - name: Upload solution files
         uses: actions/upload-artifact@v4
