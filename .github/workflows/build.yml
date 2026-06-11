@@ -29,7 +29,7 @@ jobs:
     needs: get-unity-version
     runs-on: ubuntu-latest
     container:
-      image: ${{ needs.get-unity-version.outputs.image }}
+      image: unityci/editor:ubuntu-2022.3.61f1-base-3
 
     steps:
       - uses: actions/checkout@v4
