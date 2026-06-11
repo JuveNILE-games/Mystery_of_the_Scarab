@@ -1,4 +1,5 @@
 # -Dsonar.test.exclusions=**/Tests/** (no tests for now)
+# -Dsonar.tests=Assets/Tests
 name: SonarQube
 on:
   push:
@@ -26,7 +27,6 @@ jobs:
             -Dsonar.projectKey=JuveNILE-games_Mystery_of_the_Scarab
             -Dsonar.organization=juvenile-games
             -Dsonar.sources=Assets
-            -Dsonar.tests=Assets/Tests
             -Dsonar.exclusions=**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Packages/**
             -Dsonar.cs.file.suffixes=.cs
             -Dsonar.sourceEncoding=UTF-8
