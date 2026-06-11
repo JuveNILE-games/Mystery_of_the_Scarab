@@ -62,17 +62,22 @@ jobs:
           set -euo pipefail
           dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
 
-      - name: Install Unity license
-        shell: bash
+      # - name: Install Unity license
+      #   shell: bash
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #   run: |
+      #     set -euo pipefail
+      #     [ -n "${UNITY_LICENSE:-}" ] || { echo "UNITY_LICENSE missing"; exit 1; }
+      #     mkdir -p /root/.local/share/unity3d/Unity/
+      #     printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+      #     echo "License written ($(wc -c < /root/.local/share/unity3d/Unity/Unity_lic.ulf) bytes)"
+
+      - name: Activate Unity
+        uses: game-ci/unity-activate@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        run: |
-          set -euo pipefail
-          [ -n "${UNITY_LICENSE:-}" ] || { echo "UNITY_LICENSE missing"; exit 1; }
-          mkdir -p /root/.local/share/unity3d/Unity/
-          printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
-          echo "License written ($(wc -c < /root/.local/share/unity3d/Unity/Unity_lic.ulf) bytes)"
-
+    
       - name: Generate solution with Unity
         shell: bash
         run: |
