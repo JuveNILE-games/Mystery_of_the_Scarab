@@ -40,42 +40,27 @@ jobs:
           df -h /
 
       - name: Generate solution
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: ${{ steps.read.outputs.version }}
+          targetPlatform: StandaloneLinux64
+          buildMethod: Packages.Rider.Editor.RiderScriptEditor.SyncSolution
+          allowDirtyBuild: true
+          versioning: None
+          customImage: unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3
+
+      - name: List generated files
+        if: always()
         run: |
-          docker run --rm \
-            --workdir /project \
-            -v "${{ github.workspace }}:/project" \
-            -e UNITY_LICENSE \
-            -e UNITY_EMAIL \
-            -e UNITY_PASSWORD \
-            unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3 \
-            bash -c '
-              set -euo pipefail
-
-              # Write license file
-              mkdir -p /root/.local/share/unity3d/Unity/
-              printf "%s" "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
-              echo "License written"
-
-              # Generate .sln and .csproj
-              unity-editor \
-                -nographics -batchmode -quit \
-                -logFile /dev/stdout \
-                -projectPath /project \
-                -executeMethod UnityEditor.SyncVS.SyncSolution
-
-              echo "=== Generated files ==="
-              find /project -maxdepth 1 \( -name "*.sln" -o -name "*.csproj" \) -print
-            '
-
-      - name: Verify solution files
-        run: |
-          echo "Files on host after container:"
-          find . -maxdepth 1 \( -name "*.sln" -o -name "*.csproj" \) -print
-          ls -la *.sln 2>/dev/null || echo "WARNING: No .sln at root!"
+          echo "=== .sln and .csproj files ==="
+          find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
+          echo ""
+          echo "=== Root listing ==="
+          ls -la *.sln *.csproj 2>/dev/null || echo "None at root"
 
       - name: Upload solution files
         uses: actions/upload-artifact@v4
