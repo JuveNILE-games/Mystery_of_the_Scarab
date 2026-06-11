@@ -78,17 +78,13 @@ jobs:
           [ -n "${UNITY_EMAIL:-}" ] || { echo "UNITY_EMAIL missing"; exit 1; }
           [ -n "${UNITY_PASSWORD:-}" ] || { echo "UNITY_PASSWORD missing"; exit 1; }
 
-      - name: Install Unity license
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          mkdir -p /root/.local/share/unity3d/Unity/
-          printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
-
-          echo "Unity license file written."
-          wc -c /root/.local/share/unity3d/Unity/Unity_lic.ulf
-
+      - name: Activate Unity License
+        uses: buildalon/activate-unity-license@v2
+        with:
+          license: Personal
+          username: ${{ secrets.UNITY_EMAIL }}
+          password: ${{ secrets.UNITY_PASSWORD }}
+          
       - name: Generate solution with Unity
         shell: bash
         run: |
