@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.read.outputs.image }}
+      version: ${{ steps.read.outputs.version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +21,7 @@ jobs:
         id: read
         run: |
           VERSION=$(sed -n 's/^m_EditorVersion: //p' ProjectSettings/ProjectVersion.txt)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "image=unityci/editor:ubuntu-${VERSION}-base-3" >> "$GITHUB_OUTPUT"
 
   analyze:
@@ -35,7 +37,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install JDK 17
+        shell: bash
         run: |
+          set -euo pipefail
           apt-get update -qq
           apt-get install -y openjdk-17-jre-headless
 
@@ -53,28 +57,17 @@ jobs:
             Library-
 
       - name: Install dotnet-sonarscanner
-        run: |
-          dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
-
-      - name: Install Unity Personal license
         shell: bash
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         run: |
           set -euo pipefail
+          dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
 
-          if [ -z "${UNITY_LICENSE:-}" ]; then
-            echo "UNITY_LICENSE secret is empty or missing."
-            exit 1
-          fi
-
-          mkdir -p /root/.local/share/unity3d/Unity/
-
-          printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
-
-          echo "Unity license file written."
-          echo "File size:"
-          wc -c /root/.local/share/unity3d/Unity/Unity_lic.ulf
+      - name: Activate Unity license
+        uses: game-ci/unity-activate@v2
+        with:
+          unityVersion: ${{ needs.get-unity-version.outputs.version }}
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
       - name: Generate solution with Unity
         shell: bash
@@ -101,9 +94,11 @@ jobs:
           find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
 
       - name: Begin SonarQube analysis
+        shell: bash
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          set -euo pipefail
           /sonarscanner/dotnet-sonarscanner begin \
             /k:"JuveNILE-games_Mystery_of_the_Scarab" \
             /o:"juvenile-games" \
@@ -118,7 +113,6 @@ jobs:
           set -euo pipefail
 
           SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
-
           if [ -z "$SLN_FILE" ]; then
             echo "No .sln file found in repository root."
             exit 1
@@ -128,7 +122,9 @@ jobs:
           dotnet build "$SLN_FILE" --configuration Debug
 
       - name: End SonarQube analysis
+        shell: bash
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          set -euo pipefail
           /sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
