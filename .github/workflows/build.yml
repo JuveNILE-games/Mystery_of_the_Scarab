@@ -98,43 +98,58 @@ jobs:
               sed -i "/<CscToolExe>/d" *.csproj
               sed -i "/<CscToolPath>/d" *.csproj
 
-              # ── Remove third-party projects dynamically ──
-              for csproj in *.csproj; do
-                # Always keep Assembly-CSharp projects
-                case "$csproj" in Assembly-CSharp*) continue ;; esac
+              # ── Remove projects that cannot compile ──
+              # Try building, extract failing projects, exclude them, retry
+              SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
+              MAX_RETRIES=5
 
-                # Keep projects whose source files are outside Plugins folders
-                if grep -q "<Compile Include=\"Assets/" "$csproj" && \
-                   grep "<Compile Include=\"Assets/" "$csproj" | grep -qv "/Plugins/"; then
-                  continue
+              for attempt in $(seq 1 $MAX_RETRIES); do
+                echo ""
+                echo "=== Build attempt $attempt ==="
+
+                BUILD_OUTPUT=$(dotnet build "$SLN_FILE" --configuration Debug --no-incremental 2>&1) || true
+
+                # Extract unique failing .csproj files from error lines
+                FAILING=$(echo "$BUILD_OUTPUT" \
+                  | grep ": error CS" \
+                  | grep -oP "\[.*?\.csproj\]" \
+                  | tr -d "[]" \
+                  | sort -u || true)
+
+                if [ -z "$FAILING" ]; then
+                  echo "Build succeeded!"
+                  break
                 fi
 
-                echo "Excluding third-party project: $csproj"
-                proj_name="${csproj%.csproj}"
-                sed -i "/\"${proj_name}.csproj\"/d" *.sln
-                rm -f "$csproj"
+                if [ "$attempt" -eq "$MAX_RETRIES" ]; then
+                  echo "Still failing after $MAX_RETRIES attempts:"
+                  echo "$FAILING"
+                  exit 1
+                fi
+
+                # Exclude each failing project
+                for proj_path in $FAILING; do
+                  proj_file=$(basename "$proj_path")
+                  proj_name="${proj_file%.csproj}"
+                  echo "Excluding failing project: $proj_name"
+                  sed -i "/\"${proj_name}.csproj\"/d" "$SLN_FILE"
+                  rm -f "$proj_file"
+                done
               done
 
               echo ""
-              echo "=== Projects to analyze ==="
+              echo "=== Final projects ==="
               find . -maxdepth 1 -name "*.csproj" -print
 
-              # ── Find the .sln ──
-              SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
-              echo "Building $SLN_FILE"
-
-              # ── Sonar begin ──
+              # ── Now do the real sonar build ──
               /sonarscanner/dotnet-sonarscanner begin \
                 /k:"JuveNILE-games_Mystery_of_the_Scarab" \
                 /o:"juvenile-games" \
                 /d:sonar.token="$SONAR_TOKEN" \
                 /d:sonar.host.url="https://sonarcloud.io" \
-                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**" \
-                /d:sonar.sources="Assets"
+                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**"
 
-              # ── Build ──
               dotnet build "$SLN_FILE" --configuration Debug --no-incremental
 
-              # ── Sonar end ──
               /sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
             '
