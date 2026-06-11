@@ -79,23 +79,22 @@ jobs:
               export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
               # ── Install .NET SDK 8 ──
-              apt-get install -y --no-install-recommends wget
               wget -q https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
               chmod +x /tmp/dotnet-install.sh
               /tmp/dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet
               export PATH="/usr/share/dotnet:$PATH"
               export DOTNET_ROOT="/usr/share/dotnet"
 
-              # ── Install sonarscanner ──
+              # ── Install sonarscanner (from /tmp to avoid csproj confusion) ──
+              cd /tmp
               dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
+              cd /project
 
-              # ── Point to Mono reference assemblies (inside this container) ──
+              # ── Point to Mono reference assemblies ──
               export FrameworkPathOverride=/opt/unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/
 
-              # ── Strip source generators (container paths that dotnet cant use as analyzers) ──
+              # ── Strip source generators and Unity compiler overrides ──
               sed -i "/<Analyzer Include=/d" *.csproj
-
-              # ── Remove Unity custom compiler override ──
               sed -i "/<CscToolExe>/d" *.csproj
               sed -i "/<CscToolPath>/d" *.csproj
 
