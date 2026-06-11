@@ -90,9 +90,6 @@ jobs:
               dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
               cd /github/workspace
 
-              # ── Point to Mono reference assemblies ──
-              export FrameworkPathOverride=/opt/unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/
-
               # ── Strip source generators and Unity compiler overrides ──
               sed -i "/<Analyzer Include=/d" *.csproj
               sed -i "/<CscToolExe>/d" *.csproj
