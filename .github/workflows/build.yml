@@ -1,0 +1,32 @@
+name: SonarQube
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # required for accurate blame annotations and new-code detection
+
+      - name: Analyze with SonarQube Cloud
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          args: >
+            -Dsonar.projectKey=JuveNILE-games_Mystery_of_the_Scarab
+            -Dsonar.organization=juvenile-games
+            -Dsonar.sources=Assets
+            -Dsonar.tests=Assets/Tests
+            -Dsonar.exclusions=**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Packages/**
+            -Dsonar.test.exclusions=**/Tests/**
+            -Dsonar.cs.file.suffixes=.cs
+            -Dsonar.sourceEncoding=UTF-8
