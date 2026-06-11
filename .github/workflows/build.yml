@@ -2,103 +2,95 @@ name: SonarQube
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  get-unity-version:
-    name: Read Unity version
+  # ─── Job 1: Unity generates .sln / .csproj ───────────────────
+  generate-solution:
+    name: Generate Unity solution
     runs-on: ubuntu-latest
-    outputs:
-      image: ${{ steps.read.outputs.image }}
+    # NO container: — game-ci actions manage their own Docker
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Parse ProjectVersion.txt
+      - name: Parse Unity version
         id: read
-        shell: bash
         run: |
-          set -euo pipefail
-          VERSION=$(sed -n 's/^m_EditorVersion: //p' ProjectSettings/ProjectVersion.txt)
-          echo "image=unityci/editor:ubuntu-${VERSION}-base-3" >> "$GITHUB_OUTPUT"
-
-  analyze:
-    name: Build and analyze
-    needs: get-unity-version
-    runs-on: ubuntu-latest
-    container:
-      image: unityci/editor:ubuntu-2022.3.61f1-base-3
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install JDK 17
-        shell: bash
-        run: |
-          set -euo pipefail
-          apt-get update -qq
-          apt-get install -y openjdk-17-jre-headless
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+          VERSION=$(sed -n 's/^m_EditorVersion: //p' \
+                   ProjectSettings/ProjectVersion.txt)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Cache Unity Library
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
+          restore-keys: Library-
 
-      - name: Install dotnet-sonarscanner
-        shell: bash
-        run: |
-          set -euo pipefail
-          dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
-
-      # - name: Install Unity license
-      #   shell: bash
-      #   env:
-      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #   run: |
-      #     set -euo pipefail
-      #     [ -n "${UNITY_LICENSE:-}" ] || { echo "UNITY_LICENSE missing"; exit 1; }
-      #     mkdir -p /root/.local/share/unity3d/Unity/
-      #     printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
-      #     echo "License written ($(wc -c < /root/.local/share/unity3d/Unity/Unity_lic.ulf) bytes)"
-
-      - name: Activate Unity
+      - name: Activate Unity license
         uses: game-ci/unity-activate@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with: 
-          unityVersion: 2022.3.61f1
-    
-      - name: Generate solution with Unity
-        shell: bash
-        run: |
-          set -euo pipefail
-          unity-editor \
-            -nographics -batchmode -logFile /dev/stdout \
-            -projectPath . \
-            -executeMethod UnityEditor.SyncVS.SyncSolution \
-            -quit
-          echo "Generated files:"
-          find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
+
+      - name: Generate solution
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: ${{ steps.read.outputs.version }}
+          targetPlatform: StandaloneLinux64
+          buildMethod: UnityEditor.SyncVS.SyncSolution
+          allowDirtyBuild: true
+          versioning: None
+
+      - name: Upload solution files
+        uses: actions/upload-artifact@v4
+        with:
+          name: solution-files
+          retention-days: 1
+          path: |
+            **/*.sln
+            **/*.csproj
+
+  # ─── Job 2: SonarQube analysis ───────────────────────────────
+  analyze:
+    name: Build and analyze
+    needs: generate-solution
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download solution files
+        uses: actions/download-artifact@v4
+        with:
+          name: solution-files
+
+      - name: Verify solution files
+        run: find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install dotnet-sonarscanner
+        run: dotnet tool install dotnet-sonarscanner --tool-path ./sonarscanner
 
       - name: Begin SonarQube analysis
-        shell: bash
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          set -euo pipefail
-          /sonarscanner/dotnet-sonarscanner begin \
+          ./sonarscanner/dotnet-sonarscanner begin \
             /k:"JuveNILE-games_Mystery_of_the_Scarab" \
             /o:"juvenile-games" \
             /d:sonar.token="$SONAR_TOKEN" \
@@ -107,18 +99,13 @@ jobs:
             /d:sonar.sources="Assets"
 
       - name: Build
-        shell: bash
         run: |
-          set -euo pipefail
           SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
           [ -n "$SLN_FILE" ] || { echo "No .sln found"; exit 1; }
           echo "Building $SLN_FILE"
           dotnet build "$SLN_FILE" --configuration Debug
 
       - name: End SonarQube analysis
-        shell: bash
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          set -euo pipefail
-          /sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+        run: ./sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
