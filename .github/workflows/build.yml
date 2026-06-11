@@ -95,7 +95,6 @@ jobs:
       - name: Install dotnet-sonarscanner
         run: dotnet tool install dotnet-sonarscanner --tool-path ./sonarscanner
 
-      # Download AFTER tool install so .csproj files don't confuse dotnet
       - name: Download solution files
         uses: actions/download-artifact@v4
         with:
@@ -103,6 +102,15 @@ jobs:
 
       - name: Verify solution files
         run: find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
+
+      - name: Strip Unity source generator references
+        run: |
+          echo "Removing Analyzer references from .csproj files..."
+          sed -i '/<Analyzer Include=".*\/opt\/unity\//d' *.csproj
+          sed -i '/<Analyzer Include=".*\/github\/workspace\/Library\//d' *.csproj
+          sed -i '/<Analyzer Include=".*SourceGenerator.*\.dll"/d' *.csproj
+          echo "Done. Remaining Analyzer lines:"
+          grep '<Analyzer Include=' *.csproj || echo "None (clean)"
 
       - name: Begin SonarQube analysis
         env:
