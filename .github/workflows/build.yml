@@ -55,7 +55,6 @@ jobs:
           buildMethod: UnityEditor.SyncVS.SyncSolution
           allowDirtyBuild: true
           versioning: None
-          customImage: unityci/editor:ubuntu-2022.3.61f1-base-3
 
       - name: Upload solution files
         uses: actions/upload-artifact@v4
