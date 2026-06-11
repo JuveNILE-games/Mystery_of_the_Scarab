@@ -10,6 +10,8 @@ jobs:
   generate-solution:
     name: Generate Unity solution
     runs-on: ubuntu-latest
+    outputs:
+      unity-version: ${{ steps.read.outputs.version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -75,6 +77,8 @@ jobs:
     name: Build and analyze
     needs: generate-solution
     runs-on: ubuntu-latest
+    container:
+      image: unityci/editor:ubuntu-${{ needs.generate-solution.outputs.unity-version }}-base-3
 
     steps:
       - uses: actions/checkout@v4
