@@ -2,9 +2,14 @@ name: SonarQube
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+
   pull_request:
-    types: [opened, synchronize, reopened]
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   analyze:
@@ -12,33 +17,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # ---------------------------------------------------------------------
+      # Checkout
+      # ---------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: recursive
           token: ${{ secrets.GH_PAT }}
 
+      # ---------------------------------------------------------------------
+      # Read Unity version
+      # ---------------------------------------------------------------------
       - name: Parse Unity version
         id: read
         run: |
           VERSION=$(sed -n 's/^m_EditorVersion: //p' \
-                   ProjectSettings/ProjectVersion.txt)
+            ProjectSettings/ProjectVersion.txt)
+
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
+      # ---------------------------------------------------------------------
+      # Cache Unity Library
+      # ---------------------------------------------------------------------
       - name: Cache Unity Library
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: Library-
+          restore-keys: |
+            Library-
 
+      # ---------------------------------------------------------------------
+      # Free disk space
+      # ---------------------------------------------------------------------
       - name: Free disk space
         run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android \
-                       /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /usr/local/lib/android \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL
+
           sudo docker image prune --all --force
+
           df -h /
 
+      # ---------------------------------------------------------------------
+      # Generate solution and project files
+      # ---------------------------------------------------------------------
       - name: Generate solution
         uses: game-ci/unity-builder@v4
         env:
@@ -53,96 +81,156 @@ jobs:
           versioning: None
           customImage: unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3
 
+      # ---------------------------------------------------------------------
+      # Verify generated solution
+      # ---------------------------------------------------------------------
       - name: Verify generated files
         run: |
           echo "=== Generated files ==="
-          find . -maxdepth 1 \( -name "*.sln" -o -name "*.csproj" \) -print
+
+          find . -maxdepth 1 \
+            \( -name "*.sln" -o -name "*.csproj" \) \
+            -print
+
           echo ""
           echo "Total: $(find . -maxdepth 1 \( -name '*.sln' -o -name '*.csproj' \) | wc -l) files"
-          ls *.sln || { echo "No .sln found!"; exit 1; }
 
-      # Writes the patching script into the workspace so the docker container
-      # in the next step can call it. Kept as a separate step so the heredoc
-      # is clean YAML with no quoting gymnastics inside bash -c '...'.
+          ls *.sln || {
+            echo "No .sln found!"
+            exit 1
+          }
+
+      # ---------------------------------------------------------------------
+      # Create patch script
+      # ---------------------------------------------------------------------
       - name: Write project patch script
         run: |
           cat > patch_projects.py << 'PYEOF'
-          import re, os, glob
+          import re
+          import os
+          import glob
 
-          # Projects whose source code we want SonarQube to analyse.
-          # Everything else is third-party and will be replaced with its
-          # pre-compiled DLL from Library/ScriptAssemblies/ (produced by
-          # the game-ci/unity-builder step above).
-          FIRST_PARTY = ('MysteryOfTheScarab', 'JuveNILE.', 'Assembly-CSharp')
-          DLL_DIR = 'Library/ScriptAssemblies'
+          FIRST_PARTY = (
+              'MysteryOfTheScarab',
+              'JuveNILE.',
+              'Assembly-CSharp'
+          )
 
           def is_first_party(name):
               return any(name.startswith(p) for p in FIRST_PARTY)
 
-          all_projs   = {f[:-7] for f in glob.glob('*.csproj')}
+          all_projs = {f[:-7] for f in glob.glob('*.csproj')}
           first_party = {n for n in all_projs if is_first_party(n)}
           third_party = all_projs - first_party
 
-          print(f'\nFirst-party  ({len(first_party)}): {sorted(first_party)}')
-          print(f'Third-party  ({len(third_party)}): {sorted(third_party)}\n')
+          print(f'\nFirst-party ({len(first_party)}): {sorted(first_party)}')
+          print(f'Third-party ({len(third_party)}): {sorted(third_party)}\n')
 
-          # 1. Delete third-party .csproj files — we don't want dotnet
-          #    trying (and failing) to rebuild them from source.
+          print('Building DLL index...')
+
+          dll_index = {}
+
+          for pattern in [
+              'Library/ScriptAssemblies/*.dll',
+              'Library/PackageCache/**/*.dll',
+              'Assets/**/*.dll',
+          ]:
+              for path in glob.glob(pattern, recursive=True):
+                  name = os.path.splitext(os.path.basename(path))[0]
+
+                  if (
+                      name not in dll_index
+                      or os.path.getsize(path)
+                      > os.path.getsize(dll_index[name])
+                  ):
+                      dll_index[name] = path
+
+          print(f'Indexed {len(dll_index)} assemblies\n')
+
           for name in third_party:
               os.remove(f'{name}.csproj')
               print(f'  Deleted: {name}.csproj')
 
-          # 2. In first-party projects, replace every ProjectReference that
-          #    points to a third-party assembly with a DLL Reference to the
-          #    pre-built binary in Library/ScriptAssemblies/.
           def patch_refs(content):
-              def replace(m):
-                  dep = m.group(1)
+              def replace(match):
+                  dep = match.group(1)
+
                   if is_first_party(dep):
-                      return m.group(0)   # keep cross-first-party project refs
-                  dll = f'{DLL_DIR}/{dep}.dll'
-                  if os.path.exists(dll):
-                      return (f'<Reference Include="{dep}">'
-                              f'<HintPath>{dll}</HintPath></Reference>')
-                  print(f'  WARNING: {dep}.dll not found in ScriptAssemblies — dropping reference')
+                      return match.group(0)
+
+                  if dep in dll_index:
+                      path = dll_index[dep]
+                      size = os.path.getsize(path)
+
+                      print(
+                          f'  Ref: {dep} -> {path} ({size} bytes)'
+                      )
+
+                      return (
+                          f'<Reference Include="{dep}">'
+                          f'<HintPath>{path}</HintPath>'
+                          f'</Reference>'
+                      )
+
+                  print(f'  WARNING: No DLL found for {dep}')
                   return ''
+
               return re.sub(
                   r'<ProjectReference Include="([^"]+)\.csproj"\s*/>',
-                  replace, content
+                  replace,
+                  content
               )
 
           for name in first_party:
               csproj = f'{name}.csproj'
+
               if not os.path.exists(csproj):
                   continue
+
               with open(csproj) as f:
                   content = f.read()
+
               with open(csproj, 'w') as f:
                   f.write(patch_refs(content))
+
               print(f'  Patched: {csproj}')
 
-          # 3. Remove deleted projects from the .sln so MSBuild doesn't
-          #    complain about missing project files.
           for sln in glob.glob('*.sln'):
               with open(sln) as f:
                   content = f.read()
-              def keep_block(m):
-                  hit = re.search(r'"([^"]+\.csproj)"', m.group(0))
+
+              def keep_block(match):
+                  hit = re.search(
+                      r'"([^"]+\.csproj)"',
+                      match.group(0)
+                  )
+
                   if hit and not os.path.exists(hit.group(1)):
                       return ''
-                  return m.group(0)
+
+                  return match.group(0)
+
               with open(sln, 'w') as f:
-                  f.write(re.sub(
-                      r'Project\(.*?\).*?EndProject\n',
-                      keep_block, content, flags=re.DOTALL
-                  ))
+                  f.write(
+                      re.sub(
+                          r'Project\(.*?\).*?EndProject\n',
+                          keep_block,
+                          content,
+                          flags=re.DOTALL
+                      )
+                  )
+
               print(f'  Cleaned .sln: {sln}')
 
           print('\nRemaining projects:')
+
           for f in sorted(glob.glob('*.csproj')):
               print(f'  {f}')
           PYEOF
 
+      # ---------------------------------------------------------------------
+      # SonarCloud Analysis
+      # ---------------------------------------------------------------------
       - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -155,35 +243,45 @@ jobs:
             bash -c '
               set -euo pipefail
 
-              # ── Install Java 17 ──────────────────────────────────────────
+              echo "Installing Java 17..."
               apt-get update -qq
-              apt-get install -y --no-install-recommends openjdk-17-jre-headless
+              apt-get install -y --no-install-recommends \
+                openjdk-17-jre-headless
+
               export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
-              # ── Install .NET SDK 8 ───────────────────────────────────────
-              wget -q https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
+              echo "Installing .NET SDK 8..."
+              wget -q https://dot.net/v1/dotnet-install.sh \
+                -O /tmp/dotnet-install.sh
+
               chmod +x /tmp/dotnet-install.sh
-              /tmp/dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet
+
+              /tmp/dotnet-install.sh \
+                --channel 8.0 \
+                --install-dir /usr/share/dotnet
+
               export PATH="/usr/share/dotnet:$PATH"
               export DOTNET_ROOT="/usr/share/dotnet"
 
-              # ── Install dotnet-sonarscanner ──────────────────────────────
+              echo "Installing SonarScanner..."
               cd /tmp
-              dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
+              dotnet tool install \
+                dotnet-sonarscanner \
+                --tool-path /sonarscanner
+
               cd /github/workspace
 
-              # ── Strip Unity compiler overrides from all .csproj files ────
+              echo "Cleaning Unity compiler overrides..."
               sed -i "/<Analyzer Include=/d" *.csproj
               sed -i "/<CscToolExe>/d" *.csproj
               sed -i "/<CscToolPath>/d" *.csproj
 
-              # ── Patch projects: whitelist first-party, swap third-party ──
-              # ProjectReferences with pre-built DLL References so dotnet
-              # build can resolve types without rebuilding Unity packages.
+              echo "Patching project references..."
               python3 /github/workspace/patch_projects.py
 
-              # ── SonarQube: begin → build → end ───────────────────────────
               SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
+
+              echo "Starting SonarCloud analysis..."
 
               /sonarscanner/dotnet-sonarscanner begin \
                 /k:"JuveNILE-games_Mystery_of_the_Scarab" \
@@ -192,7 +290,11 @@ jobs:
                 /d:sonar.host.url="https://sonarcloud.io" \
                 /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**"
 
-              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+              dotnet build \
+                "$SLN_FILE" \
+                --configuration Debug \
+                --no-incremental
 
-              /sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+              /sonarscanner/dotnet-sonarscanner end \
+                /d:sonar.token="$SONAR_TOKEN"
             '
