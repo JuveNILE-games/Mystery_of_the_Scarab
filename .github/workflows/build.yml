@@ -83,14 +83,6 @@ jobs:
           submodules: recursive
           token: ${{ secrets.GH_PAT }}
 
-      - name: Download solution files
-        uses: actions/download-artifact@v4
-        with:
-          name: solution-files
-
-      - name: Verify solution files
-        run: find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -102,6 +94,15 @@ jobs:
 
       - name: Install dotnet-sonarscanner
         run: dotnet tool install dotnet-sonarscanner --tool-path ./sonarscanner
+
+      # Download AFTER tool install so .csproj files don't confuse dotnet
+      - name: Download solution files
+        uses: actions/download-artifact@v4
+        with:
+          name: solution-files
+
+      - name: Verify solution files
+        run: find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
 
       - name: Begin SonarQube analysis
         env:
