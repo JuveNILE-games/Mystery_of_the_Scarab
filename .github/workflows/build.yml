@@ -75,9 +75,10 @@ jobs:
 
       - name: Activate Unity
         uses: game-ci/unity-activate@v2
-        with: unityVersion: 2022.3.61f1
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with: 
+          unityVersion: 2022.3.61f1
     
       - name: Generate solution with Unity
         shell: bash
