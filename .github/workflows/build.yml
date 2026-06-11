@@ -35,7 +35,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install JDK 17
-        run: apt-get update -qq && apt-get install -y openjdk-17-jre-headless
+        run: |
+          apt-get update -qq
+          apt-get install -y openjdk-17-jre-headless
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -47,25 +49,51 @@ jobs:
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: Library-
+          restore-keys: |
+            Library-
 
       - name: Install dotnet-sonarscanner
-        run: dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
+        run: |
+          dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
 
-      - name: Activate Unity and generate solution
+      - name: Install Unity Personal license
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         run: |
+          set -euo pipefail
+
+          if [ -z "${UNITY_LICENSE:-}" ]; then
+            echo "UNITY_LICENSE secret is empty or missing."
+            exit 1
+          fi
+
           mkdir -p /root/.local/share/unity3d/Unity/
-          echo "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+
+          printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+
+          echo "Unity license file written."
+          echo "File size:"
+          wc -c /root/.local/share/unity3d/Unity/Unity_lic.ulf
+
+      - name: Generate solution with Unity
+        run: |
+          set -euo pipefail
 
           unity-editor \
-            -nographics -batchmode -logFile /dev/stdout \
-            -projectPath . -executeMethod UnityEditor.SyncVS.SyncSolution -quit
+            -nographics \
+            -batchmode \
+            -logFile /dev/stdout \
+            -projectPath . \
+            -executeMethod UnityEditor.SyncVS.SyncSolution \
+            -quit
 
           unity-editor \
-            -nographics -batchmode -logFile /dev/stdout \
-            -projectPath . -executeMethod UnityEditor.SyncVS.SyncSolution -quit
+            -nographics \
+            -batchmode \
+            -logFile /dev/stdout \
+            -projectPath . \
+            -executeMethod UnityEditor.SyncVS.SyncSolution \
+            -quit
 
           echo "Generated solution/project files:"
           find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
@@ -84,7 +112,10 @@ jobs:
 
       - name: Build
         run: |
+          set -euo pipefail
+
           SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
+
           if [ -z "$SLN_FILE" ]; then
             echo "No .sln file found in repository root."
             exit 1
