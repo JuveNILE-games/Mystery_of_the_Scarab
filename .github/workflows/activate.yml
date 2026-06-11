@@ -1,0 +1,40 @@
+name: Request Unity Activation File
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  request-alf:
+    name: Generate .alf
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read Unity version
+        id: unity
+        shell: bash
+        run: |
+          VERSION=$(sed -n 's/^m_EditorVersion: //p' ProjectSettings/ProjectVersion.txt)
+          echo "image=unityci/editor:ubuntu-${VERSION}-base-3" >> "$GITHUB_OUTPUT"
+
+      - name: Create manual activation file
+        shell: bash
+        run: |
+          docker pull "${{ steps.unity.outputs.image }}"
+          docker run --rm -v "$PWD:/project" -w /project \
+            "${{ steps.unity.outputs.image }}" \
+            unity-editor -batchmode -nographics \
+              -logFile /dev/stdout \
+              -createManualActivationFile \
+              -quit || true
+
+          echo "Activation files found:"
+          find . -name "*.alf" -print
+
+      - name: Upload .alf
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-activation-file
+          path: "*.alf"
+          if-no-files-found: error
