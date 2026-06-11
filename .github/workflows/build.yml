@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.read.outputs.image }}
-      version: ${{ steps.read.outputs.version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -23,7 +22,6 @@ jobs:
         run: |
           set -euo pipefail
           VERSION=$(sed -n 's/^m_EditorVersion: //p' ProjectSettings/ProjectVersion.txt)
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "image=unityci/editor:ubuntu-${VERSION}-base-3" >> "$GITHUB_OUTPUT"
 
   analyze:
@@ -32,11 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ${{ needs.get-unity-version.outputs.image }}
-
-    env:
-      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
@@ -69,44 +62,27 @@ jobs:
           set -euo pipefail
           dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
 
-      - name: Verify Unity credentials
+      - name: Install Unity license
         shell: bash
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         run: |
           set -euo pipefail
-
           [ -n "${UNITY_LICENSE:-}" ] || { echo "UNITY_LICENSE missing"; exit 1; }
-          [ -n "${UNITY_EMAIL:-}" ] || { echo "UNITY_EMAIL missing"; exit 1; }
-          [ -n "${UNITY_PASSWORD:-}" ] || { echo "UNITY_PASSWORD missing"; exit 1; }
+          mkdir -p /root/.local/share/unity3d/Unity/
+          printf '%s' "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+          echo "License written ($(wc -c < /root/.local/share/unity3d/Unity/Unity_lic.ulf) bytes)"
 
-      - name: Activate Unity License
-        uses: buildalon/activate-unity-license@v2
-        with:
-          license: Personal
-          username: ${{ secrets.UNITY_EMAIL }}
-          password: ${{ secrets.UNITY_PASSWORD }}
-          
       - name: Generate solution with Unity
         shell: bash
         run: |
           set -euo pipefail
-
           unity-editor \
-            -nographics \
-            -batchmode \
-            -logFile /dev/stdout \
+            -nographics -batchmode -logFile /dev/stdout \
             -projectPath . \
             -executeMethod UnityEditor.SyncVS.SyncSolution \
             -quit
-
-          unity-editor \
-            -nographics \
-            -batchmode \
-            -logFile /dev/stdout \
-            -projectPath . \
-            -executeMethod UnityEditor.SyncVS.SyncSolution \
-            -quit
-
-          echo "Generated solution/project files:"
+          echo "Generated files:"
           find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
 
       - name: Begin SonarQube analysis
@@ -127,13 +103,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
           SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
-          if [ -z "$SLN_FILE" ]; then
-            echo "No solution file found."
-            exit 1
-          fi
-
+          [ -n "$SLN_FILE" ] || { echo "No .sln found"; exit 1; }
           echo "Building $SLN_FILE"
           dotnet build "$SLN_FILE" --configuration Debug
 
