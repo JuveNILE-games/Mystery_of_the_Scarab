@@ -7,11 +7,9 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  # ─── Job 1: Unity generates .sln / .csproj ───────────────────
   generate-solution:
     name: Generate Unity solution
     runs-on: ubuntu-latest
-    # NO container: — game-ci actions manage their own Docker
 
     steps:
       - uses: actions/checkout@v4
@@ -30,8 +28,17 @@ jobs:
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: Library-
 
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android \
+                       /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          df -h /
+
       - name: Activate Unity license
         uses: game-ci/unity-activate@v2
+        with:
+          unityVersion: ${{ steps.read.outputs.version }}
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
@@ -45,6 +52,7 @@ jobs:
           buildMethod: UnityEditor.SyncVS.SyncSolution
           allowDirtyBuild: true
           versioning: None
+          customImage: unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3
 
       - name: Upload solution files
         uses: actions/upload-artifact@v4
@@ -55,7 +63,6 @@ jobs:
             **/*.sln
             **/*.csproj
 
-  # ─── Job 2: SonarQube analysis ───────────────────────────────
   analyze:
     name: Build and analyze
     needs: generate-solution
