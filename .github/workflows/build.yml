@@ -61,6 +61,88 @@ jobs:
           echo "Total: $(find . -maxdepth 1 \( -name '*.sln' -o -name '*.csproj' \) | wc -l) files"
           ls *.sln || { echo "No .sln found!"; exit 1; }
 
+      # Writes the patching script into the workspace so the docker container
+      # in the next step can call it. Kept as a separate step so the heredoc
+      # is clean YAML with no quoting gymnastics inside bash -c '...'.
+      - name: Write project patch script
+        run: |
+          cat > patch_projects.py << 'PYEOF'
+          import re, os, glob
+
+          # Projects whose source code we want SonarQube to analyse.
+          # Everything else is third-party and will be replaced with its
+          # pre-compiled DLL from Library/ScriptAssemblies/ (produced by
+          # the game-ci/unity-builder step above).
+          FIRST_PARTY = ('MysteryOfTheScarab', 'JuveNILE.', 'Assembly-CSharp')
+          DLL_DIR = 'Library/ScriptAssemblies'
+
+          def is_first_party(name):
+              return any(name.startswith(p) for p in FIRST_PARTY)
+
+          all_projs   = {f[:-7] for f in glob.glob('*.csproj')}
+          first_party = {n for n in all_projs if is_first_party(n)}
+          third_party = all_projs - first_party
+
+          print(f'\nFirst-party  ({len(first_party)}): {sorted(first_party)}')
+          print(f'Third-party  ({len(third_party)}): {sorted(third_party)}\n')
+
+          # 1. Delete third-party .csproj files — we don't want dotnet
+          #    trying (and failing) to rebuild them from source.
+          for name in third_party:
+              os.remove(f'{name}.csproj')
+              print(f'  Deleted: {name}.csproj')
+
+          # 2. In first-party projects, replace every ProjectReference that
+          #    points to a third-party assembly with a DLL Reference to the
+          #    pre-built binary in Library/ScriptAssemblies/.
+          def patch_refs(content):
+              def replace(m):
+                  dep = m.group(1)
+                  if is_first_party(dep):
+                      return m.group(0)   # keep cross-first-party project refs
+                  dll = f'{DLL_DIR}/{dep}.dll'
+                  if os.path.exists(dll):
+                      return (f'<Reference Include="{dep}">'
+                              f'<HintPath>{dll}</HintPath></Reference>')
+                  print(f'  WARNING: {dep}.dll not found in ScriptAssemblies — dropping reference')
+                  return ''
+              return re.sub(
+                  r'<ProjectReference Include="([^"]+)\.csproj"\s*/>',
+                  replace, content
+              )
+
+          for name in first_party:
+              csproj = f'{name}.csproj'
+              if not os.path.exists(csproj):
+                  continue
+              with open(csproj) as f:
+                  content = f.read()
+              with open(csproj, 'w') as f:
+                  f.write(patch_refs(content))
+              print(f'  Patched: {csproj}')
+
+          # 3. Remove deleted projects from the .sln so MSBuild doesn't
+          #    complain about missing project files.
+          for sln in glob.glob('*.sln'):
+              with open(sln) as f:
+                  content = f.read()
+              def keep_block(m):
+                  hit = re.search(r'"([^"]+\.csproj)"', m.group(0))
+                  if hit and not os.path.exists(hit.group(1)):
+                      return ''
+                  return m.group(0)
+              with open(sln, 'w') as f:
+                  f.write(re.sub(
+                      r'Project\(.*?\).*?EndProject\n',
+                      keep_block, content, flags=re.DOTALL
+                  ))
+              print(f'  Cleaned .sln: {sln}')
+
+          print('\nRemaining projects:')
+          for f in sorted(glob.glob('*.csproj')):
+              print(f'  {f}')
+          PYEOF
+
       - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -73,72 +155,36 @@ jobs:
             bash -c '
               set -euo pipefail
 
-              # ── Install Java 17 ──
+              # ── Install Java 17 ──────────────────────────────────────────
               apt-get update -qq
               apt-get install -y --no-install-recommends openjdk-17-jre-headless
               export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
-              # ── Install .NET SDK 8 ──
+              # ── Install .NET SDK 8 ───────────────────────────────────────
               wget -q https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
               chmod +x /tmp/dotnet-install.sh
               /tmp/dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet
               export PATH="/usr/share/dotnet:$PATH"
               export DOTNET_ROOT="/usr/share/dotnet"
 
-              # ── Install sonarscanner ──
+              # ── Install dotnet-sonarscanner ──────────────────────────────
               cd /tmp
               dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
               cd /github/workspace
 
-              # ── Strip source generators and Unity compiler overrides ──
+              # ── Strip Unity compiler overrides from all .csproj files ────
               sed -i "/<Analyzer Include=/d" *.csproj
               sed -i "/<CscToolExe>/d" *.csproj
               sed -i "/<CscToolPath>/d" *.csproj
 
-              # ── Remove projects that cannot compile ──
-              # Try building, extract failing projects, exclude them, retry
+              # ── Patch projects: whitelist first-party, swap third-party ──
+              # ProjectReferences with pre-built DLL References so dotnet
+              # build can resolve types without rebuilding Unity packages.
+              python3 /github/workspace/patch_projects.py
+
+              # ── SonarQube: begin → build → end ───────────────────────────
               SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
-              MAX_RETRIES=5
 
-              for attempt in $(seq 1 $MAX_RETRIES); do
-                echo ""
-                echo "=== Build attempt $attempt ==="
-
-                BUILD_OUTPUT=$(dotnet build "$SLN_FILE" --configuration Debug --no-incremental 2>&1) || true
-
-                # Extract unique failing .csproj files from error lines
-                FAILING=$(echo "$BUILD_OUTPUT" \
-                  | grep ": error CS" \
-                  | grep -oP "\[.*?\.csproj\]" \
-                  | tr -d "[]" \
-                  | sort -u || true)
-
-                if [ -z "$FAILING" ]; then
-                  echo "Build succeeded!"
-                  break
-                fi
-
-                if [ "$attempt" -eq "$MAX_RETRIES" ]; then
-                  echo "Still failing after $MAX_RETRIES attempts:"
-                  echo "$FAILING"
-                  exit 1
-                fi
-
-                # Exclude each failing project
-                for proj_path in $FAILING; do
-                  proj_file=$(basename "$proj_path")
-                  proj_name="${proj_file%.csproj}"
-                  echo "Excluding failing project: $proj_name"
-                  sed -i "/\"${proj_name}.csproj\"/d" "$SLN_FILE"
-                  rm -f "$proj_file"
-                done
-              done
-
-              echo ""
-              echo "=== Final projects ==="
-              find . -maxdepth 1 -name "*.csproj" -print
-
-              # ── Now do the real sonar build ──
               /sonarscanner/dotnet-sonarscanner begin \
                 /k:"JuveNILE-games_Mystery_of_the_Scarab" \
                 /o:"juvenile-games" \
