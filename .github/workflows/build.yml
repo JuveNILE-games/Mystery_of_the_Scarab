@@ -7,11 +7,9 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  generate-solution:
-    name: Generate Unity solution
+  analyze:
+    name: Build and analyze
     runs-on: ubuntu-latest
-    outputs:
-      unity-version: ${{ steps.read.outputs.version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -41,6 +39,7 @@ jobs:
           sudo docker image prune --all --force
           df -h /
 
+      # Step 1: Generate .sln and .csproj (game-ci handles licensing)
       - name: Generate solution
         uses: game-ci/unity-builder@v4
         env:
@@ -55,87 +54,67 @@ jobs:
           versioning: None
           customImage: unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3
 
-      - name: List generated files
-        if: always()
+      - name: Verify generated files
         run: |
-          echo "=== .sln and .csproj files ==="
-          find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
-          echo ""
-          echo "=== Root listing ==="
-          ls -la *.sln *.csproj 2>/dev/null || echo "None at root"
+          find . -maxdepth 1 \( -name "*.sln" -o -name "*.csproj" \) | head -5
+          ls *.sln || { echo "No .sln found!"; exit 1; }
 
-      - name: Upload solution files
-        uses: actions/upload-artifact@v4
-        with:
-          name: solution-files
-          retention-days: 1
-          path: |
-            *.sln
-            **/*.csproj
-
-  analyze:
-    name: Build and analyze
-    needs: generate-solution
-    runs-on: ubuntu-latest
-    container:
-      image: unityci/editor:ubuntu-${{ needs.generate-solution.outputs.unity-version }}-base-3
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: recursive
-          token: ${{ secrets.GH_PAT }}
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Install dotnet-sonarscanner
-        run: dotnet tool install dotnet-sonarscanner --tool-path ./sonarscanner
-
-      - name: Download solution files
-        uses: actions/download-artifact@v4
-        with:
-          name: solution-files
-
-      - name: Verify solution files
-        run: find . -maxdepth 2 \( -name "*.sln" -o -name "*.csproj" \) -print
-
-      - name: Strip Unity source generator references
-        run: |
-          echo "Removing Analyzer references from .csproj files..."
-          sed -i '/<Analyzer Include=".*\/opt\/unity\//d' *.csproj
-          sed -i '/<Analyzer Include=".*\/github\/workspace\/Library\//d' *.csproj
-          sed -i '/<Analyzer Include=".*SourceGenerator.*\.dll"/d' *.csproj
-          echo "Done. Remaining Analyzer lines:"
-          grep '<Analyzer Include=' *.csproj || echo "None (clean)"
-
-      - name: Begin SonarQube analysis
+      # Step 2: Run sonar analysis inside the SAME Docker image
+      #         so all /opt/unity/... paths in .csproj are valid
+      - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./sonarscanner/dotnet-sonarscanner begin \
-            /k:"JuveNILE-games_Mystery_of_the_Scarab" \
-            /o:"juvenile-games" \
-            /d:sonar.token="$SONAR_TOKEN" \
-            /d:sonar.host.url="https://sonarcloud.io" \
-            /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**" \
-            /d:sonar.sources="Assets"
+          docker run --rm \
+            -v "${{ github.workspace }}:/project" \
+            -w /project \
+            -e SONAR_TOKEN \
+            unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3 \
+            bash -c '
+              set -euo pipefail
 
-      - name: Build
-        run: |
-          SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
-          [ -n "$SLN_FILE" ] || { echo "No .sln found"; exit 1; }
-          echo "Building $SLN_FILE"
-          dotnet build "$SLN_FILE" --configuration Debug
+              # ── Install Java 17 ──
+              apt-get update -qq
+              apt-get install -y --no-install-recommends openjdk-17-jre-headless
+              export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
-      - name: End SonarQube analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+              # ── Install .NET SDK 8 ──
+              apt-get install -y --no-install-recommends wget
+              wget -q https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
+              chmod +x /tmp/dotnet-install.sh
+              /tmp/dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet
+              export PATH="/usr/share/dotnet:$PATH"
+              export DOTNET_ROOT="/usr/share/dotnet"
+
+              # ── Install sonarscanner ──
+              dotnet tool install dotnet-sonarscanner --tool-path /sonarscanner
+
+              # ── Point to Mono reference assemblies (inside this container) ──
+              export FrameworkPathOverride=/opt/unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/
+
+              # ── Strip source generators (container paths that dotnet cant use as analyzers) ──
+              sed -i "/<Analyzer Include=/d" *.csproj
+
+              # ── Remove Unity custom compiler override ──
+              sed -i "/<CscToolExe>/d" *.csproj
+              sed -i "/<CscToolPath>/d" *.csproj
+
+              # ── Find the .sln ──
+              SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
+              echo "Building $SLN_FILE"
+
+              # ── Sonar begin ──
+              /sonarscanner/dotnet-sonarscanner begin \
+                /k:"JuveNILE-games_Mystery_of_the_Scarab" \
+                /o:"juvenile-games" \
+                /d:sonar.token="$SONAR_TOKEN" \
+                /d:sonar.host.url="https://sonarcloud.io" \
+                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**" \
+                /d:sonar.sources="Assets"
+
+              # ── Build ──
+              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+
+              # ── Sonar end ──
+              /sonarscanner/dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+            '
