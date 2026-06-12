@@ -33,6 +33,7 @@ namespace Game.AI
 
         private bool _aiRequested;
         private bool _isFirstEnable = true;
+        private bool _waitingForNavMeshReady;
         private IDisposable _targetSubscription;
 
         private void Awake()
@@ -137,7 +138,7 @@ namespace Game.AI
             if (_movementBridge != null) _movementBridge.SetAiControlled(false);
         }
 
-        private void SubscribeToNavMeshReady()
+        private void SubscribeToNavMeshReady(bool invokeImmediatelyIfReady = true)
         {
             if (_navMeshService == null)
             {
@@ -146,13 +147,15 @@ namespace Game.AI
             }
             _navMeshService.OnNavMeshReady -= OnNavMeshReady;
             _navMeshService.OnNavMeshReady += OnNavMeshReady;
+            _waitingForNavMeshReady = true;
             
-            if (_navMeshService.IsReady) OnNavMeshReady();
+            if (invokeImmediatelyIfReady && _navMeshService.IsReady) OnNavMeshReady();
         }
 
         private void OnNavMeshReady()
         {
             if (_navMeshService != null) _navMeshService.OnNavMeshReady -= OnNavMeshReady;
+            _waitingForNavMeshReady = false;
             if (_aiRequested) SnapAndEnable();
         }
 
@@ -191,9 +194,12 @@ namespace Game.AI
                 // off-mesh, causing FollowPlayerAction to immediately return PathInvalid and the
                 // companion to stand frozen with no error. Wait for the next OnNavMeshReady event
                 // instead, which fires once DynamicNavMeshSurfaceService finishes a bake.
-                Debug.LogWarning("[CompanionAIAdapter] SnapAndEnable: no NavMesh found within 3m of " +
-                                 $"{transform.position}. Waiting for next NavMesh ready event.", this);
-                SubscribeToNavMeshReady();
+                _logger?.LogWarning(this,
+                    $"[CompanionAIAdapter] SnapAndEnable: no NavMesh found within 3m of {transform.position}. Waiting for next NavMesh ready event.");
+                if (!_waitingForNavMeshReady)
+                {
+                    SubscribeToNavMeshReady(invokeImmediatelyIfReady: false);
+                }
             }
         }
 
