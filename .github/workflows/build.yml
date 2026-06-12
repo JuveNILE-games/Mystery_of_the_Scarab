@@ -273,7 +273,8 @@ jobs:
               cd /github/workspace
 
               echo "Cleaning Unity compiler overrides..."
-              sed -i "/<Analyzer Include=/d" *.csproj
+              sed -i "/<Analyzer Include=.*Editor\/Data\/Tools/d" *.csproj
+              sed -i "/<Analyzer Include=.*YarnSpinner.*SourceCodeGenerator/d" *.csproj
               sed -i "/<CscToolExe>/d" *.csproj
               sed -i "/<CscToolPath>/d" *.csproj
 
