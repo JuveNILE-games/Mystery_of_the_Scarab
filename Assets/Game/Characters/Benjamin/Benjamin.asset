@@ -19,9 +19,11 @@ MonoBehaviour:
     Portrait: {fileID: 21300000, guid: 973b5f19eadaaea409c126d4b8703070, type: 3}
   - Type: 1
     Portrait: {fileID: 21300000, guid: d543fcae3ef1b3f40a2d95ed6b51c67d, type: 3}
-  walkSpeed: 3
-  sprintSpeed: 6
+  walkSpeed: 2.5
+  sprintSpeed: 4.5
   airControl: 2
   jumpForce: 5
   gravityMultiplier: 2
   maxFallSpeed: 20
+  groundStickForce: -5
+  jumpCutMultiplier: 1.5
