@@ -40,19 +40,19 @@ namespace Game.Player.States.Grounded
             idleState
                 .When(() => HasInput() && !Owner.IsSprintPressed, walkState, name: "Walking")
                 .When(() => HasInput() && Owner.IsSprintPressed, sprintState, name: "Sprinting pressed and moving")
-                .When(() => Owner.IsJumpPressed, jumpState, name: "Jump pressed");
+                .When(() => Owner.IsJumpPressed && Owner.CanStartJump(), jumpState, name: "Jump pressed");
             
             // Walk transitions
             walkState
                 .When(() => !HasInput(), idleState, name: "No input")
                 .When(() => Owner.IsSprintPressed, sprintState, name: "Sprint pressed")
-                .When(() => Owner.IsJumpPressed, jumpState, name: "Jump pressed");
+                .When(() => Owner.IsJumpPressed && Owner.CanStartJump(), jumpState, name: "Jump pressed");
             
             // Sprint transitions
             sprintState
                 .When(() => !HasInput(), idleState , name: "No input")
                 .When(() => !Owner.IsSprintPressed, walkState , name: "Sprint released")
-                .When(() => Owner.IsJumpPressed, jumpState , name: "Jump pressed");
+                .When(() => Owner.IsJumpPressed && Owner.CanStartJump(), jumpState , name: "Jump pressed");
             
             // Jump transitions
             jumpState

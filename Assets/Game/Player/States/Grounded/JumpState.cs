@@ -11,6 +11,7 @@ namespace Game.Player.States.Grounded{
             base.OnEnter();
             if (Owner != null)
             {
+                Owner.ConsumeJumpEligibility();
                 Owner.VerticalVelocity = Owner.Data.Value != null ? Owner.Data.Value.JumpForce : 5f;
             }
             Animator?.Play("Jump");

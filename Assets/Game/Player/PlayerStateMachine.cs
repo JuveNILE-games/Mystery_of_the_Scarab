@@ -7,6 +7,7 @@ using Game.Player.States.Grounded;
 using SpriteAnimations;
 using UnityEngine;
 using Game.AI;
+using System.Collections.Generic;
 
 namespace Game.Player
 {
@@ -20,6 +21,8 @@ namespace Game.Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerStateMachine : StateMachineComponent<PlayerStateMachine, BaseState<PlayerStateMachine, PlayerState>>, IMovementControllable
     {
+        private static readonly List<PlayerStateMachine> ActivePlayers = new();
+
         [Header("Component References")]
         [SerializeField] private CharacterController controller;
         [SerializeField] private SpriteAnimator anim;
@@ -32,6 +35,8 @@ namespace Game.Player
         // 0.2f was too shallow for a dynamic NavMesh: micro-gaps between bakes caused 1-2 frame
         // airborne flickers, switching the companion into air-control movement and killing speed.
         [SerializeField] private float groundCheckDistance = 0.3f;
+        [SerializeField] private float ungroundedGraceTime = 0.08f;
+        [SerializeField] private float coyoteTimeDuration = 0.12f;
         
         [Header("Input (Connect from InputSystem)")]
         // World-space XZ movement direction (magnitude 0-1). Set by PlayerInputInitializer
@@ -57,6 +62,11 @@ namespace Game.Player
         
         // Grounded check cache
         private bool isGrounded;
+        private bool hasValidGroundContact;
+        private float lastGroundedTime = float.NegativeInfinity;
+        private float lastValidGroundContactTime = float.NegativeInfinity;
+        private bool coyoteJumpConsumed;
+        private Collider[] passthroughColliders;
         
         #region Public Properties (accessed by states)
         
@@ -73,6 +83,11 @@ namespace Game.Player
         public Vector2 MoveInput => new Vector2(worldMoveInput.x, worldMoveInput.z);
 
         public bool IsGrounded => isGrounded;
+        public bool CanUseCoyoteJump =>
+            !hasValidGroundContact &&
+            !coyoteJumpConsumed &&
+            (Time.time - lastValidGroundContactTime) <= coyoteTimeDuration;
+
         public bool IsJumpPressed => jumpPressed;
         public bool IsSprintPressed => sprintPressed;
         public bool IsPrimaryAbilityPressed => primaryAbilityPressed;
@@ -100,6 +115,8 @@ namespace Game.Player
             // Cache components
             if (controller == null) controller = GetComponent<CharacterController>();
             if (anim == null) anim = GetComponentInChildren<SpriteAnimator>();
+            passthroughColliders = GetComponents<Collider>();
+            RegisterPlayerPassthrough();
             
             if (initialCharacterData != null)
             {
@@ -107,6 +124,11 @@ namespace Game.Player
             }
             
             base.Awake();
+        }
+
+        private void OnDestroy()
+        {
+            UnregisterPlayerPassthrough();
         }
         
         private void OnValidate()
@@ -124,6 +146,54 @@ namespace Game.Player
         }
         
         #endregion
+
+        private void RegisterPlayerPassthrough()
+        {
+            for (int i = 0; i < ActivePlayers.Count; i++)
+            {
+                SetPlayerPassthrough(this, ActivePlayers[i], true);
+            }
+
+            ActivePlayers.Add(this);
+        }
+
+        private void UnregisterPlayerPassthrough()
+        {
+            ActivePlayers.Remove(this);
+
+            for (int i = 0; i < ActivePlayers.Count; i++)
+            {
+                SetPlayerPassthrough(this, ActivePlayers[i], false);
+            }
+        }
+
+        private static void SetPlayerPassthrough(PlayerStateMachine a, PlayerStateMachine b, bool ignore)
+        {
+            if (a == null || b == null || a.passthroughColliders == null || b.passthroughColliders == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < a.passthroughColliders.Length; i++)
+            {
+                Collider colliderA = a.passthroughColliders[i];
+                if (colliderA == null)
+                {
+                    continue;
+                }
+
+                for (int j = 0; j < b.passthroughColliders.Length; j++)
+                {
+                    Collider colliderB = b.passthroughColliders[j];
+                    if (colliderB == null || colliderA == colliderB)
+                    {
+                        continue;
+                    }
+
+                    Physics.IgnoreCollision(colliderA, colliderB, ignore);
+                }
+            }
+        }
         
         #region State Machine Setup
         
@@ -172,6 +242,19 @@ namespace Game.Player
         #endregion
         
         #region Ground Detection
+
+        public bool CanStartJump()
+        {
+            return hasValidGroundContact || CanUseCoyoteJump;
+        }
+
+        public void ConsumeJumpEligibility()
+        {
+            if (!hasValidGroundContact)
+            {
+                coyoteJumpConsumed = true;
+            }
+        }
         
         private void CheckGrounded()
         {
@@ -195,6 +278,8 @@ namespace Game.Player
             // Increase max distance
             float actualDistance = groundCheckDistance + castRetreat;
             
+            bool hasValidGroundHit = false;
+
             // SphereCast
             if (Physics.SphereCast(origin, radius, Vector3.down, out RaycastHit hit, actualDistance, groundLayer))
             {
@@ -202,28 +287,38 @@ namespace Game.Player
                 float angle = Vector3.Angle(Vector3.up, hit.normal);
                 if (angle <= controller.slopeLimit) // Default is usually 45
                 {
-                    isGrounded = true;
+                    hasValidGroundHit = true;
                 }
-                else
-                {
-                    // Too steep! Treat as wall/air.
-                    // Debug.Log($"[PlayerSM] Too steep: {angle} deg on {hit.collider.name}");
-                    isGrounded = false;
-                }
-            }
-            else
-            {
-                isGrounded = false;
             }
             
-            // Debugging collision with Controller fallback (Be careful with this on walls)
-            if (!isGrounded && controller.isGrounded)
+            // CharacterController can report grounded when standing on dynamic colliders (for example,
+            // the companion). Only trust that fallback when the supporting collider is in groundLayer.
+            if (!hasValidGroundHit && controller.isGrounded)
             {
-                 // Controller says grounded. Trust it? 
-                 // It might also be sliding down a wall if slope limit isn't configured right on the CC.
-                 // Let's trust it but only if velocity is low? No, safer to just trust it for now.
-                 isGrounded = true; 
+                float supportProbeDistance = actualDistance + controller.skinWidth;
+                if (Physics.SphereCast(origin, radius, Vector3.down, out RaycastHit supportHit, supportProbeDistance, groundLayer, QueryTriggerInteraction.Ignore))
+                {
+                    float supportAngle = Vector3.Angle(Vector3.up, supportHit.normal);
+                    if (supportAngle <= controller.slopeLimit)
+                    {
+                        hasValidGroundHit = true;
+                    }
+                }
             }
+
+            if (hasValidGroundHit)
+            {
+                hasValidGroundContact = true;
+                isGrounded = true;
+                lastGroundedTime = Time.time;
+                lastValidGroundContactTime = Time.time;
+                coyoteJumpConsumed = false;
+                return;
+            }
+
+            hasValidGroundContact = false;
+            bool inUngroundedGraceWindow = (Time.time - lastGroundedTime) <= ungroundedGraceTime;
+            isGrounded = inUngroundedGraceWindow && VerticalVelocity <= 0f;
         }
         
         private void OnDrawGizmosSelected()
