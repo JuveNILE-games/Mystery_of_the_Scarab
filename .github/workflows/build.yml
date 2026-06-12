@@ -280,7 +280,7 @@ jobs:
 
               echo "Forcing SonarScanner to treat Unity projects as production code..."
               for file in *.csproj; do
-                sed -i '0,/<PropertyGroup>/s//<PropertyGroup>\n    <SonarQubeTestProject>false<\/SonarQubeTestProject>/' "$file"
+                sed -i "0,/<PropertyGroup>/s//<PropertyGroup>\n    <SonarQubeTestProject>false<\/SonarQubeTestProject>/" "$file"
               done
 
               echo "Patching project references..."
