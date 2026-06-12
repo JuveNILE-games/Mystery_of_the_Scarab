@@ -487,9 +487,9 @@ MonoBehaviour:
     MaxPoolSize: 100
     MaxSoundInstances: 30
     MainMixer: {fileID: 24100000, guid: 5cac997a0359d5749b2b252be18de732, type: 2}
-    MasterVolumeParam: MasterVolume
-    MusicVolumeParam: MusicVolume
-    SfxVolumeParam: SFXVolume
+    MasterVolumeParam: Master
+    MusicVolumeParam: Music
+    SfxVolumeParam: SFX
   inputReader: {fileID: 11400000, guid: 911c536129671d446adce40a23429918, type: 2}
   editorEnvironmentOverride: {fileID: 0}
   gameAssemblyName: MysteryOfTheScarab

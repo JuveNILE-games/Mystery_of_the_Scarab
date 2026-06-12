@@ -39,6 +39,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Overlay
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f14d9b937aa40643b73fefcfa919a34
+    m_Address: Assets/Game/Navigation/Overlays/SettingsPanelOverlay.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Overlay
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 84594d1b50ef07947bb5e4933af8243f
     m_Address: Assets/Game/Navigation/Overlays/ErrorPopUp.asset
     m_ReadOnly: 0
