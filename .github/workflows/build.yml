@@ -176,9 +176,10 @@ jobs:
                   return ''
 
               return re.sub(
-                  r'<ProjectReference Include="([^"]+)\.csproj"\s*/>',
+                  r'<ProjectReference\s+Include="([^"]+)\.csproj"\s*(?:/>|>.*?</ProjectReference>)',
                   replace,
-                  content
+                  content,
+                  flags=re.DOTALL
               )
 
           for name in first_party:
@@ -213,7 +214,7 @@ jobs:
               with open(sln, 'w') as f:
                   f.write(
                       re.sub(
-                          r'Project\(.*?\).*?EndProject\n',
+                          r'Project\([^)]*\)\s*=\s*"[^"]*",\s*"[^"]*\.csproj".*?EndProject\n',
                           keep_block,
                           content,
                           flags=re.DOTALL
