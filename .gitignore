@@ -158,11 +158,9 @@ sysinfo.txt
 # End of https://www.toptal.com/developers/gitignore/api/unity,rider
 
 statemachine-refactor.md
-
 WARP.md
-
 Docs/
-
 Assets/_Recovery/
-
 scratch/
+sonar-project.properties
+sonar-project.properties
