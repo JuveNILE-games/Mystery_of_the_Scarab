@@ -1,0 +1,3 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/UI/Views/Settings/SettingsPanel.uss?fileID=7433441132597879392&amp;guid=1e28e259e8a5ce945a60bb094f9fb972&amp;type=3#SettingsPanel"/>
+</ui:UXML>

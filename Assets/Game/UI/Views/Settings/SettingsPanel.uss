@@ -1,0 +1,376 @@
+/* =====================================================================
+ * Settings Panel — Overlay drawer for Main Menu
+ * Uses game theme CSS variables from GameTheme.uss
+ * ===================================================================== */
+
+/* ===== Backdrop (click-away area) ===== */
+.settings-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    flex-direction: row;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+}
+
+.settings-backdrop--open {
+    opacity: 1;
+}
+
+/* ===== Main Panel Container ===== */
+.settings-panel {
+    width: 35%;
+    min-width: 420px;
+    height: 100%;
+    background-color: var(--bg-panel);
+    flex-direction: column;
+    border-right-width: 2px;
+    border-right-color: var(--border-color-default);
+    /* Start off-screen left; slide in via CSS transition */
+    translate: -100% 0;
+    transition-property: translate;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.settings-panel--open {
+    translate: 35% 0;
+}
+
+/* Drop shadow on the panel's right edge */
+.settings-panel-shadow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    width: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    /* Gradient from dark to transparent using a border trick */
+    border-left-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0.15);
+    /* Faux gradient via layered opacity */
+    background-color: rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+}
+
+.settings-panel--open .settings-panel-shadow {
+    opacity: 1;
+}
+
+/* ===== Header ===== */
+.settings-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 16px 28px;
+    border-bottom-width: 2px;
+    border-bottom-color: var(--border-color-default);
+    background-color: var(--bg-panel-header);
+}
+
+.settings-title {
+    font-size: 28px;
+    -unity-font-style: bold;
+    color: var(--color-primary-hover);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.settings-close-btn {
+    font-size: 24px;
+    background-color: transparent;
+    border-width: 0;
+    color: var(--text-color-muted);
+    padding: 4px 10px;
+    transition-duration: 0.15s;
+}
+
+.settings-close-btn:hover,
+.settings-close-btn:focus {
+    color: var(--color-primary-hover);
+    scale: 1.15;
+}
+
+/* ===== Tab Bar ===== */
+.settings-tab-bar {
+    flex-direction: row;
+    padding: 0 20px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--border-color-default);
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.settings-tab {
+    padding: 12px 18px;
+    margin: 0;
+    background-color: transparent;
+    border-width: 0;
+    border-bottom-width: 3px;
+    border-bottom-color: transparent;
+    color: var(--text-color-muted);
+    font-size: var(--font-size-md);
+    -unity-font-style: bold;
+    transition-duration: 0.2s;
+    border-radius: 0;
+}
+
+.settings-tab:hover {
+    color: var(--text-color-default);
+    background-color: rgba(233, 181, 65, 0.08);
+}
+
+.settings-tab:focus {
+    color: var(--text-color-default);
+    background-color: rgba(233, 181, 65, 0.08);
+}
+
+.settings-tab--active {
+    color: var(--color-primary-hover);
+    border-bottom-color: var(--color-primary);
+}
+
+.settings-tab--active:hover,
+.settings-tab--active:focus {
+    color: var(--color-primary-hover);
+}
+
+/* ===== Content Area ===== */
+.settings-content {
+    flex-grow: 1;
+    padding: 24px 28px;
+    overflow: hidden;
+}
+
+.settings-tab-content {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* ===== Settings Row (label + control) ===== */
+.settings-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 8px 0;
+}
+
+.settings-label {
+    font-size: var(--font-size-md);
+    color: var(--text-color-default);
+    flex-shrink: 0;
+    min-width: 140px;
+}
+
+.settings-value-label {
+    font-size: 14px;
+    color: var(--text-color-muted);
+    min-width: 40px;
+    -unity-text-align: middle-right;
+    margin-left: 12px;
+}
+
+/* ===== Slider Styling ===== */
+.settings-slider {
+    flex-grow: 1;
+    max-width: 260px;
+}
+
+.settings-slider .unity-base-slider__dragger {
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    margin-top: -7px;
+    border-width: 2px;
+    border-color: var(--color-primary-hover);
+    transition-duration: 0.15s;
+}
+
+.settings-slider .unity-base-slider__dragger:hover {
+    background-color: var(--color-primary-hover);
+    scale: 1.15;
+}
+
+.settings-slider .unity-base-slider__tracker {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    height: 4px;
+}
+
+.settings-slider .unity-base-slider__drag-container {
+    min-height: 20px;
+}
+
+/* ===== Rebind Row ===== */
+.rebind-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    border-width: 1px;
+    border-color: rgba(238, 199, 111, 0.15);
+}
+
+.rebind-action {
+    font-size: var(--font-size-md);
+    color: var(--text-color-default);
+    flex-grow: 1;
+}
+
+.rebind-key-btn {
+    padding: 6px 16px;
+    background-color: var(--bg-input);
+    border-width: 1px;
+    border-color: var(--border-color-default);
+    border-radius: var(--radius-sm);
+    color: var(--color-primary);
+    font-size: 14px;
+    -unity-font-style: bold;
+    min-width: 80px;
+    -unity-text-align: middle-center;
+    transition-duration: 0.15s;
+}
+
+.rebind-key-btn:hover,
+.rebind-key-btn:focus {
+    border-color: var(--color-primary-hover);
+    background-color: rgba(233, 181, 65, 0.1);
+}
+
+.rebind-key-btn--listening {
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+    background-color: rgba(255, 140, 0, 0.1);
+}
+
+/* ===== Language Selection ===== */
+.language-option {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 16px;
+    margin-bottom: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    border-width: 1px;
+    border-color: transparent;
+    transition-duration: 0.15s;
+}
+
+.language-option:hover,
+.language-option:focus {
+    background-color: rgba(233, 181, 65, 0.08);
+    border-color: var(--border-color-default);
+}
+
+.language-option--selected {
+    border-color: var(--color-primary);
+    background-color: rgba(233, 181, 65, 0.12);
+}
+
+.language-name {
+    font-size: var(--font-size-md);
+    color: var(--text-color-default);
+    flex-grow: 1;
+}
+
+.language-check {
+    font-size: 20px;
+    color: var(--color-primary);
+}
+
+/* ===== Placeholder Tab Content ===== */
+.settings-placeholder {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-placeholder-text {
+    font-size: 18px;
+    color: var(--text-color-disabled);
+    -unity-font-style: italic;
+}
+
+/* ===== Section Header (within a tab) ===== */
+.settings-section-header {
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(233, 181, 65, 0.25);
+}
+
+/* ===== Footer ===== */
+.settings-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 28px;
+    border-top-width: 2px;
+    border-top-color: var(--border-color-default);
+    background-color: var(--bg-panel-header);
+}
+
+.settings-footer > Button {
+    margin-left: 12px;
+}
+
+/* Save & Close button — primary style */
+.settings-save-btn {
+    padding: 10px 24px;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border-width: 2px;
+    border-color: var(--color-primary-hover);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    -unity-font-style: bold;
+    transition-duration: 0.2s;
+}
+
+.settings-save-btn:hover,
+.settings-save-btn:focus {
+    background-color: var(--color-primary-hover);
+    scale: 1.03;
+}
+
+/* Reset Defaults button — secondary/danger style */
+.settings-reset-btn {
+    padding: 10px 24px;
+    background-color: transparent;
+    color: var(--color-danger);
+    border-width: 1px;
+    border-color: var(--color-danger);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    transition-duration: 0.2s;
+}
+
+.settings-reset-btn:hover,
+.settings-reset-btn:focus {
+    background-color: rgba(178, 34, 34, 0.15);
+    border-color: var(--color-danger-hover);
+    color: var(--color-danger-hover);
+}
+
+/* ===== Scrollable Content ===== */
+.settings-scroll {
+    flex-grow: 1;
+}
+
+.settings-scroll .unity-scroll-view__content-container {
+    padding-right: 8px;
+}

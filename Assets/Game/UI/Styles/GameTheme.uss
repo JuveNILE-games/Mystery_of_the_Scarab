@@ -19,7 +19,7 @@
     --bg-modal: #1A0F0E; /* Very dark brown/black */
     --bg-modal-overlay: rgba(0, 0, 0, 0.85);
     
-    --bg-panel: rgba(119, 48, 17, 0.8); /* Terracotta/Brick - Main Background */
+    --bg-panel: rgb(119, 48, 17); /* Terracotta/Brick - Main Background */
     --bg-panel-header: rgba(233, 181, 65, 0.2); /* Gold Tint */
     
     --bg-input: rgba(20, 10, 5, 0.6); /* Dark Recess */

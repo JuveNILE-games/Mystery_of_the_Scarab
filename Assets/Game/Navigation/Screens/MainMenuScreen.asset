@@ -16,7 +16,8 @@ MonoBehaviour:
   allowedMode: 1
   incomingScreens: []
   conditions: []
-  allowedOverlays: []
+  allowedOverlays:
+  - {fileID: 11400000, guid: 5f14d9b937aa40643b73fefcfa919a34, type: 2}
   onOpen:
     m_PersistentCalls:
       m_Calls: []

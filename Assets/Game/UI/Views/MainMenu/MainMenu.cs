@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Core.Systems.AudioSystem;
 using Core.Systems.Localization.Definitions;
+using Core.Systems.Navigation;
+using Core.Systems.Navigation.Definitions;
 using Core.Systems.PopUp;
 using Core.Systems.Theming;
 using Core.Utility.Attributes;
@@ -20,6 +22,7 @@ namespace Game.UI.Views.MainMenu{
         [Inject] private AudioService _audioService;
         [SerializeField] private SoundData themeMusic;
         [SerializeField] private UIDocument document;
+        [SerializeField] private OverlayDefinition _settingsOverlay;
         //[SerializeField] private ThemeConfig theme; // Deprecated
         
         private SoundEmitter _activeTheme;
@@ -137,7 +140,7 @@ namespace Game.UI.Views.MainMenu{
         }
 
         public void Settings(){
-            throw new Exception("Testing exception for ErrorHandler");
+            Navigation.ShowOverlay(_settingsOverlay);
         }
 
         public void Quit(){
