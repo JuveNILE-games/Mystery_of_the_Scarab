@@ -281,6 +281,9 @@ jobs:
               echo "Patching project references..."
               python3 /github/workspace/patch_projects.py
 
+              echo "Cleaning up patch script..."
+              rm /github/workspace/patch_projects.py
+
               SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
 
               echo "Starting SonarCloud analysis..."
