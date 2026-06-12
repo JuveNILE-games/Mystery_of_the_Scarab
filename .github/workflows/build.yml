@@ -278,6 +278,11 @@ jobs:
               sed -i "/<CscToolExe>/d" *.csproj
               sed -i "/<CscToolPath>/d" *.csproj
 
+              echo "Forcing SonarScanner to treat Unity projects as production code..."
+              for file in *.csproj; do
+                sed -i '0,/<PropertyGroup>/s//<PropertyGroup>\n    <SonarQubeTestProject>false<\/SonarQubeTestProject>/' "$file"
+              done
+
               echo "Patching project references..."
               python3 /github/workspace/patch_projects.py
 
