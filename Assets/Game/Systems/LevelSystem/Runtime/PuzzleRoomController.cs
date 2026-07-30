@@ -12,7 +12,7 @@ namespace Game.Systems.LevelSystem.Runtime{
     /// Reads PuzzleRoomDefinition at runtime; at design-time the definition is assigned in Inspector.
     /// </summary>
     public class PuzzleRoomController : RoomController{
-        [SerializeField] private new PuzzleRoomDefinition _definition;
+        public new PuzzleRoomDefinition Definition => (PuzzleRoomDefinition)_definition;
 
         public bool IsRoomSolved { get; private set; }
         public event Action<PuzzleRoomController> OnRoomSolved;
@@ -25,7 +25,7 @@ namespace Game.Systems.LevelSystem.Runtime{
             _rewardExecutor = FindFirstObjectByType<PuzzleRewardExecutor>();
 
             // Find or create PuzzleControllers for each PuzzleDefinition.
-            foreach (var puzzleDef in _definition.puzzles)
+            foreach (var puzzleDef in Definition.puzzles)
             {
                 // Look for an existing PuzzleController in children that already holds this def.
                 var existing = FindPuzzleController(puzzleDef);
@@ -73,7 +73,7 @@ namespace Game.Systems.LevelSystem.Runtime{
         }
 
         private void EvaluateRoomSolved(){
-            bool solved = _definition.solveMode == RoomSolveMode.All
+            bool solved = Definition.solveMode == RoomSolveMode.All
                 ? _puzzleControllers.All(p => p.IsSolved)
                 : _puzzleControllers.Any(p => p.IsSolved);
 
@@ -86,7 +86,7 @@ namespace Game.Systems.LevelSystem.Runtime{
 
         public void ResetRoom(){
             IsRoomSolved = false;
-            if (_definition.resetPuzzlesOnExit)
+            if (Definition.resetPuzzlesOnExit)
                 foreach (var pc in _puzzleControllers)
                     pc.ResetPuzzle();
         }

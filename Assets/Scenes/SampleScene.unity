@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 330585548}
   - component: {fileID: 330585549}
   - component: {fileID: 330585550}
+  - component: {fileID: 330585551}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -660,7 +661,7 @@ Camera:
   far clip plane: 1000
   field of view: 20
   orthographic: 0
-  orthographic size: 2.4107144
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -786,7 +787,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
   m_Name: 
@@ -803,6 +804,37 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &330585551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946cab0d2ada0ad4b9ca8aac5ed2c62f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PSXStyleShader.PSXRetroGlobals
+  _enabled: 1
+  _snapResolution: {x: 640, y: 360}
+  _useScreenResolution: 1
+  _snapStrength: 1
+  _jitterSpeed: 32
+  _jitterPixels: 1
+  _depthSteps: 48
+  _depthStrength: 0.75
+  _depthNoise: 0.0015
+  _uvPrecision: 128
+  _uvSnapStrength: 0
+  _uvWarpStrength: 0
+  _affineSwim: 0.2
+  _affineUvInterpolation: 0
+  _mipBias: -1
+  _vertexLighting: 0
+  _lightSteps: 16
+  _colorBits: 6
+  _ditherStrength: 0
 --- !u!1001 &372590219
 PrefabInstance:
   m_ObjectHideFlags: 0
