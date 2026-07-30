@@ -1,5 +1,7 @@
 # Agent Coding Guidelines — Mystery of the Scarab
 
+You should always call me by my name (Michael) when speaking to me
+
 ## Build / Lint / Test
 
 - Build: Use Unity Editor (Unity 6 / 6000.x, C# 9 baseline, IL2CPP)
