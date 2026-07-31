@@ -110,10 +110,15 @@ jobs:
           import os
           import glob
 
-          FIRST_PARTY = (
-              'MysteryOfTheScarab',
-              'JuveNILE.',
-              'Assembly-CSharp'
+          # Which projects are "first-party" for THIS analysis pass (kept as source,
+          # so Sonar actually analyzes them) vs "third-party" (deleted and DLL-referenced
+          # instead, so they still compile but aren't analyzed or counted for LOC).
+          # Set per-pass via the SONAR_FIRST_PARTY env var — see the SonarQube analysis step.
+          FIRST_PARTY = tuple(
+              p for p in os.environ.get(
+                  'SONAR_FIRST_PARTY',
+                  'MysteryOfTheScarab,JuveNILE.,Assembly-CSharp'
+              ).split(',') if p
           )
 
           def is_first_party(name):
@@ -281,65 +286,75 @@ jobs:
 
               cd /github/workspace
 
-              echo "Cleaning Unity compiler overrides..."
-              sed -i "/<Analyzer Include=.*Editor\/Data\/Tools/d" *.csproj
-              sed -i "/<Analyzer Include=.*YarnSpinner.*SourceCodeGenerator/d" *.csproj
-              sed -i "/<CscToolExe>/d" *.csproj
-              sed -i "/<CscToolPath>/d" *.csproj
-
-              echo "Forcing SonarScanner to treat Unity projects as production code..."
-              for file in *.csproj; do
-                sed -i "0,/<PropertyGroup>/s//<PropertyGroup>\n    <SonarQubeTestProject>false<\/SonarQubeTestProject>/" "$file"
-              done
-
-              echo "Patching project references..."
-              python3 /github/workspace/patch_projects.py
-
-              echo "Cleaning up patch script..."
-              rm /github/workspace/patch_projects.py
+              # Snapshot the freshly-generated, unpatched *.csproj/*.sln once. Each pass below
+              # restores from here first: patch_projects.py deletes "third-party" (for that pass)
+              # csproj and rewrites the .sln in place, which is a one-way operation — without
+              # restoring between passes, pass 2 would find pass 1'"'"'s already-deleted files gone.
+              mkdir -p /tmp/proj-backup
+              cp *.csproj *.sln /tmp/proj-backup/
 
               SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
 
-              echo "=== SonarCloud analysis: Mystery_of_the_Scarab ==="
-              /sonarscanner/dotnet-sonarscanner begin \
-                /k:"JuveNILE-games_Mystery_of_the_Scarab" \
-                /o:"juvenile-games" \
-                /d:sonar.token="$SONAR_TOKEN" \
-                /d:sonar.host.url="https://sonarcloud.io" \
-                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**,Assets/Core/**,Assets/NetCore/**"
+              run_pass () {
+                local pass_name="$1"
+                local project_key="$2"
+                local token="$3"
+                local first_party="$4"
+                local exclusions="$5"
 
-              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+                echo "=== SonarCloud analysis: $pass_name ==="
 
-              /sonarscanner/dotnet-sonarscanner end \
-                /d:sonar.token="$SONAR_TOKEN"
+                echo "Restoring unpatched project files..."
+                rm -f *.csproj *.sln
+                cp /tmp/proj-backup/*.csproj /tmp/proj-backup/*.sln .
 
-              echo "=== SonarCloud analysis: Core ==="
-              /sonarscanner/dotnet-sonarscanner begin \
-                /k:"JuveNILE-games_Core" \
-                /o:"juvenile-games" \
-                /d:sonar.token="$CORE_SONAR_TOKEN" \
-                /d:sonar.host.url="https://sonarcloud.io" \
-                /d:sonar.sources="Assets/Core" \
-                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**"
+                echo "Cleaning Unity compiler overrides..."
+                sed -i "/<Analyzer Include=.*Editor\/Data\/Tools/d" *.csproj
+                sed -i "/<Analyzer Include=.*YarnSpinner.*SourceCodeGenerator/d" *.csproj
+                sed -i "/<CscToolExe>/d" *.csproj
+                sed -i "/<CscToolPath>/d" *.csproj
 
-              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+                echo "Forcing SonarScanner to treat Unity projects as production code..."
+                for file in *.csproj; do
+                  sed -i "0,/<PropertyGroup>/s//<PropertyGroup>\n    <SonarQubeTestProject>false<\/SonarQubeTestProject>/" "$file"
+                done
 
-              /sonarscanner/dotnet-sonarscanner end \
-                /d:sonar.token="$CORE_SONAR_TOKEN"
+                echo "Patching project references (first-party: $first_party)..."
+                SONAR_FIRST_PARTY="$first_party" python3 /github/workspace/patch_projects.py
 
-              echo "=== SonarCloud analysis: NetCore ==="
-              /sonarscanner/dotnet-sonarscanner begin \
-                /k:"JuveNILE-games_NetCore" \
-                /o:"juvenile-games" \
-                /d:sonar.token="$NETCORE_SONAR_TOKEN" \
-                /d:sonar.host.url="https://sonarcloud.io" \
-                /d:sonar.sources="Assets/NetCore" \
-                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**"
+                /sonarscanner/dotnet-sonarscanner begin \
+                  /k:"$project_key" \
+                  /o:"juvenile-games" \
+                  /d:sonar.token="$token" \
+                  /d:sonar.host.url="https://sonarcloud.io" \
+                  /d:sonar.exclusions="$exclusions"
 
-              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+                dotnet build "$SLN_FILE" --configuration Debug --no-incremental
 
-              /sonarscanner/dotnet-sonarscanner end \
-                /d:sonar.token="$NETCORE_SONAR_TOKEN"
+                /sonarscanner/dotnet-sonarscanner end \
+                  /d:sonar.token="$token"
+              }
+
+              # Main pass: Core/NetCore treated as third-party (DLL-referenced, not analyzed —
+              # this is what keeps their C# LOC out of this project'"'"'s count; sonar.exclusions
+              # alone was not enough for .cs files, since the .NET scanner counts LOC per built
+              # project regardless of file globs. The Assets/Core|NetCore glob exclusions below are
+              # still needed on top of that for non-C# files (.meta/.asset/.prefab/etc.) that were
+              # never part of any csproj compile-item in the first place.
+              run_pass "Mystery_of_the_Scarab" "JuveNILE-games_Mystery_of_the_Scarab" "$SONAR_TOKEN" \
+                "MysteryOfTheScarab,Assembly-CSharp" \
+                "**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**,Assets/Core/**,Assets/NetCore/**"
+
+              run_pass "Core" "JuveNILE-games_Core" "$CORE_SONAR_TOKEN" \
+                "JuveNILE.Core" \
+                "**/Library/**,**/Temp/**,**/obj/**"
+
+              run_pass "NetCore" "JuveNILE-games_NetCore" "$NETCORE_SONAR_TOKEN" \
+                "JuveNILE.NetCore" \
+                "**/Library/**,**/Temp/**,**/obj/**"
+
+              echo "Cleaning up patch script..."
+              rm -f /github/workspace/patch_projects.py
             '
 
   test:
