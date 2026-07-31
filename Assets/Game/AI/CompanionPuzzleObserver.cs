@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.Behavior;
@@ -33,6 +34,7 @@ namespace Game.AI
         private PlayerAbilities _abilities;
         private PuzzleRoomController _currentRoom;
         private float _deferenceTimer;
+        private CancellationTokenSource _reevaluateCts;
 
         // Cache all conditions we are currently listening to
         private readonly List<IPuzzleCondition> _subscribedConditions = new();
@@ -114,14 +116,27 @@ namespace Game.AI
 
         private void OnConditionChanged(IPuzzleCondition condition)
         {
-            // A component just changed state — re-evaluate after a short delay
-            StopAllCoroutines();
-            StartCoroutine(EvaluateAfterDelay(0.1f));
+            // A component just changed state — re-evaluate after a short, randomized
+            // reaction delay (was hardcoded to 0.1f, silently ignoring _reactionDelayMin/Max —
+            // those inspector fields, also baked into Player.prefab, had zero effect).
+            _reevaluateCts?.Cancel();
+            _reevaluateCts?.Dispose();
+            _reevaluateCts = new CancellationTokenSource();
+            float delay = Random.Range(_reactionDelayMin, _reactionDelayMax);
+            EvaluateAfterDelayAsync(delay, _reevaluateCts.Token).Forget();
         }
 
-        private IEnumerator EvaluateAfterDelay(float delay)
+        private async UniTaskVoid EvaluateAfterDelayAsync(float delay, CancellationToken ct)
         {
-            yield return new WaitForSeconds(delay);
+            try
+            {
+                await UniTask.Delay(System.TimeSpan.FromSeconds(delay), cancellationToken: ct);
+            }
+            catch (System.OperationCanceledException)
+            {
+                return; // superseded by a newer condition change — normal flow, not an error
+            }
+
             EvaluatePuzzleState();
         }
 
@@ -179,12 +194,14 @@ namespace Game.AI
                 }
             }
 
+            _behaviorAgent.SetVariableValue("IsAmbiguous", isAmbiguous);
+
             if (bestTarget != null)
             {
                 _behaviorAgent.SetVariableValue("TargetComponent", bestTarget.gameObject);
                 _behaviorAgent.SetVariableValue("TargetPosition", bestTarget.transform.position);
                 _behaviorAgent.SetVariableValue("HasActionablePuzzleTarget", true);
-                
+
                 // Holding logic: if we are close to the target and it requires holding, set IsHolding
                 float distToTarget = Vector3.Distance(transform.position, bestTarget.transform.position);
                 bool atTarget = distToTarget < 1.0f; // threshold for "being on it"
@@ -227,6 +244,8 @@ namespace Game.AI
         private void OnDestroy()
         {
             UnsubscribeAll();
+            _reevaluateCts?.Cancel();
+            _reevaluateCts?.Dispose();
         }
     }
 }
