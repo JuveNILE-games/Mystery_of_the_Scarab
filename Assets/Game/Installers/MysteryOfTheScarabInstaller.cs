@@ -103,8 +103,8 @@ namespace Game.Installers
 
             var eventBus = new SoapDialogueEventBus(
                 cfg.DialogueStarted, cfg.DialogueEnded, cfg.DialogueLinePresented,
-                cfg.DialogueAdvanced, cfg.DialogueChoiceMade, cfg.DialogueChoicePending,
-                cfg.DialogueChoiceConfirmed);
+                cfg.DialogueAdvanced, cfg.DialogueChoicePending, cfg.DialogueChoiceConfirmed,
+                cfg.DialogueChoiceMade);
 
             var lineResolver = new LineResolver(cfg.CharacterRegistry, logger);
 

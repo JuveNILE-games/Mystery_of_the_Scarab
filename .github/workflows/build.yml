@@ -308,3 +308,50 @@ jobs:
               /sonarscanner/dotnet-sonarscanner end \
                 /d:sonar.token="$SONAR_TOKEN"
             '
+
+  test:
+    name: Run EditMode tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Parse Unity version
+        id: read
+        run: |
+          VERSION=$(sed -n 's/^m_EditorVersion: //p' \
+            ProjectSettings/ProjectVersion.txt)
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Run EditMode tests
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: ${{ steps.read.outputs.version }}
+          testMode: EditMode
+          artifactsPath: test-results
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EditMode test results
+          path: test-results
