@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using Core.Systems.Dialogue;
+using Core.Systems.Logging;
 using Core.Systems.Services.Interfaces;
+using Core.Systems.Signals;
 using Game.Systems.PuzzleSystem.Definitions;
+using Game.Systems.PuzzleSystem.Signals;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Core.Utility.Attributes;
@@ -18,6 +21,8 @@ namespace Game.Systems.PuzzleSystem.Runtime
         // called by Bootstrapper.OnSceneLoaded. Attach this component to a GameObject
         // that is present in a scene loaded after the service bootstrapper.
         [Inject] private IDialogueService _dialogueService;
+        [Inject] private IEventBus _eventBus;
+        [Inject] private ILoggerService _logger;
 
         public void Execute(IReadOnlyList<PuzzleReward> rewards)
         {
@@ -31,13 +36,13 @@ namespace Game.Systems.PuzzleSystem.Runtime
             switch (reward.type)
             {
                 case PuzzleRewardType.UnlockDoor:
-                    // TODO: Find DoorwayMarker by reward.targetId and unlock
-                    Debug.Log($"[PuzzleRewardExecutor] UnlockDoor: {reward.targetId}");
+                    // TODO: Find DoorwayMarker by reward.targetId and unlock — no door system
+                    // exists in this codebase yet. Needs a design decision before implementing.
+                    _logger?.LogWarning(this, $"[PuzzleRewardExecutor] UnlockDoor '{reward.targetId}' not implemented — no door system exists yet.");
                     break;
 
                 case PuzzleRewardType.TriggerEvent:
-                    // TODO: Publish via IEventBus
-                    Debug.Log($"[PuzzleRewardExecutor] TriggerEvent: {reward.targetId}");
+                    _eventBus?.Publish(new PuzzleRewardEventSignal(reward.targetId));
                     break;
 
                 case PuzzleRewardType.PlayDialogue:
@@ -46,13 +51,16 @@ namespace Game.Systems.PuzzleSystem.Runtime
                     break;
 
                 case PuzzleRewardType.SpawnItem:
-                    // TODO: Resolve spawn system
-                    Debug.Log($"[PuzzleRewardExecutor] SpawnItem: {reward.targetId}");
+                    // TODO: Resolve spawn system — no item/inventory system exists in this
+                    // codebase yet. Needs a design decision before implementing.
+                    _logger?.LogWarning(this, $"[PuzzleRewardExecutor] SpawnItem '{reward.targetId}' not implemented — no item system exists yet.");
                     break;
 
                 case PuzzleRewardType.Custom:
-                    // TODO: Custom reward handling
-                    Debug.Log($"[PuzzleRewardExecutor] Custom: {reward.targetId}");
+                    if (PuzzleCustomRewardRegistry.TryGet(reward.targetId, out var handler))
+                        handler.Handle(reward);
+                    else
+                        _logger?.LogWarning(this, $"[PuzzleRewardExecutor] Custom reward '{reward.targetId}' has no registered handler.");
                     break;
             }
         }
