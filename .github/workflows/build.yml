@@ -232,14 +232,23 @@ jobs:
       # ---------------------------------------------------------------------
       # SonarCloud Analysis
       # ---------------------------------------------------------------------
+      # Three separate analyses from one checkout/build (monorepo-style): the main game
+      # project, plus Assets/Core and Assets/NetCore under their own SonarCloud projects
+      # and tokens. All three csproj stay in the built solution (Core/NetCore code is a real
+      # dependency of the main project and needs to actually compile), sonar.sources/
+      # sonar.exclusions is what scopes each pass to its own slice of the same source tree.
       - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          CORE_SONAR_TOKEN: ${{ secrets.CORE_SONAR_TOKEN }}
+          NETCORE_SONAR_TOKEN: ${{ secrets.NETCORE_SONAR_TOKEN }}
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/github/workspace" \
             -w /github/workspace \
             -e SONAR_TOKEN \
+            -e CORE_SONAR_TOKEN \
+            -e NETCORE_SONAR_TOKEN \
             unityci/editor:ubuntu-${{ steps.read.outputs.version }}-base-3 \
             bash -c '
               set -euo pipefail
@@ -291,22 +300,46 @@ jobs:
 
               SLN_FILE=$(find . -maxdepth 1 -name "*.sln" | head -n 1)
 
-              echo "Starting SonarCloud analysis..."
-
+              echo "=== SonarCloud analysis: Mystery_of_the_Scarab ==="
               /sonarscanner/dotnet-sonarscanner begin \
                 /k:"JuveNILE-games_Mystery_of_the_Scarab" \
                 /o:"juvenile-games" \
                 /d:sonar.token="$SONAR_TOKEN" \
                 /d:sonar.host.url="https://sonarcloud.io" \
-                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**"
+                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**,Assets/Core/**,Assets/NetCore/**"
 
-              dotnet build \
-                "$SLN_FILE" \
-                --configuration Debug \
-                --no-incremental
+              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
 
               /sonarscanner/dotnet-sonarscanner end \
                 /d:sonar.token="$SONAR_TOKEN"
+
+              echo "=== SonarCloud analysis: Core ==="
+              /sonarscanner/dotnet-sonarscanner begin \
+                /k:"JuveNILE-games_Core" \
+                /o:"juvenile-games" \
+                /d:sonar.token="$CORE_SONAR_TOKEN" \
+                /d:sonar.host.url="https://sonarcloud.io" \
+                /d:sonar.sources="Assets/Core" \
+                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**"
+
+              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+
+              /sonarscanner/dotnet-sonarscanner end \
+                /d:sonar.token="$CORE_SONAR_TOKEN"
+
+              echo "=== SonarCloud analysis: NetCore ==="
+              /sonarscanner/dotnet-sonarscanner begin \
+                /k:"JuveNILE-games_NetCore" \
+                /o:"juvenile-games" \
+                /d:sonar.token="$NETCORE_SONAR_TOKEN" \
+                /d:sonar.host.url="https://sonarcloud.io" \
+                /d:sonar.sources="Assets/NetCore" \
+                /d:sonar.exclusions="**/Library/**,**/Temp/**,**/obj/**"
+
+              dotnet build "$SLN_FILE" --configuration Debug --no-incremental
+
+              /sonarscanner/dotnet-sonarscanner end \
+                /d:sonar.token="$NETCORE_SONAR_TOKEN"
             '
 
   test:
