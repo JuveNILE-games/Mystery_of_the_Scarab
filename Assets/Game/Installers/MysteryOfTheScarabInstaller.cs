@@ -127,6 +127,9 @@ namespace Game.Installers
             locator.Register<IDialogueServiceConfig>(dialogueService);
             locator.Register<ILineResolver>(lineResolver);
             locator.Register<ITypewriterEffect>(typewriter);
+            // Presenters (e.g. DialogueBox) inject IDialogueEventBus to subscribe to
+            // OnEmotionChanged — without this registration that field would resolve to null.
+            locator.Register<IDialogueEventBus>(eventBus);
             
             // ── Participant & Player Provider ─────────────────────────────────────
             var playerProvider = new TaggedLocalPlayerProvider("Player");
