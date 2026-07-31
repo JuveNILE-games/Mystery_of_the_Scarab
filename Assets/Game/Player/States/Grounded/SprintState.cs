@@ -19,7 +19,7 @@ namespace Game.Player.States.Grounded{
             if (Animator != null)
             {
                 _windroseAnimator = Animator.Play<WindroseAnimator>("Sprint");
-                if (Owner != null) _windroseAnimator?.SetDirection(Owner.LastMoveDirection);
+                if (Owner != null && _windroseAnimator != null) _windroseAnimator.SetDirection(Owner.LastMoveDirection);
             }
         }
 

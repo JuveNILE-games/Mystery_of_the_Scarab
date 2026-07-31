@@ -10,7 +10,7 @@
             {
                 Owner.VerticalVelocity = Owner.Data.Value != null ? Owner.Data.Value.GroundStickForce : -5f;
             }
-            Animator?.Play("Land");
+            if (Animator != null) Animator.Play("Land");
         }
     }
 }

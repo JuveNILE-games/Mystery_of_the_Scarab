@@ -15,9 +15,9 @@ namespace Game.Player.States
     public abstract class PlayerState : BaseState<PlayerStateMachine, PlayerState>
     {
         // Common player references (cached for performance)
-        protected CharacterController Controller => Owner?.Controller;
-        protected SpriteAnimator Animator => Owner?.Animator;
-        protected Transform Transform => Owner?.transform;
+        protected CharacterController Controller => Owner != null ? Owner.Controller : null;
+        protected SpriteAnimator Animator => Owner != null ? Owner.Animator : null;
+        protected Transform Transform => Owner != null ? Owner.transform : null;
 
         protected bool IsGrounded => Owner != null && Owner.IsGrounded;
 

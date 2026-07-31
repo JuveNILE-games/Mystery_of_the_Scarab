@@ -81,8 +81,7 @@ namespace Game.Player.States.Grounded
         
         private bool HasInput()
         {
-            bool has = Owner?.MoveInput.sqrMagnitude > 0.01f;
-            return has;
+            return Owner != null && Owner.MoveInput.sqrMagnitude > 0.01f;
         }
     }
 }

@@ -7,7 +7,7 @@ public class FallingState : PlayerState
     public override void OnEnter()
     {
         base.OnEnter();
-        Animator?.Play("Fall");
+        if (Animator != null) Animator.Play("Fall");
     }
         
     public override void OnUpdate()

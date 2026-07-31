@@ -203,7 +203,9 @@ namespace Game.AI
 
         private bool IsPlayerCovering(PuzzleComponent component)
         {
-            if (SceneCamera.Instance?.TrackingTarget.Value == null) return false;
+            // SceneCamera is a MonoBehaviour — use != null, not ?., to catch the fake-null case
+            // (matches every other SceneCamera.Instance call site in this codebase).
+            if (SceneCamera.Instance == null || SceneCamera.Instance.TrackingTarget.Value == null) return false;
             var playerPos = SceneCamera.Instance.TrackingTarget.Value.position;
             return Vector3.Distance(playerPos, component.transform.position) < 1.5f;
         }

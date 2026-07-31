@@ -16,7 +16,7 @@ namespace Game.Player.States.Grounded{
             {
                 _windroseAnimator = Animator.Play<WindroseAnimator>("Walk");
                 // Set initial direction to last known direction so we don't snap to default (usually South/East)
-                if (Owner != null) _windroseAnimator?.SetDirection(Owner.LastMoveDirection);
+                if (Owner != null && _windroseAnimator != null) _windroseAnimator.SetDirection(Owner.LastMoveDirection);
             }
         }
         

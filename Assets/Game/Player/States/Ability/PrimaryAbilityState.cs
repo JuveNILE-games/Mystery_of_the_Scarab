@@ -12,7 +12,7 @@ namespace Game.Player.States.Ability{
             base.OnEnter();
             startTime = Time.time;
 
-            Animator?.Play("PrimaryAbility");
+            if (Animator != null) Animator.Play("PrimaryAbility");
             Debug.Log("[PlayerSM] Executing Primary Ability");
 
             // Execute ability logic here
@@ -25,7 +25,7 @@ namespace Game.Player.States.Ability{
             // Mark as finished after duration
             if (Time.time - startTime >= abilityDuration)
             {
-                Owner?.MarkPrimaryAbilityFinished();
+                if (Owner != null) Owner.MarkPrimaryAbilityFinished();
             }
             else
             {
