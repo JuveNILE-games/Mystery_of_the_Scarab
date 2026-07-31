@@ -21,6 +21,12 @@ namespace Game.Systems.LevelSystem.Runtime{
         private readonly List<PuzzleController> _puzzleControllers = new();
         private PuzzleRewardExecutor _rewardExecutor;
 
+        /// <summary>Read-only view for NetworkPuzzleRoomController to subscribe/look up by id.</summary>
+        public IReadOnlyList<PuzzleController> PuzzleControllers => _puzzleControllers;
+
+        public PuzzleController FindPuzzleControllerById(string puzzleId)
+            => _puzzleControllers.Find(p => p.Definition != null && p.Definition.puzzleId == puzzleId);
+
         private void Awake(){
             _rewardExecutor = FindFirstObjectByType<PuzzleRewardExecutor>();
 
@@ -38,7 +44,10 @@ namespace Game.Systems.LevelSystem.Runtime{
                 }
 
                 _puzzleControllers.Add(existing);
-                existing.OnSolved += OnPuzzleSolved;
+                // Confirmed, not raw OnSolved: rewards/progression are real game-state side
+                // effects, and OnSolved alone can fire independently on every client (no
+                // network authority) — see NetworkPuzzleRoomController.
+                existing.OnSolvedConfirmed += OnPuzzleSolved;
             }
 
             HandlePrerequisites();
@@ -52,7 +61,7 @@ namespace Game.Systems.LevelSystem.Runtime{
                     var prereq = _puzzleControllers.Find(p => p.Definition == pc.Definition.prerequisite);
                     if (prereq != null)
                     {
-                        prereq.OnSolved += _ => {
+                        prereq.OnSolvedConfirmed += _ => {
                             pc.Initialize();
                             OnPuzzleUnlocked?.Invoke(pc);
                         };
@@ -74,8 +83,8 @@ namespace Game.Systems.LevelSystem.Runtime{
 
         private void EvaluateRoomSolved(){
             bool solved = Definition.solveMode == RoomSolveMode.All
-                ? _puzzleControllers.All(p => p.IsSolved)
-                : _puzzleControllers.Any(p => p.IsSolved);
+                ? _puzzleControllers.All(p => p.IsSolveConfirmed)
+                : _puzzleControllers.Any(p => p.IsSolveConfirmed);
 
             if (solved && !IsRoomSolved)
             {

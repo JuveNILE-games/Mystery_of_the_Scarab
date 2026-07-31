@@ -16,10 +16,25 @@ namespace Game.Systems.PuzzleSystem.Runtime{
     public PuzzleDefinition Definition => _definition;
     public bool IsSolved { get; private set; }
     public bool IsFailed { get; private set; }
+    public bool IsSolveConfirmed { get; private set; }
 
+    /// <summary>
+    /// Fires the instant this client's own condition tree evaluates as solved — immediate,
+    /// not network-confirmed. Fine for local/visual reactions (animate the lever, play a
+    /// sting), but two clients can independently evaluate this at slightly different times.
+    /// Reward-firing / door-unlocking / anything with a real game-state side effect should
+    /// subscribe to <see cref="OnSolvedConfirmed"/> instead so it only happens once.
+    /// </summary>
     public event Action<PuzzleController> OnSolved;
     public event Action<PuzzleController> OnFailed;
     public event Action<PuzzleController> OnReset;
+
+    /// <summary>
+    /// Fires once this puzzle's solved state has been network-confirmed (via
+    /// NetworkPuzzleRoomController), or immediately if there's no NetworkManager in the scene
+    /// (single-player). Idempotent — only ever fires once per solve.
+    /// </summary>
+    public event Action<PuzzleController> OnSolvedConfirmed;
 
     private readonly List<IPuzzleCondition> _resolvedConditions = new();
     private Action<IPuzzleCondition> _evaluateHandler;
@@ -101,6 +116,18 @@ namespace Game.Systems.PuzzleSystem.Runtime{
         OnSolved?.Invoke(this);
     }
 
+    /// <summary>
+    /// Called by NetworkPuzzleRoomController once the server has confirmed this puzzle's
+    /// solve (or immediately, if nothing is listening to broker that confirmation — e.g. no
+    /// NetworkManager in the scene). Idempotent so a duplicate confirmation is a no-op.
+    /// </summary>
+    public void ConfirmSolved()
+    {
+        if (IsSolveConfirmed) return;
+        IsSolveConfirmed = true;
+        OnSolvedConfirmed?.Invoke(this);
+    }
+
     public void Fail()
     {
         IsFailed = true;
@@ -111,6 +138,7 @@ namespace Game.Systems.PuzzleSystem.Runtime{
     {
         IsSolved = false;
         IsFailed = false;
+        IsSolveConfirmed = false;
         foreach (var c in _resolvedConditions) c.Reset();
         if (_timerRoutine != null) StopCoroutine(_timerRoutine);
         if (_definition.canFail && _definition.timeLimit > 0f)
