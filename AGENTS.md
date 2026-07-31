@@ -212,10 +212,21 @@ _logger?.LogError(this, "...");
 ## Multiplayer
 
 - **PurrNet** for networking (`NetworkBehaviour`, `NetworkManager`)
-- NetCore submodule provides abstractions: `INetRunner`, `IRpcBus`, `INetPlayer`
-- `PurrNetRunner` adapter implements `INetRunner`
-- `PurrNetRpcBus` implements `IRpcBus` with `Server()`, `Clients()`, `Client(target)` RPC patterns
+- NetCore submodule provides generic sync abstractions: `INetworkService` (connection lifecycle —
+  `StartFromLobby`, `Stop`, `State`), `INetworkStateSource<T>` / `INetworkStateSink<T>` (capture
+  local state / apply remote state), `INetworkOwnershipGate` (owner vs non-owner checks)
+- `PurrNetService` implements `INetworkService`. Adapters extend `PurrNetStateSyncAdapterBase`
+  (owner captures + broadcasts via `[ObserversRpc]`, non-owners apply the latest received state
+  each `FixedUpdate`) — e.g. `PurrNetPlayerStateSyncAdapter` for player position/input,
+  `NetworkPuzzleRoomController` for puzzle-solve confirmation
+- RPCs are direct PurrNet attributes on `NetworkBehaviour` subclasses — `[ServerRpc(requireOwnership:
+  false)]`, `[ObserversRpc(excludeOwner: true)]` — not a bus/wrapper indirection layer
 - Dialogue system supports multiplayer via `DialogueContext.Mode`, role-based resolution (Initiator/Companion), and transient Yarn variables
+- Puzzle state is server-confirmed, not purely client-authoritative: every client evaluates
+  `PuzzleController` locally for responsive feedback, but reward-firing/progression subscribes to
+  `PuzzleController.OnSolvedConfirmed`, which only fires once the server has confirmed the solve
+  via `NetworkPuzzleRoomController`. This is a deliberate simplicity/responsiveness tradeoff for a
+  co-op game with no anti-cheat requirement, not a security boundary.
 
 ---
 
