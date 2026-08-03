@@ -309,7 +309,8 @@ jobs:
                 local token="$3"
                 local first_party="$4"
                 local sources="$5"
-                local exclusions="$6"
+                local inclusions="$6"
+                local exclusions="$7"
 
                 echo "=== SonarCloud analysis: $pass_name ==="
 
@@ -337,6 +338,7 @@ jobs:
                   /d:sonar.token="$token" \
                   /d:sonar.host.url="https://sonarcloud.io" \
                   /d:sonar.sources="$sources" \
+                  /d:sonar.inclusions="$inclusions" \
                   /d:sonar.exclusions="$exclusions"
 
                 dotnet build "$SLN_FILE" --configuration Debug --no-incremental
@@ -346,24 +348,33 @@ jobs:
               }
 
               # Main pass: Core/NetCore (and their Editor/Player variants) treated as third-party
-              # (DLL-referenced, not analyzed) — sonar.exclusions alone was not enough for .cs
-              # files, since the .NET scanner counts LOC per built project regardless of file
-              # globs. sonar.sources is scoped explicitly per pass too — it was previously left at
-              # its Assets-wide default for every pass, so non-C# files (.meta/.asset/.prefab)
-              # were being scanned from the whole tree every time regardless of project scoping.
+              # (DLL-referenced, not analyzed) for C# LOC, since the .NET scanner counts C# LOC
+              # per built project regardless of sonar.sources/exclusions. But sonar.sources itself
+              # is silently recalculated by the MSBuild scanner and ignored when passed via /d: —
+              # confirmed via a SonarCloud "SonarScanner Context" dump showing sonar.sources= blank
+              # at the root despite being set here. That left the *generic* (non-C#) file scanner
+              # (xml/yaml/web/py/json...) with no real scope restriction beyond sonar.exclusions,
+              # so it was scanning the whole repo checkout every pass — e.g. patch_projects.py
+              # itself (py=92) and root-level ProjectSettings/*.csproj/*.sln xml showing up
+              # identically in every pass's LOC count regardless of which project was analyzed.
+              # sonar.inclusions IS respected as a plain glob filter independent of the MSBuild
+              # source recalculation, so it's what actually scopes the generic scan per pass.
               run_pass "Mystery_of_the_Scarab" "JuveNILE-games_Mystery_of_the_Scarab" "$SONAR_TOKEN" \
                 "MysteryOfTheScarab,MysteryOfTheScarab.Net,Assembly-CSharp" \
                 "Assets" \
+                "Assets/**" \
                 "**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**,Assets/Core/**,Assets/NetCore/**"
 
               run_pass "Core" "JuveNILE-games_Core" "$CORE_SONAR_TOKEN" \
                 "JuveNILE.Core" \
                 "Assets/Core" \
+                "Assets/Core/**" \
                 "**/Library/**,**/Temp/**,**/obj/**"
 
               run_pass "NetCore" "JuveNILE-games_NetCore" "$NETCORE_SONAR_TOKEN" \
                 "JuveNILE.NetCore" \
                 "Assets/NetCore" \
+                "Assets/NetCore/**" \
                 "**/Library/**,**/Temp/**,**/obj/**"
 
               echo "Cleaning up patch script..."
