@@ -356,9 +356,9 @@ jobs:
               # (xml/yaml/web/py/json...) with no real scope restriction beyond sonar.exclusions,
               # so it was scanning the whole repo checkout every pass — e.g. patch_projects.py
               # itself (py=92) and root-level ProjectSettings/*.csproj/*.sln xml showing up
-              # identically in every pass's LOC count regardless of which project was analyzed.
+              # identically in every pass LOC count regardless of which project was analyzed.
               # sonar.inclusions IS respected as a plain glob filter independent of the MSBuild
-              # source recalculation, so it's what actually scopes the generic scan per pass.
+              # source recalculation, so it actually scopes the generic scan per pass.
               run_pass "Mystery_of_the_Scarab" "JuveNILE-games_Mystery_of_the_Scarab" "$SONAR_TOKEN" \
                 "MysteryOfTheScarab,MysteryOfTheScarab.Net,Assembly-CSharp" \
                 "Assets" \
