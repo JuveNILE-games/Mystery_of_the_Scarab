@@ -349,16 +349,17 @@ jobs:
 
               # Main pass: Core/NetCore (and their Editor/Player variants) treated as third-party
               # (DLL-referenced, not analyzed) for C# LOC, since the .NET scanner counts C# LOC
-              # per built project regardless of sonar.sources/exclusions. But sonar.sources itself
-              # is silently recalculated by the MSBuild scanner and ignored when passed via /d: —
-              # confirmed via a SonarCloud "SonarScanner Context" dump showing sonar.sources= blank
-              # at the root despite being set here. That left the *generic* (non-C#) file scanner
-              # (xml/yaml/web/py/json...) with no real scope restriction beyond sonar.exclusions,
-              # so it was scanning the whole repo checkout every pass — e.g. patch_projects.py
-              # itself (py=92) and root-level ProjectSettings/*.csproj/*.sln xml showing up
-              # identically in every pass LOC count regardless of which project was analyzed.
-              # sonar.inclusions IS respected as a plain glob filter independent of the MSBuild
-              # source recalculation, so it actually scopes the generic scan per pass.
+              # per built project regardless of sonar.sources/exclusions. sonar.sources itself is
+              # silently recalculated by the MSBuild scanner and ignored when passed via /d:, so
+              # sonar.inclusions is what actually scopes the *generic* (non-C#) file scanner
+              # (xml/yaml/web/py/json...) per pass.
+              #
+              # The Core LOC-cap failures were traced to real content, not a scoping bug: Assets/
+              # Core/Plugins/Sirenix/Assemblies/*.xml (Odin Inspector precompiled-DLL doc sidecar
+              # files — confirmed that folder is DLL/PDB/XML only, zero actual source) and Assets/
+              # Core/Plugins/Clavian/SuperTextMesh/Documentation/*.html account for ~47.5k of the
+              # ~77.5k-84k lines every failing run reported. Excluded below since none of it is
+              # analyzable source, just vendored docs sitting next to real Core code.
               run_pass "Mystery_of_the_Scarab" "JuveNILE-games_Mystery_of_the_Scarab" "$SONAR_TOKEN" \
                 "MysteryOfTheScarab,MysteryOfTheScarab.Net,Assembly-CSharp" \
                 "Assets" \
@@ -369,7 +370,7 @@ jobs:
                 "JuveNILE.Core" \
                 "Assets/Core" \
                 "Assets/Core/**" \
-                "**/Library/**,**/Temp/**,**/obj/**"
+                "**/Library/**,**/Temp/**,**/obj/**,Assets/Core/Plugins/**"
 
               run_pass "NetCore" "JuveNILE-games_NetCore" "$NETCORE_SONAR_TOKEN" \
                 "JuveNILE.NetCore" \
