@@ -110,19 +110,27 @@ jobs:
           import os
           import glob
 
-          # Which projects are "first-party" for THIS analysis pass (kept as source,
-          # so Sonar actually analyzes them) vs "third-party" (deleted and DLL-referenced
-          # instead, so they still compile but aren't analyzed or counted for LOC).
+          # Which EXACT projects are "first-party" for THIS analysis pass (kept as source, so
+          # Sonar actually analyzes them) vs "third-party" (deleted and DLL-referenced instead,
+          # so they still compile but aren't analyzed or counted for LOC).
           # Set per-pass via the SONAR_FIRST_PARTY env var — see the SonarQube analysis step.
-          FIRST_PARTY = tuple(
+          #
+          # Exact match, NOT prefix: Unity generates separate .csproj per assembly-definition
+          # variant (JuveNILE.Core, JuveNILE.Core.Editor, JuveNILE.Core.Player, ...), and most of
+          # them compile largely the SAME underlying .cs files for different platform/editor
+          # contexts. A prefix match like "JuveNILE.Core" would keep all of those variants as
+          # first-party and Sonar would count the same physical lines 3-4x over. Only the single
+          # canonical runtime assembly per component is analyzed; its Editor/Player siblings are
+          # treated as third-party (still built via DLL reference, just not re-analyzed).
+          FIRST_PARTY = frozenset(
               p for p in os.environ.get(
                   'SONAR_FIRST_PARTY',
-                  'MysteryOfTheScarab,JuveNILE.,Assembly-CSharp'
+                  'MysteryOfTheScarab,MysteryOfTheScarab.Net'
               ).split(',') if p
           )
 
           def is_first_party(name):
-              return any(name.startswith(p) for p in FIRST_PARTY)
+              return name in FIRST_PARTY
 
           all_projs = {f[:-7] for f in glob.glob('*.csproj')}
           first_party = {n for n in all_projs if is_first_party(n)}
@@ -300,7 +308,8 @@ jobs:
                 local project_key="$2"
                 local token="$3"
                 local first_party="$4"
-                local exclusions="$5"
+                local sources="$5"
+                local exclusions="$6"
 
                 echo "=== SonarCloud analysis: $pass_name ==="
 
@@ -327,6 +336,7 @@ jobs:
                   /o:"juvenile-games" \
                   /d:sonar.token="$token" \
                   /d:sonar.host.url="https://sonarcloud.io" \
+                  /d:sonar.sources="$sources" \
                   /d:sonar.exclusions="$exclusions"
 
                 dotnet build "$SLN_FILE" --configuration Debug --no-incremental
@@ -335,22 +345,25 @@ jobs:
                   /d:sonar.token="$token"
               }
 
-              # Main pass: Core/NetCore treated as third-party (DLL-referenced, not analyzed —
-              # this is what keeps their C# LOC out of this project'"'"'s count; sonar.exclusions
-              # alone was not enough for .cs files, since the .NET scanner counts LOC per built
-              # project regardless of file globs. The Assets/Core|NetCore glob exclusions below are
-              # still needed on top of that for non-C# files (.meta/.asset/.prefab/etc.) that were
-              # never part of any csproj compile-item in the first place.
+              # Main pass: Core/NetCore (and their Editor/Player variants) treated as third-party
+              # (DLL-referenced, not analyzed) — sonar.exclusions alone was not enough for .cs
+              # files, since the .NET scanner counts LOC per built project regardless of file
+              # globs. sonar.sources is scoped explicitly per pass too — it was previously left at
+              # its Assets-wide default for every pass, so non-C# files (.meta/.asset/.prefab)
+              # were being scanned from the whole tree every time regardless of project scoping.
               run_pass "Mystery_of_the_Scarab" "JuveNILE-games_Mystery_of_the_Scarab" "$SONAR_TOKEN" \
-                "MysteryOfTheScarab,Assembly-CSharp" \
+                "MysteryOfTheScarab,MysteryOfTheScarab.Net,Assembly-CSharp" \
+                "Assets" \
                 "**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**,Assets/Core/**,Assets/NetCore/**"
 
               run_pass "Core" "JuveNILE-games_Core" "$CORE_SONAR_TOKEN" \
                 "JuveNILE.Core" \
+                "Assets/Core" \
                 "**/Library/**,**/Temp/**,**/obj/**"
 
               run_pass "NetCore" "JuveNILE-games_NetCore" "$NETCORE_SONAR_TOKEN" \
                 "JuveNILE.NetCore" \
+                "Assets/NetCore" \
                 "**/Library/**,**/Temp/**,**/obj/**"
 
               echo "Cleaning up patch script..."
