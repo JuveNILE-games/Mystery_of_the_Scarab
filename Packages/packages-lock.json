@@ -307,7 +307,7 @@
     },
     "com.unity.splines": {
       "version": "2.8.2",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
@@ -366,6 +366,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.yucchiy.unicli-server": {
+      "version": "https://github.com/yucchiy/UniCli.git?path=src/UniCli.Unity/Packages/com.yucchiy.unicli-server#v1.6.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "297c28ec9e8b1117df6aba607d6238f1addf8209"
     },
     "dev.purrnet.purrnet": {
       "version": "1.18.0-beta.27",
