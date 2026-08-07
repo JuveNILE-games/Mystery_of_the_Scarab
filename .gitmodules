@@ -1,6 +1,6 @@
 [submodule "Core"]
-	path = Assets/Core
+	path = Packages/com.juvenile.games.core
 	url = https://github.com/JuveNILE-games/Core
 [submodule "NetCore"]
-	path = Assets/NetCore
+	path = Packages/com.juvenile.games.netcore
 	url = https://github.com/JuveNILE-games/NetCore

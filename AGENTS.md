@@ -13,9 +13,11 @@ You should always call me by my name (Michael) when speaking to me
 ## Project Structure
 
 ```
+Packages/
+├── com.juvenile.games.core/     ← git submodule (JuveNILE.Core framework, shared across projects)
+└── com.juvenile.games.netcore/  ← git submodule (JuveNILE.NetCore multiplayer layer)
+
 Assets/
-├── Core/           ← git submodule (JuveNILE.Core framework, shared across projects)
-├── NetCore/        ← git submodule (JuveNILE.NetCore multiplayer layer)
 ├── Game/           ← Mystery of the Scarab game-specific code
 │   ├── AI/         ← Companion behavior trees, puzzle observer
 │   ├── Installers/ ← Game-specific IGameServiceInstaller implementations
@@ -25,6 +27,8 @@ Assets/
 ├── Plugins/        ← Third-party packages (PurrNet, Odin, Soap, etc.)
 └── Scenes/
 ```
+
+Core and NetCore are embedded UPM packages (physically inside `Packages/`, not referenced via `manifest.json`), not plain `Assets/` folders — this is what makes their `package.json`/asmdef dependency resolution actually work.
 
 Core namespace convention: `Core.Systems.<SystemName>`, `Core.Installers`, `Core.Boot`, `Core.Definitions`, `Core.Utility`. Some root-level interfaces (`IServiceLocator`, `IControllable`) exist without a namespace for historical reasons — do not add new ones.
 

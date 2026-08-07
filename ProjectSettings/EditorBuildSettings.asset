@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Networking.unity
     guid: 4debfac05b26c5f4f9f6a766e2962f8b
   - enabled: 1
-    path: Assets/NetCore/Scenes/Lobby.unity
+    path: Packages/com.juvenile.games.netcore/Scenes/Lobby.unity
     guid: aebcbb7fdcd35de4180f93b4bbe8cdf8
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c133cd043393b174f84b4023f5903883, type: 2}

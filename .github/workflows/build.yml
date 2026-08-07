@@ -246,8 +246,9 @@ jobs:
       # SonarCloud Analysis
       # ---------------------------------------------------------------------
       # Three separate analyses from one checkout/build (monorepo-style): the main game
-      # project, plus Assets/Core and Assets/NetCore under their own SonarCloud projects
-      # and tokens. All three csproj stay in the built solution (Core/NetCore code is a real
+      # project, plus Packages/com.juvenile.games.core and Packages/com.juvenile.games.netcore
+      # under their own SonarCloud projects and tokens. All three csproj stay in the built
+      # solution (Core/NetCore code is a real
       # dependency of the main project and needs to actually compile), sonar.sources/
       # sonar.exclusions is what scopes each pass to its own slice of the same source tree.
       - name: SonarQube analysis
@@ -354,28 +355,29 @@ jobs:
               # sonar.inclusions is what actually scopes the *generic* (non-C#) file scanner
               # (xml/yaml/web/py/json...) per pass.
               #
-              # The Core LOC-cap failures were traced to real content, not a scoping bug: Assets/
-              # Core/Plugins/Sirenix/Assemblies/*.xml (Odin Inspector precompiled-DLL doc sidecar
-              # files — confirmed that folder is DLL/PDB/XML only, zero actual source) and Assets/
-              # Core/Plugins/Clavian/SuperTextMesh/Documentation/*.html account for ~47.5k of the
-              # ~77.5k-84k lines every failing run reported. Excluded below since none of it is
-              # analyzable source, just vendored docs sitting next to real Core code.
+              # The Core LOC-cap failures were traced to real content, not a scoping bug:
+              # Packages/com.juvenile.games.core/Plugins/Sirenix/Assemblies/*.xml (Odin Inspector
+              # precompiled-DLL doc sidecar files — confirmed that folder is DLL/PDB/XML only, zero
+              # actual source) and Packages/com.juvenile.games.core/Plugins/Clavian/SuperTextMesh/
+              # Documentation/*.html account for ~47.5k of the ~77.5k-84k lines every failing run
+              # reported. Excluded below since none of it is analyzable source, just vendored docs
+              # sitting next to real Core code.
               run_pass "Mystery_of_the_Scarab" "JuveNILE-games_Mystery_of_the_Scarab" "$SONAR_TOKEN" \
                 "MysteryOfTheScarab,MysteryOfTheScarab.Net,Assembly-CSharp" \
                 "Assets" \
                 "Assets/**" \
-                "**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**,Assets/Core/**,Assets/NetCore/**"
+                "**/Library/**,**/Temp/**,**/obj/**,**/Logs/**,**/UserSettings/**,**/Audio/**"
 
               run_pass "Core" "JuveNILE-games_Core" "$CORE_SONAR_TOKEN" \
                 "JuveNILE.Core" \
-                "Assets/Core" \
-                "Assets/Core/**" \
-                "**/Library/**,**/Temp/**,**/obj/**,Assets/Core/Plugins/**"
+                "Packages/com.juvenile.games.core" \
+                "Packages/com.juvenile.games.core/**" \
+                "**/Library/**,**/Temp/**,**/obj/**,Packages/com.juvenile.games.core/Plugins/**"
 
               run_pass "NetCore" "JuveNILE-games_NetCore" "$NETCORE_SONAR_TOKEN" \
                 "JuveNILE.NetCore" \
-                "Assets/NetCore" \
-                "Assets/NetCore/**" \
+                "Packages/com.juvenile.games.netcore" \
+                "Packages/com.juvenile.games.netcore/**" \
                 "**/Library/**,**/Temp/**,**/obj/**"
 
               echo "Cleaning up patch script..."
