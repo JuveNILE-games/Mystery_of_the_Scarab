@@ -4,7 +4,7 @@
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.eflatun.scenereference": "4.1.1",
     "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git",
-    "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui",
+    "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui#19ec2a5703424e29126715492c12eb995d77f31f",
     "com.no-slopes.sprite-animations": "2.3.5",
     "com.nobi.roundedcorners": "https://github.com/kirevdokimov/Unity-UI-Rounded-Corners.git",
     "com.unity.2d.sprite": "1.0.0",

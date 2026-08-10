@@ -61,7 +61,7 @@
       }
     },
     "com.mirovsky.fluent-ui": {
-      "version": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui",
+      "version": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui#19ec2a5703424e29126715492c12eb995d77f31f",
       "depth": 0,
       "source": "git",
       "dependencies": {},
