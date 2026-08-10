@@ -38,7 +38,7 @@
       "dependencies": {
         "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
         "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git",
-        "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui",
+        "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui#19ec2a5703424e29126715492c12eb995d77f31f",
         "com.eflatun.scenereference": "4.1.1",
         "com.unity.addressables": "2.7.6",
         "com.unity.ugui": "2.0.0",
