@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Core.Systems.AudioSystem;
+using Core.Systems.Localization;
 using Core.Systems.Localization.Definitions;
+using Core.Systems.Localization.Interfaces;
 using Core.Systems.Navigation;
 using Core.Systems.Navigation.Definitions;
 using Core.Systems.PopUp;
@@ -16,10 +18,11 @@ using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Game.UI.Views.MainMenu{
-    public class MainMenu : MonoBehaviour
+    public class MainMenu : MonoBehaviour, ILocalizationListener
     {
         [Inject] private IThemeService _themeService;
         [Inject] private AudioService _audioService;
+        [Inject] private LocalizationService _localizationService;
         [SerializeField] private SoundData themeMusic;
         [SerializeField] private UIDocument document;
         [SerializeField] private OverlayDefinition _settingsOverlay;
@@ -37,10 +40,24 @@ namespace Game.UI.Views.MainMenu{
 
         [Header("Menu Configuration")]
         [SerializeField] private List<MainMenuItem> menuItems;
-        
+
+        // Tracks each button's Label alongside the LocalizedString that drives it, so
+        // OnLanguageChanged can refresh text in place instead of rebuilding the whole menu
+        // (which would restart the fade-in animation and the theme music).
+        private readonly List<(Label label, LocalizedString text)> _localizedLabels = new();
+        private bool _isRegisteredForLocalization = false;
+
         public void OnOpen(){
             var root = document.rootVisualElement;
             root.Clear();
+            _localizedLabels.Clear();
+
+            if (!_isRegisteredForLocalization && _localizationService != null)
+            {
+                _localizationService.RegisterListener(this);
+                _isRegisteredForLocalization = true;
+            }
+
             root.RegisterCallback<NavigationMoveEvent>(evt => {
                 Debug.Log($"[MainMenu] NavigationMove fired | Direction: {evt.direction} | Target: {(evt.target as VisualElement)?.name}");
             }, TrickleDown.TrickleDown); // TrickleDown catches it before anything swallows it
@@ -121,14 +138,38 @@ namespace Game.UI.Views.MainMenu{
 
             // Text
             string displayContent = text != null ? text.GetLocalizedValue() : "[UNASSIGNED]";
-            btn.Add(
-                new Label(displayContent)
-            );
+            var label = new Label(displayContent);
+            btn.Add(label);
+
+            if (text != null)
+            {
+                _localizedLabels.Add((label, text));
+            }
 
             return btn;
         }
 
+        /// <summary>
+        /// ILocalizationListener - refreshes button labels in place when the language changes,
+        /// so a language switch while the menu is open (or already applied since it last opened)
+        /// is actually reflected instead of staying baked to whatever was current at OnOpen().
+        /// </summary>
+        public void OnLanguageChanged()
+        {
+            foreach (var (label, text) in _localizedLabels)
+            {
+                label.text = text.GetLocalizedValue();
+            }
+        }
+
         public void OnClose(){
+            if (_isRegisteredForLocalization && _localizationService != null)
+            {
+                _localizationService.UnregisterListener(this);
+                _isRegisteredForLocalization = false;
+            }
+            _localizedLabels.Clear();
+
             // Clear the UI to clean up elements and listeners
             document.rootVisualElement.Clear();
 
