@@ -609,7 +609,6 @@ GameObject:
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
   - component: {fileID: 330585549}
-  - component: {fileID: 330585550}
   - component: {fileID: 330585551}
   m_Layer: 0
   m_Name: Main Camera
@@ -780,30 +779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c899f446eb7de4f89a17f0b9271f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.Utilities.SceneCamera
---- !u!114 &330585550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
-  m_ComponentVersion: 1
-  m_AssetsPPU: 32
-  m_RefResolutionX: 640
-  m_RefResolutionY: 360
-  m_CropFrame: 2
-  m_GridSnapping: 0
-  m_FilterMode: 0
-  m_UpscaleRT: 0
-  m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!114 &330585551
 MonoBehaviour:
   m_ObjectHideFlags: 0
