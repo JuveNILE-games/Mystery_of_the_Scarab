@@ -137,7 +137,7 @@ namespace Game.UI.Views.MainMenu{
             );
 
             // Text
-            string displayContent = text != null ? text.GetLocalizedValue() : "[UNASSIGNED]";
+            string displayContent = text != null ? text.GetLocalizedValue(_localizationService) : "[UNASSIGNED]";
             var label = new Label(displayContent);
             btn.Add(label);
 
@@ -158,7 +158,7 @@ namespace Game.UI.Views.MainMenu{
         {
             foreach (var (label, text) in _localizedLabels)
             {
-                label.text = text.GetLocalizedValue();
+                label.text = text.GetLocalizedValue(_localizationService);
             }
         }
 
@@ -186,10 +186,14 @@ namespace Game.UI.Views.MainMenu{
 
         public void Quit(){
             Popup.ShowConfirmPopup(
-                message: "Are you sure you want to quit?",
+                message: _localizationService != null
+                    ? _localizationService.GetString("MAINMENU_QuitConfirmMessage", "Are you sure you want to quit?")
+                    : "Are you sure you want to quit?",
                 onYes: Application.Quit,
                 onNo: () => {},
-                title: "Quit Game"
+                title: _localizationService != null
+                    ? _localizationService.GetString("MAINMENU_QuitConfirmTitle", "Quit Game")
+                    : "Quit Game"
             );
         }
     }

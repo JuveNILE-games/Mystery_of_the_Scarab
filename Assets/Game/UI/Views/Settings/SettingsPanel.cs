@@ -5,6 +5,7 @@ using Core.Systems.Bindables;
 using Core.Systems.InputManagement;
 using Core.Systems.Localization;
 using Core.Systems.Localization.Definitions;
+using Core.Systems.Localization.Interfaces;
 using Core.Systems.Navigation.Canvases;
 using Core.Systems.Settings;
 using Core.Systems.Theming;
@@ -29,7 +30,7 @@ namespace Game.UI.Views.Settings
     ///   - Language   (functional — language buttons from LocalizationService)
     ///   - Accessibility (placeholder — TODO: requires AccessibilityService)
     /// </summary>
-    public class SettingsPanel : OverlayCanvas
+    public class SettingsPanel : OverlayCanvas, ILocalizationListener
     {
         [Header("UI Document")]
         [SerializeField] private UIDocument document;
@@ -57,6 +58,7 @@ namespace Game.UI.Views.Settings
         private VisualElement _languageContainer;
 
         private bool _uiBuilt = false;
+        private bool _isRegisteredForLocalization = false;
 
         #region Lifecycle
 
@@ -81,6 +83,12 @@ namespace Game.UI.Views.Settings
             {
                 _inputReader.SubscribePerformed("Cancel", OnCancelPressed);
             }
+
+            if (!_isRegisteredForLocalization && _localizationService != null)
+            {
+                _localizationService.RegisterListener(this);
+                _isRegisteredForLocalization = true;
+            }
         }
 
         protected override void OnDisable()
@@ -102,6 +110,31 @@ namespace Game.UI.Views.Settings
             {
                 _inputReader.UnsubscribePerformed("Cancel", OnCancelPressed);
             }
+
+            if (_isRegisteredForLocalization && _localizationService != null)
+            {
+                _localizationService.UnregisterListener(this);
+                _isRegisteredForLocalization = false;
+            }
+        }
+
+        /// <summary>
+        /// ILocalizationListener — rebuilds all panel text in place on a language switch.
+        /// Reuses BuildUI() (idempotent) rather than updating each Label individually, but
+        /// restores the active tab afterward since BuildUI() otherwise always lands on tab 0.
+        /// </summary>
+        public void OnLanguageChanged()
+        {
+            if (!_uiBuilt) return;
+
+            int previousTabIndex = _activeTabIndex;
+            BuildUI();
+            SwitchTab(previousTabIndex);
+        }
+
+        private string GetString(string key, string fallback)
+        {
+            return _localizationService != null ? _localizationService.GetString(key, fallback) : fallback;
         }
 
         protected override void OnDestroy()
@@ -242,7 +275,7 @@ namespace Game.UI.Views.Settings
                 .Classes("settings-header");
 
             header.Add(
-                new Label("Settings")
+                new Label(GetString("SETTINGS_Title", "Settings"))
                     .Classes("settings-title")
             );
 
@@ -259,15 +292,25 @@ namespace Game.UI.Views.Settings
             var tabBar = Layout.Row("TabBar")
                 .Classes("settings-tab-bar");
 
-            string[] tabNames = { "Audio", "Video", "Controls", "Language", "Accessibility" };
+            // (internal id, localization key, English fallback) — the id is used for the
+            // element name only, so it stays stable regardless of the current language.
+            var tabs = new[]
+            {
+                ("Audio", "SETTINGS_TabAudio", "Audio"),
+                ("Video", "SETTINGS_TabVideo", "Video"),
+                ("Controls", "SETTINGS_TabControls", "Controls"),
+                ("Language", "SETTINGS_TabLanguage", "Language"),
+                ("Accessibility", "SETTINGS_TabAccessibility", "Accessibility"),
+            };
 
-            for (int i = 0; i < tabNames.Length; i++)
+            for (int i = 0; i < tabs.Length; i++)
             {
                 int tabIndex = i; // Closure capture
-                var tab = new Button(() => SwitchTab(tabIndex)) { text = tabNames[i] };
+                var (id, key, fallback) = tabs[i];
+                var tab = new Button(() => SwitchTab(tabIndex)) { text = GetString(key, fallback) };
                 tab.AddToClassList("settings-tab");
                 tab.focusable = true;
-                tab.name = $"Tab_{tabNames[i]}";
+                tab.name = $"Tab_{id}";
 
                 _tabButtons.Add(tab);
                 tabBar.Add(tab);
@@ -281,11 +324,11 @@ namespace Game.UI.Views.Settings
             var footer = Layout.Row("SettingsFooter")
                 .Classes("settings-footer");
 
-            var resetBtn = new Button(ResetToDefaults) { text = "Reset to Defaults" };
+            var resetBtn = new Button(ResetToDefaults) { text = GetString("SETTINGS_ResetToDefaults", "Reset to Defaults") };
             resetBtn.AddToClassList("settings-reset-btn");
             resetBtn.focusable = true;
 
-            var saveBtn = new Button(SaveAndClose) { text = "Save & Close" };
+            var saveBtn = new Button(SaveAndClose) { text = GetString("SETTINGS_SaveAndClose", "Save & Close") };
             saveBtn.AddToClassList("settings-save-btn");
             saveBtn.focusable = true;
 
@@ -303,23 +346,23 @@ namespace Game.UI.Views.Settings
             var container = Layout.Column("AudioContent")
                 .Classes("settings-tab-content");
 
-            container.Add(new Label("Volume").Classes("settings-section-header"));
+            container.Add(new Label(GetString("SETTINGS_AudioSectionHeader", "Volume")).Classes("settings-section-header"));
 
             if (_settingsService != null)
             {
-                container.Add(BuildVolumeSlider("Master Volume", _settingsService.MasterVolume));
-                container.Add(BuildVolumeSlider("Music Volume", _settingsService.MusicVolume));
-                container.Add(BuildVolumeSlider("SFX Volume", _settingsService.SfxVolume));
+                container.Add(BuildVolumeSlider("MasterVolume", GetString("SETTINGS_MasterVolume", "Master Volume"), _settingsService.MasterVolume));
+                container.Add(BuildVolumeSlider("MusicVolume", GetString("SETTINGS_MusicVolume", "Music Volume"), _settingsService.MusicVolume));
+                container.Add(BuildVolumeSlider("SfxVolume", GetString("SETTINGS_SfxVolume", "SFX Volume"), _settingsService.SfxVolume));
             }
             else
             {
-                container.Add(BuildPlaceholder("Audio settings unavailable."));
+                container.Add(BuildPlaceholder(GetString("SETTINGS_AudioUnavailable", "Audio settings unavailable.")));
             }
 
             return container;
         }
 
-        private VisualElement BuildVolumeSlider(string label, Bindable<float> bindable)
+        private VisualElement BuildVolumeSlider(string id, string label, Bindable<float> bindable)
         {
             var row = Layout.Row()
                 .Classes("settings-row");
@@ -329,7 +372,7 @@ namespace Game.UI.Views.Settings
             var slider = new Slider(0f, 1f)
                 .Classes("settings-slider");
             slider.focusable = true;
-            slider.name = $"Slider_{label.Replace(" ", "")}";
+            slider.name = $"Slider_{id}";
 
             var valueLabel = new Label(FormatPercent(bindable.Value))
                 .Classes("settings-value-label");
@@ -362,8 +405,8 @@ namespace Game.UI.Views.Settings
             var container = Layout.Column("VideoContent")
                 .Classes("settings-tab-content");
 
-            container.Add(new Label("Display").Classes("settings-section-header"));
-            container.Add(BuildPlaceholder("Video settings coming soon."));
+            container.Add(new Label(GetString("SETTINGS_VideoSectionHeader", "Display")).Classes("settings-section-header"));
+            container.Add(BuildPlaceholder(GetString("SETTINGS_VideoComingSoon", "Video settings coming soon.")));
 
             return container;
         }
@@ -377,7 +420,7 @@ namespace Game.UI.Views.Settings
             var container = Layout.Column("ControlsContent")
                 .Classes("settings-tab-content");
 
-            container.Add(new Label("Key Bindings").Classes("settings-section-header"));
+            container.Add(new Label(GetString("SETTINGS_ControlsSectionHeader", "Key Bindings")).Classes("settings-section-header"));
 
             if (_rebindService != null && _inputReader != null && _inputReader.Actions != null)
             {
@@ -439,7 +482,7 @@ namespace Game.UI.Views.Settings
             }
             else
             {
-                container.Add(BuildPlaceholder("Controls settings unavailable."));
+                container.Add(BuildPlaceholder(GetString("SETTINGS_ControlsUnavailable", "Controls settings unavailable.")));
             }
 
             return container;
@@ -479,7 +522,7 @@ namespace Game.UI.Views.Settings
 
             keyBtn.clicked += () =>
             {
-                keyBtn.text = "Press a key...";
+                keyBtn.text = GetString("SETTINGS_PressAKey", "Press a key...");
                 keyBtn.AddToClassList("rebind-key-btn--listening");
 
                 _rebindService.StartRebind(
@@ -511,7 +554,7 @@ namespace Game.UI.Views.Settings
             var container = Layout.Column("LanguageContent")
                 .Classes("settings-tab-content");
 
-            container.Add(new Label("Language").Classes("settings-section-header"));
+            container.Add(new Label(GetString("SETTINGS_LanguageSectionHeader", "Language")).Classes("settings-section-header"));
 
             _languageContainer = Layout.Column("LanguageOptions");
 
@@ -528,7 +571,7 @@ namespace Game.UI.Views.Settings
             }
             else
             {
-                _languageContainer.Add(BuildPlaceholder("Language settings unavailable."));
+                _languageContainer.Add(BuildPlaceholder(GetString("SETTINGS_LanguageUnavailable", "Language settings unavailable.")));
             }
 
             container.Add(_languageContainer);
@@ -607,8 +650,8 @@ namespace Game.UI.Views.Settings
             var container = Layout.Column("AccessibilityContent")
                 .Classes("settings-tab-content");
 
-            container.Add(new Label("Accessibility").Classes("settings-section-header"));
-            container.Add(BuildPlaceholder("Accessibility settings coming soon."));
+            container.Add(new Label(GetString("SETTINGS_AccessibilitySectionHeader", "Accessibility")).Classes("settings-section-header"));
+            container.Add(BuildPlaceholder(GetString("SETTINGS_AccessibilityComingSoon", "Accessibility settings coming soon.")));
 
             return container;
         }

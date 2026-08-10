@@ -25,3 +25,51 @@ MonoBehaviour:
       Value: Credits
     - Key: MAINMENU_Quit
       Value: Quit
+    - Key: MAINMENU_QuitConfirmMessage
+      Value: Are you sure you want to quit?
+    - Key: MAINMENU_QuitConfirmTitle
+      Value: Quit Game
+    - Key: SETTINGS_Title
+      Value: Settings
+    - Key: SETTINGS_TabAudio
+      Value: Audio
+    - Key: SETTINGS_TabVideo
+      Value: Video
+    - Key: SETTINGS_TabControls
+      Value: Controls
+    - Key: SETTINGS_TabLanguage
+      Value: Language
+    - Key: SETTINGS_TabAccessibility
+      Value: Accessibility
+    - Key: SETTINGS_ResetToDefaults
+      Value: Reset to Defaults
+    - Key: SETTINGS_SaveAndClose
+      Value: Save & Close
+    - Key: SETTINGS_AudioSectionHeader
+      Value: Volume
+    - Key: SETTINGS_MasterVolume
+      Value: Master Volume
+    - Key: SETTINGS_MusicVolume
+      Value: Music Volume
+    - Key: SETTINGS_SfxVolume
+      Value: SFX Volume
+    - Key: SETTINGS_AudioUnavailable
+      Value: Audio settings unavailable.
+    - Key: SETTINGS_VideoSectionHeader
+      Value: Display
+    - Key: SETTINGS_VideoComingSoon
+      Value: Video settings coming soon.
+    - Key: SETTINGS_ControlsSectionHeader
+      Value: Key Bindings
+    - Key: SETTINGS_ControlsUnavailable
+      Value: Controls settings unavailable.
+    - Key: SETTINGS_PressAKey
+      Value: Press a key...
+    - Key: SETTINGS_LanguageSectionHeader
+      Value: Language
+    - Key: SETTINGS_LanguageUnavailable
+      Value: Language settings unavailable.
+    - Key: SETTINGS_AccessibilitySectionHeader
+      Value: Accessibility
+    - Key: SETTINGS_AccessibilityComingSoon
+      Value: Accessibility settings coming soon.
