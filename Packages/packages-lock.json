@@ -56,6 +56,7 @@
         "com.unity.cinemachine": "3.1.1",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.2.2",
+        "com.unity.render-pipelines.universal": "17.3.0",
         "dev.yarnspinner.unity": "3.1.3"
       }
     },

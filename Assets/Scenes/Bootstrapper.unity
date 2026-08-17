@@ -817,7 +817,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
+      propertyPath: sceneGroups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
       propertyPath: sceneGroups.Array.data[0].LoadMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
+      propertyPath: sceneGroups.Array.data[0].GroupName
+      value: TestGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
+      propertyPath: sceneGroups.Array.data[0].Scenes.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
@@ -828,6 +840,14 @@ PrefabInstance:
       propertyPath: sceneGroups.Array.data[0].Scenes.Array.data[0].EntryScreen
       value: 
       objectReference: {fileID: 11400000, guid: 1dc44237624c3fd4896ff6befa370a46, type: 2}
+    - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
+      propertyPath: sceneGroups.Array.data[0].Scenes.Array.data[0].Reference.guid
+      value: 3d9bc7fdcd9ef6544860b99d6cd90f98
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920529778165678307, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
+      propertyPath: sceneGroups.Array.data[0].Scenes.Array.data[0].Reference.asset
+      value: 
+      objectReference: {fileID: 102900000, guid: 3d9bc7fdcd9ef6544860b99d6cd90f98, type: 3}
     - target: {fileID: 8547672606690668917, guid: f56ca6a913fa419478b5b789f5232cb8, type: 3}
       propertyPath: textMesh
       value: 
