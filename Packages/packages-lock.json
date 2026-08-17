@@ -24,6 +24,13 @@
       },
       "url": "https://package.openupm.com"
     },
+    "com.gitamend.improvedtimers": {
+      "version": "https://github.com/adammyhre/Unity-Improved-Timers.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "0c93083e7968e5d2a7746b38d6d5a477d2b5b3ac"
+    },
     "com.gitamend.unityutils": {
       "version": "https://github.com/adammyhre/Unity-Utils.git",
       "depth": 0,
@@ -37,6 +44,7 @@
       "source": "embedded",
       "dependencies": {
         "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+        "com.gitamend.improvedtimers": "https://github.com/adammyhre/Unity-Improved-Timers.git",
         "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git",
         "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui#19ec2a5703424e29126715492c12eb995d77f31f",
         "com.eflatun.scenereference": "4.1.1",
@@ -47,6 +55,7 @@
         "com.unity.ai.navigation": "2.0.10",
         "com.unity.cinemachine": "3.1.1",
         "com.unity.2d.sprite": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.2",
         "dev.yarnspinner.unity": "3.1.3"
       }
     },
