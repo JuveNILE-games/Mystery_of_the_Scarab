@@ -18,6 +18,7 @@ using Core.Systems.Logging;
 using Core.Systems.Environment;
 using Core.Systems.SaveSystem.Interfaces;
 using Core.Systems.InputManagement;
+using Core.Systems.Settings;
 using Core.Systems.Dialogue.Effects;
 using Core.Systems.Dialogue.Events;
 using Core.Systems.Dialogue.Installer;
@@ -100,6 +101,15 @@ namespace Game.Installers
             // Shared TypewriterEffect: same instance reaches both <<speed>> command and DialogueBox.
             // It is NOT registered globally — it's passed to the adapter via Configure().
             var typewriter = new TypewriterEffect();
+            if (locator.TryGet<AccessibilityService>(out var accessibilityService))
+            {
+                typewriter.CharactersPerSecond = accessibilityService.TextSpeed.Value;
+                // App-lifetime binding, never disposed — same convention as SettingsService's own
+                // volume bindings. Known collision, not fixed here: DialogueCommandRegistry's
+                // <<speed>>/<<speed default>> commands directly overwrite CharactersPerSecond
+                // per dialogue node, stomping this preference for the remainder of that node.
+                accessibilityService.TextSpeed.Bind(v => typewriter.CharactersPerSecond = v, false);
+            }
 
             var eventBus = new SoapDialogueEventBus(
                 cfg.DialogueStarted, cfg.DialogueEnded, cfg.DialogueLinePresented,

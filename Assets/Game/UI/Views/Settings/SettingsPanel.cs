@@ -25,11 +25,11 @@ namespace Game.UI.Views.Settings
     /// Built with UIToolkit + FluentUI to match the Main Menu style.
     ///
     /// Tabs:
-    ///   - Audio      (functional — volume sliders bound to SettingsService)
-    ///   - Video      (placeholder — TODO: requires VideoSettingsService)
-    ///   - Controls   (functional — rebind rows from RebindService)
-    ///   - Language   (functional — language buttons from LocalizationService)
-    ///   - Accessibility (placeholder — TODO: requires AccessibilityService)
+    ///   - Audio         (functional — volume sliders bound to SettingsService)
+    ///   - Video         (functional — resolution/fullscreen/quality/vsync bound to VideoSettingsService)
+    ///   - Controls      (functional — rebind rows from RebindService)
+    ///   - Language      (functional — language buttons from LocalizationService)
+    ///   - Accessibility (functional — UI scale + text speed bound to AccessibilityService)
     /// </summary>
     public class SettingsPanel : OverlayCanvas, ILocalizationListener
     {
@@ -40,6 +40,8 @@ namespace Game.UI.Views.Settings
         [SerializeField] private StyleSheet _settingsStyleSheet;
 
         [Inject] private SettingsService _settingsService;
+        [Inject] private VideoSettingsService _videoSettingsService;
+        [Inject] private AccessibilityService _accessibilityService;
         [Inject] private RebindService _rebindService;
         [Inject] private LocalizationService _localizationService;
         [Inject] private IThemeService _themeService;
@@ -328,10 +330,12 @@ namespace Game.UI.Views.Settings
             var resetBtn = new Button(ResetToDefaults) { text = GetString("SETTINGS_ResetToDefaults", "Reset to Defaults") };
             resetBtn.AddToClassList("settings-reset-btn");
             resetBtn.focusable = true;
+            resetBtn.name = "Btn_ResetToDefaults";
 
             var saveBtn = new Button(SaveAndClose) { text = GetString("SETTINGS_SaveAndClose", "Save & Close") };
             saveBtn.AddToClassList("settings-save-btn");
             saveBtn.focusable = true;
+            saveBtn.name = "Btn_SaveAndClose";
 
             footer.Add(resetBtn);
             footer.Add(saveBtn);
@@ -397,21 +401,129 @@ namespace Game.UI.Views.Settings
 
         #endregion
 
-        #region Tab Content — Video (Placeholder)
+        #region Tab Content — Video
 
-        /// <summary>
-        /// TODO: Implement video settings once a VideoSettingsService exists.
-        /// Expected settings: resolution, fullscreen toggle, quality presets, V-Sync.
-        /// </summary>
+        // Internal QualitySettings level names (project-defined, e.g. "Mobile"/"PC") relabeled for
+        // display — a desktop player seeing "Mobile" reads as broken even though it's a legitimate
+        // low tier. Falls back to the raw name for any level not covered here.
+        private static readonly Dictionary<string, string> s_QualityDisplayNames = new()
+        {
+            { "Mobile", "Low" },
+            { "PC", "High" },
+        };
+
         private VisualElement BuildVideoContent()
         {
             var container = Layout.Column("VideoContent")
                 .Classes("settings-tab-content");
 
             container.Add(new Label(GetString("SETTINGS_VideoSectionHeader", "Display")).Classes("settings-section-header"));
-            container.Add(BuildPlaceholder(GetString("SETTINGS_VideoComingSoon", "Video settings coming soon.")));
+
+            if (_videoSettingsService != null)
+            {
+                container.Add(BuildResolutionDropdown());
+                container.Add(BuildFullscreenToggle());
+                container.Add(BuildQualityDropdown());
+                container.Add(BuildVSyncToggle());
+            }
+            else
+            {
+                container.Add(BuildPlaceholder(GetString("SETTINGS_VideoUnavailable", "Video settings unavailable.")));
+            }
 
             return container;
+        }
+
+        private VisualElement BuildResolutionDropdown()
+        {
+            var row = Layout.Row().Classes("settings-row");
+            row.Add(new Label(GetString("SETTINGS_Resolution", "Resolution")).Classes("settings-label"));
+
+            var choices = _videoSettingsService.AvailableResolutions
+                .Select(r => $"{r.width} x {r.height}")
+                .ToList();
+
+            var dropdown = new DropdownField(choices, _videoSettingsService.ResolutionIndex.Value)
+                .Classes("settings-dropdown");
+            dropdown.focusable = true;
+            dropdown.name = "Dropdown_Resolution";
+
+            var sub = _videoSettingsService.ResolutionIndex.Bind((int i) =>
+            {
+                if (i >= 0 && i < choices.Count) dropdown.SetValueWithoutNotify(choices[i]);
+            });
+            _bindings.Add(sub);
+            dropdown.RegisterValueChangedCallback(evt =>
+            {
+                int idx = choices.IndexOf(evt.newValue);
+                if (idx >= 0) _videoSettingsService.ResolutionIndex.Value = idx;
+            });
+
+            row.Add(dropdown);
+            return row;
+        }
+
+        private VisualElement BuildFullscreenToggle()
+        {
+            return BuildBoolToggle(
+                "Toggle_Fullscreen",
+                GetString("SETTINGS_Fullscreen", "Fullscreen"),
+                _videoSettingsService.Fullscreen);
+        }
+
+        private VisualElement BuildQualityDropdown()
+        {
+            var row = Layout.Row().Classes("settings-row");
+            row.Add(new Label(GetString("SETTINGS_Quality", "Quality")).Classes("settings-label"));
+
+            var internalNames = _videoSettingsService.QualityLevelNames;
+            var choices = internalNames
+                .Select(n => GetString($"SETTINGS_Quality_{n}", s_QualityDisplayNames.GetValueOrDefault(n, n)))
+                .ToList();
+
+            var dropdown = new DropdownField(choices, _videoSettingsService.QualityLevel.Value)
+                .Classes("settings-dropdown");
+            dropdown.focusable = true;
+            dropdown.name = "Dropdown_Quality";
+
+            var sub = _videoSettingsService.QualityLevel.Bind((int i) =>
+            {
+                if (i >= 0 && i < choices.Count) dropdown.SetValueWithoutNotify(choices[i]);
+            });
+            _bindings.Add(sub);
+            dropdown.RegisterValueChangedCallback(evt =>
+            {
+                int idx = choices.IndexOf(evt.newValue);
+                if (idx >= 0) _videoSettingsService.QualityLevel.Value = idx;
+            });
+
+            row.Add(dropdown);
+            return row;
+        }
+
+        private VisualElement BuildVSyncToggle()
+        {
+            return BuildBoolToggle(
+                "Toggle_VSync",
+                GetString("SETTINGS_VSync", "V-Sync"),
+                _videoSettingsService.VSync);
+        }
+
+        private VisualElement BuildBoolToggle(string id, string label, Bindable<bool> bindable)
+        {
+            var row = Layout.Row().Classes("settings-row");
+            row.Add(new Label(label).Classes("settings-label"));
+
+            var toggle = new Toggle().Classes("settings-toggle");
+            toggle.focusable = true;
+            toggle.name = id;
+
+            var sub = bindable.Bind((bool v) => toggle.SetValueWithoutNotify(v));
+            _bindings.Add(sub);
+            toggle.RegisterValueChangedCallback(evt => bindable.Value = evt.newValue);
+
+            row.Add(toggle);
+            return row;
         }
 
         #endregion
@@ -641,12 +753,13 @@ namespace Game.UI.Views.Settings
 
         #endregion
 
-        #region Tab Content — Accessibility (Placeholder)
+        #region Tab Content — Accessibility
 
         /// <summary>
-        /// TODO: Implement accessibility settings once an AccessibilityService exists.
-        /// Expected settings: subtitle font size, colorblind mode, high-contrast UI,
-        /// screen reader hints, reduced motion.
+        /// v1 scope is deliberately limited to the two levers with a real hook in the codebase
+        /// today (PanelSettings.scale, ITypewriterEffect.CharactersPerSecond). Colorblind mode /
+        /// high-contrast UI need a new theming mechanism first (IThemeService has no accessibility
+        /// hooks) and are intentionally not promised here.
         /// </summary>
         private VisualElement BuildAccessibilityContent()
         {
@@ -654,9 +767,68 @@ namespace Game.UI.Views.Settings
                 .Classes("settings-tab-content");
 
             container.Add(new Label(GetString("SETTINGS_AccessibilitySectionHeader", "Accessibility")).Classes("settings-section-header"));
-            container.Add(BuildPlaceholder(GetString("SETTINGS_AccessibilityComingSoon", "Accessibility settings coming soon.")));
+
+            if (_accessibilityService != null)
+            {
+                container.Add(BuildUIScaleSlider());
+                container.Add(BuildTextSpeedSlider());
+            }
+            else
+            {
+                container.Add(BuildPlaceholder(GetString("SETTINGS_AccessibilityUnavailable", "Accessibility settings unavailable.")));
+            }
 
             return container;
+        }
+
+        private VisualElement BuildUIScaleSlider()
+        {
+            var row = Layout.Row().Classes("settings-row");
+            row.Add(new Label(GetString("SETTINGS_UIScale", "UI Scale")).Classes("settings-label"));
+
+            var slider = new Slider(0.75f, 1.5f).Classes("settings-slider");
+            slider.focusable = true;
+            slider.name = "Slider_UIScale";
+
+            var valueLabel = new Label(FormatScale(_accessibilityService.UIScale.Value))
+                .Classes("settings-value-label");
+
+            var sub = _accessibilityService.UIScale.Bind((float v) =>
+            {
+                slider.SetValueWithoutNotify(v);
+                valueLabel.text = FormatScale(v);
+            });
+            _bindings.Add(sub);
+            slider.RegisterValueChangedCallback(evt => _accessibilityService.UIScale.Value = evt.newValue);
+
+            row.Add(slider);
+            row.Add(valueLabel);
+            return row;
+        }
+
+        private VisualElement BuildTextSpeedSlider()
+        {
+            var row = Layout.Row().Classes("settings-row");
+            row.Add(new Label(GetString("SETTINGS_TextSpeed", "Text Speed")).Classes("settings-label"));
+
+            var slider = new Slider(10f, 60f).Classes("settings-slider");
+            slider.focusable = true;
+            slider.name = "Slider_TextSpeed";
+
+            var valueLabel = new Label(FormatCps(_accessibilityService.TextSpeed.Value))
+                .Classes("settings-value-label");
+
+            var sub = _accessibilityService.TextSpeed.Bind((float v) =>
+            {
+                slider.SetValueWithoutNotify(v);
+                valueLabel.text = FormatCps(v);
+            });
+            _bindings.Add(sub);
+            slider.RegisterValueChangedCallback(evt => _accessibilityService.TextSpeed.Value = evt.newValue);
+
+            row.Add(slider);
+            row.Add(valueLabel);
+            return row;
         }
 
         #endregion
@@ -712,6 +884,20 @@ namespace Game.UI.Views.Settings
                 _settingsService.MasterVolume.Value = 1f;
                 _settingsService.MusicVolume.Value = 1f;
                 _settingsService.SfxVolume.Value = 1f;
+            }
+
+            if (_videoSettingsService != null)
+            {
+                // Mutates the same Bindables the dropdowns/toggles are already subscribed to,
+                // so their SetValueWithoutNotify callbacks fire automatically — no manual UI
+                // refresh needed here, unlike Controls below.
+                _videoSettingsService.ResetToDefaults();
+            }
+
+            if (_accessibilityService != null)
+            {
+                _accessibilityService.UIScale.Value = AccessibilityService.DefaultUIScale;
+                _accessibilityService.TextSpeed.Value = AccessibilityService.DefaultTextSpeed;
             }
 
             if (_rebindService != null)
@@ -792,6 +978,16 @@ namespace Game.UI.Views.Settings
         private static string FormatPercent(float value)
         {
             return $"{Mathf.RoundToInt(value * 100)}%";
+        }
+
+        private static string FormatScale(float value)
+        {
+            return $"{value:0.00}x";
+        }
+
+        private static string FormatCps(float value)
+        {
+            return $"{Mathf.RoundToInt(value)} cps";
         }
 
         private void DisposeBindings()

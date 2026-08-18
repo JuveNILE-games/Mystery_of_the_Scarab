@@ -209,6 +209,43 @@
     min-height: 20px;
 }
 
+/* ===== Dropdown Styling (Video / Accessibility) ===== */
+.settings-dropdown {
+    flex-grow: 1;
+    max-width: 260px;
+}
+
+.settings-dropdown .unity-base-popup-field__input {
+    background-color: var(--bg-input);
+    border-width: 1px;
+    border-color: var(--border-color-default);
+    border-radius: var(--radius-sm);
+    color: var(--text-color-default);
+    padding: 4px 10px;
+    transition-duration: 0.15s;
+}
+
+.settings-dropdown .unity-base-popup-field__input:hover,
+.settings-dropdown .unity-base-popup-field__input:focus {
+    border-color: var(--color-primary-hover);
+}
+
+/* ===== Toggle Styling (Video / Accessibility) ===== */
+.settings-toggle {
+    flex-grow: 1;
+    max-width: 260px;
+    justify-content: flex-end;
+}
+
+.settings-toggle .unity-toggle__checkmark {
+    border-color: var(--border-color-default);
+}
+
+.settings-toggle .unity-toggle__input:checked .unity-toggle__checkmark {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary-hover);
+}
+
 /* ===== Rebind Row ===== */
 .rebind-row {
     flex-direction: row;
