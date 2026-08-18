@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Core.Systems.Bindables;
 using Core.Systems.InputManagement;
@@ -377,15 +378,17 @@ namespace Game.UI.Views.Settings
             var valueLabel = new Label(FormatPercent(bindable.Value))
                 .Classes("settings-value-label");
 
-            // Two-way binding: slider ↔ Bindable
-            slider.BindValueTwoWay(gameObject, bindable);
-
-            // Update the percentage label when slider changes
+            // Two-way binding: slider ↔ Bindable.
+            // Done manually (rather than via BindValueTwoWay(gameObject, ...)) so the
+            // subscription lands in _bindings and gets disposed on every BuildUI() rebuild —
+            // the GameObject-lifecycle helper otherwise leaks one subscription per panel open.
             var sub = bindable.Bind(v =>
             {
+                slider.SetValueWithoutNotify(v);
                 valueLabel.text = FormatPercent(v);
             });
             _bindings.Add(sub);
+            slider.RegisterValueChangedCallback(evt => bindable.Value = evt.newValue);
 
             row.Add(slider);
             row.Add(valueLabel);
@@ -723,6 +726,19 @@ namespace Game.UI.Views.Settings
                 var defaultLang = _localizationService.Settings?.DefaultLanguage
                                   ?? SystemLanguage.English;
                 _localizationService.SetLanguage(defaultLang);
+
+                // Keep the persisted SettingsService.Language in sync, same as SelectLanguage() —
+                // otherwise the reset language doesn't survive a relaunch.
+                if (_settingsService != null)
+                {
+                    var defaultLangInfo = _localizationService.Settings?.AvailableLanguages
+                        .FirstOrDefault(l => l.Language == defaultLang);
+                    if (defaultLangInfo != null)
+                    {
+                        _settingsService.Language.Value = defaultLangInfo.LanguageCode;
+                    }
+                }
+
                 RefreshLanguageOptions();
             }
         }
