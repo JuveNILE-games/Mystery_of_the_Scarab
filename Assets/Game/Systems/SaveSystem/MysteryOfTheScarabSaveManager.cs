@@ -6,7 +6,7 @@ using UnityEngine;
 using Core.Systems.Logging;
 using Core.Systems.Services.Interfaces;
 using System;
-using Core; // For IGameStateManager
+using NetCore.Interfaces;
 
 namespace Game.Systems.SaveSystem
 {
@@ -16,28 +16,17 @@ namespace Game.Systems.SaveSystem
     /// </summary>
     public class MysteryOfTheScarabSaveManager : SaveService
     {
-        private IGameStateManager _gameStateManager;
+        // Not currently read — kept for save-related logic that may need the current
+        // session mode later (e.g. gating cloud vs local save behavior per mode).
+        private readonly ISessionService _session;
 
         // Public API for other systems
         public event Action OnGameLoaded;
 
-        public MysteryOfTheScarabSaveManager(IPersister persister, ILoggerService logger = null) 
+        public MysteryOfTheScarabSaveManager(IPersister persister, ILoggerService logger = null, ISessionService session = null)
             : base(persister, logger)
         {
-        }
-        
-        /// <summary>
-        /// Inject dependencies that weren't available at construction time if needed, 
-        /// or use a Setup method.
-        /// </summary>
-        public void BindGameStateManager(IGameStateManager gameStateManager)
-        {
-            _gameStateManager = gameStateManager;
-            if (isInitialized)
-            {
-                // If we're already initialized, hook up listeners now
-                HookGameStateListeners();
-            }
+            _session = session;
         }
 
         protected override void BeforeLoad()
@@ -59,35 +48,10 @@ namespace Game.Systems.SaveSystem
 
         protected override void InitializeVarListeners()
         {
-            _logger?.Log(this, "InitializeVarListeners - Setting up auto-save listeners");
-            HookGameStateListeners();
-        }
-
-        private void HookGameStateListeners()
-        {
-            if (_gameStateManager != null)
-            {
-                _gameStateManager.OnStateChanged -= OnGameStateChanged;
-                _gameStateManager.OnStateChanged += OnGameStateChanged;
-            }
-        }
-
-        private void OnGameStateChanged(GameState newState)
-        {
-            // Auto-save when returning to menu
-            if (newState == GameState.Menu && isLoaded)
-            {
-                 SaveNow().Forget();
-            }
-        }
-        
-        public override void Dispose()
-        {
-            if (_gameStateManager != null)
-            {
-                _gameStateManager.OnStateChanged -= OnGameStateChanged;
-            }
-            base.Dispose();
+            // No-op: the old auto-save-on-return-to-menu listener (via IGameStateManager)
+            // was never actually wired up (its bind method was defined but never called) —
+            // removed rather than ported. ISessionService has no equivalent "Menu" mode;
+            // revisit as an explicit follow-up if auto-save-on-session-end is wanted.
         }
 
         // --- Public API for Game Systems ---

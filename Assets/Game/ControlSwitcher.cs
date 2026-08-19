@@ -8,6 +8,7 @@ using Core.Utility;
 using Core.Systems.AgentNavigation;
 using Core.Systems.Services;
 using Core.Systems.InputManagement;
+using NetCore.Interfaces;
 
 namespace Game
 {
@@ -21,7 +22,7 @@ namespace Game
         [SerializeField] private ScriptableEventControlChanged onControlChanged;
 
         [Inject] private IControllableRegistry _registry;
-        [Inject] private IGameStateManager _gameState;
+        [Inject] private ISessionService _session;
         [Inject] private InputReader _inputReader;
         [Inject] private INavMeshSurfaceService _navMeshService;
 
@@ -29,7 +30,7 @@ namespace Game
 
         private void Start()
         {
-            if (_gameState == null || _gameState.CurrentState != GameState.SinglePlayer)
+            if (_session == null || _session.Mode.Value != SessionMode.Solo)
             {
                 enabled = false;
                 return;

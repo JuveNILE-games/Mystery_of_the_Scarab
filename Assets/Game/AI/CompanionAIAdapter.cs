@@ -8,6 +8,7 @@ using System;
 using Core;
 using Core.Systems.Logging;
 using Game.Systems.LevelSystem.Runtime;
+using NetCore.Interfaces;
 
 namespace Game.AI
 {
@@ -29,7 +30,7 @@ namespace Game.AI
 
         [Inject] private INavMeshSurfaceService _navMeshService;
         [Inject] private ILoggerService _logger;
-        [Inject] private IGameStateManager _gameState;
+        [Inject] private ISessionService _session;
 
         private bool _aiRequested;
         private bool _isFirstEnable = true;
@@ -61,7 +62,7 @@ namespace Game.AI
 
         private void Start()
         {
-            if (_gameState != null && _gameState.CurrentState != GameState.SinglePlayer)
+            if (_session != null && _session.Mode.Value != SessionMode.Solo)
             {
                 DisableAI();
                 enabled = false;

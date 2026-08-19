@@ -26,6 +26,7 @@ using Core.Systems.Dialogue.Resolver;
 using Core.Systems.Dialogue.Trigger;
 using Core.Systems.Signals;
 using Game.Systems.SaveSystem;
+using NetCore.Interfaces;
 
 namespace Game.Installers
 {
@@ -42,21 +43,23 @@ namespace Game.Installers
             logger?.Log(this, "Installing Game-Specific Services for Mystery of the Scarab...");
 
             // ── Core Game Services ────────────────────────────────────────────────
-            locator.Register<IGameStateManager>(new GameStateManagerImpl(GameState.SinglePlayer));
+            // ISessionService is registered by NetCoreModule during ModuleSyncBootPhase,
+            // which GameServicesDiscoveryBootPhase now explicitly depends on — safe to
+            // resolve eagerly here.
+            var session = locator.Get<ISessionService>();
             locator.Register<IControllableRegistry>(new ControllableRegistry());
 
             // ── Save System ───────────────────────────────────────────────────────
             var env      = envService.Current;
             var profile  = config.GetProfileForEnvironment(env);
             var persister = CreatePersister(profile, locator, logger);
-            var saveManager = new MysteryOfTheScarabSaveManager(persister, logger);
+            var saveManager = new MysteryOfTheScarabSaveManager(persister, logger, session);
 
             locator.Register<ISaveService>(saveManager);
-            
 
-            // ── Dynamic NavMesh Surface (SinglePlayer only) ──────────────────────
-            var currentState = locator.Get<IGameStateManager>();
-            if (currentState?.CurrentState == GameState.SinglePlayer)
+
+            // ── Dynamic NavMesh Surface (Solo only) ──────────────────────────────
+            if (session?.Mode.Value == SessionMode.Solo)
             {
                 var navMeshPrefab = Resources.Load<GameObject>("Prefabs/AI/DynamicNavMeshSurface");
                 if (navMeshPrefab != null)
@@ -67,7 +70,7 @@ namespace Game.Installers
                     locator.Register<INavMeshSurfaceService>(service);
                     locator.Register(scope =>
                         scope.Get<INavMeshSurfaceService>() as INavMeshReadinessProvider);
-                    logger?.Log(this, "DynamicNavMeshSurfaceService registered for SinglePlayer.");
+                    logger?.Log(this, "DynamicNavMeshSurfaceService registered for Solo session.");
                 }
                 else
                 {
@@ -77,7 +80,7 @@ namespace Game.Installers
             }
             else
             {
-                logger?.Log(this, $"NavMesh surface registration skipped — GameState is {currentState?.CurrentState}.");
+                logger?.Log(this, $"NavMesh surface registration skipped — session mode is {session?.Mode.Value}.");
             }
 
             // ── Dialogue System ───────────────────────────────────────────────────
