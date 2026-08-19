@@ -67,7 +67,7 @@
       "dependencies": {
         "com.juvenile.games.core": "1.0.1",
         "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-        "dev.purrnet.purrnet": "1.18.0-beta.27"
+        "dev.purrnet.purrnet": "1.22.0"
       }
     },
     "com.mirovsky.fluent-ui": {
@@ -414,10 +414,11 @@
       "hash": "297c28ec9e8b1117df6aba607d6238f1addf8209"
     },
     "dev.purrnet.purrnet": {
-      "version": "1.18.0-beta.27",
+      "version": "1.22.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.collections": "2.6.2",
         "com.unity.nuget.mono-cecil": "1.11.4",
         "com.unity.nuget.newtonsoft-json": "3.2.1"
       },
