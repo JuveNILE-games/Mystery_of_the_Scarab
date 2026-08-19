@@ -1,4 +1,5 @@
 using Core.Systems.InputManagement;
+using NetCore.Abstractions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,13 @@ namespace Game.Player
         [Header("Configuration")]
         [SerializeField] private bool enableActions = true;
 
+        // Null on any non-networked player (single-player, local multiplayer) — in that case
+        // OnEnable behaves exactly as before. Only narrows, doesn't eliminate, the window
+        // before PurrNet's OnSpawned callback reactively disables this component for
+        // non-owners; still needs an in-editor Play Mode pass to confirm ordering against
+        // NetworkIdentity spawn timing.
+        private INetworkOwnershipGate _ownershipGate;
+
         private InputReader _playerInputReader;
         // Cached camera reference for world-space projection. The camera is looked up once in
         // Awake and re-cached on first use if it somehow changes (e.g. scene load). All input
@@ -29,6 +37,7 @@ namespace Game.Player
             if (stateMachine == null) stateMachine = GetComponent<PlayerStateMachine>();
             if (interactor == null) interactor = GetComponent<PlayerInteractor>();
             if (abilities == null) abilities = GetComponent<PlayerAbilities>();
+            if (_ownershipGate == null) _ownershipGate = GetComponent<INetworkOwnershipGate>();
 
             // Link to the shared InputReader from the manager (or locate it if manager is missing)
             if (manager != null)
@@ -54,6 +63,16 @@ namespace Game.Player
 
         private void OnEnable()
         {
+            // Ownership gate check: a non-owner networked player should never process local
+            // input, even for the brief window before PurrNetStateSyncAdapterBase.OnSpawned
+            // reactively disables this component. No-op (permissive) for single-player /
+            // local-multiplayer, where no gate component exists on this object.
+            if (_ownershipGate != null && !_ownershipGate.CanAcceptLocalControl)
+            {
+                ClearInputState();
+                return;
+            }
+
             if (_playerInputReader != null)
             {
                 SubscribeToInput();
