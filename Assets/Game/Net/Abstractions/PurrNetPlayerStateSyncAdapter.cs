@@ -9,12 +9,18 @@ namespace Game.Net.Adapters
     [DisallowMultipleComponent]
     public class PurrNetPlayerStateSyncAdapter : PurrNetStateSyncAdapterBase
     {
+        // ownerAuth: true — the owning client captures and broadcasts state, matching this
+        // project's deliberate client-authoritative co-op design (see root AGENTS.md's
+        // Multiplayer section). Replaces the hand-rolled [ObserversRpc] pipeline: SyncVar's
+        // own .value setter does dirty-checking via PurrEquality<T>.Default.Equals, which
+        // respects PlayerNetworkState's IEquatable<T> implementation (added for the interim
+        // Phase 0 guard, reused here rather than discarded) — plus rate-limited unreliable
+        // sends with a final reliable flush, and late-joiner catch-up (OnObserverAdded), none
+        // of which the old hand-rolled RPC had.
+        [SerializeField] private SyncVar<PlayerNetworkState> _networkState = new(ownerAuth: true);
+
         private INetworkStateSource<PlayerNetworkState> _source;
         private INetworkStateSink<PlayerNetworkState>   _sink;
-        private PlayerNetworkState _latestRemoteState;
-        private bool               _hasRemoteState;
-        private PlayerNetworkState _lastSentState;
-        private bool               _hasSentState;
 
         // ── PurrNetStateSyncAdapterBase ──────────────────────────────────────
 
@@ -32,29 +38,23 @@ namespace Game.Net.Adapters
                 Debug.LogWarning($"[{nameof(PurrNetPlayerStateSyncAdapter)}] " +
                     $"_sinkComponent on {gameObject.name} does not implement " +
                     $"INetworkStateSink<PlayerNetworkState>.", this);
+
+            // Seed the SyncVar with the owner's real starting state before any observer can
+            // see this object, so a just-spawned remote player never shows a zeroed-default
+            // transform for even one frame.
+            if (isOwner && _source != null && _source.TryCapture(out var initial))
+                _networkState.value = initial;
         }
 
         protected override void TryCaptureAndSend()
         {
-            if (_source == null || !_source.TryCapture(out var state))
-                return;
-
-            // Interim dirty-check: skip the RPC when nothing actually changed since the
-            // last broadcast. This is a cheap stopgap for the per-tick full-state judder
-            // finding — real delta compression arrives once state moves onto PurrNet's
-            // native SyncVar<T>, which replaces this hand-rolled adapter entirely.
-            if (_hasSentState && state.Equals(_lastSentState))
-                return;
-
-            SyncStateRpc(state);
-            _lastSentState = state;
-            _hasSentState  = true;
+            if (_source != null && _source.TryCapture(out var state))
+                _networkState.value = state;
         }
 
         protected override void ApplyLatestIfAvailable(NetworkSyncContext ctx)
         {
-            if (_hasRemoteState && _sink != null)
-                _sink.Apply(_latestRemoteState, ctx);
+            _sink?.Apply(_networkState.value, ctx);
         }
 
         protected override void SetInputEnabled(bool enabled)
@@ -62,19 +62,6 @@ namespace Game.Net.Adapters
             // Reach through to the bridge — safe because _sinkComponent is always
             // expected to be a PlayerNetworkStateBridge on this prefab.
             (_sinkComponent as PlayerNetworkStateBridge)?.SetLocalInputEnabled(enabled);
-        }
-
-        // ── RPC ─────────────────────────────────────────────────────────────
-
-        /// <summary>
-        /// Broadcast owner state to all non-owner observers each FixedUpdate.
-        /// excludeOwner avoids the owner receiving its own RPC and running the early-return guard.
-        /// </summary>
-        [ObserversRpc(excludeOwner: true)]
-        private void SyncStateRpc(PlayerNetworkState state)
-        {
-            _latestRemoteState = state;
-            _hasRemoteState    = true;
         }
     }
 }
