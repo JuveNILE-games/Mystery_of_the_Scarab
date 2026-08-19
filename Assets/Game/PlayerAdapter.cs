@@ -30,7 +30,8 @@ namespace Game.Player
             if (_interactor == null) _interactor = GetComponent<PlayerInteractor>();
             if (_abilities == null) _abilities = GetComponent<PlayerAbilities>();
             if (_aiController == null) _aiController = GetComponent<IAIController>();
-            if (_ownershipGate == null) _ownershipGate = _networkingGameObject.GetComponent<INetworkOwnershipGate>();
+            if (_ownershipGate == null && _networkingGameObject != null)
+                _ownershipGate = _networkingGameObject.GetComponent<INetworkOwnershipGate>();
         }
 
         private void Start()
