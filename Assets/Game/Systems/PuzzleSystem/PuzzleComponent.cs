@@ -66,7 +66,17 @@ public abstract class PuzzleComponent : MonoBehaviour, IPuzzleCondition
     protected virtual void OnStateChanged(bool newState) { }
     protected virtual void OnLockChanged(bool locked) { }
 
-    // ── Network sync hooks (override in NetworkPuzzleComponent) ──────
+    // ── Network sync (decision, 2026-08-19: still unbuilt, tracked work item) ──
+    // Per-component condition state (this specific lever/plate/button) currently has NO
+    // network sync — only the puzzle's final aggregate solved state is server-confirmed,
+    // via NetworkPuzzleRoomController/PuzzleController.OnSolvedConfirmed (see AGENTS.md's
+    // Multiplayer section). That's a real gap for THIS game's design, not a deferred nice-
+    // to-have: co-op puzzles are specced around one player watching a mechanism the other
+    // player triggers in real time (lever -> door, plate -> gate). Without component-level
+    // sync, two clients can genuinely diverge mid-puzzle until the root condition happens
+    // to resolve. A "NetworkPuzzleComponent" override point was never built; this virtual
+    // hook is the intended seam for it. Scoped as roadmap Phase 2 work (or earlier if new
+    // puzzle content ships first) — see the Scarab Engineering Roadmap.
     /// <summary>Call this from a subclass instead of SetState when you want
     /// the change to be network-authoritative.</summary>
     protected virtual void RequestStateChange(bool met) => SetState(met);
