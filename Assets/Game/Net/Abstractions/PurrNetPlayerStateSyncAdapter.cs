@@ -13,6 +13,8 @@ namespace Game.Net.Adapters
         private INetworkStateSink<PlayerNetworkState>   _sink;
         private PlayerNetworkState _latestRemoteState;
         private bool               _hasRemoteState;
+        private PlayerNetworkState _lastSentState;
+        private bool               _hasSentState;
 
         // ── PurrNetStateSyncAdapterBase ──────────────────────────────────────
 
@@ -34,8 +36,19 @@ namespace Game.Net.Adapters
 
         protected override void TryCaptureAndSend()
         {
-            if (_source != null && _source.TryCapture(out var state))
-                SyncStateRpc(state);
+            if (_source == null || !_source.TryCapture(out var state))
+                return;
+
+            // Interim dirty-check: skip the RPC when nothing actually changed since the
+            // last broadcast. This is a cheap stopgap for the per-tick full-state judder
+            // finding — real delta compression arrives once state moves onto PurrNet's
+            // native SyncVar<T>, which replaces this hand-rolled adapter entirely.
+            if (_hasSentState && state.Equals(_lastSentState))
+                return;
+
+            SyncStateRpc(state);
+            _lastSentState = state;
+            _hasSentState  = true;
         }
 
         protected override void ApplyLatestIfAvailable(NetworkSyncContext ctx)
