@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: JuveNILE.Core::Core.Systems.Navigation.Definitions.OverlayDefinition
   allowedForAllScreens: 0
   opensAutomatically: 0
-  canBeClosedByUser: 0
+  canBeClosedByUser: 1
   inputMode: 1
   conditions: []
   openTransition: {fileID: 0}

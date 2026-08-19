@@ -82,11 +82,6 @@ namespace Game.UI.Views.Settings
                 _uiBuilt = true;
             }
 
-            if (_inputReader != null)
-            {
-                _inputReader.SubscribePerformed("Cancel", OnCancelPressed);
-            }
-
             if (!_isRegisteredForLocalization && _localizationService != null)
             {
                 _localizationService.RegisterListener(this);
@@ -107,11 +102,6 @@ namespace Game.UI.Views.Settings
             if (_panel != null)
             {
                 _panel.RemoveFromClassList("settings-panel--open");
-            }
-
-            if (_inputReader != null)
-            {
-                _inputReader.UnsubscribePerformed("Cancel", OnCancelPressed);
             }
 
             if (_isRegisteredForLocalization && _localizationService != null)
@@ -951,13 +941,6 @@ namespace Game.UI.Views.Settings
             }
         }
 
-        private void OnCancelPressed(InputAction.CallbackContext _)
-        {
-            if (IsOpen)
-            {
-                SaveAndClose();
-            }
-        }
 
         #endregion
 
