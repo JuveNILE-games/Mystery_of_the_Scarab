@@ -40,6 +40,22 @@ namespace Game.UI.Views.Multiplayer
         private VisualElement _panel;
         private bool _uiBuilt;
 
+        // Guards the *entire* click-to-scene-load chain, not just the tail end of it - a click
+        // handler here awaits ISessionService.StartSession(mode) before ever reaching
+        // LoadSceneByButton.LoadScene(), and StartSession's own duration used to be highly
+        // variable (a confirmed real 2-player test showed it could take up to a full 10s
+        // timeout, before SessionService.StartSession was fixed to no longer start networking
+        // eagerly). LoadSceneByButton's own re-entrancy guard only catches overlap while ITS
+        // load is in flight, so a second click landing after StartSession resolves but before
+        // this overlay fully closes sailed straight past it, double-loading Lobby.unity. This
+        // flag is set synchronously, before any await, so no click can slip through regardless
+        // of how slow the chain underneath it is - and is only ever cleared in
+        // StartSessionThenLoad's own finally, not on OnEnable: clearing it there would let a
+        // reopen-while-still-in-flight (navigate away and immediately back to Multiplayer while
+        // the first click's chain hasn't resolved yet) reintroduce the same race via a
+        // different path.
+        private bool _actionInFlight;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -143,33 +159,38 @@ namespace Game.UI.Views.Multiplayer
 
         private void OnLocalClicked()
         {
+            if (_actionInFlight) return;
+            _actionInFlight = true;
+
             CloseOverlay();
             StartSessionThenLoad(SessionMode.SplitScreen, _localSceneLoader).Forget();
         }
 
         private void OnOnlineClicked()
         {
-            CloseOverlay();
+            if (_actionInFlight) return;
+            _actionInFlight = true;
 
-            // Online doesn't set SessionMode here — the lobby flow doesn't know yet whether
-            // this peer ends up hosting or joining. ISessionService.StartSession(Online) is
-            // called once networking actually starts (NetCoreConnectionService.RetryConnection,
-            // wired to LobbyManager.OnAllReady), not at this button press.
-            if (_onlineSceneLoader != null)
-                _onlineSceneLoader.LoadScene();
-            else
-                Debug.LogError("[MultiplayerOverlay] _onlineSceneLoader not assigned.", this);
+            CloseOverlay();
+            StartSessionThenLoad(SessionMode.Online, _onlineSceneLoader).Forget();
         }
 
         private async UniTask StartSessionThenLoad(SessionMode mode, LoadSceneByButton loader)
         {
-            if (_session != null)
-                await _session.StartSession(mode);
+            try
+            {
+                if (_session != null)
+                    await _session.StartSession(mode);
 
-            if (loader != null)
-                loader.LoadScene();
-            else
-                Debug.LogError("[MultiplayerOverlay] scene loader not assigned.", this);
+                if (loader != null)
+                    loader.LoadScene();
+                else
+                    Debug.LogError("[MultiplayerOverlay] scene loader not assigned.", this);
+            }
+            finally
+            {
+                _actionInFlight = false;
+            }
         }
     }
 }
