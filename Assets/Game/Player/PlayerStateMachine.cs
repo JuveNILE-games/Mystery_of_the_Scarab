@@ -67,6 +67,14 @@ namespace Game.Player
         private float lastValidGroundContactTime = float.NegativeInfinity;
         private bool coyoteJumpConsumed;
         private Collider[] passthroughColliders;
+
+        // True for the local player and for a networked owner; false for a non-owned remote
+        // copy, which should never run its own CheckGrounded()/ApplyMovement() — its transform
+        // is driven purely by PlayerNetworkStateBridge's position/rotation lerp instead. The
+        // state machine's transitions (and therefore its animations) still run either way —
+        // see SetReplicatedGrounded, which feeds the owner's real ground state into a non-owner
+        // copy so Grounded/Airborne/Jump/Land resolve correctly without local physics.
+        private bool physicsEnabled = true;
         
         #region Public Properties (accessed by states)
         
@@ -139,10 +147,16 @@ namespace Game.Player
         
         protected override void Update()
         {
-            CheckGrounded();
+            if (physicsEnabled)
+            {
+                CheckGrounded();
+            }
             HandleMainStateTransitions();
             base.Update();
-            ApplyMovement();
+            if (physicsEnabled)
+            {
+                ApplyMovement();
+            }
         }
         
         #endregion
@@ -218,17 +232,19 @@ namespace Game.Player
         
         private void SetupMainTransitions()
         {
-            // Grounded → Airborne (jump started or no longer grounded)
+            // Grounded → Airborne (jump started or no longer grounded).
+            // VerticalVelocity is only physically meaningful when physicsEnabled — a non-owner
+            // resimulates it locally, decoupled from the owner's real value, so it's gated here.
             groundedState
-                .When(() => (!isGrounded || VerticalVelocity > 0f) && !IsInAbilityState(), airborneState, priority: 10, name: "Not Grounded");
-            
+                .When(() => (!isGrounded || (physicsEnabled && VerticalVelocity > 0f)) && !IsInAbilityState(), airborneState, priority: 10, name: "Not Grounded");
+
             // Grounded → Ability (when ability pressed)
             groundedState
                 .When(() => primaryAbilityPressed, abilityState, priority: 20, name: "Ability Pressed");
-            
+
             // Airborne → Grounded (when grounded and descending)
             airborneState
-                .When(() => isGrounded && VerticalVelocity <= 0f, groundedState, priority: 10, name: "Landed");
+                .When(() => isGrounded && (!physicsEnabled || VerticalVelocity <= 0f), groundedState, priority: 10, name: "Landed");
             
             // Ability → Grounded (when finished and grounded)
             abilityState
@@ -242,6 +258,36 @@ namespace Game.Player
         #endregion
         
         #region Ground Detection
+
+        /// <summary>
+        /// Called by the network sync adapter on spawn/ownership change. False for a non-owned
+        /// remote copy, whose transform is driven purely by PlayerNetworkStateBridge's lerp.
+        /// Also disables the CharacterController itself — confirmed live that it otherwise
+        /// silently overrides direct transform.position writes, fighting the network lerp.
+        /// </summary>
+        public void SetPhysicsEnabled(bool enabled)
+        {
+            physicsEnabled = enabled;
+            if (controller != null) controller.enabled = enabled;
+        }
+
+        /// <summary>
+        /// Feeds the owner's replicated CheckGrounded() result into a non-owner copy (which
+        /// never runs CheckGrounded() itself — see SetPhysicsEnabled). Keeps CanStartJump() and
+        /// the Grounded/Airborne transition correct so the right animation still plays, without
+        /// this copy doing any local ground raycasting of its own.
+        /// </summary>
+        public void SetReplicatedGrounded(bool grounded)
+        {
+            isGrounded = grounded;
+            hasValidGroundContact = grounded;
+            if (grounded)
+            {
+                lastGroundedTime = Time.time;
+                lastValidGroundContactTime = Time.time;
+                coyoteJumpConsumed = false;
+            }
+        }
 
         public bool CanStartJump()
         {
@@ -275,8 +321,10 @@ namespace Game.Player
             // Move origin UP
             Vector3 origin = bottomCenter + Vector3.up * castRetreat;
             
-            // Increase max distance
-            float actualDistance = groundCheckDistance + castRetreat;
+            // Scale with actual per-frame downward travel so a slow frame (Editor gizmo overhead,
+            // a GC spike, ...) can't push the controller further than the probe reaches.
+            float frameDrop = Mathf.Max(0f, -VerticalVelocity) * Time.deltaTime;
+            float actualDistance = Mathf.Max(groundCheckDistance, frameDrop) + castRetreat;
             
             bool hasValidGroundHit = false;
 
@@ -313,14 +361,28 @@ namespace Game.Player
                 lastGroundedTime = Time.time;
                 lastValidGroundContactTime = Time.time;
                 coyoteJumpConsumed = false;
+                DebugLogGroundedChange(true, hasValidGroundHit, controller.isGrounded, false);
                 return;
             }
 
             hasValidGroundContact = false;
             bool inUngroundedGraceWindow = (Time.time - lastGroundedTime) <= ungroundedGraceTime;
             isGrounded = inUngroundedGraceWindow && VerticalVelocity <= 0f;
+            DebugLogGroundedChange(isGrounded, hasValidGroundHit, controller.isGrounded, inUngroundedGraceWindow);
         }
-        
+
+        private bool _debugPrevGrounded = true;
+        private void DebugLogGroundedChange(bool newGrounded, bool sphereHit, bool ccGrounded, bool inGrace)
+        {
+            if (newGrounded != _debugPrevGrounded)
+            {
+                Debug.Log($"[DEBUG-gnd1] t={Time.time:F3} {(_debugPrevGrounded ? "GROUNDED->AIRBORNE" : "AIRBORNE->GROUNDED")} " +
+                    $"sphereHit={sphereHit} ccGrounded={ccGrounded} inGrace={inGrace} VVel={VerticalVelocity:F3} " +
+                    $"moveInput={worldMoveInput} name={name}");
+                _debugPrevGrounded = newGrounded;
+            }
+        }
+
         private void OnDrawGizmosSelected()
         {
              if (controller == null) controller = GetComponent<CharacterController>();

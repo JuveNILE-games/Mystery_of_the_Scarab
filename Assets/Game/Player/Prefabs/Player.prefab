@@ -102,9 +102,13 @@ GameObject:
   - component: {fileID: 1000003}
   - component: {fileID: 2120222826471210667}
   - component: {fileID: 6945606818427400169}
+  - component: {fileID: 3529758083964183272}
+  - component: {fileID: 5713478244509997295}
+  - component: {fileID: 1393383268334979930}
+  - component: {fileID: 2635174897542272582}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +127,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4291121530354048106}
-  - {fileID: 2690105318549733642}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4095327181172430929
@@ -139,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoStart: 1
-  enableLogging: 1
+  enableLogging: 0
   updateInFixedUpdate: 0
   currentStateName: 
   previousStateName: 
@@ -150,12 +153,15 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckDistance: 0.1
+  groundCheckDistance: 0.13
+  ungroundedGraceTime: 0.08
+  coyoteTimeDuration: 0.12
   worldMoveInput: {x: 0, y: 0, z: 0}
   jumpPressed: 0
   sprintPressed: 0
   primaryAbilityPressed: 0
   secondaryAbilityPressed: 0
+  additionalVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &2327800527177361339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +245,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2545725099360330263}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6b4ec038abdaa94a83d3a771917f137, type: 3}
   m_Name: 
@@ -288,7 +294,7 @@ CharacterController:
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.1
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!54 &5650686287504423242
@@ -348,7 +354,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2545725099360330263}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb42314615cf06a47a597367ca1451d1, type: 3}
   m_Name: 
@@ -393,8 +399,8 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 1075032407982997677
   - rid: 1075032407982997746
-  - rid: 1075032652250874809
-  - rid: 1075032652250874810
+  - rid: 1075032652250873946
+  - rid: 1075032652250873947
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -417,15 +423,7 @@ MonoBehaviour:
           m_Value1: 6271422207882155894
         Name: Agent
         m_Value: {fileID: -598102136007462339}
-    - rid: 1075032652250874809
-      type: {class: 'BlackboardVariable`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 848870189693822947
-          m_Value1: 3753154221857369063
-        Name: Interactor
-        m_Value: {fileID: 7154600553087900425}
-    - rid: 1075032652250874810
+    - rid: 1075032652250873946
       type: {class: 'BlackboardVariable`1[[Game.PlayerAbilities, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -433,6 +431,14 @@ MonoBehaviour:
           m_Value1: 14823991233567839807
         Name: Abilities
         m_Value: {fileID: -5208957104539809424}
+    - rid: 1075032652250873947
+      type: {class: 'BlackboardVariable`1[[Game.PlayerInteractor, MysteryOfTheScarab]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 848870189693822947
+          m_Value1: 3753154221857369063
+        Name: Interactor
+        m_Value: {fileID: 7154600553087900425}
 --- !u!195 &-598102136007462339
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -513,7 +519,6 @@ MonoBehaviour:
   _input: {fileID: 2327800527177361339}
   _interactor: {fileID: 7154600553087900425}
   _abilities: {fileID: -5208957104539809424}
-  _networkingGameObject: {fileID: 8379502651654294353}
 --- !u!114 &2120222826471210667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,76 +554,26 @@ MonoBehaviour:
   _deferenceWindowDuration: 5
   _reachabilityRadius: 20
   _tieThreshold: 0.5
---- !u!1 &8379502651654294353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2690105318549733642}
-  - component: {fileID: 7760750791054680413}
-  - component: {fileID: 7464753619356958645}
-  - component: {fileID: 2241998010583255160}
-  m_Layer: 0
-  m_Name: Networking
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2690105318549733642
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379502651654294353}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4081627251559586505}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7760750791054680413
+--- !u!114 &3529758083964183272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379502651654294353}
+  m_GameObject: {fileID: 2545725099360330263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa2c71b5e76ed8244b6423e19623b344, type: 3}
+  m_Script: {fileID: 11500000, guid: 17dc9c183b3c2a54280b0d5dd903cea5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: MysteryOfTheScarab.Net::Game.Net.PlayerNetworkStateBridge
-  _playerInput: {fileID: 2327800527177361339}
-  _stateMachine: {fileID: 4095327181172430929}
-  _positionLerpSpeed: 15
-  _rotationLerpSpeed: 15
---- !u!114 &7464753619356958645
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.DialogueParticipant
+  npcCharacterData: {fileID: 0}
+--- !u!114 &5713478244509997295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379502651654294353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acbc782f315d08e4eb53dbccc2a2d711, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: JuveNILE.NetCore::NetCore.Adapters.PurrNet.PurrNetOwnershipGate
-  _identity: {fileID: 2241998010583255160}
---- !u!114 &2241998010583255160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379502651654294353}
+  m_GameObject: {fileID: 2545725099360330263}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f83d63b72e28a534196c05840562ea27, type: 3}
@@ -633,5 +588,37 @@ MonoBehaviour:
   _directChildren: []
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
-  _sourceComponent: {fileID: 7760750791054680413}
-  _sinkComponent: {fileID: 7760750791054680413}
+  _sourceComponent: {fileID: 2635174897542272582}
+  _sinkComponent: {fileID: 2635174897542272582}
+  _networkState:
+    _ownerAuth: 1
+    _sendIntervalInSeconds: 0
+--- !u!114 &1393383268334979930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbc782f315d08e4eb53dbccc2a2d711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: JuveNILE.NetCore::NetCore.Adapters.PurrNet.PurrNetOwnershipGate
+  _identity: {fileID: 5713478244509997295}
+--- !u!114 &2635174897542272582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545725099360330263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2c71b5e76ed8244b6423e19623b344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab.Net::Game.Net.PlayerNetworkStateBridge
+  _playerInput: {fileID: 2327800527177361339}
+  _stateMachine: {fileID: 4095327181172430929}
+  _positionLerpSpeed: 15
+  _rotationLerpSpeed: 15

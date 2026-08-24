@@ -17,8 +17,7 @@ namespace Game.Player
         [SerializeField] private PlayerInputInitializer _input;
         [SerializeField] private PlayerInteractor _interactor;
         [SerializeField] private PlayerAbilities _abilities;
-        [SerializeField] private GameObject _networkingGameObject;
-        
+
         private IAIController _aiController;
         private INetworkOwnershipGate _ownershipGate;
 
@@ -30,8 +29,10 @@ namespace Game.Player
             if (_interactor == null) _interactor = GetComponent<PlayerInteractor>();
             if (_abilities == null) _abilities = GetComponent<PlayerAbilities>();
             if (_aiController == null) _aiController = GetComponent<IAIController>();
-            if (_ownershipGate == null && _networkingGameObject != null)
-                _ownershipGate = _networkingGameObject.GetComponent<INetworkOwnershipGate>();
+            // Network components live on this same GameObject, not a child — PurrNet's Spawn()
+            // only registers the exact GameObject it's called on.
+            if (_ownershipGate == null)
+                _ownershipGate = GetComponent<INetworkOwnershipGate>();
         }
 
         private void Start()

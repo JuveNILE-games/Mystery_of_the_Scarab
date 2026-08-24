@@ -17,6 +17,13 @@ namespace Game.Net.Abstractions
         public bool       PrimaryPressed;
         public bool       SecondaryPressed;
 
+        // Owner's real CheckGrounded() result. Non-owners never run local ground detection
+        // (see PlayerStateMachine.SetPhysicsEnabled) — without this, their own state machine's
+        // Grounded/Airborne transition (which needs to know "am I grounded") would have nothing
+        // to read, and CanStartJump() would never see a valid ground contact for the Jump
+        // animation to trigger on the remote copy.
+        public bool       IsGrounded;
+
         /// <summary>
         /// Field-wise equality using Vector3/Quaternion's own epsilon-based ==, so tiny
         /// floating-point noise doesn't count as a change. Used to skip redundant RPC
@@ -30,12 +37,13 @@ namespace Game.Net.Abstractions
                 && JumpPressed == other.JumpPressed
                 && SprintPressed == other.SprintPressed
                 && PrimaryPressed == other.PrimaryPressed
-                && SecondaryPressed == other.SecondaryPressed;
+                && SecondaryPressed == other.SecondaryPressed
+                && IsGrounded == other.IsGrounded;
         }
 
         public override bool Equals(object obj) => obj is PlayerNetworkState other && Equals(other);
 
         public override int GetHashCode() => System.HashCode.Combine(Position, Rotation, MoveInput,
-            JumpPressed, SprintPressed, PrimaryPressed, SecondaryPressed);
+            JumpPressed, SprintPressed, PrimaryPressed, SecondaryPressed, IsGrounded);
     }
 }

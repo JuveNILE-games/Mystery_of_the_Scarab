@@ -7,17 +7,8 @@ using UnityEngine;
 namespace Game.Net.Adapters
 {
     /// <summary>
-    /// Makes puzzle-solve confirmation network-authoritative for a room, without requiring
-    /// each individual PuzzleController to have its own NetworkIdentity (PuzzleRoomController
-    /// creates PuzzleControllers at runtime in Awake(), so they aren't stable network-spawned
-    /// objects — the room root, a designed scene object, is).
-    ///
-    /// Every client still runs PuzzleController.Evaluate()/Solve() locally and immediately —
-    /// that's what OnSolved reacts to for responsive local feedback (this is a co-op game with
-    /// no anti-cheat requirement, so client-reported solves are trusted). This component's job
-    /// is narrower: make sure that when multiple clients solve the same puzzle within the same
-    /// network tick, exactly one confirmation reaches everyone, so reward-firing and
-    /// progression (subscribed to PuzzleController.OnSolvedConfirmed) only happen once.
+    /// Makes puzzle-solve confirmation network-authoritative for a room: every client solves
+    /// locally for responsive feedback, this ensures exactly one confirmation reaches everyone.
     /// </summary>
     [RequireComponent(typeof(PuzzleRoomController))]
     public class NetworkPuzzleRoomController : NetworkBehaviour

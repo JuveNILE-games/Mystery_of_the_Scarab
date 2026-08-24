@@ -16,11 +16,7 @@ namespace Game.Player
         [Header("Configuration")]
         [SerializeField] private bool enableActions = true;
 
-        // Null on any non-networked player (single-player, local multiplayer) — in that case
-        // OnEnable behaves exactly as before. Only narrows, doesn't eliminate, the window
-        // before PurrNet's OnSpawned callback reactively disables this component for
-        // non-owners; still needs an in-editor Play Mode pass to confirm ordering against
-        // NetworkIdentity spawn timing.
+        // Null for non-networked players (single-player, local multiplayer).
         private INetworkOwnershipGate _ownershipGate;
 
         private InputReader _playerInputReader;
@@ -63,10 +59,7 @@ namespace Game.Player
 
         private void OnEnable()
         {
-            // Ownership gate check: a non-owner networked player should never process local
-            // input, even for the brief window before PurrNetStateSyncAdapterBase.OnSpawned
-            // reactively disables this component. No-op (permissive) for single-player /
-            // local-multiplayer, where no gate component exists on this object.
+            // A non-owner networked player should never process local input.
             if (_ownershipGate != null && !_ownershipGate.CanAcceptLocalControl)
             {
                 ClearInputState();
@@ -177,13 +170,8 @@ namespace Game.Player
         }
 
         /// <summary>
-        /// Projects a camera-relative 2D input vector (WASD / left stick) onto the world XZ
-        /// plane aligned with the current camera's facing direction. This is the single location
-        /// where camera space is converted to world space for human player movement.
-        ///
-        /// Called only on input events (Started / Performed / Canceled), NOT every frame.
-        /// When the camera rotates 45 degrees, the next input event automatically picks up the
-        /// new orientation because _camera is re-queried lazily.
+        /// Projects a camera-relative 2D input vector onto the world XZ plane. Called only on
+        /// input events, not every frame.
         /// </summary>
         private Vector3 ProjectToWorldSpace(Vector2 input)
         {

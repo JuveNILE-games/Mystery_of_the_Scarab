@@ -1,3 +1,4 @@
+using Core.Utility;
 using NetCore.Abstractions;
 using Game.Net.Abstractions;
 using Game.Player;
@@ -29,6 +30,7 @@ namespace Game.Net
             state.SprintPressed    = _stateMachine.IsSprintPressed;
             state.PrimaryPressed   = _stateMachine.IsPrimaryAbilityPressed;
             state.SecondaryPressed = _stateMachine.IsSecondaryAbilityPressed;
+            state.IsGrounded       = _stateMachine.IsGrounded;
             return true;
         }
 
@@ -46,6 +48,7 @@ namespace Game.Net
 
             if (_stateMachine == null) return;
 
+            _stateMachine.SetReplicatedGrounded(state.IsGrounded);
             _stateMachine.OnMoveWorldSpace(state.MoveInput);
             _stateMachine.OnJump(state.JumpPressed);
             _stateMachine.OnSprint(state.SprintPressed);
@@ -53,13 +56,32 @@ namespace Game.Net
             _stateMachine.OnSecondaryAbility(state.SecondaryPressed);
         }
 
-        // ── Input gating (called by adapter on spawn) ────────────────────────
+        // ── Input/physics gating (called by adapter on spawn) ────────────────
 
         public void SetLocalInputEnabled(bool enabled)
         {
-            if (_playerInput == null) return;
-            _playerInput.enabled = enabled;
-            if (!enabled) _playerInput.ClearInputState();
+            var id = GetComponent<PurrNet.NetworkIdentity>();
+            Debug.Log($"[DEBUG-cam1] {name} (goId={gameObject.GetInstanceID()}) owner={id?.owner} isOwner={id?.isOwner} " +
+                $"SetLocalInputEnabled({enabled}) t={Time.time:F3} frame={Time.frameCount} pos={transform.position}");
+            if (_playerInput != null)
+            {
+                _playerInput.enabled = enabled;
+                if (!enabled) _playerInput.ClearInputState();
+            }
+
+            // Same boolean, same moment (owner vs non-owner) — a non-owned copy must never run
+            // its own local physics simulation (CheckGrounded/ApplyMovement), only Apply()'s
+            // lerp + the replicated grounded state above should ever move/ground-check it.
+            _stateMachine?.SetPhysicsEnabled(enabled);
+
+            // ControlSwitcher (Solo-only) sets this for the local-multiplayer path; for LAN/Online
+            // there's no ControlSwitcher, so the local owner's own spawn/ownership-change is the
+            // only signal available to point the camera at it.
+            if (enabled && SceneCamera.Instance != null)
+            {
+                SceneCamera.Instance.TrackingTarget.Value = transform;
+                Debug.Log($"[DEBUG-cam1]   -> TrackingTarget set to (goId={gameObject.GetInstanceID()}) pos={transform.position}");
+            }
         }
     }
 }

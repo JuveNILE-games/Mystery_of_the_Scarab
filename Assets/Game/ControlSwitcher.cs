@@ -26,7 +26,10 @@ namespace Game
         [Inject] private InputReader _inputReader;
         [Inject] private INavMeshSurfaceService _navMeshService;
 
-        private int _currentIndex = 0;
+        // Tracks the actual controlled object, not a list index — an unregister before the
+        // tracked slot would otherwise silently hand control to whoever occupies it next.
+        private IControllable _controlled;
+        private System.IDisposable _controllablesSubscription;
 
         private void Start()
         {
@@ -48,8 +51,11 @@ namespace Game
 
             // Self-register as IControlSwitcher
             ServiceLocator.Global.Register<IControlSwitcher>(this);
-            
-            InitializeSwitching();
+
+            // Reactive rather than a one-shot check: controllables can register after this Start()
+            // runs, and ReconcileControlState is idempotent so re-running it as membership grows
+            // always converges correctly.
+            _controllablesSubscription = _registry.Controllables.Bind(ReconcileControlState);
         }
 
         // NOTE: Subscription happens in Start(), not OnEnable(), because [Inject] fields
@@ -62,6 +68,9 @@ namespace Game
             {
                 _inputReader.UnsubscribeStarted("SwitchCharacter", OnSwitchCharacter);
             }
+
+            _controllablesSubscription?.Dispose();
+            _controllablesSubscription = null;
         }
 
         private void OnSwitchCharacter(InputAction.CallbackContext context)
@@ -69,25 +78,34 @@ namespace Game
             var all = _registry.GetAll();
             if (all.Count > 1)
             {
-                int nextIndex = (_currentIndex + 1) % all.Count;
+                int currentIndex = _controlled != null ? IndexOf(all, _controlled) : -1;
+                int nextIndex = (currentIndex + 1) % all.Count;
                 SwitchTo(nextIndex);
             }
         }
 
-        private void InitializeSwitching()
+        private void ReconcileControlState(IReadOnlyList<IControllable> all)
         {
-            var all = _registry.GetAll();
-            if (all.Count == 0) return;
-            
+            if (all.Count == 0)
+            {
+                _controlled = null;
+                return;
+            }
+
+            if (_controlled == null || IndexOf(all, _controlled) < 0)
+            {
+                _controlled = all[0];
+            }
+
             for (int i = 0; i < all.Count; i++)
             {
-                ApplyState(all[i], i == _currentIndex);
+                ApplyState(all[i], all[i] == _controlled);
             }
-            
-            // Ensure reactive systems (Camera, AI) know who to follow from the start
+
+            // Ensure reactive systems (Camera, AI) know who to follow
             if (SceneCamera.Instance != null)
             {
-                SceneCamera.Instance.TrackingTarget.Value = all[_currentIndex].GetTransform();
+                SceneCamera.Instance.TrackingTarget.Value = _controlled.GetTransform();
             }
 
             // Initialize the dynamic NavMesh surface around the AI companion (inactive player)
@@ -95,7 +113,7 @@ namespace Game
             {
                 for (int j = 0; j < all.Count; j++)
                 {
-                    if (j != _currentIndex)
+                    if (all[j] != _controlled)
                     {
                         _navMeshService.InitializeSurface(all[j].GetTransform());
                         break;
@@ -107,25 +125,28 @@ namespace Game
         public void SwitchTo(int newIndex)
         {
             var all = _registry.GetAll();
-            if (newIndex < 0 || newIndex >= all.Count || newIndex == _currentIndex) return;
+            if (newIndex < 0 || newIndex >= all.Count) return;
+
+            var target = all[newIndex];
+            if (target == _controlled) return;
 
             // 1. Publish the new target to the global reactive system (Camera and AI will react automatically)
             if (SceneCamera.Instance != null)
             {
-                SceneCamera.Instance.TrackingTarget.Value = all[newIndex].GetTransform();
+                SceneCamera.Instance.TrackingTarget.Value = target.GetTransform();
             }
 
             // 2. Re-anchor the NavMesh surface on the AI companion (the previously active player)
-            if (_navMeshService != null)
+            if (_navMeshService != null && _controlled != null)
             {
-                _navMeshService.InitializeSurface(all[_currentIndex].GetTransform());
+                _navMeshService.InitializeSurface(_controlled.GetTransform());
             }
 
             // 3. Then apply control states
-            ApplyState(all[_currentIndex], false);
-            ApplyState(all[newIndex], true);
-            
-            _currentIndex = newIndex;
+            if (_controlled != null) ApplyState(_controlled, false);
+            ApplyState(target, true);
+
+            _controlled = target;
             BroadcastControlChanged();
         }
 
@@ -137,15 +158,22 @@ namespace Game
 
         private void BroadcastControlChanged()
         {
-            var all = _registry.GetAll();
-            if (all.Count == 0) return;
-            
-            var tf = all[_currentIndex].GetTransform();
-            
+            if (_controlled == null) return;
+
             if (onControlChanged != null)
             {
-                onControlChanged.Raise(new ControlChanged { newIndex = _currentIndex, newTransform = tf });
+                int index = IndexOf(_registry.GetAll(), _controlled);
+                onControlChanged.Raise(new ControlChanged { newIndex = index, newTransform = _controlled.GetTransform() });
             }
+        }
+
+        private static int IndexOf(IReadOnlyList<IControllable> list, IControllable item)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] == item) return i;
+            }
+            return -1;
         }
     }
 }
