@@ -9,18 +9,21 @@ namespace Game.Net.Adapters
     [DisallowMultipleComponent]
     public class PurrNetPlayerStateSyncAdapter : PurrNetStateSyncAdapterBase
     {
-        // ownerAuth: true — the owning client captures and broadcasts state, matching this
-        // project's deliberate client-authoritative co-op design (see root AGENTS.md's
-        // Multiplayer section). Replaces the hand-rolled [ObserversRpc] pipeline: SyncVar's
-        // own .value setter does dirty-checking via PurrEquality<T>.Default.Equals, which
-        // respects PlayerNetworkState's IEquatable<T> implementation (added for the interim
-        // Phase 0 guard, reused here rather than discarded) — plus rate-limited unreliable
-        // sends with a final reliable flush, and late-joiner catch-up (OnObserverAdded), none
-        // of which the old hand-rolled RPC had.
+        // ownerAuth: true matches this project's client-authoritative co-op design (see AGENTS.md).
         [SerializeField] private SyncVar<PlayerNetworkState> _networkState = new(ownerAuth: true);
+
+        // How far behind real time a non-owner renders, so ApplyLatestIfAvailable always has two
+        // real received samples to interpolate between instead of chasing/extrapolating the latest
+        // one. Slightly larger than one expected send interval to absorb normal jitter.
+        [SerializeField] private float _interpolationDelay = 0.05f;
 
         private INetworkStateSource<PlayerNetworkState> _source;
         private INetworkStateSink<PlayerNetworkState>   _sink;
+
+        private double _prevSampleTime;
+        private PlayerNetworkState _prevSample;
+        private double _latestSampleTime;
+        private PlayerNetworkState _latestSample;
 
         // ── PurrNetStateSyncAdapterBase ──────────────────────────────────────
 
@@ -44,6 +47,20 @@ namespace Game.Net.Adapters
             // transform for even one frame.
             if (isOwner && _source != null && _source.TryCapture(out var initial))
                 _networkState.value = initial;
+
+            // Seed the interpolation buffer too, so a fresh non-owner interpolates from its real
+            // starting pose instead of a zeroed-default prevSample.
+            _prevSampleTime = _latestSampleTime = Time.unscaledTimeAsDouble;
+            _prevSample = _latestSample = _networkState.value;
+            _networkState.onChanged += OnNetworkStateReceived;
+        }
+
+        private void OnNetworkStateReceived(PlayerNetworkState newState)
+        {
+            _prevSampleTime = _latestSampleTime;
+            _prevSample     = _latestSample;
+            _latestSampleTime = Time.unscaledTimeAsDouble;
+            _latestSample     = newState;
         }
 
         protected override void TryCaptureAndSend()
@@ -54,7 +71,12 @@ namespace Game.Net.Adapters
 
         protected override void ApplyLatestIfAvailable(NetworkSyncContext ctx)
         {
-            _sink?.Apply(_networkState.value, ctx);
+            if (_sink == null) return;
+
+            double renderTime = Time.unscaledTimeAsDouble - _interpolationDelay;
+            var interpolated = PlayerNetworkStateInterpolator.Interpolate(
+                _prevSampleTime, _prevSample, _latestSampleTime, _latestSample, renderTime);
+            _sink.Apply(interpolated, ctx);
         }
 
         protected override void SetInputEnabled(bool enabled)

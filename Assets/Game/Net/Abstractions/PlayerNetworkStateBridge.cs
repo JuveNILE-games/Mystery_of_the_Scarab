@@ -13,8 +13,6 @@ namespace Game.Net
     {
         [SerializeField] private PlayerInputInitializer _playerInput;
         [SerializeField] private PlayerStateMachine     _stateMachine;
-        [SerializeField] private float _positionLerpSpeed = 15f;
-        [SerializeField] private float _rotationLerpSpeed = 15f;
 
         // ── INetworkStateSource ──────────────────────────────────────────────
 
@@ -38,13 +36,12 @@ namespace Game.Net
 
         public void Apply(in PlayerNetworkState state, in NetworkSyncContext context)
         {
-            transform.position = Vector3.Lerp(
-                transform.position, state.Position,
-                context.DeltaTime * _positionLerpSpeed);
-
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation, state.Rotation,
-                context.DeltaTime * _rotationLerpSpeed);
+            // state.Position/Rotation already arrive time-interpolated between the two most
+            // recently received samples (see PurrNetPlayerStateSyncAdapter/
+            // PlayerNetworkStateInterpolator) — assign directly rather than lerping again here,
+            // which would just add a second, redundant layer of smoothing lag on top.
+            transform.position = state.Position;
+            transform.rotation = state.Rotation;
 
             if (_stateMachine == null) return;
 
@@ -68,7 +65,8 @@ namespace Game.Net
 
             // Same boolean, same moment (owner vs non-owner) — a non-owned copy must never run
             // its own local physics simulation (CheckGrounded/ApplyMovement), only Apply()'s
-            // lerp + the replicated grounded state above should ever move/ground-check it.
+            // interpolated position/rotation + the replicated grounded state above should ever
+            // move/ground-check it.
             _stateMachine?.SetPhysicsEnabled(enabled);
 
             // ControlSwitcher (Solo-only) sets this for the local-multiplayer path; for LAN/Online

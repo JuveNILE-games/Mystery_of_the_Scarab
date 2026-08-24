@@ -1,0 +1,25 @@
+{
+    "name": "MysteryOfTheScarab.Tests",
+    "rootNamespace": "Game.Tests",
+    "references": [
+        "GUID:06c0659c2dccc864291e6c6587f9e0da",
+        "GUID:59dea802cd0d21943ac42a0c45997408",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
