@@ -361,26 +361,12 @@ namespace Game.Player
                 lastGroundedTime = Time.time;
                 lastValidGroundContactTime = Time.time;
                 coyoteJumpConsumed = false;
-                DebugLogGroundedChange(true, hasValidGroundHit, controller.isGrounded, false);
                 return;
             }
 
             hasValidGroundContact = false;
             bool inUngroundedGraceWindow = (Time.time - lastGroundedTime) <= ungroundedGraceTime;
             isGrounded = inUngroundedGraceWindow && VerticalVelocity <= 0f;
-            DebugLogGroundedChange(isGrounded, hasValidGroundHit, controller.isGrounded, inUngroundedGraceWindow);
-        }
-
-        private bool _debugPrevGrounded = true;
-        private void DebugLogGroundedChange(bool newGrounded, bool sphereHit, bool ccGrounded, bool inGrace)
-        {
-            if (newGrounded != _debugPrevGrounded)
-            {
-                Debug.Log($"[DEBUG-gnd1] t={Time.time:F3} {(_debugPrevGrounded ? "GROUNDED->AIRBORNE" : "AIRBORNE->GROUNDED")} " +
-                    $"sphereHit={sphereHit} ccGrounded={ccGrounded} inGrace={inGrace} VVel={VerticalVelocity:F3} " +
-                    $"moveInput={worldMoveInput} name={name}");
-                _debugPrevGrounded = newGrounded;
-            }
         }
 
         private void OnDrawGizmosSelected()

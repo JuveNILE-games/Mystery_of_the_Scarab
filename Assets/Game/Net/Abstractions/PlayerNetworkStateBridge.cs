@@ -60,9 +60,6 @@ namespace Game.Net
 
         public void SetLocalInputEnabled(bool enabled)
         {
-            var id = GetComponent<PurrNet.NetworkIdentity>();
-            Debug.Log($"[DEBUG-cam1] {name} (goId={gameObject.GetInstanceID()}) owner={id?.owner} isOwner={id?.isOwner} " +
-                $"SetLocalInputEnabled({enabled}) t={Time.time:F3} frame={Time.frameCount} pos={transform.position}");
             if (_playerInput != null)
             {
                 _playerInput.enabled = enabled;
@@ -80,7 +77,6 @@ namespace Game.Net
             if (enabled && SceneCamera.Instance != null)
             {
                 SceneCamera.Instance.TrackingTarget.Value = transform;
-                Debug.Log($"[DEBUG-cam1]   -> TrackingTarget set to (goId={gameObject.GetInstanceID()}) pos={transform.position}");
             }
         }
     }
