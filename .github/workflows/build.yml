@@ -46,8 +46,6 @@ jobs:
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
 
       # ---------------------------------------------------------------------
       # Free disk space
@@ -409,8 +407,6 @@ jobs:
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
 
       - name: Run EditMode tests
         uses: game-ci/unity-test-runner@v4
