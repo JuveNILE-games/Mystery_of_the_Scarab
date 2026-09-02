@@ -30,7 +30,6 @@ using NetCore.Interfaces;
 
 namespace Game.Installers
 {
-    [InstallerDependsOn(typeof(GameServicesInstaller))]
     [Serializable]
     public class MysteryOfTheScarabInstaller : IGameServiceInstaller
     {
