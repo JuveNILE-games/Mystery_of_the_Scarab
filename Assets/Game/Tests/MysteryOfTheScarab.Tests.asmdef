@@ -4,6 +4,8 @@
     "references": [
         "GUID:06c0659c2dccc864291e6c6587f9e0da",
         "GUID:59dea802cd0d21943ac42a0c45997408",
+        "GUID:2400cb7968d550d4f8dd8f23ecd3b7fd",
+        "GUID:8411a964f908abf4a8401bafc804a395",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
