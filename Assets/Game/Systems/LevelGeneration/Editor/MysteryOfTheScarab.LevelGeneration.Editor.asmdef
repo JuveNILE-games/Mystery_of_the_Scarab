@@ -1,0 +1,21 @@
+{
+    "name": "MysteryOfTheScarab.LevelGeneration.Editor",
+    "rootNamespace": "Game.Systems.LevelGeneration.Editor",
+    "references": [
+        "GUID:8411a964f908abf4a8401bafc804a395",
+        "GUID:74e2e1886e4caca4984f7d0ed1077fa9",
+        "GUID:06c0659c2dccc864291e6c6587f9e0da",
+        "GUID:caca889fed6088d40b22c2d7e2909c31"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
