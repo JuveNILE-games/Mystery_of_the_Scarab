@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Core.Tools.PrefabBrush;
 using Eflatun.SceneReference;
 using Game.Systems.LevelSystem.Definitions;
@@ -209,6 +210,92 @@ namespace Game.Systems.LevelGeneration.Editor
 
             AssetDatabase.SaveAssets();
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+
+        // Standalone, sync-to-declared-state step (SCARAB-012) — deliberately separate from
+        // Bake/BakeFloors (Michael, 2026-09-05): curation is a human decision made by hand-
+        // editing a LevelConnectionCuration asset, applied after the fact, so this must never
+        // touch wall/room/floor geometry and must be safe to run against an existing bake
+        // whose room layout has since drifted from hand-edits. Never creates the level root —
+        // unlike Bake/BakeFloors, it's meant to upgrade a bake that must already exist.
+        //
+        // Reset-then-reapply, matching BakeFloors' own idempotency discipline
+        // (ClearGeneratedShellChildren before rebuilding): every existing
+        // DoorwayTeleportTrigger is stripped before curation.Pairings is reapplied, so
+        // shrinking or editing the curation list actually converges to the declared state
+        // instead of only ever accumulating stale triggers/pairings from earlier runs.
+        public static void BakeConnections(Layout layout, LevelConnectionCuration curation,
+            NonEuclideanTransitionDefaults transitionDefaults)
+        {
+            if (curation.Seed != layout.Seed)
+            {
+                Debug.LogError($"[LevelGeneration] Curation asset targets seed {curation.Seed}, " +
+                                $"but the current layout is seed {layout.Seed} — aborting.");
+                return;
+            }
+
+            var rootName = $"Level_{layout.Seed}_Root";
+            var scene = EditorSceneManager.GetActiveScene();
+            if (!scene.GetRootGameObjects().Any(r => r.name == rootName))
+            {
+                Debug.LogError($"[LevelGeneration] '{rootName}' does not exist in the active scene — run Bake first.");
+                return;
+            }
+
+            var root = FindOrCreateRoot(rootName); // safe now — existence already confirmed above
+
+            foreach (var existingTrigger in root.GetComponentsInChildren<DoorwayTeleportTrigger>(true))
+                Undo.DestroyObjectImmediate(existingTrigger);
+
+            var allMarkers = root.GetComponentsInChildren<DoorwayMarker>(true)
+                .ToDictionary(m => m.DoorwayId, m => m);
+
+            var failures = new List<string>();
+            foreach (var pairing in curation.Pairings)
+            {
+                allMarkers.TryGetValue(pairing.DoorwayIdA, out var markerA);
+                allMarkers.TryGetValue(pairing.DoorwayIdB, out var markerB);
+                if (markerA == null) failures.Add($"{pairing.DoorwayIdA} not found");
+                if (markerB == null) failures.Add($"{pairing.DoorwayIdB} not found");
+                if (markerA == null || markerB == null) continue;
+
+                // Purely for validation/logging — confirms both DoorwayIds are real
+                // connections for this seed and reports which rooms they belonged to,
+                // since Kind itself always comes from curation, never from Layout.
+                LogPairing(layout, pairing);
+
+                var triggerA = Undo.AddComponent<DoorwayTeleportTrigger>(markerA.gameObject);
+                var triggerB = Undo.AddComponent<DoorwayTeleportTrigger>(markerB.gameObject);
+                triggerA.Kind = pairing.Kind;
+                triggerB.Kind = pairing.Kind;
+                triggerA.PairedTrigger = triggerB;
+                triggerB.PairedTrigger = triggerA;
+                triggerA.TransitionDefaults = transitionDefaults;
+                triggerB.TransitionDefaults = transitionDefaults;
+            }
+
+            if (failures.Count > 0)
+            {
+                Debug.LogError($"[LevelGeneration] Bake Connections: {failures.Count} bad row(s), " +
+                                $"nothing else applied:\n{string.Join("\n", failures)}");
+                return;
+            }
+
+            EditorSceneManager.MarkSceneDirty(scene);
+        }
+
+        private static void LogPairing(Layout layout, CuratedConnectionPairing pairing)
+        {
+            string DescribeDoorway(string doorwayId)
+            {
+                var connection = layout.Connections.Find(c => c.DoorwayId == doorwayId);
+                return connection != null
+                    ? $"{doorwayId} ({connection.FromRoomId} <-> {connection.ToRoomId})"
+                    : $"{doorwayId} (not a connection in seed {layout.Seed}'s layout)";
+            }
+
+            Debug.Log($"[LevelGeneration] Bake Connections: {DescribeDoorway(pairing.DoorwayIdA)} now paired " +
+                       $"with {DescribeDoorway(pairing.DoorwayIdB)} as {pairing.Kind}.");
         }
 
         // Wall/door pieces are computed once across the whole Layout (a shared

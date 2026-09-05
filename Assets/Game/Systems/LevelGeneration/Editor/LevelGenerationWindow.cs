@@ -1,4 +1,5 @@
 using Core.Tools.PrefabBrush;
+using Game.Systems.LevelSystem.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Game.Systems.LevelGeneration.Editor
         private FloorUvMode _floorUvMode = FloorUvMode.ContinuousWorldSpace;
         private float _floorThickness = 0.2f;
         private float _cellSize = 1f;
+        private LevelConnectionCuration _curation;
+        private NonEuclideanTransitionDefaults _transitionDefaults;
 
         // Regenerated live from whatever seed/parameters are currently typed
         // in (below), not just after a Bake — same seed+parameters always
@@ -78,6 +81,10 @@ namespace Game.Systems.LevelGeneration.Editor
             _floorUvMode = (FloorUvMode)EditorGUILayout.EnumPopup("Floor UV Mode", _floorUvMode);
             _floorThickness = EditorGUILayout.FloatField("Floor Thickness", _floorThickness);
             _cellSize = EditorGUILayout.FloatField("Cell Size", _cellSize);
+            _curation = (LevelConnectionCuration)EditorGUILayout.ObjectField(
+                "Connection Curation", _curation, typeof(LevelConnectionCuration), false);
+            _transitionDefaults = (NonEuclideanTransitionDefaults)EditorGUILayout.ObjectField(
+                "Transition Defaults", _transitionDefaults, typeof(NonEuclideanTransitionDefaults), false);
 
             bool changed = EditorGUI.EndChangeCheck();
             if (changed || _previewLayout == null)
@@ -109,6 +116,16 @@ namespace Game.Systems.LevelGeneration.Editor
             {
                 if (GUILayout.Button("Bake Floor", GUILayout.Height(30)))
                     BakeFloor();
+            }
+
+            // Deliberately separate again (SCARAB-012, 2026-09-05): curation is a hand-edited
+            // asset, applied after the fact — never touches wall/room/floor geometry, so this
+            // is also safe to run against a level baked in an earlier session, same as
+            // Bake Floor above (uses _previewLayout, not a same-session Bake result).
+            using (new EditorGUI.DisabledScope(_previewLayout == null || _curation == null || _transitionDefaults == null))
+            {
+                if (GUILayout.Button("Bake Connections", GUILayout.Height(30)))
+                    BakeConnections();
             }
         }
 
@@ -151,6 +168,11 @@ namespace Game.Systems.LevelGeneration.Editor
             };
             LevelBaker.BakeFloors(_previewLayout, shellConfig);
             Debug.Log($"[LevelGeneration] Baked floor for 'Level_{_previewLayout.Seed}'.");
+        }
+
+        private void BakeConnections()
+        {
+            LevelBaker.BakeConnections(_previewLayout, _curation, _transitionDefaults);
         }
 
         private GenerationParameters CloneParameters() => new()
@@ -262,6 +284,9 @@ namespace Game.Systems.LevelGeneration.Editor
             EditorPrefs.SetString(PrefsPrefix + "FloorMaterial", _floorMaterial != null ? AssetDatabase.GetAssetPath(_floorMaterial) : "");
             EditorPrefs.SetInt(PrefsPrefix + "FloorUvMode", (int)_floorUvMode);
             EditorPrefs.SetFloat(PrefsPrefix + "FloorThickness", _floorThickness);
+            EditorPrefs.SetString(PrefsPrefix + "Curation", _curation != null ? AssetDatabase.GetAssetPath(_curation) : "");
+            EditorPrefs.SetString(PrefsPrefix + "TransitionDefaults",
+                _transitionDefaults != null ? AssetDatabase.GetAssetPath(_transitionDefaults) : "");
             EditorPrefs.SetBool(PrefsPrefix + "HasPending", true);
         }
 
@@ -294,6 +319,14 @@ namespace Game.Systems.LevelGeneration.Editor
                 _floorMaterial = AssetDatabase.LoadAssetAtPath<Material>(floorMaterialPath);
             _floorUvMode = (FloorUvMode)EditorPrefs.GetInt(PrefsPrefix + "FloorUvMode", (int)FloorUvMode.ContinuousWorldSpace);
             _floorThickness = EditorPrefs.GetFloat(PrefsPrefix + "FloorThickness", 0.2f);
+
+            var curationPath = EditorPrefs.GetString(PrefsPrefix + "Curation", "");
+            if (!string.IsNullOrEmpty(curationPath))
+                _curation = AssetDatabase.LoadAssetAtPath<LevelConnectionCuration>(curationPath);
+
+            var transitionDefaultsPath = EditorPrefs.GetString(PrefsPrefix + "TransitionDefaults", "");
+            if (!string.IsNullOrEmpty(transitionDefaultsPath))
+                _transitionDefaults = AssetDatabase.LoadAssetAtPath<NonEuclideanTransitionDefaults>(transitionDefaultsPath);
         }
 
         private void ClearPendingState()
