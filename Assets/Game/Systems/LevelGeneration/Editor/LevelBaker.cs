@@ -117,6 +117,100 @@ namespace Game.Systems.LevelGeneration.Editor
             return (roomDef, roomGo);
         }
 
+        // Floor is a deliberately separate bake step from Bake's wall/Room
+        // Shell assembly (Michael, 2026-09-04): Bake and BakeFloors must be
+        // safe to run independently, any number of times, in either order,
+        // without one clobbering hand-edits made after the other last ran.
+        // Requires Bake to have already run at least once for this seed (the
+        // level root and per-room GameObjects must already exist) — it does
+        // not create/wire RoomDefinition assets, RoomControllers, or
+        // connections, only floor tiles under the existing room hierarchy.
+        public static void BakeFloors(Layout layout, ShellAssemblyConfig shellConfig)
+        {
+            var levelRoot = FindOrCreateRoot($"Level_{layout.Seed}_Root");
+
+            var roomGoById = new Dictionary<string, GameObject>();
+            foreach (var roomNode in layout.Rooms)
+                roomGoById[roomNode.RoomId] = FindOrCreateChild(levelRoot.transform, roomNode.RoomId);
+
+            var (wallCells, doorCells) = RoomShellAssembler.ReadSceneWallGeometry(levelRoot, shellConfig.CellSize);
+
+            // Fail loudly rather than handing the flood-fill an empty wall
+            // set — without this, clicking Bake Floor before Bake (or against
+            // a scene whose wall geometry was otherwise wiped out) would only
+            // be caught by RoomFloorFloodFill's sanity cap, several steps
+            // downstream of the actual mistake.
+            if (wallCells.Count == 0 && layout.Rooms.Count > 0)
+            {
+                Debug.LogError("[LevelGeneration] Bake Floor found no wall geometry under " +
+                                $"'{levelRoot.name}' — run Bake first for this seed.");
+                return;
+            }
+
+            foreach (var roomGo in roomGoById.Values)
+                ClearGeneratedShellChildren(roomGo.transform, RoomShellAssembler.FloorPlacementGroup);
+
+            var cellRoomIds = RoomFloorFloodFill.ComputeFloorCellsByRoom(layout, wallCells, doorCells);
+
+            var cellsByRoom = new Dictionary<string, List<Vector2Int>>();
+            foreach (var (cell, roomId) in cellRoomIds)
+            {
+                if (!cellsByRoom.TryGetValue(roomId, out var cells))
+                    cellsByRoom[roomId] = cells = new List<Vector2Int>();
+                cells.Add(cell);
+            }
+
+            // One generated mesh per room (Michael, 2026-09-04), not one
+            // instance per cell — sidesteps the whole "does a tile prefab's
+            // mesh/import/transform scale match CellSize" class of bug
+            // phase-1 hit, and is far cheaper (one draw call per room).
+            //
+            // Persisted as a real .asset (not left in-memory-only): a plain
+            // `new Mesh()` has no asset identity, so Unity refuses "Apply to
+            // Prefab" for any MeshFilter referencing one — there is nothing
+            // for the prefab file to point at (confirmed live, 2026-09-05,
+            // trying to sync Level_1399816449_Root.prefab). Load-or-create +
+            // repopulate in place (never delete-then-recreate) so the SAME
+            // asset identity survives every re-bake, matching the same
+            // pattern LoadOrCreateAsset already uses for RoomDefinition/
+            // LevelDefinition.
+            string folder = $"Assets/Game/Systems/LevelSystem/Generated/Level_{layout.Seed}";
+            EnsureFolder(folder);
+
+            foreach (var (roomId, cells) in cellsByRoom)
+            {
+                if (!roomGoById.TryGetValue(roomId, out var roomGo)) continue;
+
+                string meshPath = $"{folder}/{roomId}_FloorMesh.asset";
+                var existingMesh = AssetDatabase.LoadAssetAtPath<Mesh>(meshPath);
+                var mesh = RoomFloorMeshBuilder.BuildRoomFloorMesh(cells, wallCells, shellConfig.CellSize,
+                    shellConfig.FloorUvMode, shellConfig.FloorThickness, existingMesh);
+                mesh.name = $"{roomId}_FloorMesh"; // match the asset filename, avoids a Unity import warning
+
+                if (existingMesh == null)
+                    AssetDatabase.CreateAsset(mesh, meshPath);
+                else
+                    EditorUtility.SetDirty(mesh);
+
+                var floorGo = new GameObject($"{roomId}_Floor");
+                Undo.RegisterCreatedObjectUndo(floorGo, "Bake Floor");
+                floorGo.transform.SetParent(roomGo.transform, false);
+
+                floorGo.AddComponent<MeshFilter>().sharedMesh = mesh;
+                var renderer = floorGo.AddComponent<MeshRenderer>();
+                if (shellConfig.FloorMaterial != null) renderer.sharedMaterial = shellConfig.FloorMaterial;
+                floorGo.AddComponent<MeshCollider>().sharedMesh = mesh;
+
+                var marker = floorGo.AddComponent<PrefabBrushObject>();
+                marker.PlacementGroup = RoomShellAssembler.FloorPlacementGroup;
+                marker.PlacementTime = System.DateTime.UtcNow.ToString("o");
+                marker.SurfaceNormal = Vector3.up;
+            }
+
+            AssetDatabase.SaveAssets();
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+
         // Wall/door pieces are computed once across the whole Layout (a shared
         // gap cell between two rooms is one physical object, never duplicated),
         // then distributed to their owning Room GameObject after the fact.
@@ -170,13 +264,14 @@ namespace Game.Systems.LevelGeneration.Editor
             return owner;
         }
 
-        private static void ClearGeneratedShellChildren(Transform parent)
+        private static void ClearGeneratedShellChildren(Transform parent,
+            string placementGroup = RoomShellAssembler.WallPlacementGroup)
         {
             for (int i = parent.childCount - 1; i >= 0; i--)
             {
                 var child = parent.GetChild(i);
                 var marker = child.GetComponent<PrefabBrushObject>();
-                if (marker != null && marker.PlacementGroup == "LevelGeneration")
+                if (marker != null && marker.PlacementGroup == placementGroup)
                     Undo.DestroyObjectImmediate(child.gameObject);
             }
         }

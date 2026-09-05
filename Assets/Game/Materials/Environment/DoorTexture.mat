@@ -142,7 +142,7 @@ Material:
     m_Colors:
     - _AmbientLightCol: {r: 0.26666668, g: 0.18039216, b: 0.93333334, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.93333334, g: 0.8784314, b: 0.8784314, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainLightCol: {r: 1, g: 0.9737635, b: 0.8443396, a: 0}
     - _PsxSpecColor: {r: 0.07450981, g: 0.0627451, b: 0.05490196, a: 1}

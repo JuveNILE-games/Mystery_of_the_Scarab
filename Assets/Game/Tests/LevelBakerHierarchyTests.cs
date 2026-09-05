@@ -161,7 +161,7 @@ namespace Game.Tests
             };
 
             var layout = BspLayoutGenerator.Generate(parameters);
-            var shellConfig = new ShellAssemblyConfig { RuleSet = ruleSet, DoorPrefab = null, CellSize = 2f };
+            var shellConfig = new ShellAssemblyConfig { RuleSet = ruleSet, DoorPrefab = null, CellSize = 1f };
             levelDef = LevelBaker.Bake(layout, shellConfig, "HierarchyTestRepro");
             levelRoot = GameObject.Find($"Level_{layout.Seed}_Root");
             return layout;

@@ -15,6 +15,16 @@ namespace Game.Systems.LevelGeneration.Editor
     // swapped for the Door prefab (SCARAB-006).
     public static class RoomShellAssembler
     {
+        public const string WallPlacementGroup = "LevelGeneration";
+
+        // Kept distinct from walls' group so a floor rebake's cleanup
+        // (LevelBaker.BakeFloors) never touches hand-edited wall pieces, and
+        // vice versa — floor is a deliberately separate bake step from
+        // wall/Room Shell assembly (Michael, 2026-09-04): walls get baked and
+        // hand-cleaned up first, floor gets baked afterward on top of
+        // whatever the walls ended up looking like.
+        public const string FloorPlacementGroup = "LevelGenerationFloor";
+
         private static readonly Vector2Int[] FourWayDirs =
         {
             new(0, 1), new(1, 0), new(0, -1), new(-1, 0) // N, E, S, W
@@ -146,6 +156,126 @@ namespace Game.Systems.LevelGeneration.Editor
             return cellByInstance;
         }
 
+        // The only place that reads back what BuildShells/PlaceDoorway wrote,
+        // mirroring the marker convention this same class owns on the write
+        // side — keeps "what counts as a wall vs. a doorway" in one file
+        // instead of splintering it across a writer and a separate reader.
+        // Deliberately returns plain grid data (no UnityEngine scene types
+        // beyond Vector2Int) so RoomFloorFloodFill's actual flood-fill/merge/
+        // split/door-stops-propagation logic can be unit-tested without a
+        // scene, prefabs, or colliders at all.
+        //
+        // Cell membership is decided by AABB overlap between each piece's
+        // world-space mesh bounds and a per-cell query box, not by
+        // reconstructing a cell from a piece's transform — ShellAlignmentPass
+        // deliberately shifts exterior wall pieces close to half a cell
+        // toward their outward edge, and reverse-engineering a cell from that
+        // shifted position was already tried and already rounds wrong for
+        // most exterior walls (SCARAB-MAP-01 follow-up, 2026-09-03). No
+        // Physics.*/layer-based query either: this project has no dedicated
+        // "Wall" physics layer, and Torch/Pillar/PushBlock/stairs/Door all
+        // share the Default layer with real walls, so a layer query would
+        // false-positive on ordinary room dressing. Component-based
+        // collection (PrefabBrushObject marker, not layer) sidesteps both
+        // problems with no ProjectSettings changes at all.
+        //
+        // Deliberately reads MeshFilter + transform math instead of
+        // Collider.bounds: Collider.bounds does not reflect a transform
+        // change made by script until PhysX syncs (no simulation runs in
+        // Edit Mode), so right after RoomShellAssembler places/moves a piece
+        // it can report stale, near-origin bounds instead of the piece's
+        // actual world position (confirmed live — every wall piece resolved
+        // to the same wrong bounds regardless of its real position). Mesh
+        // bounds transformed via Transform.TransformPoint are always current
+        // and need no sync, exactly like ShellAlignmentPass.TransformBounds
+        // already does elsewhere in this file's neighborhood.
+        public static (HashSet<Vector2Int> wallCells, HashSet<Vector2Int> doorCells) ReadSceneWallGeometry(
+            GameObject levelRoot, float cellSize)
+        {
+            var wallBounds = new List<Bounds>();
+            var doorBounds = new List<Bounds>();
+
+            foreach (var marker in levelRoot.GetComponentsInChildren<PrefabBrushObject>(true))
+            {
+                if (marker.PlacementGroup != WallPlacementGroup) continue;
+
+                var boundsList = marker.GetComponent<DoorwayMarker>() != null ? doorBounds : wallBounds;
+                foreach (var filter in marker.GetComponentsInChildren<MeshFilter>())
+                {
+                    if (filter.sharedMesh == null) continue;
+                    boundsList.Add(WorldMeshBounds(filter));
+                }
+            }
+
+            var wallCells = CellsOverlapping(wallBounds, cellSize);
+            var doorCells = CellsOverlapping(doorBounds, cellSize);
+            return (wallCells, doorCells);
+        }
+
+        // Mirrors ShellAlignmentPass.TransformBounds (transform all 8 corners
+        // of the mesh's local bounds, not just its center) — safe for
+        // whatever rotation this grid-aligned kit's pieces carry.
+        private static Bounds WorldMeshBounds(MeshFilter filter)
+        {
+            var localBounds = filter.sharedMesh.bounds;
+            var t = filter.transform;
+            var result = new Bounds(t.TransformPoint(localBounds.min), Vector3.zero);
+            for (int i = 1; i < 8; i++)
+            {
+                var corner = new Vector3(
+                    (i & 1) != 0 ? localBounds.max.x : localBounds.min.x,
+                    (i & 2) != 0 ? localBounds.max.y : localBounds.min.y,
+                    (i & 4) != 0 ? localBounds.max.z : localBounds.min.z);
+                result.Encapsulate(t.TransformPoint(corner));
+            }
+
+            return result;
+        }
+
+        private static HashSet<Vector2Int> CellsOverlapping(List<Bounds> boundsList, float cellSize)
+        {
+            var cells = new HashSet<Vector2Int>();
+            if (boundsList.Count == 0) return cells;
+
+            // Generous Y range (props/doors are already excluded by the
+            // marker filter above, not by height) but a TIGHT XZ margin — a
+            // wall/door piece is authored to fit exactly within its own
+            // cell(s) along its run axis (confirmed live, 2026-09-04: a
+            // WallStraightPrefab instance measures exactly CellSize=1 unit
+            // along its run axis, not the ~2 units a raw, import-scale-blind
+            // .obj read wrongly suggested). A piece's bounds edge therefore
+            // often sits EXACTLY on a shared cell boundary — the previous
+            // ±1-cell index padding plus a 5% GROW margin double-counted
+            // that shared edge into the neighboring cell too, which is what
+            // actually caused a border row of a room's own cells to get
+            // wrongly classified as wall (not a real pre-existing wall-
+            // spacing mismatch, as first — wrongly — suspected). A slight
+            // SHRINK instead of a grow absorbs ordinary floating-point jitter
+            // without re-introducing that double-count.
+            const float yMin = -1f, yMax = 4f, shrink = 0.98f;
+
+            foreach (var bounds in boundsList)
+            {
+                int minX = Mathf.FloorToInt((bounds.min.x / cellSize) + 0.5f);
+                int maxX = Mathf.CeilToInt((bounds.max.x / cellSize) + 0.5f) - 1;
+                int minZ = Mathf.FloorToInt((bounds.min.z / cellSize) + 0.5f);
+                int maxZ = Mathf.CeilToInt((bounds.max.z / cellSize) + 0.5f) - 1;
+
+                for (int x = minX; x <= maxX; x++)
+                for (int z = minZ; z <= maxZ; z++)
+                {
+                    var cell = new Vector2Int(x, z);
+                    if (cells.Contains(cell)) continue;
+
+                    var cellBox = new Bounds(new Vector3(x * cellSize, (yMin + yMax) * 0.5f, z * cellSize),
+                        new Vector3(cellSize * shrink, yMax - yMin, cellSize * shrink));
+                    if (bounds.Intersects(cellBox)) cells.Add(cell);
+                }
+            }
+
+            return cells;
+        }
+
         // A wall cell's run-axis neighbors are guaranteed wallCells (void), never
         // rooms, by construction of the Straight/Corner match that got it here —
         // so any room-cell neighbor found here is on the thickness axis. Exactly
@@ -228,7 +358,7 @@ namespace Game.Systems.LevelGeneration.Editor
         }
 
         private static GameObject PlacePiece(GameObject prefab, Vector2 cell, float yRotation,
-            ShellAssemblyConfig config, Transform parent)
+            ShellAssemblyConfig config, Transform parent, float yPosition = 0f)
         {
             var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
             if (instance == null) return null;
@@ -244,17 +374,18 @@ namespace Game.Systems.LevelGeneration.Editor
 
             Undo.RegisterCreatedObjectUndo(instance, "Bake Room Shell");
             instance.transform.SetParent(parent, false);
-            instance.transform.localPosition = new Vector3(cell.x * config.CellSize, 0f, cell.y * config.CellSize);
+            instance.transform.localPosition = new Vector3(cell.x * config.CellSize, yPosition, cell.y * config.CellSize);
             instance.transform.localRotation = extraRotation * bakedRotation;
 
             return instance;
         }
 
-        private static void AttachShellMarker(GameObject instance, GameObject sourcePrefab, PrefabRuleSet ruleSet)
+        private static void AttachShellMarker(GameObject instance, GameObject sourcePrefab, PrefabRuleSet ruleSet,
+            string placementGroup = WallPlacementGroup)
         {
             var marker = instance.AddComponent<PrefabBrushObject>();
             marker.SourcePrefab = sourcePrefab;
-            marker.PlacementGroup = "LevelGeneration";
+            marker.PlacementGroup = placementGroup;
             marker.PlacementTime = DateTime.UtcNow.ToString("o");
             marker.RuleTag = ruleSet.RuleTag;
             marker.RuleSet = ruleSet;

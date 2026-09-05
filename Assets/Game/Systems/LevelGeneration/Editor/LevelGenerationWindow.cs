@@ -16,7 +16,20 @@ namespace Game.Systems.LevelGeneration.Editor
         private GenerationParameters _parameters = new();
         private PrefabRuleSet _ruleSet;
         private GameObject _doorPrefab;
+        private Material _floorMaterial;
+        private FloorUvMode _floorUvMode = FloorUvMode.ContinuousWorldSpace;
+        private float _floorThickness = 0.2f;
         private float _cellSize = 1f;
+
+        // Regenerated live from whatever seed/parameters are currently typed
+        // in (below), not just after a Bake — same seed+parameters always
+        // reproduce the same Layout.Rooms[*].RoomId/FootprintCells
+        // deterministically, so Bake Floor can target a level baked in an
+        // *earlier* session (e.g. Level_1399816449) just by typing in its
+        // original seed/parameters, with no same-session Bake required first.
+        // BakeFloors only ever reads the scene's existing wall geometry
+        // (RoomShellAssembler.ReadSceneWallGeometry) and never touches it, so
+        // this is safe even against a hand-cleaned reference level.
         private Layout _previewLayout;
 
         [MenuItem("Tools/Level Generation/Generate Level")]
@@ -61,6 +74,9 @@ namespace Game.Systems.LevelGeneration.Editor
             EditorGUILayout.LabelField("Room Shell", EditorStyles.boldLabel);
             _ruleSet = (PrefabRuleSet)EditorGUILayout.ObjectField("Rule Set", _ruleSet, typeof(PrefabRuleSet), false);
             _doorPrefab = (GameObject)EditorGUILayout.ObjectField("Door Prefab", _doorPrefab, typeof(GameObject), false);
+            _floorMaterial = (Material)EditorGUILayout.ObjectField("Floor Material", _floorMaterial, typeof(Material), false);
+            _floorUvMode = (FloorUvMode)EditorGUILayout.EnumPopup("Floor UV Mode", _floorUvMode);
+            _floorThickness = EditorGUILayout.FloatField("Floor Thickness", _floorThickness);
             _cellSize = EditorGUILayout.FloatField("Cell Size", _cellSize);
 
             bool changed = EditorGUI.EndChangeCheck();
@@ -79,6 +95,20 @@ namespace Game.Systems.LevelGeneration.Editor
             {
                 if (GUILayout.Button("Bake", GUILayout.Height(30)))
                     BakeLevel();
+            }
+
+            // Deliberately separate from Bake (Michael, 2026-09-04): walls get
+            // baked and hand-cleaned up first, floor gets baked afterward on
+            // top of whatever the walls ended up looking like. Re-running this
+            // never touches wall pieces, and re-running Bake never touches
+            // floor pieces (see RoomShellAssembler/LevelBaker.BakeFloors). Uses
+            // _previewLayout (the live seed/parameter regenerate), not a
+            // same-session Bake result, so this also works to add floor to an
+            // already-baked level from an earlier session.
+            using (new EditorGUI.DisabledScope(_previewLayout == null || _floorMaterial == null || _ruleSet == null))
+            {
+                if (GUILayout.Button("Bake Floor", GUILayout.Height(30)))
+                    BakeFloor();
             }
         }
 
@@ -110,6 +140,17 @@ namespace Game.Systems.LevelGeneration.Editor
             Debug.Log($"[LevelGeneration] Baked '{levelDef.displayName}' — {requested} rooms " +
                       $"(RoomCount was {_parameters.RoomCount}) + {corridors} corridor(s) + {margins} margin room(s), " +
                       $"{layout.Connections.Count} connections.");
+        }
+
+        private void BakeFloor()
+        {
+            var shellConfig = new ShellAssemblyConfig
+            {
+                RuleSet = _ruleSet, FloorMaterial = _floorMaterial, FloorUvMode = _floorUvMode,
+                FloorThickness = _floorThickness, CellSize = _cellSize
+            };
+            LevelBaker.BakeFloors(_previewLayout, shellConfig);
+            Debug.Log($"[LevelGeneration] Baked floor for 'Level_{_previewLayout.Seed}'.");
         }
 
         private GenerationParameters CloneParameters() => new()
@@ -218,6 +259,9 @@ namespace Game.Systems.LevelGeneration.Editor
             EditorPrefs.SetFloat(PrefsPrefix + "CellSize", _cellSize);
             EditorPrefs.SetString(PrefsPrefix + "RuleSet", _ruleSet != null ? AssetDatabase.GetAssetPath(_ruleSet) : "");
             EditorPrefs.SetString(PrefsPrefix + "DoorPrefab", _doorPrefab != null ? AssetDatabase.GetAssetPath(_doorPrefab) : "");
+            EditorPrefs.SetString(PrefsPrefix + "FloorMaterial", _floorMaterial != null ? AssetDatabase.GetAssetPath(_floorMaterial) : "");
+            EditorPrefs.SetInt(PrefsPrefix + "FloorUvMode", (int)_floorUvMode);
+            EditorPrefs.SetFloat(PrefsPrefix + "FloorThickness", _floorThickness);
             EditorPrefs.SetBool(PrefsPrefix + "HasPending", true);
         }
 
@@ -244,6 +288,12 @@ namespace Game.Systems.LevelGeneration.Editor
             var doorPath = EditorPrefs.GetString(PrefsPrefix + "DoorPrefab", "");
             if (!string.IsNullOrEmpty(doorPath))
                 _doorPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(doorPath);
+
+            var floorMaterialPath = EditorPrefs.GetString(PrefsPrefix + "FloorMaterial", "");
+            if (!string.IsNullOrEmpty(floorMaterialPath))
+                _floorMaterial = AssetDatabase.LoadAssetAtPath<Material>(floorMaterialPath);
+            _floorUvMode = (FloorUvMode)EditorPrefs.GetInt(PrefsPrefix + "FloorUvMode", (int)FloorUvMode.ContinuousWorldSpace);
+            _floorThickness = EditorPrefs.GetFloat(PrefsPrefix + "FloorThickness", 0.2f);
         }
 
         private void ClearPendingState()
