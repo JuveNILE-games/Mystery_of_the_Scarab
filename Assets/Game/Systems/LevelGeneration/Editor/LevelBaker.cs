@@ -168,9 +168,6 @@ namespace Game.Systems.LevelGeneration.Editor
                 return;
             }
 
-            foreach (var roomGo in roomGoById.Values)
-                ClearGeneratedShellChildren(roomGo.transform, RoomShellAssembler.FloorPlacementGroup);
-
             var cellRoomIds = RoomFloorFloodFill.ComputeFloorCellsByRoom(layout, wallCells, doorCells);
 
             var cellsByRoom = new Dictionary<string, List<Vector2Int>>();
@@ -202,6 +199,18 @@ namespace Game.Systems.LevelGeneration.Editor
             {
                 if (!roomGoById.TryGetValue(roomId, out var roomGo)) continue;
 
+                // SCARAB-015: no anchor, no edit history for floors at all (Michael, 2026-09-18 —
+                // "fine to just ignore floors entirely"). Just a same/different check: if this
+                // room's required cells match what's already there, skip it completely, so a
+                // hand edit on the floor object (transform, material, an added child) survives
+                // by never being touched in the first place.
+                var fingerprint = ComputeFloorCellFingerprint(cells);
+                var existingMarker = FindFloorMarker(roomGo.transform);
+                if (existingMarker != null && existingMarker.RuleTag == fingerprint)
+                    continue;
+
+                ClearGeneratedShellChildren(roomGo.transform, RoomShellAssembler.FloorPlacementGroup);
+
                 string meshPath = $"{folder}/{roomId}_FloorMesh.asset";
                 var existingMesh = AssetDatabase.LoadAssetAtPath<Mesh>(meshPath);
                 var mesh = RoomFloorMeshBuilder.BuildRoomFloorMesh(cells, wallCells, shellConfig.CellSize,
@@ -226,10 +235,40 @@ namespace Game.Systems.LevelGeneration.Editor
                 marker.PlacementGroup = RoomShellAssembler.FloorPlacementGroup;
                 marker.PlacementTime = System.DateTime.UtcNow.ToString("o");
                 marker.SurfaceNormal = Vector3.up;
+                marker.RuleTag = fingerprint;
+            }
+
+            // A room that used to have floor cells but has none now (an edge case, not the
+            // common "nothing changed" path above) still needs its stale floor cleaned up.
+            foreach (var (roomId, roomGo) in roomGoById)
+            {
+                if (cellsByRoom.ContainsKey(roomId)) continue;
+                ClearGeneratedShellChildren(roomGo.transform, RoomShellAssembler.FloorPlacementGroup);
             }
 
             AssetDatabase.SaveAssets();
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+
+        // Order-independent, cheap, and stored on the floor's own PrefabBrushObject.RuleTag
+        // field (unused for a floor marker, since floors don't come from PrefabRuleResolver) —
+        // no new component, no RoomShellEditHistory involvement, matching the ADR's own call
+        // that floor doesn't need any of that.
+        private static string ComputeFloorCellFingerprint(List<Vector2Int> cells)
+        {
+            return string.Join(";", cells.OrderBy(c => c.x).ThenBy(c => c.y).Select(c => $"{c.x},{c.y}"));
+        }
+
+        private static PrefabBrushObject FindFloorMarker(Transform roomTransform)
+        {
+            foreach (Transform child in roomTransform)
+            {
+                var marker = child.GetComponent<PrefabBrushObject>();
+                if (marker != null && marker.PlacementGroup == RoomShellAssembler.FloorPlacementGroup)
+                    return marker;
+            }
+
+            return null;
         }
 
         // Standalone, sync-to-declared-state step (SCARAB-012) — deliberately separate from
