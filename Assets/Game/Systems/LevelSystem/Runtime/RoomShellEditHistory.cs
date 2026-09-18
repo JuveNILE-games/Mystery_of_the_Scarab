@@ -24,6 +24,20 @@ namespace Game.Systems.LevelSystem.Runtime
         // against the wrong bake.
         public int Seed;
         public List<RoomShellSlotEdit> Edits = new();
+
+        // Every Wall/Door Cell+Role the last bake's fresh regeneration actually produced —
+        // identity only, no transforms. Not a baseline: it exists purely so Replay can tell a
+        // fresh slot that's genuinely new (from a topology-changing parameter change) apart from
+        // one that used to be there and was hand-deleted since. Both look identical — a fresh
+        // slot with no live match — without this.
+        public List<RoomShellSlotKey> KnownSlots = new();
+    }
+
+    [Serializable]
+    public struct RoomShellSlotKey
+    {
+        public Vector2Int Cell;
+        public RoomShellSlotRole Role;
     }
 
     public enum RoomShellEditKind
@@ -50,6 +64,8 @@ namespace Game.Systems.LevelSystem.Runtime
         public Vector3 LocalScale;
 
         // Only meaningful for an Add entry — the prefab Replay re-instantiates at LocalPosition.
-        public string PrefabGuid;
+        // A direct asset reference, same convention as PrefabBrushObject.SourcePrefab, not a
+        // GUID round-trip through AssetDatabase.
+        public GameObject SourcePrefab;
     }
 }

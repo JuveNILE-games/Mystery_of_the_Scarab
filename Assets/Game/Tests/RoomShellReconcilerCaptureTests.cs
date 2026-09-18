@@ -92,6 +92,30 @@ namespace Game.Tests
         }
 
         [Test]
+        public void Capture_RecordsWorldPositionAndParent_ForReplaysNearestMatchFallback()
+        {
+            // Replay's legacy fallback (step 4) matches by world distance and re-parents a
+            // re-instantiated Add under the same room — both need data LocalPosition alone
+            // can't give once nested parents are in play.
+            _root.transform.position = new Vector3(100f, 0f, 0f);
+            var room = new GameObject("Room_000");
+            room.transform.SetParent(_root.transform, false);
+            room.transform.localPosition = new Vector3(10f, 0f, 0f);
+            var wall = new GameObject("Marked");
+            wall.transform.SetParent(room.transform, false);
+            wall.transform.localPosition = new Vector3(2f, 0f, 0f);
+            wall.AddComponent<PrefabBrushObject>().PlacementGroup = RoomShellAssembler.WallPlacementGroup;
+
+            var slots = RoomShellReconciler.Capture(_root, RoomShellAssembler.WallPlacementGroup);
+
+            Assert.AreEqual(1, slots.Count);
+            Assert.AreEqual(room.transform, slots[0].Parent);
+            Assert.AreEqual(wall.transform.position, slots[0].WorldPosition);
+            Assert.AreNotEqual(slots[0].WorldPosition, slots[0].LocalPosition,
+                "This test is only meaningful if world and local position actually differ.");
+        }
+
+        [Test]
         public void Capture_IgnoresObjectsInADifferentPlacementGroup()
         {
             AddMarked(RoomShellAssembler.FloorPlacementGroup, null);
