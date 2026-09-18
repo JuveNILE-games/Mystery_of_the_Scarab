@@ -245,6 +245,19 @@ namespace Game.Systems.LevelGeneration.Editor
             return curation;
         }
 
+        // SCARAB-015: same load-or-create/reuse-if-present convention as
+        // LoadOrCreateDefaultCuration — Bake() calls this on every bake, not just the first, so
+        // an existing asset's Edits must survive untouched, never get overwritten with a fresh
+        // empty instance.
+        public static RoomShellEditHistory LoadOrCreateRoomShellEditHistory(int seed)
+        {
+            string folder = $"Assets/Game/Systems/LevelSystem/Generated/Level_{seed}";
+            EnsureFolder(folder);
+            var history = LoadOrCreateAsset<RoomShellEditHistory>($"{folder}/RoomShellEditHistory.asset");
+            history.Seed = seed;
+            return history;
+        }
+
         // SCARAB-014 follow-up (2026-09-06, Michael): a generated Isolated Pocket
         // must be reachable out of the box, not silently unreachable until a
         // curator happens to hand-author a pairing for it. Additive only — never
