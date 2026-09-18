@@ -57,8 +57,16 @@ namespace Game.Systems.LevelGeneration.Editor
 
             foreach (var connection in layout.Connections)
             {
-                AddOrUpdateConnection(roomDefsById[connection.FromRoomId], roomDefsById[connection.ToRoomId], connection.DoorwayId);
-                AddOrUpdateConnection(roomDefsById[connection.ToRoomId], roomDefsById[connection.FromRoomId], connection.DoorwayId);
+                // A Spare or Pocket door (SCARAB-014) has ToRoomId == null — no
+                // destination until a curator pairs it (ADR 0001) — so it never
+                // gets a RoomConnection entry here; BakeConnections is what wires
+                // it up later, onto DoorwayTeleportTrigger, not RoomDefinition.
+                if (connection.ToRoomId == null) continue;
+                if (!roomDefsById.TryGetValue(connection.FromRoomId, out var fromDef)) continue;
+                if (!roomDefsById.TryGetValue(connection.ToRoomId, out var toDef)) continue;
+
+                AddOrUpdateConnection(fromDef, toDef, connection.DoorwayId);
+                AddOrUpdateConnection(toDef, fromDef, connection.DoorwayId);
             }
 
             levelDef.rooms = new List<RoomDefinition>(roomDefsById.Values);
@@ -224,6 +232,74 @@ namespace Game.Systems.LevelGeneration.Editor
         // DoorwayTeleportTrigger is stripped before curation.Pairings is reapplied, so
         // shrinking or editing the curation list actually converges to the declared state
         // instead of only ever accumulating stale triggers/pairings from earlier runs.
+        // Same Generated/Level_{seed}/ folder convention as Bake/BakeFloors — see
+        // LevelConnectionCuration's own doc comment ("one asset per generated
+        // level"). Reuses the level's existing asset if one is already there
+        // (e.g. from a prior session) rather than overwriting a curator's work.
+        public static LevelConnectionCuration LoadOrCreateDefaultCuration(int seed)
+        {
+            string folder = $"Assets/Game/Systems/LevelSystem/Generated/Level_{seed}";
+            EnsureFolder(folder);
+            var curation = LoadOrCreateAsset<LevelConnectionCuration>($"{folder}/ConnectionCuration.asset");
+            curation.Seed = seed;
+            return curation;
+        }
+
+        // SCARAB-014 follow-up (2026-09-06, Michael): a generated Isolated Pocket
+        // must be reachable out of the box, not silently unreachable until a
+        // curator happens to hand-author a pairing for it. Additive only — never
+        // touches a pairing the curator already made by hand (referencing either
+        // side of it), never reuses an ordinary main-graph door across two
+        // default pairings. Everything else (a Pocket's Exit, Spare Doors,
+        // Felt-vs-Hidden choices) is still entirely up to the curator; this only
+        // guarantees the minimum needed for the Pocket to not ship broken.
+        public static void EnsureDefaultPocketCuration(Layout layout, LevelConnectionCuration curation)
+        {
+            if (layout.Pockets.Count == 0) return;
+
+            var referencedDoorwayIds = new HashSet<string>();
+            foreach (var pairing in curation.Pairings)
+            {
+                referencedDoorwayIds.Add(pairing.DoorwayIdA);
+                referencedDoorwayIds.Add(pairing.DoorwayIdB);
+            }
+
+            var availableOrdinaryDoors = new List<string>();
+            foreach (var c in layout.Connections)
+                if (!c.IsSpareDoor && c.ToRoomId != null && !referencedDoorwayIds.Contains(c.DoorwayId))
+                    availableOrdinaryDoors.Add(c.DoorwayId);
+
+            int nextOrdinaryIndex = 0;
+            foreach (var pocket in layout.Pockets)
+            {
+                if (pocket.EntranceDoorwayId == null) continue; // generation couldn't place a door for it at all
+
+                bool alreadyCovered = referencedDoorwayIds.Contains(pocket.EntranceDoorwayId) ||
+                                       (pocket.ExitDoorwayId != null &&
+                                        referencedDoorwayIds.Contains(pocket.ExitDoorwayId));
+                if (alreadyCovered) continue;
+
+                if (nextOrdinaryIndex >= availableOrdinaryDoors.Count)
+                {
+                    Debug.LogWarning($"[LevelGeneration] No unused ordinary door left to default-curate Pocket " +
+                                      $"{pocket.PocketId} — add a pairing for it by hand.");
+                    continue;
+                }
+
+                var mainDoorId = availableOrdinaryDoors[nextOrdinaryIndex];
+                nextOrdinaryIndex++;
+
+                curation.Pairings.Add(new CuratedConnectionPairing
+                {
+                    DoorwayIdA = mainDoorId,
+                    DoorwayIdB = pocket.EntranceDoorwayId,
+                    Kind = ConnectionKind.NonEuclideanHidden
+                });
+                referencedDoorwayIds.Add(mainDoorId);
+                referencedDoorwayIds.Add(pocket.EntranceDoorwayId);
+            }
+        }
+
         public static void BakeConnections(Layout layout, LevelConnectionCuration curation,
             NonEuclideanTransitionDefaults transitionDefaults)
         {
@@ -253,10 +329,14 @@ namespace Game.Systems.LevelGeneration.Editor
             var failures = new List<string>();
             foreach (var pairing in curation.Pairings)
             {
-                allMarkers.TryGetValue(pairing.DoorwayIdA, out var markerA);
-                allMarkers.TryGetValue(pairing.DoorwayIdB, out var markerB);
-                if (markerA == null) failures.Add($"{pairing.DoorwayIdA} not found");
-                if (markerB == null) failures.Add($"{pairing.DoorwayIdB} not found");
+                // A null DoorwayId (e.g. an Isolated Pocket door that generation
+                // itself couldn't place — SCARAB-014, see PlacePocketDoor)
+                // is "not found", not a Dictionary key lookup to crash on.
+                DoorwayMarker markerA = null, markerB = null;
+                if (!string.IsNullOrEmpty(pairing.DoorwayIdA)) allMarkers.TryGetValue(pairing.DoorwayIdA, out markerA);
+                if (!string.IsNullOrEmpty(pairing.DoorwayIdB)) allMarkers.TryGetValue(pairing.DoorwayIdB, out markerB);
+                if (markerA == null) failures.Add($"{pairing.DoorwayIdA ?? "(none)"} not found");
+                if (markerB == null) failures.Add($"{pairing.DoorwayIdB ?? "(none)"} not found");
                 if (markerA == null || markerB == null) continue;
 
                 // Purely for validation/logging — confirms both DoorwayIds are real
@@ -281,7 +361,75 @@ namespace Game.Systems.LevelGeneration.Editor
                 return;
             }
 
+            ValidatePocketReachability(layout, curation);
+
             EditorSceneManager.MarkSceneDirty(scene);
+        }
+
+        // SCARAB-014: flags any Isolated Pocket that curation.Pairings doesn't
+        // actually connect back to the main graph — a pure Debug.LogWarning,
+        // no scene mutation, so it never needs its own idempotency story
+        // alongside BakeConnections' reset-then-reapply trigger logic above.
+        // A real graph walk (fixpoint iteration through Pairings), not a
+        // per-door presence check — the latter would miss a closed loop of
+        // Pockets curated only to each other, or a multi-hop chain, since a
+        // door's id can appear in a Pairing row without that Pairing's other
+        // side ever actually reaching the main graph.
+        private static void ValidatePocketReachability(Layout layout, LevelConnectionCuration curation)
+        {
+            if (layout.Pockets.Count == 0) return;
+
+            // Every DoorwayId's owning room(s) — both sides for an ordinary
+            // door (it's one shared physical doorway), just the one room for a
+            // Spare/Pocket door (ToRoomId is null: void on the other side).
+            var roomsByDoorwayId = new Dictionary<string, List<string>>();
+            foreach (var c in layout.Connections)
+            {
+                if (!roomsByDoorwayId.TryGetValue(c.DoorwayId, out var rooms))
+                    roomsByDoorwayId[c.DoorwayId] = rooms = new List<string>();
+                rooms.Add(c.FromRoomId);
+                if (c.ToRoomId != null) rooms.Add(c.ToRoomId);
+            }
+
+            var reached = new HashSet<string>();
+            foreach (var room in layout.Rooms)
+                if (!layout.Pockets.Exists(p => p.RoomIds.Contains(room.RoomId)))
+                    reached.Add(room.RoomId);
+
+            bool changed = true;
+            while (changed)
+            {
+                changed = false;
+                foreach (var pairing in curation.Pairings)
+                {
+                    if (!roomsByDoorwayId.TryGetValue(pairing.DoorwayIdA, out var roomsA)) continue;
+                    if (!roomsByDoorwayId.TryGetValue(pairing.DoorwayIdB, out var roomsB)) continue;
+
+                    bool aReached = roomsA.Exists(reached.Contains);
+                    bool bReached = roomsB.Exists(reached.Contains);
+                    if (aReached == bReached) continue; // both already reached, or neither — nothing new to spread
+
+                    foreach (var roomId in aReached ? roomsB : roomsA)
+                    {
+                        if (!reached.Add(roomId)) continue;
+                        changed = true;
+
+                        // Reaching one room of a Pocket reaches all of it —
+                        // internal connectivity between its own rooms is
+                        // already guaranteed by generation (AssignPocketDoors).
+                        var pocket = layout.Pockets.Find(p => p.RoomIds.Contains(roomId));
+                        if (pocket == null) continue;
+                        foreach (var pocketRoomId in pocket.RoomIds)
+                            if (reached.Add(pocketRoomId))
+                                changed = true;
+                    }
+                }
+            }
+
+            foreach (var pocket in layout.Pockets)
+                if (!pocket.RoomIds.TrueForAll(reached.Contains))
+                    Debug.LogWarning($"[LevelGeneration] Pocket {pocket.PocketId} is not reachable from the main " +
+                                      "graph — check its Entrance/Exit curation.");
         }
 
         private static void LogPairing(Layout layout, CuratedConnectionPairing pairing)

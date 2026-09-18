@@ -10,6 +10,7 @@ namespace Game.Systems.LevelGeneration.Editor
         public GenerationParameters Parameters;
         public List<LayoutRoomNode> Rooms = new();
         public List<LayoutConnection> Connections = new();
+        public List<PocketInfo> Pockets = new();
 
         public LayoutRoomNode FindRoom(string roomId) => Rooms.Find(r => r.RoomId == roomId);
     }

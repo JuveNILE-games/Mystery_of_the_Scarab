@@ -34,10 +34,11 @@ namespace Game.Systems.LevelGeneration.Editor
             var placementRandom = DeterministicRandom.ForStage(parameters.Seed, "placement");
             var connectivityRandom = DeterministicRandom.ForStage(parameters.Seed, "connectivity");
             var roleRandom = DeterministicRandom.ForStage(parameters.Seed, "roles");
+            var pocketRandom = DeterministicRandom.ForStage(parameters.Seed, "pockets");
 
             var splitCorridors = new List<LayoutRoomNode>();
             var marginRooms = new List<LayoutRoomNode>();
-            var leaves = SplitIntoLeaves(parameters, placementRandom, splitCorridors, marginRooms);
+            var leaves = SplitIntoLeaves(parameters, placementRandom, splitCorridors, marginRooms, DefaultAreaUnitSide);
 
             var rooms = new List<LayoutRoomNode>();
             for (int i = 0; i < leaves.Count; i++)
@@ -71,7 +72,6 @@ namespace Game.Systems.LevelGeneration.Editor
             // unwanted doorway or, worse, read as a disconnected component and
             // get bridged to by a spurious fallback corridor.
             var graphRooms = rooms.FindAll(r => r.Role != RoomRole.Margin);
-
             var edges = FindAdjacentPairs(graphRooms);
 
             // Start past whatever the BSP-split corridors already claimed so a
@@ -99,14 +99,33 @@ namespace Game.Systems.LevelGeneration.Editor
             AssignPuzzleRooms(rooms, parameters, roleRandom);
             AssignEntryExit(graphRooms, layout.Connections, parameters.MinEntryExitDistance);
 
+            // Pockets/Spare doors are appended after AssignEntryExit runs so they
+            // never influence entry/exit BFS distance — see the "Curated
+            // Reachability Survey" design artifact. Pockets are generated in
+            // their own detached area (never part of graphRooms/edges above),
+            // so no exclusion step is needed here — they were never candidates.
+            var pockets = GenerateIsolatedPockets(parameters, rooms, layout.Connections, ref doorwayCounter,
+                pocketRandom);
+            AssignSpareDoors(rooms, graphRooms, parameters.SpareDoorCount, layout.Connections, ref doorwayCounter,
+                pocketRandom);
+            layout.Pockets = pockets;
+
             layout.Rooms = rooms;
             return layout;
         }
 
         // --- Placement -------------------------------------------------------
 
+        // The "4" here is a tuned per-room area unit (side=4 -> ~16 cells/room on
+        // average) — overridable so a detached Isolated Pocket area (SCARAB-014
+        // follow-up, 2026-09-06) can be scaled to the main level's own measured
+        // room sizes instead of always this fixed constant. Every existing
+        // caller keeps passing 4 explicitly, so main-level generation is
+        // byte-for-byte unchanged.
+        private const int DefaultAreaUnitSide = 4;
+
         private static List<RectInt> SplitIntoLeaves(GenerationParameters p, DeterministicRandom rng,
-            List<LayoutRoomNode> corridorsOut, List<LayoutRoomNode> marginRoomsOut)
+            List<LayoutRoomNode> corridorsOut, List<LayoutRoomNode> marginRoomsOut, int areaUnitSide = DefaultAreaUnitSide)
         {
             int splitsRemaining = Mathf.Max(0, p.RoomCount - 1);
             int corridorBudget = Mathf.Clamp(p.CorridorCount, 0, splitsRemaining);
@@ -116,7 +135,7 @@ namespace Game.Systems.LevelGeneration.Editor
             // formula only ever assumed 1-cell gaps, so without this padding a
             // meaningful CorridorCount relative to RoomCount starves the split loop
             // of room and it silently undershoots the requested room count.
-            int baseSide = Mathf.CeilToInt(Mathf.Sqrt(p.RoomCount)) * 4;
+            int baseSide = Mathf.CeilToInt(Mathf.Sqrt(p.RoomCount)) * areaUnitSide;
             int corridorPadding = corridorBudget * (p.CorridorMaxLength + 1);
             int side = Mathf.Max(8, baseSide + corridorPadding);
             var leaves = new List<RectInt> { new(0, 0, side, side) };
@@ -501,12 +520,40 @@ namespace Game.Systems.LevelGeneration.Editor
         {
             var aCells = new HashSet<Vector2Int>(a.FootprintCells);
             var bCells = new HashSet<Vector2Int>(b.FootprintCells);
-            var perp = new Vector2Int(-dir.y, dir.x);
 
             bool IsValidBorderCell(Vector2Int candidate) =>
                 !aCells.Contains(candidate) && !bCells.Contains(candidate) &&
                 bCells.Contains(candidate + dir) && aCells.Contains(candidate - dir);
 
+            return GrowDoorwayCells(gapCell, dir, IsValidBorderCell);
+        }
+
+        // Same border-cell as WidenDoorway (SCARAB-014's Spare Door / Pocket door
+        // widening), except there is no second room — the far side must be
+        // confirmed void instead of confirmed-occupied-by-b, so a Spare Door
+        // never silently lines up with a real, merely-unselected neighboring room.
+        private static List<Vector2Int> WidenDoorwayAgainstVoid(LayoutRoomNode room,
+            HashSet<Vector2Int> allClaimedCells, Vector2Int gapCell, Vector2Int dir)
+        {
+            var roomCells = new HashSet<Vector2Int>(room.FootprintCells);
+
+            bool IsValidBorderCell(Vector2Int candidate) =>
+                !allClaimedCells.Contains(candidate) &&
+                roomCells.Contains(candidate - dir) &&
+                !allClaimedCells.Contains(candidate + dir);
+
+            return GrowDoorwayCells(gapCell, dir, IsValidBorderCell);
+        }
+
+        // Shared growth loop behind WidenDoorway/WidenDoorwayAgainstVoid — grows
+        // both directions along the shared border alternately and
+        // deterministically (no RNG) so layouts stay seed-reproducible; falls
+        // back to fewer cells if the border is short. The two callers differ
+        // only in what counts as a valid border cell.
+        private static List<Vector2Int> GrowDoorwayCells(Vector2Int gapCell, Vector2Int dir,
+            System.Func<Vector2Int, bool> isValidBorderCell)
+        {
+            var perp = new Vector2Int(-dir.y, dir.x);
             var cells = new List<Vector2Int> { gapCell };
             int posOffset = 1, negOffset = 1;
             bool grewPos = true, grewNeg = true;
@@ -517,7 +564,7 @@ namespace Game.Systems.LevelGeneration.Editor
                 if (cells.Count < DoorwayWidthCells)
                 {
                     var posCandidate = gapCell + perp * posOffset;
-                    if (IsValidBorderCell(posCandidate))
+                    if (isValidBorderCell(posCandidate))
                     {
                         cells.Add(posCandidate);
                         posOffset++;
@@ -529,7 +576,7 @@ namespace Game.Systems.LevelGeneration.Editor
                 if (cells.Count < DoorwayWidthCells)
                 {
                     var negCandidate = gapCell - perp * negOffset;
-                    if (IsValidBorderCell(negCandidate))
+                    if (isValidBorderCell(negCandidate))
                     {
                         cells.Add(negCandidate);
                         negOffset++;
@@ -539,6 +586,36 @@ namespace Game.Systems.LevelGeneration.Editor
             }
 
             return cells;
+        }
+
+        // SCARAB-014: a free wall-perimeter cell on `room` with nothing behind
+        // it at all — no room claims the gap cell, and none claims one further
+        // step out either (so a Spare Door never silently lines up with a real
+        // neighboring room that just wasn't picked for the connectivity graph).
+        // Generation-time only: cannot reuse RoomShellAssembler's wall-cell
+        // detection, which runs at bake time against GameObjects/rule
+        // resolution, not against plain LayoutRoomNode.FootprintCells.
+        private static bool TryFindFreeWallCell(LayoutRoomNode room, HashSet<Vector2Int> allClaimedCells,
+            HashSet<Vector2Int> alreadyUsedDoorCells, out Vector2Int gapCell, out Vector2Int dir)
+        {
+            foreach (var cell in room.FootprintCells)
+            foreach (var d in Orthogonal4)
+            {
+                var gap = cell + d;
+                if (allClaimedCells.Contains(gap)) continue;
+                if (alreadyUsedDoorCells.Contains(gap)) continue;
+
+                var beyond = gap + d;
+                if (allClaimedCells.Contains(beyond)) continue;
+
+                gapCell = gap;
+                dir = d;
+                return true;
+            }
+
+            gapCell = default;
+            dir = default;
+            return false;
         }
 
         private static bool TryFindDoorway(LayoutRoomNode a, LayoutRoomNode b, out Vector2Int gapCell,
@@ -844,15 +921,277 @@ namespace Game.Systems.LevelGeneration.Editor
             }
         }
 
+        // --- Pockets -------------------------------------------------------
+
+        // A gap, in cells, between the main blob and the first Pocket's own
+        // detached area, and between consecutive Pockets' own areas — enough
+        // that no flat top-down view could read a Pocket as still part of the
+        // main blob's footprint (Michael, 2026-09-05 follow-up: a Pocket is a
+        // genuine sub-level, spatially apart, not merely missing a door).
+        private const int PocketAreaGap = 4;
+
+        // Generates up to pocketCount Isolated Pockets (SCARAB-014): each is its
+        // own scaled-down mini-BSP pass (reusing SplitIntoLeaves directly, with
+        // CorridorCount=0 and RoomCount set to a random 1-3 target), placed in a
+        // detached area to the right of everything already placed — never
+        // selected from the main level's own rooms, so it's never spatially
+        // adjacent to the main blob at all, let alone connected to it. A BSP
+        // split's own leaves are always mutually reachable by construction (see
+        // EnsureConnected's comment on the main level), so a Pocket's internal
+        // connectivity needs no extra bridging step here either.
+        private static List<PocketInfo> GenerateIsolatedPockets(GenerationParameters parameters,
+            List<LayoutRoomNode> rooms, List<LayoutConnection> connections, ref int doorwayCounter,
+            DeterministicRandom pocketRandom)
+        {
+            var pockets = new List<PocketInfo>();
+            if (parameters.IsolatedPocketCount <= 0) return pockets;
+
+            var allClaimedCells = new HashSet<Vector2Int>();
+            foreach (var room in rooms)
+            foreach (var cell in room.FootprintCells)
+                allClaimedCells.Add(cell);
+
+            var usedDoorCells = new HashSet<Vector2Int>();
+            foreach (var c in connections)
+            foreach (var cell in c.DoorCells)
+                usedDoorCells.Add(cell);
+
+            int nextAreaX = MaxClaimedX(rooms) + PocketAreaGap;
+
+            // A Pocket room is "any type of room... any size" (SCARAB-014
+            // grilling), not capped to a small fixed area regardless of how big
+            // the main level's own rooms turned out — scale each Pocket's
+            // bounding area from the main level's own measured average room size
+            // (Margin/Corridor excluded — filler and long-thin, not representative
+            // of "room size"), with its own random per-pocket multiplier so
+            // different Pockets vary in size the same way main-level rooms do
+            // via merges/notches, rather than every Pocket landing on the same
+            // handful of sizes. Each individual Pocket is capped to the main
+            // blob's own total area (Michael, 2026-09-06: "every pocket by
+            // itself should not be bigger [than the main blob], it is a pocket
+            // after all") — the combined total across several Pockets is free to
+            // exceed that; only any one Pocket outweighing the whole level it's
+            // attached to is the thing being prevented here.
+            int avgMainRoomArea = ComputeAverageRoomArea(rooms);
+            long mainBlobTotalArea = 0;
+            foreach (var room in rooms)
+                mainBlobTotalArea += room.FootprintCells.Count;
+
+            for (int pocketIndex = 0; pocketIndex < parameters.IsolatedPocketCount; pocketIndex++)
+            {
+                int targetSize = pocketRandom.NextInt(1, 4); // 1-3 inclusive
+
+                double sizeMultiplier = 0.5 + pocketRandom.NextDouble() * 1.5; // 0.5x-2x
+                long desiredTotalArea = (long)(avgMainRoomArea * (float)sizeMultiplier * targetSize);
+                long cappedTotalArea = System.Math.Min(desiredTotalArea, mainBlobTotalArea);
+                int desiredAreaPerRoom = Mathf.Max(9, Mathf.RoundToInt(cappedTotalArea / (float)targetSize));
+                int areaUnitSide = Mathf.Max(DefaultAreaUnitSide, Mathf.CeilToInt(Mathf.Sqrt(desiredAreaPerRoom)));
+
+                // Same size/shape-variety knobs as the main level — a Pocket room
+                // is eligible for every generation pass, same as any other room
+                // (SCARAB-014 grilling: "isolated rooms can be anything just like
+                // all the other rooms"), not just a plain BSP-leaf rectangle.
+                // CarveNotches/MergeOpenSpaces already self-clamp against however
+                // many rooms actually exist, so passing these through unscaled is
+                // safe even for a 1-3 room pocket.
+                var pocketParams = new GenerationParameters
+                {
+                    Seed = parameters.Seed,
+                    RoomCount = targetSize,
+                    CorridorCount = 0,
+                    MinLeafSize = parameters.MinLeafSize,
+                    IrregularRoomCount = parameters.IrregularRoomCount,
+                    OpenSpaceCount = parameters.OpenSpaceCount
+                };
+                var leafRandom = DeterministicRandom.ForStage(parameters.Seed, $"pocket-{pocketIndex}-leaves");
+                var leaves = SplitIntoLeaves(pocketParams, leafRandom, new List<LayoutRoomNode>(),
+                    new List<LayoutRoomNode>(), areaUnitSide);
+
+                int leafMinX = int.MaxValue, leafMaxX = int.MinValue;
+                foreach (var leaf in leaves)
+                {
+                    leafMinX = Mathf.Min(leafMinX, leaf.x);
+                    leafMaxX = Mathf.Max(leafMaxX, leaf.xMax);
+                }
+                var offset = new Vector2Int(nextAreaX - leafMinX, 0);
+                nextAreaX += (leafMaxX - leafMinX) + PocketAreaGap;
+
+                var pocketRooms = new List<LayoutRoomNode>();
+                for (int i = 0; i < leaves.Count; i++)
+                {
+                    var cells = new List<Vector2Int>();
+                    foreach (var cell in RectCells(leaves[i])) cells.Add(cell + offset);
+                    pocketRooms.Add(new LayoutRoomNode
+                        { RoomId = $"Pocket_{pocketIndex:000}_Room_{i:000}", Role = RoomRole.Normal, FootprintCells = cells });
+                }
+
+                CarveNotches(pocketRooms, pocketParams, leafRandom);
+                MergeOpenSpaces(pocketRooms, pocketParams, leafRandom);
+
+                foreach (var room in pocketRooms)
+                {
+                    rooms.Add(room);
+                    foreach (var cell in room.FootprintCells) allClaimedCells.Add(cell);
+                }
+
+                string entranceRoomId, exitRoomId;
+                if (pocketRooms.Count == 1)
+                {
+                    entranceRoomId = exitRoomId = pocketRooms[0].RoomId;
+                }
+                else
+                {
+                    var pocketEdges = FindAdjacentPairs(pocketRooms);
+                    var connectivityRandom =
+                        DeterministicRandom.ForStage(parameters.Seed, $"pocket-{pocketIndex}-connectivity");
+                    var tree = BuildSpanningTree(pocketRooms, pocketEdges, connectivityRandom);
+                    foreach (var edge in tree)
+                        connections.Add(ToConnection(edge, ref doorwayCounter, isLoopEdge: false));
+
+                    var adjacency = BuildAdjacencyMap(pocketRooms, connections);
+                    (entranceRoomId, exitRoomId) = FindFarthestPair(pocketRooms, adjacency);
+                }
+
+                var pocket = new PocketInfo
+                    { PocketId = $"Pocket_{pocketIndex:000}", RoomIds = pocketRooms.ConvertAll(r => r.RoomId) };
+
+                var entranceRoom = pocketRooms.Find(r => r.RoomId == entranceRoomId);
+                pocket.EntranceDoorwayId = PlacePocketDoor(entranceRoom, allClaimedCells, usedDoorCells, connections,
+                    ref doorwayCounter, pocket.PocketId);
+
+                pocket.ExitDoorwayId = exitRoomId == entranceRoomId
+                    ? pocket.EntranceDoorwayId
+                    : PlacePocketDoor(pocketRooms.Find(r => r.RoomId == exitRoomId), allClaimedCells, usedDoorCells,
+                        connections, ref doorwayCounter, pocket.PocketId);
+
+                pockets.Add(pocket);
+            }
+
+            return pockets;
+        }
+
+        private static int MaxClaimedX(List<LayoutRoomNode> rooms)
+        {
+            int maxX = 0;
+            foreach (var room in rooms)
+            foreach (var cell in room.FootprintCells)
+                maxX = Mathf.Max(maxX, cell.x);
+            return maxX;
+        }
+
+        // Margin (pure filler) and Corridor (long-thin by design) rooms are
+        // excluded — neither is representative of what "a room's size" means
+        // for scaling a Pocket's own area. Falls back to DefaultAreaUnitSide's
+        // implicit ~16-cell average (the main level's own baseline before any
+        // merges) if there's nothing else to measure from.
+        private static int ComputeAverageRoomArea(List<LayoutRoomNode> rooms)
+        {
+            int count = 0;
+            long totalCells = 0;
+            foreach (var room in rooms)
+            {
+                if (room.Role == RoomRole.Margin || room.Role == RoomRole.Corridor) continue;
+                count++;
+                totalCells += room.FootprintCells.Count;
+            }
+
+            return count > 0 ? Mathf.Max(1, (int)(totalCells / count)) : DefaultAreaUnitSide * DefaultAreaUnitSide;
+        }
+
+        // Decorative Spare Doors (SCARAB-014) on otherwise-normal, already-
+        // reachable rooms — main graph only, never a Pocket room. Purely
+        // optional extra material for curation, unrelated to any room's own
+        // reachability.
+        private static void AssignSpareDoors(List<LayoutRoomNode> allRooms, List<LayoutRoomNode> graphRooms,
+            int spareDoorCount, List<LayoutConnection> connections, ref int doorwayCounter, DeterministicRandom rng)
+        {
+            if (spareDoorCount <= 0) return;
+
+            var allClaimedCells = new HashSet<Vector2Int>();
+            foreach (var room in allRooms)
+            foreach (var cell in room.FootprintCells)
+                allClaimedCells.Add(cell);
+
+            var usedDoorCells = new HashSet<Vector2Int>();
+            foreach (var c in connections)
+            foreach (var cell in c.DoorCells)
+                usedDoorCells.Add(cell);
+
+            var eligible = graphRooms.FindAll(r => r.Role == RoomRole.Normal);
+            ShuffleRooms(eligible, rng);
+
+            int placed = 0;
+            foreach (var room in eligible)
+            {
+                if (placed >= spareDoorCount) break;
+
+                if (!TryFindFreeWallCell(room, allClaimedCells, usedDoorCells, out var gapCell, out var dir))
+                    continue;
+
+                var doorCells = WidenDoorwayAgainstVoid(room, allClaimedCells, gapCell, dir);
+                foreach (var cell in doorCells) usedDoorCells.Add(cell);
+
+                var doorwayId = $"Doorway_{doorwayCounter:000}";
+                doorwayCounter++;
+
+                connections.Add(new LayoutConnection
+                {
+                    FromRoomId = room.RoomId,
+                    ToRoomId = null,
+                    DoorCell = gapCell,
+                    DoorCells = doorCells,
+                    DoorwayId = doorwayId,
+                    Kind = ConnectionKind.Euclidean,
+                    IsSpareDoor = true
+                });
+
+                placed++;
+            }
+
+            if (placed < spareDoorCount)
+                Debug.LogWarning($"[LevelGeneration] Requested {spareDoorCount} Spare Doors but only " +
+                                  $"{placed} eligible free wall cells were found.");
+        }
+
+        private static string PlacePocketDoor(LayoutRoomNode room, HashSet<Vector2Int> allClaimedCells,
+            HashSet<Vector2Int> usedDoorCells, List<LayoutConnection> connections, ref int doorwayCounter,
+            string pocketId)
+        {
+            if (room == null) return null;
+
+            if (!TryFindFreeWallCell(room, allClaimedCells, usedDoorCells, out var gapCell, out var dir))
+            {
+                Debug.LogWarning($"[LevelGeneration] Pocket {pocketId}: no free wall cell available for a door " +
+                                  $"on {room.RoomId} — pocket will ship with one fewer door than intended.");
+                return null;
+            }
+
+            var doorCells = WidenDoorwayAgainstVoid(room, allClaimedCells, gapCell, dir);
+            foreach (var cell in doorCells) usedDoorCells.Add(cell);
+
+            var doorwayId = $"Doorway_{doorwayCounter:000}";
+            doorwayCounter++;
+
+            connections.Add(new LayoutConnection
+            {
+                FromRoomId = room.RoomId,
+                ToRoomId = null,
+                DoorCell = gapCell,
+                DoorCells = doorCells,
+                DoorwayId = doorwayId,
+                Kind = ConnectionKind.Euclidean,
+                IsSpareDoor = false
+            });
+
+            return doorwayId;
+        }
+
         private static void AssignEntryExit(List<LayoutRoomNode> rooms, List<LayoutConnection> connections, int minDistance)
         {
             if (rooms.Count == 0) return;
 
             var adjacency = BuildAdjacencyMap(rooms, connections);
-
-            var first = rooms[0].RoomId;
-            var farthestFromFirst = BfsFarthest(first, adjacency);
-            var farthestFromThat = BfsFarthest(farthestFromFirst, adjacency);
+            var (farthestFromThat, farthestFromFirst) = FindFarthestPair(rooms, adjacency);
 
             var entry = rooms.Find(r => r.RoomId == farthestFromThat);
             var exit = rooms.Find(r => r.RoomId == farthestFromFirst);
@@ -897,11 +1236,28 @@ namespace Game.Systems.LevelGeneration.Editor
 
             foreach (var c in connections)
             {
+                // A Spare/Pocket door (SCARAB-014) has no destination yet — not an
+                // edge to traverse, and ContainsKey(null) would throw besides.
+                if (c.ToRoomId == null) continue;
+
                 if (map.ContainsKey(c.FromRoomId)) map[c.FromRoomId].Add(c.ToRoomId);
                 if (map.ContainsKey(c.ToRoomId)) map[c.ToRoomId].Add(c.FromRoomId);
             }
 
             return map;
+        }
+
+        // The room-graph-diameter endpoint pair: farthest-from-an-arbitrary-start,
+        // then farthest-from-that. Shared by AssignEntryExit (whole level) and
+        // AssignPocketDoors (a single Pocket's own local rooms) so the BFS logic
+        // lives in one place.
+        private static (string, string) FindFarthestPair(List<LayoutRoomNode> rooms,
+            Dictionary<string, List<string>> adjacency)
+        {
+            var first = rooms[0].RoomId;
+            var farthestFromFirst = BfsFarthest(first, adjacency);
+            var farthestFromThat = BfsFarthest(farthestFromFirst, adjacency);
+            return (farthestFromThat, farthestFromFirst);
         }
 
         private static string BfsFarthest(string start, Dictionary<string, List<string>> adjacency)

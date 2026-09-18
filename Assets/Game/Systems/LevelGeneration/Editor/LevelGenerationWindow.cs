@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Tools.PrefabBrush;
 using Game.Systems.LevelSystem.Runtime;
 using UnityEditor;
@@ -72,6 +73,14 @@ namespace Game.Systems.LevelGeneration.Editor
                 Mathf.Max(_parameters.CorridorMaxLength, _parameters.CorridorMinLength), _parameters.CorridorMinLength, 16);
             _parameters.IrregularRoomCount =
                 EditorGUILayout.IntSlider("Irregular Rooms", _parameters.IrregularRoomCount, 0, _parameters.RoomCount);
+            _parameters.SpareDoorCount = EditorGUILayout.IntSlider(
+                new GUIContent("Spare Doors", "Decorative dead-end doors on otherwise-normal, reachable rooms — " +
+                                               "extra material for Connection Curation, no room behind them until curated."),
+                _parameters.SpareDoorCount, 0, _parameters.RoomCount);
+            _parameters.IsolatedPocketCount = EditorGUILayout.IntSlider(
+                new GUIContent("Isolated Pockets", "Clusters of 1-3 rooms deliberately cut off from the main graph — " +
+                                                    "reachable only via a curated connection to one of the pocket's own doors."),
+                _parameters.IsolatedPocketCount, 0, _parameters.RoomCount);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Room Shell", EditorStyles.boldLabel);
@@ -121,8 +130,10 @@ namespace Game.Systems.LevelGeneration.Editor
             // Deliberately separate again (SCARAB-012, 2026-09-05): curation is a hand-edited
             // asset, applied after the fact — never touches wall/room/floor geometry, so this
             // is also safe to run against a level baked in an earlier session, same as
-            // Bake Floor above (uses _previewLayout, not a same-session Bake result).
-            using (new EditorGUI.DisabledScope(_previewLayout == null || _curation == null || _transitionDefaults == null))
+            // Bake Floor above (uses _previewLayout, not a same-session Bake result). No longer
+            // requires _curation to already be assigned (SCARAB-014 follow-up) — BakeConnections
+            // auto-creates one and fills in default Isolated Pocket pairings if it's missing.
+            using (new EditorGUI.DisabledScope(_previewLayout == null || _transitionDefaults == null))
             {
                 if (GUILayout.Button("Bake Connections", GUILayout.Height(30)))
                     BakeConnections();
@@ -172,22 +183,35 @@ namespace Game.Systems.LevelGeneration.Editor
 
         private void BakeConnections()
         {
+            if (_curation == null)
+            {
+                _curation = LevelBaker.LoadOrCreateDefaultCuration(_previewLayout.Seed);
+                SavePendingState();
+            }
+
+            // Guarantees every Isolated Pocket has at least one way back to the
+            // main graph before applying — a generated Pocket must be reachable
+            // out of the box, not silently broken until a curator notices.
+            LevelBaker.EnsureDefaultPocketCuration(_previewLayout, _curation);
+            EditorUtility.SetDirty(_curation);
+            AssetDatabase.SaveAssets();
+
             LevelBaker.BakeConnections(_previewLayout, _curation, _transitionDefaults);
         }
 
-        private GenerationParameters CloneParameters() => new()
-        {
-            Seed = _parameters.Seed,
-            RoomCount = _parameters.RoomCount,
-            PuzzleRoomCount = _parameters.PuzzleRoomCount,
-            OpenSpaceCount = _parameters.OpenSpaceCount,
-            MinEntryExitDistance = _parameters.MinEntryExitDistance,
-            LoopCount = _parameters.LoopCount,
-            CorridorCount = _parameters.CorridorCount,
-            CorridorMinLength = _parameters.CorridorMinLength,
-            CorridorMaxLength = _parameters.CorridorMaxLength,
-            IrregularRoomCount = _parameters.IrregularRoomCount
-        };
+        // A generic JsonUtility round-trip rather than a hand-listed field copy
+        // (SCARAB-014 follow-up, 2026-09-05): the previous field-by-field
+        // version silently dropped SpareDoorCount/IsolatedPocketCount (and, it
+        // turned out, MinLeafSize too) — one of three places (the others:
+        // SavePendingState/LoadPendingState below) that all had to be kept in
+        // sync by hand with GenerationParameters' own field list. This stays
+        // correct for any future field without ever needing another edit here.
+        private GenerationParameters CloneParameters() => DeserializeParameters(SerializeParameters(_parameters));
+
+        private static string SerializeParameters(GenerationParameters parameters) => JsonUtility.ToJson(parameters);
+
+        private static GenerationParameters DeserializeParameters(string json) =>
+            string.IsNullOrEmpty(json) ? new GenerationParameters() : JsonUtility.FromJson<GenerationParameters>(json);
 
         private void DrawPreview()
         {
@@ -216,11 +240,28 @@ namespace Game.Systems.LevelGeneration.Editor
 
             Handles.BeginGUI();
 
+            var pocketRoomIds = new HashSet<string>();
+            foreach (var pocket in _previewLayout.Pockets)
+            foreach (var roomId in pocket.RoomIds)
+                pocketRoomIds.Add(roomId);
+
             foreach (var connection in _previewLayout.Connections)
             {
                 var from = _previewLayout.FindRoom(connection.FromRoomId);
+                if (from == null) continue;
+
+                // A Spare/Pocket door (SCARAB-014) has no destination room to
+                // draw a line to — a short stub out to the door cell itself
+                // still shows it exists, distinct from an ordinary connection.
+                if (connection.ToRoomId == null)
+                {
+                    Handles.color = new Color(0.95f, 0.55f, 0.15f);
+                    Handles.DrawLine(ToPoint(RoomCenter(from)), ToPoint(connection.DoorCell));
+                    continue;
+                }
+
                 var to = _previewLayout.FindRoom(connection.ToRoomId);
-                if (from == null || to == null) continue;
+                if (to == null) continue;
 
                 Handles.color = connection.IsLoopEdge ? Color.yellow : Color.white;
                 Handles.DrawLine(ToPoint(RoomCenter(from)), ToPoint(RoomCenter(to)));
@@ -236,6 +277,7 @@ namespace Game.Systems.LevelGeneration.Editor
                     RoomRole.Margin => new Color(0.35f, 0.35f, 0.3f),
                     _ => new Color(0.75f, 0.75f, 0.35f)
                 };
+                if (pocketRoomIds.Contains(room.RoomId)) color = new Color(0.95f, 0.2f, 0.5f);
                 if (room.IsEntry) color = Color.green;
                 if (room.IsExit) color = Color.red;
 
@@ -268,16 +310,7 @@ namespace Game.Systems.LevelGeneration.Editor
         // (SCARAB-008) — cleared the moment Bake actually commits real assets.
         private void SavePendingState()
         {
-            EditorPrefs.SetInt(PrefsPrefix + "Seed", _parameters.Seed);
-            EditorPrefs.SetInt(PrefsPrefix + "RoomCount", _parameters.RoomCount);
-            EditorPrefs.SetInt(PrefsPrefix + "PuzzleRoomCount", _parameters.PuzzleRoomCount);
-            EditorPrefs.SetInt(PrefsPrefix + "OpenSpaceCount", _parameters.OpenSpaceCount);
-            EditorPrefs.SetInt(PrefsPrefix + "MinEntryExitDistance", _parameters.MinEntryExitDistance);
-            EditorPrefs.SetInt(PrefsPrefix + "LoopCount", _parameters.LoopCount);
-            EditorPrefs.SetInt(PrefsPrefix + "CorridorCount", _parameters.CorridorCount);
-            EditorPrefs.SetInt(PrefsPrefix + "CorridorMinLength", _parameters.CorridorMinLength);
-            EditorPrefs.SetInt(PrefsPrefix + "CorridorMaxLength", _parameters.CorridorMaxLength);
-            EditorPrefs.SetInt(PrefsPrefix + "IrregularRoomCount", _parameters.IrregularRoomCount);
+            EditorPrefs.SetString(PrefsPrefix + "ParametersJson", SerializeParameters(_parameters));
             EditorPrefs.SetFloat(PrefsPrefix + "CellSize", _cellSize);
             EditorPrefs.SetString(PrefsPrefix + "RuleSet", _ruleSet != null ? AssetDatabase.GetAssetPath(_ruleSet) : "");
             EditorPrefs.SetString(PrefsPrefix + "DoorPrefab", _doorPrefab != null ? AssetDatabase.GetAssetPath(_doorPrefab) : "");
@@ -294,16 +327,7 @@ namespace Game.Systems.LevelGeneration.Editor
         {
             if (!EditorPrefs.GetBool(PrefsPrefix + "HasPending", false)) return;
 
-            _parameters.Seed = EditorPrefs.GetInt(PrefsPrefix + "Seed", 0);
-            _parameters.RoomCount = EditorPrefs.GetInt(PrefsPrefix + "RoomCount", 8);
-            _parameters.PuzzleRoomCount = EditorPrefs.GetInt(PrefsPrefix + "PuzzleRoomCount", 2);
-            _parameters.OpenSpaceCount = EditorPrefs.GetInt(PrefsPrefix + "OpenSpaceCount", 1);
-            _parameters.MinEntryExitDistance = EditorPrefs.GetInt(PrefsPrefix + "MinEntryExitDistance", 3);
-            _parameters.LoopCount = EditorPrefs.GetInt(PrefsPrefix + "LoopCount", 2);
-            _parameters.CorridorCount = EditorPrefs.GetInt(PrefsPrefix + "CorridorCount", 2);
-            _parameters.CorridorMinLength = EditorPrefs.GetInt(PrefsPrefix + "CorridorMinLength", 4);
-            _parameters.CorridorMaxLength = EditorPrefs.GetInt(PrefsPrefix + "CorridorMaxLength", 8);
-            _parameters.IrregularRoomCount = EditorPrefs.GetInt(PrefsPrefix + "IrregularRoomCount", 2);
+            _parameters = DeserializeParameters(EditorPrefs.GetString(PrefsPrefix + "ParametersJson", ""));
             _cellSize = EditorPrefs.GetFloat(PrefsPrefix + "CellSize", 1f);
 
             var ruleSetPath = EditorPrefs.GetString(PrefsPrefix + "RuleSet", "");

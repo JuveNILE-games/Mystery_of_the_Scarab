@@ -38,5 +38,19 @@ namespace Game.Systems.LevelGeneration.Editor
 
         // BSP tuning, not a generation-parameter surfaced to the designer.
         public int MinLeafSize = 3;
+
+        // Decorative dead-end doors on otherwise-normal, already-reachable rooms
+        // (SCARAB-014) — no room behind them at generation time, bare exterior
+        // void until a curator pairs one via LevelConnectionCuration. Purely
+        // optional extra material for curation, unrelated to any room's own
+        // reachability. Default 0 so existing generated Levels are unaffected.
+        public int SpareDoorCount = 0;
+
+        // How many Isolated Pockets (SCARAB-014) to carve out of the layout —
+        // clusters of 1-3 mutually-adjacent Normal rooms deliberately excluded
+        // from the main connectivity graph, reachable only via a curated
+        // connection to one of the pocket's own Entrance/Exit doors. Default 0
+        // so existing generated Levels are unaffected.
+        public int IsolatedPocketCount = 0;
     }
 }
