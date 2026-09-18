@@ -132,7 +132,7 @@ namespace Game.Systems.LevelGeneration.Editor
                 if (doorwayByCell.TryGetValue(cell, out var connection))
                 {
                     if (!placedDoorways.Add(connection.DoorwayId)) continue; // other cell already placed the door
-                    var door = PlaceDoorway(connection, result.YRotation, config, parent);
+                    var door = PlaceDoorway(connection, result.YRotation, config, parent, cell);
                     if (door != null)
                     {
                         placedInstances.Add(door);
@@ -144,7 +144,7 @@ namespace Game.Systems.LevelGeneration.Editor
                 var instance = PlacePiece(result.Prefab, cell, result.YRotation, config, parent);
                 if (instance == null) continue;
 
-                AttachShellMarker(instance, result.Prefab, config.RuleSet);
+                AttachShellMarker(instance, result.Prefab, config.RuleSet, cell, RoomShellSlotRole.Wall);
                 placedInstances.Add(instance);
                 cellByInstance[instance] = cell;
 
@@ -301,7 +301,7 @@ namespace Game.Systems.LevelGeneration.Editor
         }
 
         private static GameObject PlaceDoorway(LayoutConnection connection, float yRotation, ShellAssemblyConfig config,
-            Transform parent)
+            Transform parent, Vector2Int cell)
         {
             if (config.DoorPrefab == null) return null;
 
@@ -312,12 +312,15 @@ namespace Game.Systems.LevelGeneration.Editor
                 sumY += doorCell.y;
             }
 
-            var cell = new Vector2(sumX / connection.DoorCells.Count, sumY / connection.DoorCells.Count);
+            var placementCell = new Vector2(sumX / connection.DoorCells.Count, sumY / connection.DoorCells.Count);
 
-            var instance = PlacePiece(config.DoorPrefab, cell, yRotation, config, parent);
+            var instance = PlacePiece(config.DoorPrefab, placementCell, yRotation, config, parent);
             if (instance == null) return null;
 
-            AttachShellMarker(instance, config.DoorPrefab, config.RuleSet);
+            // Anchored to the outer loop's own wall cell, not placementCell's averaged position —
+            // this is the exact Vector2Int BuildShells records in cellByInstance for this door, so
+            // the anchor and cellByInstance never disagree about this door's identity.
+            AttachShellMarker(instance, config.DoorPrefab, config.RuleSet, cell, RoomShellSlotRole.Door);
             var doorwayMarker = instance.AddComponent<DoorwayMarker>();
             doorwayMarker.DoorwayId = connection.DoorwayId;
             return instance;
@@ -381,7 +384,7 @@ namespace Game.Systems.LevelGeneration.Editor
         }
 
         private static void AttachShellMarker(GameObject instance, GameObject sourcePrefab, PrefabRuleSet ruleSet,
-            string placementGroup = WallPlacementGroup)
+            Vector2Int cell, RoomShellSlotRole role, string placementGroup = WallPlacementGroup)
         {
             var marker = instance.AddComponent<PrefabBrushObject>();
             marker.SourcePrefab = sourcePrefab;
@@ -390,6 +393,10 @@ namespace Game.Systems.LevelGeneration.Editor
             marker.RuleTag = ruleSet.RuleTag;
             marker.RuleSet = ruleSet;
             marker.SurfaceNormal = Vector3.up;
+
+            var anchor = instance.AddComponent<RoomShellSlotAnchor>();
+            anchor.Cell = cell;
+            anchor.Role = role;
         }
     }
 }
