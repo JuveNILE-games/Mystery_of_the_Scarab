@@ -62,9 +62,34 @@ _Avoid_: Impossible connection, glitch connection (Felt specifically means the w
 
 **Hidden Non-Euclidean Connection**:
 A Connection that does not reconcile in real 3D space but is built and dressed so the player never perceives anything unusual — purely a generation/baking convenience for joining Room Shells whose geometry wouldn't otherwise line up. Unlike the Felt kind, frequency is unconstrained: the generator may use it wherever convenient.
-_Avoid_: Portal, loading trick (those name a possible realization mechanism, not yet decided — see SCARAB-009)
+_Avoid_: Portal, loading trick (those name a possible realization mechanism; see Doorway Teleport Trigger for the one actually built)
 
-Note: how a Felt or Hidden Non-Euclidean Connection is actually realized as baked scene content (portal volume? camera cut? disguised geometry?) is still open — tracked as SCARAB-009, not decided yet. No implementation vocabulary for that mechanism exists here until it resolves.
+**Connection Curation**:
+A `LevelConnectionCuration` asset: a curator hand-picks pairs of already-baked Doorway Marker ids and assigns each pair a Connection kind (Felt or Hidden). One asset per generated Level, keyed to that Level's Seed, applied by `LevelBaker.BakeConnections`. The only place a Connection's realized kind is ever decided — the generation algorithm itself never produces anything but Euclidean.
+_Avoid_: Pairing, wiring (Curation is the whole asset/decision; a Pairing is one row within it)
+
+**Doorway Teleport Trigger**:
+The runtime component that actually realizes a curated Felt or Hidden Connection: attached only to the two Doorway Markers a Connection Curation pairs together, it teleports the player to its paired trigger's location on trigger-enter. An ordinary Euclidean door never has one — only a Doorway Marker, which every door has regardless of kind. Answers what SCARAB-009 left open (how a non-Euclidean Connection is realized as baked scene content): SCARAB-012's answer, for both Felt and Hidden alike.
+_Avoid_: Portal, teleporter (those describe player-facing flavor, not the component)
+
+### Curated Reachability Gaps (new, SCARAB-014)
+
+**Spare Door**:
+A door the generator places on a Room's free wall-perimeter cell with no Room behind it — opens onto bare exterior void until a curator pairs it into a real Connection via Connection Curation. Purely optional extra material for curation on an otherwise-ordinary, already-reachable Room; unrelated to whether that Room is itself reachable.
+_Avoid_: Dead-end door (describes what it looks like before curation, not what it is structurally)
+
+**Isolated Pocket**:
+A genuine sub-level: 1-3 Rooms generated in their own detached area, physically apart from the main Level's footprint, not merely missing an ordinary Connection to it. Every Room inside a Pocket is otherwise completely ordinary (eligible for every other generation pass, fully baked); connectivity among the Pocket's own Rooms is guaranteed by its own local BSP split, only its connection to the rest of the Level is not. Reachable only once a curator pairs one of its Pocket Entrance/Exit Doors.
+_Avoid_: Disconnected room, unreachable room (those describe the connectivity property alone and miss the spatial one — see ADR 0002)
+_Avoid_: Isolated room, isolated cluster, disconnected room (Pocket is the canonical term regardless of its size)
+
+**Pocket Entrance Door**:
+The Spare Door a curator is expected to pair back to the main Level graph, making an Isolated Pocket reachable. For a size-1 Pocket, its one Spare Door serves as both Pocket Entrance Door and Pocket Exit Door. Entrance is a content-authoring label only — nothing enforces what it actually gets paired to.
+_Avoid_: In-door, ingress
+
+**Pocket Exit Door**:
+A size 2-3 Isolated Pocket's second Spare Door, on a different Room than its Pocket Entrance Door — meant to be curated to somewhere else entirely (a different Level Room, or another Pocket's own door), giving the Pocket its own way out instead of only backtracking through the Entrance. Absent on a size-1 Pocket (see Pocket Entrance Door).
+_Avoid_: Out-door, egress
 
 ## Open naming questions
 
