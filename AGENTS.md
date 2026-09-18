@@ -40,6 +40,10 @@ Architecture documentation lives in the Obsidian vault at `G:\Mijn Drive\Notes\J
 
 Consult these before modifying any system you are unfamiliar with.
 
+### Knowledge graph (graphify)
+
+Where the `graphify` MCP server is connected (see `.mcp.json`), use it as the first source for questions about **Core or NetCore's** architecture, call graphs, symbol lookups, or change-impact — instead of grepping or reading files wholesale. See Core's `use-graphify` skill (`Packages/com.juvenile.games.core/.agents/skills/use-graphify/SKILL.md`) for which tool to use and known gotchas (test-linkage results are unreliable; the graph tracks GitHub HEAD, not local uncommitted changes; no cross-repo query). It does not cover this game project's own `Assets/` code — use normal file search for that.
+
 ---
 
 ## Code Style
