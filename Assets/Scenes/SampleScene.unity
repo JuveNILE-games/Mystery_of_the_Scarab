@@ -209,7 +209,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 4.8345694e-23, y: 0.98532784, z: -0.17067234, w: 2.7911004e-22}
-  m_LocalPosition: {x: 0, y: 3.5, z: 8}
+  m_LocalPosition: {x: 41.65, y: 3.5, z: 37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -451,7 +451,7 @@ Transform:
   m_GameObject: {fileID: 803881937}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.05, y: 1, z: 1}
+  m_LocalPosition: {x: 46.7, y: 1, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -717,6 +717,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MysteryOfTheScarab::TestDoTweenUIToolkit
   uiDocument: {fileID: 1045079246}
+--- !u!1001 &1227417395
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2447047572932013374, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_Name
+      value: Level_2125612262_Root
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 42.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418817261684682742, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 01eeb31aeed72ef459ad62e6859cc283, type: 3}
 --- !u!1 &1233520311
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,7 +799,7 @@ Transform:
   m_GameObject: {fileID: 1233520311}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalPosition: {x: 41.65, y: 1, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -897,7 +954,7 @@ Transform:
   m_GameObject: {fileID: 1638268150}
   serializedVersion: 2
   m_LocalRotation: {x: 6.050279e-23, y: 0.98532784, z: -0.17067233, w: 2.8121579e-22}
-  m_LocalPosition: {x: 0, y: 3.5, z: 8}
+  m_LocalPosition: {x: 41.65, y: 3.5, z: 37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1069,3 +1126,4 @@ SceneRoots:
   - {fileID: 1929678166}
   - {fileID: 667112600}
   - {fileID: 1314766284}
+  - {fileID: 1227417395}

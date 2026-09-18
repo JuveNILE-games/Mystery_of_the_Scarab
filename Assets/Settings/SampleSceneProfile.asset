@@ -127,11 +127,11 @@ MonoBehaviour:
   components:
   - {fileID: 849379129802519247}
   - {fileID: 5039436341039109119}
-  - {fileID: -7893295128165547882}
   - {fileID: 7391319092446245454}
   - {fileID: -3357603926938260329}
   - {fileID: 5043861356176456473}
   - {fileID: -1309191642372711231}
+  - {fileID: -7893295128165547882}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -230,13 +230,13 @@ MonoBehaviour:
     m_Value: 0
   focusDistance:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 3.6
   aperture:
     m_OverrideState: 1
     m_Value: 5.6
   focalLength:
     m_OverrideState: 1
-    m_Value: 75
+    m_Value: 80
   bladeCount:
     m_OverrideState: 1
     m_Value: 5

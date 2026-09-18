@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5203031145129146399
 Transform:
   m_ObjectHideFlags: 0
@@ -3326,7 +3326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       propertyPath: m_Name
-      value: WallStraightPrefab (2)
+      value: WallStraightPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5926,7 +5926,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
       propertyPath: m_Name
-      value: WallCornerPrefab_Grid (2)
+      value: WallCornerPrefab_Grid
       objectReference: {fileID: 0}
     - target: {fileID: 7462709901251382397, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12288,7 +12288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       propertyPath: m_Name
-      value: WallStraightPrefab (1)
+      value: WallStraightPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12728,7 +12728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       propertyPath: m_Name
-      value: WallStraightPrefab (1)
+      value: WallStraightPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13784,7 +13784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       propertyPath: m_Name
-      value: WallStraightPrefab (1)
+      value: WallStraightPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18894,7 +18894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       propertyPath: m_Name
-      value: WallStraightPrefab (3)
+      value: WallStraightPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22918,7 +22918,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
       propertyPath: m_Name
-      value: WallCornerPrefab_Grid (1)
+      value: WallCornerPrefab_Grid
       objectReference: {fileID: 0}
     - target: {fileID: 7462709901251382397, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24542,7 +24542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       propertyPath: m_Name
-      value: WallStraightPrefab (4)
+      value: WallStraightPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
