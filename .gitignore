@@ -159,7 +159,13 @@ sysinfo.txt
 
 statemachine-refactor.md
 WARP.md
-Docs/
+# Docs/* (not Docs/) so the docs/adr subfolder can be re-included below - a
+# trailing-slash directory pattern excludes the directory from traversal
+# entirely, and no negation of a path inside it can ever undo that. This also
+# shadows docs/adr (case-insensitive checkout, core.ignorecase=true - same
+# physical folder as Docs/), which is exactly why the negation is needed.
+Docs/*
+!docs/adr
 Assets/_Recovery/
 scratch/
 sonar-project.properties
