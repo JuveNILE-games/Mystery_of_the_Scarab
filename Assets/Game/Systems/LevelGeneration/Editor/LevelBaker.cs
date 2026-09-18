@@ -43,6 +43,13 @@ namespace Game.Systems.LevelGeneration.Editor
 
             var levelRoot = FindOrCreateRoot($"Level_{layout.Seed}_Root");
 
+            // SCARAB-015: captured before the wipe below destroys everything — an object with no
+            // RoomShellSlotAnchor yet (a level baked before this feature existed) is captured
+            // unidentified, not skipped; Replay's legacy fallback recovers its identity once the
+            // fresh regeneration exists to match it against.
+            var roomShellHistory = LoadOrCreateRoomShellEditHistory(layout.Seed);
+            var preWipeShellSlots = RoomShellReconciler.Capture(levelRoot, RoomShellAssembler.WallPlacementGroup);
+
             var roomDefsById = new Dictionary<string, RoomDefinition>();
             var roomGoById = new Dictionary<string, GameObject>();
 
@@ -54,6 +61,11 @@ namespace Game.Systems.LevelGeneration.Editor
             }
 
             AssembleAndDistributeShells(layout, shellConfig, roomGoById, levelRoot);
+
+            var replayReport = RoomShellReconciler.Replay(levelRoot, RoomShellAssembler.WallPlacementGroup,
+                preWipeShellSlots, roomShellHistory, shellConfig.CellSize);
+            LogRoomShellReplayReport(replayReport);
+            EditorUtility.SetDirty(roomShellHistory);
 
             foreach (var connection in layout.Connections)
             {
@@ -443,6 +455,17 @@ namespace Game.Systems.LevelGeneration.Editor
                 if (!pocket.RoomIds.TrueForAll(reached.Contains))
                     Debug.LogWarning($"[LevelGeneration] Pocket {pocket.PocketId} is not reachable from the main " +
                                       "graph — check its Entrance/Exit curation.");
+        }
+
+        private static void LogRoomShellReplayReport(RoomShellReplayReport report)
+        {
+            if (report.TweaksApplied > 0 || report.DeletesApplied > 0 || report.AddsApplied > 0)
+                Debug.Log($"[LevelGeneration] Room Shell reconciled: {report.TweaksApplied} tweak(s), " +
+                           $"{report.DeletesApplied} delete(s) kept, {report.AddsApplied} add(s) restored.");
+
+            foreach (var orphan in report.OrphansDropped)
+                Debug.LogWarning("[LevelGeneration] Room Shell hand edit no longer matches generated " +
+                                  $"content, dropped: {orphan}");
         }
 
         private static void LogPairing(Layout layout, CuratedConnectionPairing pairing)
