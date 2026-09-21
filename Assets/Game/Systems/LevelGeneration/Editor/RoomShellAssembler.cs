@@ -125,14 +125,20 @@ namespace Game.Systems.LevelGeneration.Editor
 
             foreach (var cell in wallCells)
             {
-                var snapshot = BuildSnapshot(cell, primaryRoomsByCell, directions, config.RuleSet.RuleTag);
-                var result = PrefabRuleResolver.Resolve(config.RuleSet, snapshot);
-                if (result.Prefab == null) continue;
-
+                // A door always wins, regardless of multi-room-seam classification —
+                // still routed through the resolver first, since PlaceDoorway reuses
+                // its computed rotation for the door module's own orientation.
                 if (doorwayByCell.TryGetValue(cell, out var connection))
                 {
+                    var doorSnapshot = BuildSnapshot(cell, primaryRoomsByCell, directions, config.RuleSet.RuleTag);
+                    var doorResult = PrefabRuleResolver.Resolve(config.RuleSet, doorSnapshot);
+                    if (doorResult.Prefab == null) continue;
+                    var doorYRotation = doorResult.Matched
+                        ? doorResult.YRotation
+                        : ResolveFallbackYRotation(doorSnapshot, doorResult.YRotation);
+
                     if (!placedDoorways.Add(connection.DoorwayId)) continue; // other cell already placed the door
-                    var door = PlaceDoorway(connection, result.YRotation, config, parent, cell);
+                    var door = PlaceDoorway(connection, doorYRotation, config, parent, cell);
                     if (door != null)
                     {
                         placedInstances.Add(door);
@@ -141,14 +147,36 @@ namespace Game.Systems.LevelGeneration.Editor
                     continue;
                 }
 
-                var instance = PlacePiece(result.Prefab, cell, result.YRotation, config, parent);
+                if (config.MultiRoomSeamPrefab != null &&
+                    TryComputeMultiRoomSeamRotation(cell, primaryRoomsByCell, FourWayDirs, out var seamRotation))
+                {
+                    var seamInstance = PlacePiece(config.MultiRoomSeamPrefab, cell, seamRotation, config, parent);
+                    if (seamInstance == null) continue;
+
+                    AttachShellMarker(seamInstance, config.MultiRoomSeamPrefab, config.RuleSet, cell, RoomShellSlotRole.Wall);
+                    placedInstances.Add(seamInstance);
+                    cellByInstance[seamInstance] = cell;
+
+                    var seamOutward = DetermineOutwardDir(cell, cellOwner, seamRotation);
+                    if (seamOutward.HasValue) outwardDirByInstance[seamInstance] = seamOutward.Value;
+                    continue; // never falls through to the resolver for this cell
+                }
+
+                var snapshot = BuildSnapshot(cell, primaryRoomsByCell, directions, config.RuleSet.RuleTag);
+                var result = PrefabRuleResolver.Resolve(config.RuleSet, snapshot);
+                if (result.Prefab == null) continue;
+                var yRotation = result.Matched
+                    ? result.YRotation
+                    : ResolveFallbackYRotation(snapshot, result.YRotation);
+
+                var instance = PlacePiece(result.Prefab, cell, yRotation, config, parent);
                 if (instance == null) continue;
 
                 AttachShellMarker(instance, result.Prefab, config.RuleSet, cell, RoomShellSlotRole.Wall);
                 placedInstances.Add(instance);
                 cellByInstance[instance] = cell;
 
-                var outward = DetermineOutwardDir(cell, cellOwner);
+                var outward = DetermineOutwardDir(cell, cellOwner, yRotation);
                 if (outward.HasValue) outwardDirByInstance[instance] = outward.Value;
             }
 
@@ -280,24 +308,58 @@ namespace Game.Systems.LevelGeneration.Editor
         // rooms, by construction of the Straight/Corner match that got it here —
         // so any room-cell neighbor found here is on the thickness axis. Exactly
         // one room neighbor with a non-room opposite is an unambiguous exterior
-        // boundary (confirmed live against 8 hand-calibrated wall/corner pairs);
-        // zero or two room neighbors is the room-vs-room seam case that was
-        // deliberately left alone before (no data to resolve it), so this returns
-        // null and the piece falls back to plain centering.
-        private static Vector2Int? DetermineOutwardDir(Vector2Int cell, Dictionary<Vector2Int, string> cellOwner)
+        // boundary (confirmed live against 8 hand-calibrated wall/corner pairs).
+        //
+        // Two room neighbors on OPPOSITE sides, or on different rooms, is a
+        // genuine room-vs-room seam with no single thickness axis to resolve —
+        // deliberately left alone (no data to resolve it), falls back to plain
+        // centering. But two room neighbors on PERPENDICULAR sides belonging to
+        // the SAME room is a convex room corner, not a seam: the piece placed
+        // here is Straight-shaped (Corner/TJunction/seam cells never reach this
+        // ambiguous branch in practice for this wall kit), so it has exactly one
+        // real thickness axis, determined by its own resolved rotation — the
+        // room neighbor lying on the OTHER axis is irrelevant to the shift
+        // decision. Verified live 2026-09-21 against seed 1959606433's cells
+        // (19,26) and (15,10) — the last 2 of 23 real world-space gaps found
+        // this session, both this exact shape.
+        private static Vector2Int? DetermineOutwardDir(Vector2Int cell, Dictionary<Vector2Int, string> cellOwner,
+            float yRotation)
         {
-            Vector2Int? inward = null;
+            var roomDirs = new List<(Vector2Int dir, string room)>();
             foreach (var dir in FourWayDirs)
+                if (cellOwner.TryGetValue(cell + dir, out var room))
+                    roomDirs.Add((dir, room));
+
+            if (roomDirs.Count == 0) return null;
+
+            if (roomDirs.Count == 1)
             {
-                if (!cellOwner.ContainsKey(cell + dir)) continue;
-                if (inward.HasValue) return null; // room on more than one side — ambiguous
-                inward = dir;
+                var inward = roomDirs[0].dir;
+                var outward = -inward;
+                return cellOwner.ContainsKey(cell + outward) ? null : outward;
             }
 
-            if (!inward.HasValue) return null;
+            if (roomDirs.Count == 2)
+            {
+                var (dirA, roomA) = roomDirs[0];
+                var (dirB, roomB) = roomDirs[1];
+                bool isOppositePair = dirA == -dirB;
+                if (!isOppositePair && roomA == roomB)
+                {
+                    bool thicknessIsZ = Mathf.RoundToInt(yRotation / 90f) % 2 == 0;
+                    Vector2Int? inward = thicknessIsZ
+                        ? (dirA.x == 0 ? dirA : dirB.x == 0 ? dirB : (Vector2Int?)null)
+                        : (dirA.y == 0 ? dirA : dirB.y == 0 ? dirB : (Vector2Int?)null);
 
-            var outward = -inward.Value;
-            return cellOwner.ContainsKey(cell + outward) ? null : outward;
+                    if (inward.HasValue)
+                    {
+                        var outward = -inward.Value;
+                        return cellOwner.ContainsKey(cell + outward) ? null : outward;
+                    }
+                }
+            }
+
+            return null; // ambiguous — room on more than one side with no single thickness axis to resolve it
         }
 
         private static GameObject PlaceDoorway(LayoutConnection connection, float yRotation, ShellAssemblyConfig config,
@@ -338,6 +400,75 @@ namespace Game.Systems.LevelGeneration.Editor
             }
 
             rooms.Add(owningRoom);
+        }
+
+        // A wall cell whose own primaryRoomsByCell membership already lists 2+
+        // distinct rooms/margins is never a genuine single-room branch — it's two
+        // (or more) different rooms' corners landing on the same or adjacent cells
+        // across a narrow shared gap. PrefabRuleResolver's 4-tag pattern can't
+        // distinguish this from a real T-junction (both look like "3 neighbors
+        // tagged This"), so this is decided here, before the resolver is ever
+        // consulted, using the room-identity data BuildSnapshot would otherwise
+        // discard (SCARAB-013 follow-up, 2026-09-21: verified live against seed
+        // 1959606433 — 8 of 10 misclassified cells were this case).
+        private static bool TryComputeMultiRoomSeamRotation(Vector2Int cell,
+            Dictionary<Vector2Int, HashSet<string>> primaryRoomsByCell, Vector2Int[] fourWayDirs, out float yRotation)
+        {
+            yRotation = 0f;
+            if (!primaryRoomsByCell.TryGetValue(cell, out var ownRooms) || ownRooms.Count < 2)
+                return false;
+
+            var continuing = new List<int>();
+            for (int i = 0; i < fourWayDirs.Length; i++)
+            {
+                var neighbor = cell + fourWayDirs[i];
+                if (primaryRoomsByCell.TryGetValue(neighbor, out var neighborRooms) && neighborRooms.Overlaps(ownRooms))
+                    continuing.Add(i);
+            }
+
+            if (continuing.Count != 2) return false;
+
+            // continuing[0]/[1] are indices into fourWayDirs (N=0,E=1,S=2,W=3).
+            // JunctionWithCorner's authored shape: straight run along one axis +
+            // one corner arm. If both continuing directions are an opposite pair,
+            // this is a straight run, not a seam corner — bail out rather than
+            // guess a rotation for a shape JunctionWithCorner doesn't represent.
+            bool isOppositePair = (continuing[0] + 2) % 4 == continuing[1];
+            if (isOppositePair) return false;
+
+            yRotation = continuing[0] * 90f;
+            return true;
+        }
+
+        // PrefabRuleResolver's DefaultPrefab fallback (Matched=false) always
+        // returns YRotation=0 regardless of topology — correct for the 0-tag
+        // (isolated) and 4-tag (fully enclosed) cases, which have no single
+        // continuing direction, but wrong for the far more common 1-tag
+        // "dead-end/spur" case: the wall still needs to run toward its one
+        // real neighbor's axis, or it visibly separates from it. Verified
+        // live, 2026-09-21: every one of 23 real world-space gaps found
+        // across seed 1959606433 bordered an unmatched 1-tag cell placed at
+        // rotation 0 regardless of which axis it actually needed to run
+        // along; ground-truthed against the real WallPrefabRuleSet's own
+        // matched Straight-rule outputs (E/W tagged -> 0°, N/S tagged -> 90°
+        // — the opposite polarity a naive per-direction reading suggests) to
+        // get this right empirically rather than re-deriving it from
+        // PrefabRuleResolver's rotation-search formula, which had already
+        // produced two wrong, regression-causing guesses. Fixing this closed
+        // 21 of the 23 gaps; the remaining 2 are a separate, much smaller
+        // ShellAlignmentPass outward-shift mismatch, not a rotation issue.
+        private static float ResolveFallbackYRotation(NeighborSnapshot snapshot, float defaultYRotation)
+        {
+            int taggedIndex = -1, taggedCount = 0;
+            for (int i = 0; i < snapshot.Tags.Length; i++)
+            {
+                if (string.IsNullOrEmpty(snapshot.Tags[i])) continue;
+                taggedCount++;
+                taggedIndex = i;
+            }
+
+            if (taggedCount != 1 || snapshot.Tags.Length != 4) return defaultYRotation;
+            return taggedIndex == 1 || taggedIndex == 3 ? 0f : 90f; // E(1)/W(3) -> 0°, N(0)/S(2) -> 90°
         }
 
         private static NeighborSnapshot BuildSnapshot(Vector2Int cell, Dictionary<Vector2Int, HashSet<string>> primaryRoomsByCell,

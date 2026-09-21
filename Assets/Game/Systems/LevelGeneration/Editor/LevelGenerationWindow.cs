@@ -19,6 +19,7 @@ namespace Game.Systems.LevelGeneration.Editor
         private GenerationParameters _parameters = new();
         private PrefabRuleSet _ruleSet;
         private GameObject _doorPrefab;
+        private GameObject _multiRoomSeamPrefab;
         private Material _floorMaterial;
         private FloorUvMode _floorUvMode = FloorUvMode.ContinuousWorldSpace;
         private float _floorThickness = 0.2f;
@@ -87,6 +88,8 @@ namespace Game.Systems.LevelGeneration.Editor
             EditorGUILayout.LabelField("Room Shell", EditorStyles.boldLabel);
             _ruleSet = (PrefabRuleSet)EditorGUILayout.ObjectField("Rule Set", _ruleSet, typeof(PrefabRuleSet), false);
             _doorPrefab = (GameObject)EditorGUILayout.ObjectField("Door Prefab", _doorPrefab, typeof(GameObject), false);
+            _multiRoomSeamPrefab = (GameObject)EditorGUILayout.ObjectField(
+                "Multi-Room Seam Prefab", _multiRoomSeamPrefab, typeof(GameObject), false);
             _floorMaterial = (Material)EditorGUILayout.ObjectField("Floor Material", _floorMaterial, typeof(Material), false);
             _floorUvMode = (FloorUvMode)EditorGUILayout.EnumPopup("Floor UV Mode", _floorUvMode);
             _floorThickness = EditorGUILayout.FloatField("Floor Thickness", _floorThickness);
@@ -151,7 +154,11 @@ namespace Game.Systems.LevelGeneration.Editor
             var originScene = EditorSceneManager.GetActiveScene();
 
             var layout = BspLayoutGenerator.Generate(CloneParameters());
-            var shellConfig = new ShellAssemblyConfig { RuleSet = _ruleSet, DoorPrefab = _doorPrefab, CellSize = _cellSize };
+            var shellConfig = new ShellAssemblyConfig
+            {
+                RuleSet = _ruleSet, DoorPrefab = _doorPrefab, MultiRoomSeamPrefab = _multiRoomSeamPrefab,
+                CellSize = _cellSize
+            };
 
             LevelBaker.EnsureLevelPrefabStageOpen(layout.Seed);
             var levelDef = LevelBaker.Bake(layout, shellConfig, $"Level {layout.Seed}");
@@ -329,6 +336,8 @@ namespace Game.Systems.LevelGeneration.Editor
             EditorPrefs.SetFloat(PrefsPrefix + "CellSize", _cellSize);
             EditorPrefs.SetString(PrefsPrefix + "RuleSet", _ruleSet != null ? AssetDatabase.GetAssetPath(_ruleSet) : "");
             EditorPrefs.SetString(PrefsPrefix + "DoorPrefab", _doorPrefab != null ? AssetDatabase.GetAssetPath(_doorPrefab) : "");
+            EditorPrefs.SetString(PrefsPrefix + "MultiRoomSeamPrefab",
+                _multiRoomSeamPrefab != null ? AssetDatabase.GetAssetPath(_multiRoomSeamPrefab) : "");
             EditorPrefs.SetString(PrefsPrefix + "FloorMaterial", _floorMaterial != null ? AssetDatabase.GetAssetPath(_floorMaterial) : "");
             EditorPrefs.SetInt(PrefsPrefix + "FloorUvMode", (int)_floorUvMode);
             EditorPrefs.SetFloat(PrefsPrefix + "FloorThickness", _floorThickness);
@@ -352,6 +361,10 @@ namespace Game.Systems.LevelGeneration.Editor
             var doorPath = EditorPrefs.GetString(PrefsPrefix + "DoorPrefab", "");
             if (!string.IsNullOrEmpty(doorPath))
                 _doorPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(doorPath);
+
+            var multiRoomSeamPath = EditorPrefs.GetString(PrefsPrefix + "MultiRoomSeamPrefab", "");
+            if (!string.IsNullOrEmpty(multiRoomSeamPath))
+                _multiRoomSeamPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(multiRoomSeamPath);
 
             var floorMaterialPath = EditorPrefs.GetString(PrefsPrefix + "FloorMaterial", "");
             if (!string.IsNullOrEmpty(floorMaterialPath))

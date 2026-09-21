@@ -9,6 +9,7 @@ namespace Game.Systems.LevelGeneration.Editor
     {
         public PrefabRuleSet RuleSet;
         public GameObject DoorPrefab;
+        public GameObject MultiRoomSeamPrefab;
 
         // Floor is a generated mesh (RoomFloorMeshBuilder), not a placed
         // prefab (Michael, 2026-09-04) — no tile prefab/mesh-import-scale to
