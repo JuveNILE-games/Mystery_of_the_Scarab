@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core.Tools.PrefabBrush;
 using Game.Systems.LevelSystem.Runtime;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Game.Systems.LevelGeneration.Editor
@@ -142,9 +143,19 @@ namespace Game.Systems.LevelGeneration.Editor
 
         private void BakeLevel()
         {
+            // Whatever scene happens to be open shouldn't matter (Michael, 2026-09-21) — Bake
+            // creates and opens the level's own Level_{seed}_Root.prefab in Prefab Stage
+            // isolation and generates directly into it, never into whatever scene was active.
+            // Dropping an instance back into that original scene afterward is a separate,
+            // optional convenience, not something the bake itself depends on.
+            var originScene = EditorSceneManager.GetActiveScene();
+
             var layout = BspLayoutGenerator.Generate(CloneParameters());
             var shellConfig = new ShellAssemblyConfig { RuleSet = _ruleSet, DoorPrefab = _doorPrefab, CellSize = _cellSize };
+
+            LevelBaker.EnsureLevelPrefabStageOpen(layout.Seed);
             var levelDef = LevelBaker.Bake(layout, shellConfig, $"Level {layout.Seed}");
+            LevelBaker.EnsureInstanceInScene(originScene, layout.Seed);
 
             ClearPendingState();
             _previewLayout = layout;
@@ -172,6 +183,8 @@ namespace Game.Systems.LevelGeneration.Editor
 
         private void BakeFloor()
         {
+            LevelBaker.EnsureLevelPrefabStageOpen(_previewLayout.Seed);
+
             var shellConfig = new ShellAssemblyConfig
             {
                 RuleSet = _ruleSet, FloorMaterial = _floorMaterial, FloorUvMode = _floorUvMode,
@@ -183,6 +196,8 @@ namespace Game.Systems.LevelGeneration.Editor
 
         private void BakeConnections()
         {
+            LevelBaker.EnsureLevelPrefabStageOpen(_previewLayout.Seed);
+
             if (_curation == null)
             {
                 _curation = LevelBaker.LoadOrCreateDefaultCuration(_previewLayout.Seed);

@@ -651,6 +651,55 @@ namespace Game.Systems.LevelGeneration.Editor
             return stage != null ? stage.scene : EditorSceneManager.GetActiveScene();
         }
 
+        // Levels don't need a scene to generate in at all (Michael, 2026-09-21): whatever scene
+        // is active when Bake gets clicked shouldn't matter. This creates an empty
+        // Level_{seed}_Root.prefab the first time a seed is baked, then opens it in Prefab Stage
+        // isolation every time — GetWorkingScene (above) then correctly resolves every
+        // subsequent LevelBaker call against it, the same fix that made this workflow safe.
+        // A no-op when already in exactly that stage, so calling this before every bake action
+        // (Bake, Bake Floor, Bake Connections) never discards an in-progress hand edit.
+        public static string EnsureLevelPrefabStageOpen(int seed)
+        {
+            string folder = $"Assets/Game/Systems/LevelSystem/Generated/Level_{seed}";
+            EnsureFolder(folder);
+            string prefabPath = $"{folder}/Level_{seed}_Root.prefab";
+
+            var currentStage = PrefabStageUtility.GetCurrentPrefabStage();
+            if (currentStage != null && currentStage.assetPath == prefabPath)
+                return prefabPath;
+
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) == null)
+            {
+                var placeholder = new GameObject($"Level_{seed}_Root");
+                PrefabUtility.SaveAsPrefabAsset(placeholder, prefabPath);
+                Object.DestroyImmediate(placeholder);
+            }
+
+            PrefabStageUtility.OpenPrefab(prefabPath);
+            return prefabPath;
+        }
+
+        // The "nice bonus" (Michael, 2026-09-21): a level living entirely in its own prefab is
+        // invisible in whatever scene you were actually looking at. Drops one instance into that
+        // scene if it doesn't already have one — never a duplicate, never required for baking to
+        // work at all.
+        public static void EnsureInstanceInScene(Scene scene, int seed)
+        {
+            if (!scene.IsValid()) return;
+
+            string rootName = $"Level_{seed}_Root";
+            foreach (var root in scene.GetRootGameObjects())
+                if (root.name == rootName)
+                    return;
+
+            string prefabPath = $"Assets/Game/Systems/LevelSystem/Generated/Level_{seed}/{rootName}.prefab";
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            if (prefab == null) return;
+
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, scene);
+            Undo.RegisterCreatedObjectUndo(instance, "Bake Level");
+        }
+
         private static GameObject FindOrCreateRoot(string name)
         {
             var scene = GetWorkingScene();
