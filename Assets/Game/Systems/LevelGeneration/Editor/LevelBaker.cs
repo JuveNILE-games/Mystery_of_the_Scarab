@@ -9,6 +9,7 @@ using Game.Systems.PuzzleSystem.Definitions;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Systems.LevelGeneration.Editor
 {
@@ -39,7 +40,13 @@ namespace Game.Systems.LevelGeneration.Editor
             var levelDef = LoadOrCreateAsset<LevelDefinition>($"{folder}/Level_{layout.Seed}.asset");
             levelDef.levelId = $"Level_{layout.Seed}";
             levelDef.displayName = string.IsNullOrEmpty(levelDisplayName) ? levelDef.levelId : levelDisplayName;
-            levelDef.levelScene = SceneReference.FromScenePath(EditorSceneManager.GetActiveScene().path);
+            // Only when baking against a real scene: a Prefab Stage's own scene isn't a loadable
+            // build scene, so it's not a meaningful answer to "where does this level live for
+            // runtime purposes" — recording it would just be a different kind of wrong. Baking a
+            // level's root prefab directly in isolation leaves whatever levelScene already
+            // pointed at (set by an earlier, real-scene bake) untouched.
+            if (PrefabStageUtility.GetCurrentPrefabStage() == null)
+                levelDef.levelScene = SceneReference.FromScenePath(EditorSceneManager.GetActiveScene().path);
 
             var levelRoot = FindOrCreateRoot($"Level_{layout.Seed}_Root");
 
@@ -247,7 +254,7 @@ namespace Game.Systems.LevelGeneration.Editor
             }
 
             AssetDatabase.SaveAssets();
-            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            EditorSceneManager.MarkSceneDirty(GetWorkingScene());
         }
 
         // Order-independent, cheap, and stored on the floor's own PrefabBrushObject.RuleTag
@@ -375,7 +382,7 @@ namespace Game.Systems.LevelGeneration.Editor
             }
 
             var rootName = $"Level_{layout.Seed}_Root";
-            var scene = EditorSceneManager.GetActiveScene();
+            var scene = GetWorkingScene();
             if (!scene.GetRootGameObjects().Any(r => r.name == rootName))
             {
                 Debug.LogError($"[LevelGeneration] '{rootName}' does not exist in the active scene — run Bake first.");
@@ -629,15 +636,32 @@ namespace Game.Systems.LevelGeneration.Editor
             AssetDatabase.CreateFolder(parent, name);
         }
 
+        // A Prefab Stage's own isolated scene is never "the active scene" as far as
+        // EditorSceneManager.GetActiveScene() is concerned — it keeps reporting whatever scene
+        // sat underneath before entering Prefab Isolation Mode. Baking while a level's root
+        // prefab is open directly (the natural way to hand-edit it) used to silently create/
+        // query a phantom root in that underlying scene instead of the prefab actually open,
+        // so Capture never saw any real content to protect. Confirmed live, 2026-09-21: this is
+        // what turned a routine re-bake into a false mass delete, once a previous bake's
+        // KnownSlots (recorded correctly, outside Prefab Mode) made every freshly regenerated
+        // slot from the phantom root read as "known but missing."
+        private static Scene GetWorkingScene()
+        {
+            var stage = PrefabStageUtility.GetCurrentPrefabStage();
+            return stage != null ? stage.scene : EditorSceneManager.GetActiveScene();
+        }
+
         private static GameObject FindOrCreateRoot(string name)
         {
-            var scene = EditorSceneManager.GetActiveScene();
+            var scene = GetWorkingScene();
             foreach (var root in scene.GetRootGameObjects())
                 if (root.name == name)
                     return root;
 
             var go = new GameObject(name);
             Undo.RegisterCreatedObjectUndo(go, "Bake Level");
+            if (go.scene != scene)
+                SceneManager.MoveGameObjectToScene(go, scene);
             return go;
         }
 
