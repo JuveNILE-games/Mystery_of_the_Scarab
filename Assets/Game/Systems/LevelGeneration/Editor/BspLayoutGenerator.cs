@@ -403,12 +403,49 @@ namespace Game.Systems.LevelGeneration.Editor
             var eligible = rooms.FindAll(r => r.Role == RoomRole.Normal);
             ShuffleRooms(eligible, rng);
 
+            // Snapshot of every room's ORIGINAL (pre-notch) footprint, built once —
+            // deliberately not rebuilt as notches get carved, since the question a
+            // later notch's check needs answered is "would this break a clean
+            // shared wall the ORIGINAL, un-notched rectangles had", not "does it
+            // match whatever an earlier notch reshaped a sibling into". Used by
+            // TryCarveNotch below (SCARAB-MAP-01 follow-up, 2026-09-23).
+            var cellOwner = new Dictionary<Vector2Int, string>();
+            foreach (var r in rooms)
+                foreach (var c in r.FootprintCells)
+                    cellOwner[c] = r.RoomId;
+
             int count = Mathf.Min(p.IrregularRoomCount, eligible.Count);
             for (int i = 0; i < count; i++)
-                TryCarveNotch(eligible[i], p.MinLeafSize, rng);
+                TryCarveNotch(eligible[i], p.MinLeafSize, rng, cellOwner);
         }
 
-        private static void TryCarveNotch(LayoutRoomNode room, int minLeafSize, DeterministicRandom rng)
+        // A candidate notch is rejected if it would remove a cell that was the
+        // room's own boundary directly across a clean 1-cell wall gap from
+        // ANOTHER room — i.e. it would widen what used to be a normal shared
+        // wall into a 2-cell gap, reading as a solid double-thickness wall once
+        // RoomShellAssembler places independent flush-shifted pieces on both
+        // sides instead of the single shared piece every other room-adjacency
+        // in the level gets (found 2026-09-22 live-inspecting seed 555555:
+        // Room_002/Room_004 shared a normal 1-cell wall at z=16, but a notch
+        // carved from Room_002's west edge widened it to 2 cells for z=10-15).
+        private static bool NotchBreaksSharedWallAdjacency(HashSet<Vector2Int> toRemove, string roomId,
+            Dictionary<Vector2Int, string> cellOwner)
+        {
+            foreach (var cell in toRemove)
+            foreach (var dir in Orthogonal4)
+            {
+                var wallCell = cell + dir;
+                if (cellOwner.ContainsKey(wallCell)) continue; // not a wall-cell gap in this direction
+
+                if (cellOwner.TryGetValue(wallCell + dir, out var neighborRoom) && neighborRoom != roomId)
+                    return true; // cell was this room's edge, 1-cell-gap-adjacent to another room right here
+            }
+
+            return false;
+        }
+
+        private static void TryCarveNotch(LayoutRoomNode room, int minLeafSize, DeterministicRandom rng,
+            Dictionary<Vector2Int, string> cellOwner)
         {
             int minX = int.MaxValue, maxX = int.MinValue, minY = int.MaxValue, maxY = int.MinValue;
             foreach (var c in room.FootprintCells)
@@ -426,16 +463,28 @@ namespace Game.Systems.LevelGeneration.Editor
             int notchH = Mathf.Min(Mathf.Max(1, height / 3), height - minLeafSize);
             if (notchW <= 0 || notchH <= 0 || notchW >= width || notchH >= height) return;
 
+            // Try the RNG-picked corner first, then cycle through the other 3 in a
+            // fixed order (no re-rolling RNG, so layouts stay seed-reproducible) —
+            // skip any corner whose notch would break a clean shared-wall
+            // adjacency with a neighboring room. If all 4 would, leave this room
+            // un-notched rather than guess.
             int cornerPick = rng.NextInt(0, 4);
-            int notchMinX = cornerPick is 1 or 2 ? maxX - notchW + 1 : minX;
-            int notchMinY = cornerPick is 2 or 3 ? maxY - notchH + 1 : minY;
+            for (int attempt = 0; attempt < 4; attempt++)
+            {
+                int corner = (cornerPick + attempt) % 4;
+                int notchMinX = corner is 1 or 2 ? maxX - notchW + 1 : minX;
+                int notchMinY = corner is 2 or 3 ? maxY - notchH + 1 : minY;
 
-            var toRemove = new HashSet<Vector2Int>();
-            for (int x = notchMinX; x < notchMinX + notchW; x++)
-            for (int y = notchMinY; y < notchMinY + notchH; y++)
-                toRemove.Add(new Vector2Int(x, y));
+                var toRemove = new HashSet<Vector2Int>();
+                for (int x = notchMinX; x < notchMinX + notchW; x++)
+                for (int y = notchMinY; y < notchMinY + notchH; y++)
+                    toRemove.Add(new Vector2Int(x, y));
 
-            room.FootprintCells.RemoveAll(c => toRemove.Contains(c));
+                if (NotchBreaksSharedWallAdjacency(toRemove, room.RoomId, cellOwner)) continue;
+
+                room.FootprintCells.RemoveAll(c => toRemove.Contains(c));
+                return;
+            }
         }
 
         private static IEnumerable<Vector2Int> RectCells(RectInt rect)
@@ -480,11 +529,20 @@ namespace Game.Systems.LevelGeneration.Editor
 
         // A gap cell is empty space exactly one step outside room A whose next
         // step lands inside room B — the wall/doorway cell between two rooms.
+        // Returns the MEDIAN gap cell along the shared border (not the first
+        // one found) so GrowDoorwayCells widens from the middle outward —
+        // otherwise a door on a border only 1 cell taller than DoorwayWidthCells
+        // could grow flush against one room's own corner, producing a wall cell
+        // that falsely looks like a 3-way junction (SCARAB-013 follow-up,
+        // 2026-09-21: seed 1959606433's Doorway_006 did exactly this).
         private static bool TryFindGapAdjacentCell(LayoutRoomNode a, LayoutRoomNode b, out Vector2Int gapCell,
             out Vector2Int dir)
         {
             var aCells = new HashSet<Vector2Int>(a.FootprintCells);
             var bCells = new HashSet<Vector2Int>(b.FootprintCells);
+
+            Vector2Int? borderDir = null;
+            var borderCells = new List<Vector2Int>();
 
             foreach (var cell in a.FootprintCells)
             foreach (var d in Orthogonal4)
@@ -493,17 +551,24 @@ namespace Game.Systems.LevelGeneration.Editor
                 if (aCells.Contains(gap) || bCells.Contains(gap)) continue;
 
                 var beyond = gap + d;
-                if (bCells.Contains(beyond))
-                {
-                    gapCell = gap;
-                    dir = d;
-                    return true;
-                }
+                if (!bCells.Contains(beyond)) continue;
+
+                borderDir ??= d;
+                if (d == borderDir.Value) borderCells.Add(gap);
             }
 
-            gapCell = default;
-            dir = default;
-            return false;
+            if (borderDir == null)
+            {
+                gapCell = default;
+                dir = default;
+                return false;
+            }
+
+            dir = borderDir.Value;
+            var perp = new Vector2Int(-dir.y, dir.x);
+            borderCells.Sort((x, y) => (x.x * perp.x + x.y * perp.y).CompareTo(y.x * perp.x + y.y * perp.y));
+            gapCell = borderCells[borderCells.Count / 2];
+            return true;
         }
 
         // Door.prefab's mesh is a true 3-cell-wide module (SCARAB-010 follow-up:
