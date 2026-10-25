@@ -8,6 +8,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1491328837293254445, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1491328837293254445, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2712709527190318227, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2712709527190318227, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242176081069047069, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_Name
+      value: WallConnection-W
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249869937578547140, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249869937578547140, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4845227464220365480, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -47,6 +75,18 @@ PrefabInstance:
     - target: {fileID: 4845227464220365480, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753565705462325598, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_Name
+      value: WallConnection-N
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870513729500449101, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_Name
+      value: WallConnection-S
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502274701661296582, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
+      propertyPath: m_Name
+      value: WallConnection-E
       objectReference: {fileID: 0}
     - target: {fileID: 7063282029781281995, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
       propertyPath: m_Name

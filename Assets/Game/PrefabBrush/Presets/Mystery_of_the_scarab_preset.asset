@@ -20,10 +20,6 @@ MonoBehaviour:
       Weight: 1
       Label: Door
       IsSelected: 1
-    - Prefab: {fileID: 3421911423723917284, guid: 217151ea4462886419dd4f6ecccd7fd4, type: 3}
-      Weight: 1
-      Label: PushBlock
-      IsSelected: 1
     - Prefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
       Weight: 1
       Label: WallStraightPrefab
@@ -31,6 +27,10 @@ MonoBehaviour:
     - Prefab: {fileID: 7063282029781281995, guid: d73ee7603e8b6a74cb5780e937ce7a08, type: 3}
       Weight: 1
       Label: WallCornerPrefab
+      IsSelected: 1
+    - Prefab: {fileID: 2126291044378984295, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      Weight: 1
+      Label: WallTJunction
       IsSelected: 1
     PaletteToLoad: {fileID: 11400000, guid: 23a43fdb6b721f14d8e5a63b7a30f18e, type: 2}
     BrushRadius: 5
@@ -43,8 +43,8 @@ MonoBehaviour:
     AlignToSurface: 1
     KeepUprightOnWalls: 1
     AlignmentStrength: 1
-    UseRules: 0
-    ActiveRuleSet: {fileID: 0}
+    UseRules: 1
+    ActiveRuleSet: {fileID: 11400000, guid: 4d314871909004d4a820cf38ceea8fb9, type: 2}
     UseRandomization: 0
     ScaleRange: {x: 0.8, y: 1.2}
     RotationYRange: {x: 0, y: 360}
@@ -58,4 +58,3 @@ MonoBehaviour:
     UsePhysicsPlacement: 0
     PhysicsDropHeight: 0.5
     PhysicsIterations: 100
-
