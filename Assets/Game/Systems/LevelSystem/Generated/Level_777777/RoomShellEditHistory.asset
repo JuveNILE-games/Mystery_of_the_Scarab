@@ -1,0 +1,1321 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f910afb54eb885a499c579b9f683e32c, type: 3}
+  m_Name: RoomShellEditHistory
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Runtime.RoomShellEditHistory
+  Seed: 777777
+  Edits:
+  - Cell: {x: 9, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 9, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 8, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 8, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 10}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 10.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 11}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 11.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 12}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 12.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 13}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 13.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 14}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 14.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 15}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 15.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 16}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 16.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 10, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 10, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 11, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 11, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 12, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 12, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 0}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 0.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 1}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 1.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 2}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 2.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 3}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 4.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 5}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 5.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 6}
+    Role: 1
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7.25, y: 0, z: 7.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 19}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.5, y: 0, z: 19}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 18}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.5, y: 0, z: 18}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 20}
+    Role: 1
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.75, y: 0, z: 21}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 23}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.5, y: 0, z: 23}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 24}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.5, y: 0, z: 24}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.5, y: 0, z: 25}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 26}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.5, y: 0, z: 26}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 27}
+    Role: 1
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18.75, y: 0, z: 28}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 7, y: 0, z: 9.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 21, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 21, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 20, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 19.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 21, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 20.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 22, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 22, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 22, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 21.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 23, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 23, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 23, y: 25}
+    Role: 1
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 23.5, y: 0, z: 25}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 24, y: 9}
+    Role: 1
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 25, y: 0, z: 9.25}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 26, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 25.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 27, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 27, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 27, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 26.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 28, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 28, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 28, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 27.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 29, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 29, y: 0, z: 9}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 29, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 28.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 4, y: 19}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 4, y: 0, z: 19}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 4, y: 18}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 4, y: 0, z: 18}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 2, y: 18}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 1.5, y: 0, z: 18}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 2, y: 19}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 1.5, y: 0, z: 19}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 4, y: 20}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 4, y: 0, z: 20}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 2, y: 20}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 1.5, y: 0, z: 20}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 4, y: 21}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 4, y: 0, z: 21}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 2, y: 21}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 1.5, y: 0, z: 21}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 4, y: 22}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 4, y: 0, z: 22}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 2, y: 22}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 1.5, y: 0, z: 22}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 4, y: 23}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 4, y: 0, z: 23}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 2, y: 23}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 1.5, y: 0, z: 23}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 14, y: 6}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 14, y: 0, z: 6}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 15, y: 6}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 15, y: 0, z: 6}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 15, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 15, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 14, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 14, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 16, y: 6}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 16, y: 0, z: 6}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 16, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 16, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 17, y: 6}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 17, y: 0, z: 6}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 17, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 17, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 18, y: 6}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18, y: 0, z: 6}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 18, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 18, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 6}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 19, y: 0, z: 6}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 4}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 19, y: 0, z: 3.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 13, y: 3}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 13, y: 0, z: 3}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 13, y: 2}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 13, y: 0, z: 2}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 13, y: -1}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 13, y: 0, z: -1}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 13, y: 0}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 13, y: 0, z: 0.000000029802322}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 13, y: 1}
+    Role: 0
+    SlotId: 
+    Kind: 0
+    LocalPosition: {x: 13, y: 0, z: 1}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: -2}
+    Role: 2
+    SlotId: 9eeff9842ca44d23840044b7199b2931
+    Kind: 2
+    LocalPosition: {x: 7, y: 0, z: -1.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  - Cell: {x: 7, y: 0}
+    Role: 2
+    SlotId: e5f5494a726949068b7d8c4101bdac6d
+    Kind: 2
+    LocalPosition: {x: 7, y: 0, z: -0.5}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  - Cell: {x: 12, y: -2}
+    Role: 2
+    SlotId: d8e73b2539b94b1bbd6afca6235ebc58
+    Kind: 2
+    LocalPosition: {x: 12, y: 0, z: -1.5}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  - Cell: {x: -1, y: 24}
+    Role: 2
+    SlotId: cd53531770a64a01a7429291f6016835
+    Kind: 2
+    LocalPosition: {x: -1, y: 0, z: 24}
+    LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: -1, y: 17}
+    Role: 2
+    SlotId: f7b1d44ae3404c26b21bbfd916dcb69b
+    Kind: 2
+    LocalPosition: {x: -1, y: 0, z: 17}
+    LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 30, y: 25}
+    Role: 2
+    SlotId: b3d2261da63a47f2ba8e8ff471806207
+    Kind: 2
+    LocalPosition: {x: 29.5, y: 0, z: 24.75}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  - Cell: {x: 30, y: 25}
+    Role: 2
+    SlotId: 6fe025e29a5e4d3bbb35e0ec8377f24e
+    Kind: 2
+    LocalPosition: {x: 30, y: 0, z: 25}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  - Cell: {x: 19, y: 30}
+    Role: 2
+    SlotId: 99bee0daf7c349dbae41e856d538018e
+    Kind: 2
+    LocalPosition: {x: 19, y: 0, z: 30}
+    LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 7, y: 30}
+    Role: 2
+    SlotId: e92a62bd9254457f8dcf2ed330a4b145
+    Kind: 2
+    LocalPosition: {x: 7, y: 0, z: 30}
+    LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 20, y: -1}
+    Role: 2
+    SlotId: 39e1f1e2a7ed49ee83617c381d17a3fb
+    Kind: 2
+    LocalPosition: {x: 20, y: 0, z: -1}
+    LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 30, y: 9}
+    Role: 2
+    SlotId: 6339658889094548a333c6287409251b
+    Kind: 2
+    LocalPosition: {x: 30, y: 0, z: 9}
+    LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 13, y: 9}
+    Role: 2
+    SlotId: c62c3b7b767d43f49d2a01499b243554
+    Kind: 2
+    LocalPosition: {x: 13, y: 0, z: 9}
+    LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 20, y: 9}
+    Role: 2
+    SlotId: cd17c405ea1b41c6b55c4e58f716e2fd
+    Kind: 2
+    LocalPosition: {x: 20, y: 0, z: 9}
+    LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+    LocalScale: {x: 1, y: 1, z: 1}
+    SourcePrefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
+  - Cell: {x: 13, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: -1}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 12, y: 1}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 12, y: 0}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 12, y: -1}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 12, y: 2}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 7, y: 30}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 19, y: 30}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 20, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 30, y: 9}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 30, y: 25}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: -1, y: 17}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: -1, y: 24}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  - Cell: {x: 20, y: -1}
+    Role: 0
+    SlotId: 
+    Kind: 1
+    LocalPosition: {x: 0, y: 0, z: 0}
+    LocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+    SourcePrefab: {fileID: 0}
+  KnownSlots:
+  - Cell: {x: 9, y: 9}
+    Role: 0
+  - Cell: {x: 8, y: 9}
+    Role: 0
+  - Cell: {x: 7, y: 10}
+    Role: 0
+  - Cell: {x: 7, y: 11}
+    Role: 0
+  - Cell: {x: 7, y: 12}
+    Role: 0
+  - Cell: {x: 7, y: 13}
+    Role: 0
+  - Cell: {x: 7, y: 14}
+    Role: 0
+  - Cell: {x: 7, y: 15}
+    Role: 0
+  - Cell: {x: 7, y: 16}
+    Role: 0
+  - Cell: {x: 8, y: 17}
+    Role: 0
+  - Cell: {x: 9, y: 17}
+    Role: 0
+  - Cell: {x: 10, y: 9}
+    Role: 0
+  - Cell: {x: 10, y: 17}
+    Role: 0
+  - Cell: {x: 11, y: 9}
+    Role: 0
+  - Cell: {x: 11, y: 17}
+    Role: 0
+  - Cell: {x: 12, y: 9}
+    Role: 0
+  - Cell: {x: 12, y: 17}
+    Role: 1
+  - Cell: {x: 13, y: 9}
+    Role: 0
+  - Cell: {x: 15, y: 17}
+    Role: 0
+  - Cell: {x: 16, y: 17}
+    Role: 0
+  - Cell: {x: 17, y: 17}
+    Role: 0
+  - Cell: {x: 18, y: 17}
+    Role: 0
+  - Cell: {x: 19, y: 11}
+    Role: 0
+  - Cell: {x: 19, y: 10}
+    Role: 0
+  - Cell: {x: 19, y: 12}
+    Role: 0
+  - Cell: {x: 19, y: 13}
+    Role: 0
+  - Cell: {x: 19, y: 14}
+    Role: 0
+  - Cell: {x: 19, y: 15}
+    Role: 0
+  - Cell: {x: 19, y: 16}
+    Role: 0
+  - Cell: {x: 9, y: -1}
+    Role: 0
+  - Cell: {x: 8, y: -1}
+    Role: 0
+  - Cell: {x: 7, y: -1}
+    Role: 0
+  - Cell: {x: 7, y: 0}
+    Role: 0
+  - Cell: {x: 7, y: 1}
+    Role: 0
+  - Cell: {x: 7, y: 2}
+    Role: 0
+  - Cell: {x: 7, y: 3}
+    Role: 0
+  - Cell: {x: 7, y: 4}
+    Role: 0
+  - Cell: {x: 7, y: 5}
+    Role: 0
+  - Cell: {x: 7, y: 6}
+    Role: 1
+  - Cell: {x: 10, y: -1}
+    Role: 0
+  - Cell: {x: 11, y: -1}
+    Role: 0
+  - Cell: {x: 12, y: 1}
+    Role: 0
+  - Cell: {x: 12, y: 0}
+    Role: 0
+  - Cell: {x: 12, y: -1}
+    Role: 0
+  - Cell: {x: 12, y: 2}
+    Role: 0
+  - Cell: {x: 7, y: 24}
+    Role: 0
+  - Cell: {x: 7, y: 25}
+    Role: 0
+  - Cell: {x: 7, y: 26}
+    Role: 0
+  - Cell: {x: 7, y: 27}
+    Role: 0
+  - Cell: {x: 7, y: 28}
+    Role: 0
+  - Cell: {x: 7, y: 29}
+    Role: 0
+  - Cell: {x: 8, y: 30}
+    Role: 0
+  - Cell: {x: 9, y: 30}
+    Role: 0
+  - Cell: {x: 7, y: 30}
+    Role: 0
+  - Cell: {x: 10, y: 30}
+    Role: 0
+  - Cell: {x: 11, y: 30}
+    Role: 0
+  - Cell: {x: 12, y: 30}
+    Role: 0
+  - Cell: {x: 13, y: 30}
+    Role: 0
+  - Cell: {x: 14, y: 30}
+    Role: 0
+  - Cell: {x: 15, y: 30}
+    Role: 0
+  - Cell: {x: 16, y: 30}
+    Role: 0
+  - Cell: {x: 17, y: 30}
+    Role: 0
+  - Cell: {x: 18, y: 30}
+    Role: 0
+  - Cell: {x: 19, y: 19}
+    Role: 0
+  - Cell: {x: 19, y: 18}
+    Role: 0
+  - Cell: {x: 19, y: 20}
+    Role: 1
+  - Cell: {x: 19, y: 23}
+    Role: 0
+  - Cell: {x: 19, y: 24}
+    Role: 0
+  - Cell: {x: 19, y: 25}
+    Role: 0
+  - Cell: {x: 19, y: 26}
+    Role: 0
+  - Cell: {x: 19, y: 27}
+    Role: 1
+  - Cell: {x: 19, y: 30}
+    Role: 0
+  - Cell: {x: 7, y: 9}
+    Role: 0
+  - Cell: {x: 1, y: -1}
+    Role: 0
+  - Cell: {x: 0, y: -1}
+    Role: 0
+  - Cell: {x: -1, y: -1}
+    Role: 0
+  - Cell: {x: -1, y: 0}
+    Role: 0
+  - Cell: {x: -1, y: 1}
+    Role: 0
+  - Cell: {x: -1, y: 2}
+    Role: 0
+  - Cell: {x: -1, y: 3}
+    Role: 0
+  - Cell: {x: -1, y: 4}
+    Role: 0
+  - Cell: {x: -1, y: 5}
+    Role: 0
+  - Cell: {x: -1, y: 6}
+    Role: 0
+  - Cell: {x: -1, y: 7}
+    Role: 0
+  - Cell: {x: -1, y: 8}
+    Role: 0
+  - Cell: {x: -1, y: 9}
+    Role: 0
+  - Cell: {x: -1, y: 10}
+    Role: 0
+  - Cell: {x: -1, y: 11}
+    Role: 0
+  - Cell: {x: -1, y: 12}
+    Role: 0
+  - Cell: {x: -1, y: 13}
+    Role: 0
+  - Cell: {x: -1, y: 14}
+    Role: 0
+  - Cell: {x: -1, y: 15}
+    Role: 0
+  - Cell: {x: -1, y: 16}
+    Role: 0
+  - Cell: {x: 2, y: -1}
+    Role: 0
+  - Cell: {x: 3, y: -1}
+    Role: 0
+  - Cell: {x: 4, y: -1}
+    Role: 0
+  - Cell: {x: 5, y: -1}
+    Role: 0
+  - Cell: {x: 6, y: -1}
+    Role: 0
+  - Cell: {x: -1, y: 25}
+    Role: 0
+  - Cell: {x: -1, y: 26}
+    Role: 0
+  - Cell: {x: -1, y: 27}
+    Role: 0
+  - Cell: {x: -1, y: 28}
+    Role: 0
+  - Cell: {x: -1, y: 29}
+    Role: 0
+  - Cell: {x: 0, y: 30}
+    Role: 0
+  - Cell: {x: 1, y: 30}
+    Role: 0
+  - Cell: {x: -1, y: 30}
+    Role: 0
+  - Cell: {x: 2, y: 30}
+    Role: 0
+  - Cell: {x: 3, y: 30}
+    Role: 0
+  - Cell: {x: 4, y: 30}
+    Role: 0
+  - Cell: {x: 5, y: 30}
+    Role: 0
+  - Cell: {x: 6, y: 30}
+    Role: 0
+  - Cell: {x: 19, y: 17}
+    Role: 0
+  - Cell: {x: 21, y: 9}
+    Role: 0
+  - Cell: {x: 20, y: 9}
+    Role: 0
+  - Cell: {x: 20, y: 25}
+    Role: 0
+  - Cell: {x: 21, y: 25}
+    Role: 0
+  - Cell: {x: 22, y: 9}
+    Role: 0
+  - Cell: {x: 22, y: 25}
+    Role: 0
+  - Cell: {x: 23, y: 9}
+    Role: 0
+  - Cell: {x: 23, y: 25}
+    Role: 1
+  - Cell: {x: 24, y: 9}
+    Role: 1
+  - Cell: {x: 26, y: 25}
+    Role: 0
+  - Cell: {x: 27, y: 9}
+    Role: 0
+  - Cell: {x: 27, y: 25}
+    Role: 0
+  - Cell: {x: 28, y: 9}
+    Role: 0
+  - Cell: {x: 28, y: 25}
+    Role: 0
+  - Cell: {x: 29, y: 9}
+    Role: 0
+  - Cell: {x: 29, y: 25}
+    Role: 0
+  - Cell: {x: 30, y: 11}
+    Role: 0
+  - Cell: {x: 30, y: 10}
+    Role: 0
+  - Cell: {x: 30, y: 9}
+    Role: 0
+  - Cell: {x: 30, y: 12}
+    Role: 0
+  - Cell: {x: 30, y: 13}
+    Role: 0
+  - Cell: {x: 30, y: 14}
+    Role: 0
+  - Cell: {x: 30, y: 15}
+    Role: 0
+  - Cell: {x: 30, y: 16}
+    Role: 0
+  - Cell: {x: 30, y: 17}
+    Role: 0
+  - Cell: {x: 30, y: 18}
+    Role: 0
+  - Cell: {x: 30, y: 19}
+    Role: 0
+  - Cell: {x: 30, y: 20}
+    Role: 0
+  - Cell: {x: 30, y: 21}
+    Role: 0
+  - Cell: {x: 30, y: 22}
+    Role: 0
+  - Cell: {x: 30, y: 23}
+    Role: 0
+  - Cell: {x: 30, y: 24}
+    Role: 0
+  - Cell: {x: 30, y: 25}
+    Role: 0
+  - Cell: {x: 20, y: 30}
+    Role: 0
+  - Cell: {x: 21, y: 30}
+    Role: 0
+  - Cell: {x: 22, y: 30}
+    Role: 0
+  - Cell: {x: 23, y: 30}
+    Role: 0
+  - Cell: {x: 24, y: 30}
+    Role: 0
+  - Cell: {x: 25, y: 30}
+    Role: 0
+  - Cell: {x: 26, y: 30}
+    Role: 0
+  - Cell: {x: 27, y: 30}
+    Role: 0
+  - Cell: {x: 28, y: 30}
+    Role: 0
+  - Cell: {x: 29, y: 30}
+    Role: 0
+  - Cell: {x: 30, y: 27}
+    Role: 0
+  - Cell: {x: 30, y: 26}
+    Role: 0
+  - Cell: {x: 30, y: 28}
+    Role: 0
+  - Cell: {x: 30, y: 29}
+    Role: 0
+  - Cell: {x: 30, y: 30}
+    Role: 0
+  - Cell: {x: 22, y: -1}
+    Role: 0
+  - Cell: {x: 21, y: -1}
+    Role: 0
+  - Cell: {x: 23, y: -1}
+    Role: 0
+  - Cell: {x: 24, y: -1}
+    Role: 0
+  - Cell: {x: 25, y: -1}
+    Role: 0
+  - Cell: {x: 26, y: -1}
+    Role: 0
+  - Cell: {x: 27, y: -1}
+    Role: 0
+  - Cell: {x: 28, y: -1}
+    Role: 0
+  - Cell: {x: 29, y: -1}
+    Role: 0
+  - Cell: {x: 30, y: 1}
+    Role: 0
+  - Cell: {x: 30, y: 0}
+    Role: 0
+  - Cell: {x: 30, y: -1}
+    Role: 0
+  - Cell: {x: 30, y: 2}
+    Role: 0
+  - Cell: {x: 30, y: 3}
+    Role: 0
+  - Cell: {x: 30, y: 4}
+    Role: 0
+  - Cell: {x: 30, y: 5}
+    Role: 0
+  - Cell: {x: 30, y: 6}
+    Role: 0
+  - Cell: {x: 30, y: 7}
+    Role: 0
+  - Cell: {x: 30, y: 8}
+    Role: 0
+  - Cell: {x: 3, y: 17}
+    Role: 1
+  - Cell: {x: 3, y: 24}
+    Role: 1
+  - Cell: {x: 4, y: 19}
+    Role: 0
+  - Cell: {x: 4, y: 18}
+    Role: 0
+  - Cell: {x: 2, y: 18}
+    Role: 0
+  - Cell: {x: 2, y: 19}
+    Role: 0
+  - Cell: {x: 4, y: 20}
+    Role: 0
+  - Cell: {x: 2, y: 20}
+    Role: 0
+  - Cell: {x: 4, y: 21}
+    Role: 0
+  - Cell: {x: 2, y: 21}
+    Role: 0
+  - Cell: {x: 4, y: 22}
+    Role: 0
+  - Cell: {x: 2, y: 22}
+    Role: 0
+  - Cell: {x: 4, y: 23}
+    Role: 0
+  - Cell: {x: 2, y: 23}
+    Role: 0
+  - Cell: {x: 13, y: 5}
+    Role: 1
+  - Cell: {x: 20, y: 5}
+    Role: 1
+  - Cell: {x: 14, y: 6}
+    Role: 0
+  - Cell: {x: 15, y: 6}
+    Role: 0
+  - Cell: {x: 15, y: 4}
+    Role: 0
+  - Cell: {x: 14, y: 4}
+    Role: 0
+  - Cell: {x: 16, y: 6}
+    Role: 0
+  - Cell: {x: 16, y: 4}
+    Role: 0
+  - Cell: {x: 17, y: 6}
+    Role: 0
+  - Cell: {x: 17, y: 4}
+    Role: 0
+  - Cell: {x: 18, y: 6}
+    Role: 0
+  - Cell: {x: 18, y: 4}
+    Role: 0
+  - Cell: {x: 19, y: 6}
+    Role: 0
+  - Cell: {x: 19, y: 4}
+    Role: 0
+  - Cell: {x: 0, y: 17}
+    Role: 0
+  - Cell: {x: 1, y: 17}
+    Role: 0
+  - Cell: {x: -1, y: 17}
+    Role: 0
+  - Cell: {x: 1, y: 24}
+    Role: 0
+  - Cell: {x: 0, y: 24}
+    Role: 0
+  - Cell: {x: -1, y: 24}
+    Role: 0
+  - Cell: {x: -1, y: 18}
+    Role: 0
+  - Cell: {x: -1, y: 19}
+    Role: 0
+  - Cell: {x: -1, y: 20}
+    Role: 0
+  - Cell: {x: -1, y: 21}
+    Role: 0
+  - Cell: {x: -1, y: 22}
+    Role: 0
+  - Cell: {x: -1, y: 23}
+    Role: 0
+  - Cell: {x: 7, y: 17}
+    Role: 0
+  - Cell: {x: 7, y: 18}
+    Role: 0
+  - Cell: {x: 7, y: 19}
+    Role: 0
+  - Cell: {x: 7, y: 20}
+    Role: 0
+  - Cell: {x: 7, y: 21}
+    Role: 0
+  - Cell: {x: 7, y: 22}
+    Role: 0
+  - Cell: {x: 7, y: 23}
+    Role: 0
+  - Cell: {x: 5, y: 17}
+    Role: 0
+  - Cell: {x: 6, y: 17}
+    Role: 0
+  - Cell: {x: 5, y: 24}
+    Role: 0
+  - Cell: {x: 6, y: 24}
+    Role: 0
+  - Cell: {x: 13, y: 3}
+    Role: 0
+  - Cell: {x: 13, y: 2}
+    Role: 0
+  - Cell: {x: 20, y: -1}
+    Role: 0
+  - Cell: {x: 20, y: 0}
+    Role: 0
+  - Cell: {x: 20, y: 1}
+    Role: 0
+  - Cell: {x: 20, y: 2}
+    Role: 0
+  - Cell: {x: 20, y: 3}
+    Role: 0
+  - Cell: {x: 15, y: -1}
+    Role: 0
+  - Cell: {x: 14, y: -1}
+    Role: 0
+  - Cell: {x: 13, y: -1}
+    Role: 0
+  - Cell: {x: 13, y: 0}
+    Role: 0
+  - Cell: {x: 13, y: 1}
+    Role: 0
+  - Cell: {x: 16, y: -1}
+    Role: 0
+  - Cell: {x: 17, y: -1}
+    Role: 0
+  - Cell: {x: 18, y: -1}
+    Role: 0
+  - Cell: {x: 19, y: -1}
+    Role: 0
+  - Cell: {x: 14, y: 9}
+    Role: 0
+  - Cell: {x: 15, y: 9}
+    Role: 0
+  - Cell: {x: 16, y: 9}
+    Role: 0
+  - Cell: {x: 17, y: 9}
+    Role: 0
+  - Cell: {x: 18, y: 9}
+    Role: 0
+  - Cell: {x: 19, y: 9}
+    Role: 0
+  - Cell: {x: 13, y: 7}
+    Role: 0
+  - Cell: {x: 13, y: 8}
+    Role: 0
+  - Cell: {x: 20, y: 7}
+    Role: 0
+  - Cell: {x: 20, y: 8}
+    Role: 0

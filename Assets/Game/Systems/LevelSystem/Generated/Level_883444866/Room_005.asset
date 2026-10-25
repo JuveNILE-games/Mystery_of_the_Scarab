@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d129ddf5a17e4610a8559e0a8487e935, type: 3}
+  m_Name: Room_005
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Definitions.RoomDefinition
+  roomId: Room_005
+  displayName: Room_005
+  sceneRootTag: Room_005
+  connections:
+  - targetRoom: {fileID: 11400000, guid: ce8c3a2817a741d4cb0638d7ba9a6d52, type: 2}
+    doorwayId: Doorway_000
+    lockedByDefault: 0
+    unlockedBy: []
+  - targetRoom: {fileID: 11400000, guid: b695d33c54eff6848aff485b42ef2bb8, type: 2}
+    doorwayId: Doorway_003
+    lockedByDefault: 0
+    unlockedBy: []

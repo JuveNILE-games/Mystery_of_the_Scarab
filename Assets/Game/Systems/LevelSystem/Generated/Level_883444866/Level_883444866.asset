@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fce25504bb9ae4498b36c847eb6537, type: 3}
+  m_Name: Level_883444866
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Definitions.LevelDefinition
+  levelId: Level_883444866
+  displayName: Level 883444866
+  levelScene:
+    asset: {fileID: 0}
+    guid: 00000000000000000000000000000000
+  rooms:
+  - {fileID: 11400000, guid: 14049c4393803c149a5429bc3036d259, type: 2}
+  - {fileID: 11400000, guid: ce8c3a2817a741d4cb0638d7ba9a6d52, type: 2}
+  - {fileID: 11400000, guid: 2a02b39c7d77d78409b9d3a263342201, type: 2}
+  - {fileID: 11400000, guid: db6d29800f761bf4bbf7f9e8cc10e721, type: 2}
+  - {fileID: 11400000, guid: fcfb1165d631cf4418d353ef4e2ba74d, type: 2}
+  - {fileID: 11400000, guid: 5e9ac6f743c39ad4997cc9b15c7dbf58, type: 2}
+  - {fileID: 11400000, guid: 6504e851801af3645b7ed470b118a737, type: 2}
+  - {fileID: 11400000, guid: b695d33c54eff6848aff485b42ef2bb8, type: 2}
+  - {fileID: 11400000, guid: 9fc1e3662ab2058448232bc58d78300c, type: 2}
+  entryRoom: {fileID: 11400000, guid: 6504e851801af3645b7ed470b118a737, type: 2}
+  exitRoom: {fileID: 11400000, guid: b695d33c54eff6848aff485b42ef2bb8, type: 2}
+  requireAllPuzzleRoomsToExit: 0
+  onLevelEnterDialogue: {fileID: 0}
+  onLevelCompleteDialogue: {fileID: 0}
+  backgroundMusic:
+    clip: {fileID: 0}
+    mixerGroup: {fileID: 0}
+    Volume: 1
+    Pitch: 1
+    SpatialBlend: 1
+    isFrequentlyPlayed: 0
+    loop: 0
+    playOnAwake: 0

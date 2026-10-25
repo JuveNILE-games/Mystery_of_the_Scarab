@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d129ddf5a17e4610a8559e0a8487e935, type: 3}
+  m_Name: Corridor_001
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Definitions.RoomDefinition
+  roomId: Corridor_001
+  displayName: Corridor_001
+  sceneRootTag: Corridor_001
+  connections:
+  - targetRoom: {fileID: 11400000, guid: 5e9ac6f743c39ad4997cc9b15c7dbf58, type: 2}
+    doorwayId: Doorway_001
+    lockedByDefault: 0
+    unlockedBy: []
+  - targetRoom: {fileID: 11400000, guid: 6504e851801af3645b7ed470b118a737, type: 2}
+    doorwayId: Doorway_005
+    lockedByDefault: 0
+    unlockedBy: []
