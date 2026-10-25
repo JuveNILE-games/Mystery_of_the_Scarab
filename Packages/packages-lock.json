@@ -65,8 +65,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.juvenile.games.core": "1.0.1",
-        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+        "com.juvenile.games.core": "1.2.2",
+        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#ceac8d6946b1125fe782cd171fbcb245b567dbf9",
         "dev.purrnet.purrnet": "1.22.0"
       }
     },
