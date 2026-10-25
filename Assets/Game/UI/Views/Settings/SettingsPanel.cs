@@ -65,9 +65,9 @@ namespace Game.UI.Views.Settings
 
         #region Lifecycle
 
-        protected override void OnServicesInjected()
+        public override void OnInjected()
         {
-            base.OnServicesInjected();
+            base.OnInjected();
             // BuildUI() cannot be called here because UIDocument.rootVisualElement is null
             // when the GameObject starts disabled (which Overlays typically do).
         }
