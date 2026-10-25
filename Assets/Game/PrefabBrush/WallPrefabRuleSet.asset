@@ -20,8 +20,8 @@ MonoBehaviour:
   - Name: Corner
     Prefab: {fileID: 5091524153600651806, guid: 93493b94f52837e4c8b67146469fdff8, type: 3}
     Transform: 1
-    Neighbors: 01000000010000000000000000000000
+    Neighbors: 01000000010000000200000002000000
   - Name: Straight
     Prefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
     Transform: 1
-    Neighbors: 00000000010000000000000001000000
+    Neighbors: 02000000010000000200000001000000

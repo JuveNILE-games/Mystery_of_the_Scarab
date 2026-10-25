@@ -36,6 +36,13 @@ namespace Game.Systems.LevelGeneration.Editor
             new(0, -1), new(-1, -1), new(-1, 0), new(-1, 1) // N, NE, E, SE, S, SW, W, NW
         };
 
+        // Run axis for ReconcileRunOutwardDirs — the direction a
+        // Straight-shaped piece's own flat face runs along, perpendicular to
+        // its thickness axis (thicknessIsZ ? X : Z, same convention
+        // DetermineOutwardDir already uses for yRotation).
+        private static readonly Vector2Int[] RunAxisX = { new(1, 0), new(-1, 0) };
+        private static readonly Vector2Int[] RunAxisZ = { new(0, 1), new(0, -1) };
+
         // Returns the exact wall cell each placed instance was resolved for —
         // callers that need to know which room a piece belongs to (LevelBaker,
         // for hierarchy grouping) must use this, not reverse-engineer it from
@@ -121,7 +128,10 @@ namespace Game.Systems.LevelGeneration.Editor
             var directions = config.RuleSet.Mode == NeighborMode.FourWay ? FourWayDirs : EightWayDirs;
             var placedDoorways = new HashSet<string>();
             var placedInstances = new List<GameObject>();
+            var tJunctionCornerCells = new List<Vector2Int>();
             var outwardDirByInstance = new Dictionary<GameObject, Vector2Int>();
+            var doorCellsByInstance = new Dictionary<GameObject, List<Vector2Int>>();
+            var straightPrefab = FindRulePrefabByName(config.RuleSet, "Straight");
 
             foreach (var cell in wallCells)
             {
@@ -143,6 +153,10 @@ namespace Game.Systems.LevelGeneration.Editor
                     {
                         placedInstances.Add(door);
                         cellByInstance[door] = cell;
+                        doorCellsByInstance[door] = connection.DoorCells;
+
+                        var doorOutward = DetermineOutwardDir(cell, cellOwner, doorYRotation);
+                        if (doorOutward.HasValue) outwardDirByInstance[door] = doorOutward.Value;
                     }
                     continue;
                 }
@@ -159,6 +173,22 @@ namespace Game.Systems.LevelGeneration.Editor
 
                     var seamOutward = DetermineOutwardDir(cell, cellOwner, seamRotation);
                     if (seamOutward.HasValue) outwardDirByInstance[seamInstance] = seamOutward.Value;
+                    continue; // never falls through to the resolver for this cell
+                }
+
+                if (TryComputeTJunctionCornerSubstitution(cell, primaryRoomsByCell, config.RuleSet,
+                        out var cornerPrefab, out var cornerRotation))
+                {
+                    var cornerInstance = PlacePiece(cornerPrefab, cell, cornerRotation, config, parent);
+                    if (cornerInstance == null) continue;
+
+                    AttachShellMarker(cornerInstance, cornerPrefab, config.RuleSet, cell, RoomShellSlotRole.Wall);
+                    placedInstances.Add(cornerInstance);
+                    cellByInstance[cornerInstance] = cell;
+                    tJunctionCornerCells.Add(cell);
+
+                    var cornerOutward = DetermineOutwardDir(cell, cellOwner, cornerRotation);
+                    if (cornerOutward.HasValue) outwardDirByInstance[cornerInstance] = cornerOutward.Value;
                     continue; // never falls through to the resolver for this cell
                 }
 
@@ -180,8 +210,98 @@ namespace Game.Systems.LevelGeneration.Editor
                 if (outward.HasValue) outwardDirByInstance[instance] = outward.Value;
             }
 
+            ReconcileRunOutwardDirs(cellByInstance, doorCellsByInstance, straightPrefab, outwardDirByInstance);
             ShellAlignmentPass.Align(placedInstances, config.CellSize, outwardDirByInstance);
+            RemoveWallPiecesOverlappingDoors(cellByInstance, doorCellsByInstance);
+
+            // WallTjunctionPrefab is retired (2026-09-23): its branch connector
+            // was authored ~0.32 units off the true cell-boundary midpoint, vs.
+            // ~0.07 off for Corner — see plans/tjunction-corner-research.md.
+            // Every former T-junction cell now gets a fixed, deterministic
+            // Corner substitution (no contextual/topological inference — no
+            // established autotiling/WFC/RuleTile convention validated one),
+            // so some of these are expected to need a human's eye afterward,
+            // same as any other generator output. Logged so a human knows
+            // exactly which cells to check rather than scanning the whole level.
+            if (tJunctionCornerCells.Count > 0)
+                Debug.Log("[LevelGeneration] " + tJunctionCornerCells.Count +
+                    " cell(s) resolved via T-junction-to-Corner substitution (worth a visual check): " +
+                    string.Join(", ", tJunctionCornerCells));
+
             return cellByInstance;
+        }
+
+        // A door's mesh is always a fixed-width module (Door.prefab is
+        // authored as a true 3-cell-wide piece regardless of how many cells
+        // its connection actually widened into — WidenDoorway can correctly
+        // refuse to widen when the neighboring topology doesn't support a
+        // clean border on one or both perpendicular sides, and DoorCells then
+        // falls back to a single cell). The normal per-cell placement loop
+        // above only excludes cells actually listed in DoorCells, so an
+        // unwidened door's real mesh footprint can physically overlap an
+        // independently-placed wall piece at its immediate neighbor cell(s).
+        // Runs after alignment so it checks final, real geometry rather than
+        // trying to predict the door's footprint from topology — found
+        // 2026-09-22 live-inspecting seed 555555 (Door at (13,9),
+        // DoorCells=[(13,9)] only, clipped into independently-placed
+        // WallStraightPrefab instances at both (12,9) and (14,9)).
+        private static void RemoveWallPiecesOverlappingDoors(Dictionary<GameObject, Vector2Int> cellByInstance,
+            Dictionary<GameObject, List<Vector2Int>> doorCellsByInstance)
+        {
+            var doors = new List<GameObject>();
+            var others = new List<GameObject>();
+            foreach (var instance in cellByInstance.Keys)
+            {
+                if (instance == null) continue;
+                if (doorCellsByInstance.ContainsKey(instance)) doors.Add(instance);
+                else others.Add(instance);
+            }
+
+            if (doors.Count == 0) return;
+
+            var toRemove = new List<GameObject>();
+            foreach (var door in doors)
+            {
+                var doorBounds = CombinedInstanceBounds(door);
+                foreach (var other in others)
+                {
+                    if (toRemove.Contains(other)) continue;
+                    var otherBounds = CombinedInstanceBounds(other);
+
+                    float overlapX = Mathf.Min(doorBounds.max.x, otherBounds.max.x) - Mathf.Max(doorBounds.min.x, otherBounds.min.x);
+                    float overlapZ = Mathf.Min(doorBounds.max.z, otherBounds.max.z) - Mathf.Max(doorBounds.min.z, otherBounds.min.z);
+                    // Genuine volumetric overlap on both axes, not merely touching at a shared edge.
+                    if (overlapX > 0.02f && overlapZ > 0.02f)
+                        toRemove.Add(other);
+                }
+            }
+
+            Debug.Log("[DEBUG-door01] toRemove.Count = " + toRemove.Count);
+            foreach (var instance in toRemove)
+            {
+                cellByInstance.Remove(instance);
+                UnityEngine.Object.DestroyImmediate(instance);
+            }
+        }
+
+        // Combined world-space mesh bounds across every MeshFilter in an
+        // instance's children — mirrors WorldMeshBounds/ReadSceneWallGeometry's
+        // own accumulation pattern for a composite prefab like
+        // WallTjunctionPrefab, which has multiple sub-meshes.
+        private static Bounds CombinedInstanceBounds(GameObject instance)
+        {
+            Bounds combined = default;
+            bool any = false;
+            foreach (var filter in instance.GetComponentsInChildren<MeshFilter>())
+            {
+                if (filter.sharedMesh == null) continue;
+                if (filter.gameObject.name.Trim().StartsWith("WallConnection")) continue; // DEBUG-door02 temp
+                var b = WorldMeshBounds(filter);
+                if (!any) { combined = b; any = true; }
+                else combined.Encapsulate(b);
+            }
+
+            return combined;
         }
 
         // The only place that reads back what BuildShells/PlaceDoorway wrote,
@@ -346,7 +466,7 @@ namespace Game.Systems.LevelGeneration.Editor
                 bool isOppositePair = dirA == -dirB;
                 if (!isOppositePair && roomA == roomB)
                 {
-                    bool thicknessIsZ = Mathf.RoundToInt(yRotation / 90f) % 2 == 0;
+                    bool thicknessIsZ = ThicknessIsZ(yRotation);
                     Vector2Int? inward = thicknessIsZ
                         ? (dirA.x == 0 ? dirA : dirB.x == 0 ? dirB : (Vector2Int?)null)
                         : (dirA.y == 0 ? dirA : dirB.y == 0 ? dirB : (Vector2Int?)null);
@@ -360,6 +480,144 @@ namespace Game.Systems.LevelGeneration.Editor
             }
 
             return null; // ambiguous — room on more than one side with no single thickness axis to resolve it
+        }
+
+        // A resolved yRotation's thickness axis — 0°/180° keep the wall kit's
+        // Z-thickness authoring as-is, 90°/270° swap it onto X. Shared by
+        // DetermineOutwardDir and ReconcileRunOutwardDirs so both agree on
+        // which axis a given piece's flat face actually runs along.
+        private static bool ThicknessIsZ(float yRotation) => Mathf.RoundToInt(yRotation / 90f) % 2 == 0;
+
+        // Finds a named rule's prefab in the RuleSet (e.g. "Straight") —
+        // data-driven, not a hardcoded prefab-asset reference, so it keeps
+        // working if the ruleset's Straight prefab is ever swapped out.
+        private static GameObject FindRulePrefabByName(PrefabRuleSet ruleSet, string ruleName)
+        {
+            if (ruleSet?.Rules == null) return null;
+            foreach (var rule in ruleSet.Rules)
+                if (rule != null && rule.Name == ruleName)
+                    return rule.Prefab;
+            return null;
+        }
+
+        // Resolves DetermineOutwardDir's per-cell verdicts (computed above,
+        // already in outwardDirByInstance) into one consistent choice per
+        // connected wall run (found 2026-09-22, fresh-eyes pass over the open
+        // wall-alignment findings): DetermineOutwardDir decides per cell in
+        // isolation, so a divider cell (genuine 2-room-opposite, deliberately
+        // centered — see that method's own comment) sitting next to a
+        // single-room cell (deliberately flush) in the same physical wall row
+        // produces a visible step exactly at the boundary. Every door is a
+        // divider cell by construction (a doorway is exactly the shared
+        // boundary of 2 rooms), so this hit doors constantly, not just
+        // occasional same-room-run transitions.
+        //
+        // Walks each maximal same-orientation, run-axis-adjacent chain of
+        // Straight-shaped wall/door instances (Corner/T-junction/multi-room-
+        // seam pieces are deliberately excluded — their footprint isn't a
+        // simple flat slab spanning the cell, so "matching a neighbor's
+        // thickness-axis center" doesn't have the same meaning, and they act
+        // as natural run boundaries instead) in cell order, and fills a
+        // null-verdict cell only when it's sandwiched between (or trailing) an
+        // anchor whose own verdict is known — for an interior gap between two
+        // anchors, only when they agree. A run whose anchors disagree (e.g. a
+        // door between two different rooms with no common flush side) is left
+        // exactly as DetermineOutwardDir decided for each cell — correct, not
+        // a bug (see plans/README.md's "Item 4" finding for the separate,
+        // deliberately unaddressed class of seam this does NOT try to fix:
+        // where the room bordering the run switches sides mid-run, so even
+        // the *direction* to push disagrees, not just whether to push).
+        //
+        // A door's own recorded cell (the single Vector2Int cellByInstance
+        // uses) is only one of potentially several DoorCells its mesh
+        // actually spans — using only that cell for adjacency would let the
+        // door "swallow" its other cells without registering them as
+        // occupied, breaking the chain across itself and making a genuinely
+        // two-sided door look one-sided to this pass. doorCellsByInstance
+        // carries the door's full span in for that reason.
+        private static void ReconcileRunOutwardDirs(Dictionary<GameObject, Vector2Int> cellByInstance,
+            Dictionary<GameObject, List<Vector2Int>> doorCellsByInstance, GameObject straightPrefab,
+            Dictionary<GameObject, Vector2Int> outwardDirByInstance)
+        {
+            if (straightPrefab == null) return;
+
+            var occupiedCells = new Dictionary<GameObject, List<Vector2Int>>();
+            foreach (var kvp in cellByInstance)
+            {
+                var instance = kvp.Key;
+                if (instance == null) continue;
+
+                if (doorCellsByInstance.TryGetValue(instance, out var doorCells))
+                {
+                    occupiedCells[instance] = doorCells;
+                    continue;
+                }
+
+                var marker = instance.GetComponent<PrefabBrushObject>();
+                if (marker != null && marker.SourcePrefab == straightPrefab)
+                    occupiedCells[instance] = new List<Vector2Int> { kvp.Value };
+            }
+
+            var instanceByCell = new Dictionary<Vector2Int, GameObject>();
+            foreach (var kvp in occupiedCells)
+                foreach (var cell in kvp.Value)
+                    instanceByCell[cell] = kvp.Key;
+
+            var visited = new HashSet<GameObject>();
+            foreach (var seed in occupiedCells.Keys)
+            {
+                if (visited.Contains(seed)) continue;
+
+                var runMembers = new List<GameObject>();
+                var queue = new Queue<GameObject>();
+                queue.Enqueue(seed);
+                visited.Add(seed);
+                bool runThicknessIsZ = ThicknessIsZ(seed.transform.eulerAngles.y);
+
+                while (queue.Count > 0)
+                {
+                    var cur = queue.Dequeue();
+                    runMembers.Add(cur);
+                    var curRotY = cur.transform.eulerAngles.y;
+                    var runDirs = ThicknessIsZ(curRotY) ? RunAxisX : RunAxisZ;
+
+                    foreach (var ownCell in occupiedCells[cur])
+                    foreach (var dir in runDirs)
+                    {
+                        if (!instanceByCell.TryGetValue(ownCell + dir, out var neighbor)) continue;
+                        if (neighbor == cur || visited.Contains(neighbor)) continue;
+                        if (!Mathf.Approximately(curRotY, neighbor.transform.eulerAngles.y)) continue;
+                        visited.Add(neighbor);
+                        queue.Enqueue(neighbor);
+                    }
+                }
+
+                runMembers.Sort((a, b) => runThicknessIsZ
+                    ? cellByInstance[a].x.CompareTo(cellByInstance[b].x)
+                    : cellByInstance[a].y.CompareTo(cellByInstance[b].y));
+
+                var anchorIdxs = new List<int>();
+                for (int i = 0; i < runMembers.Count; i++)
+                    if (outwardDirByInstance.ContainsKey(runMembers[i])) anchorIdxs.Add(i);
+
+                if (anchorIdxs.Count == 0) continue;
+
+                var firstDir = outwardDirByInstance[runMembers[anchorIdxs[0]]];
+                for (int j = 0; j < anchorIdxs[0]; j++) outwardDirByInstance[runMembers[j]] = firstDir;
+
+                var lastDir = outwardDirByInstance[runMembers[anchorIdxs[^1]]];
+                for (int j = anchorIdxs[^1] + 1; j < runMembers.Count; j++) outwardDirByInstance[runMembers[j]] = lastDir;
+
+                for (int a = 0; a < anchorIdxs.Count - 1; a++)
+                {
+                    int lo = anchorIdxs[a], hi = anchorIdxs[a + 1];
+                    var dirLo = outwardDirByInstance[runMembers[lo]];
+                    var dirHi = outwardDirByInstance[runMembers[hi]];
+                    if (dirLo == dirHi)
+                        for (int j = lo + 1; j < hi; j++)
+                            outwardDirByInstance[runMembers[j]] = dirLo;
+                }
+            }
         }
 
         private static GameObject PlaceDoorway(LayoutConnection connection, float yRotation, ShellAssemblyConfig config,
@@ -437,6 +695,63 @@ namespace Game.Systems.LevelGeneration.Editor
             if (isOppositePair) return false;
 
             yRotation = continuing[0] * 90f;
+            return true;
+        }
+
+        // Substitutes Corner for what used to match the retired TJunction
+        // rule (2026-09-23): a cell with 3 continuing wall-network directions
+        // always has one "mandatory" direction (whose opposite is the single
+        // missing direction — a Corner structurally can't represent an
+        // opposite pair) plus one full opposite-pair axis to choose from.
+        // Which pair member joins the mandatory direction has no established
+        // convention in any surveyed autotiling/WFC/RuleTile system (see
+        // plans/tjunction-corner-research.md) — grilled with Michael
+        // 2026-09-23: ship a simple fixed deterministic rule and let a human
+        // hand-correct the occasional wrong cell, exactly like RuleTile's own
+        // first-match-wins ambiguity resolution. Fixed rule: "clockwise-first"
+        // — keep the pair member one clockwise step past the mandatory
+        // direction, in this file's own N=0,E=1,S=2,W=3 indexing.
+        //
+        // The rotation itself is never hand-derived — a synthetic 2-tag
+        // snapshot is matched against the ruleset's own Corner rule via
+        // PrefabRuleResolver, so this stays correct however Corner's own
+        // rotation convention is actually authored (this file's own
+        // ResolveFallbackYRotation comment documents two prior hand-derived
+        // rotation guesses that were wrong).
+        private static bool TryComputeTJunctionCornerSubstitution(Vector2Int cell,
+            Dictionary<Vector2Int, HashSet<string>> primaryRoomsByCell, PrefabRuleSet ruleSet,
+            out GameObject prefab, out float yRotation)
+        {
+            prefab = null;
+            yRotation = 0f;
+            if (!primaryRoomsByCell.TryGetValue(cell, out var ownRooms)) return false;
+
+            var continuing = new List<int>();
+            for (int i = 0; i < FourWayDirs.Length; i++)
+            {
+                var neighbor = cell + FourWayDirs[i];
+                if (primaryRoomsByCell.TryGetValue(neighbor, out var neighborRooms) && neighborRooms.Overlaps(ownRooms))
+                    continuing.Add(i);
+            }
+
+            if (continuing.Count != 3) return false;
+
+            int missing = -1;
+            for (int i = 0; i < 4; i++)
+                if (!continuing.Contains(i)) missing = i;
+
+            int mandatory = (missing + 2) % 4; // opposite of the single missing direction
+            int keptPair = (mandatory + 1) % 4; // clockwise-first tiebreak
+
+            var syntheticSnapshot = new NeighborSnapshot(4);
+            syntheticSnapshot.Tags[mandatory] = ruleSet.RuleTag;
+            syntheticSnapshot.Tags[keptPair] = ruleSet.RuleTag;
+
+            var result = PrefabRuleResolver.Resolve(ruleSet, syntheticSnapshot);
+            if (!result.Matched) return false;
+
+            prefab = result.Prefab;
+            yRotation = result.YRotation;
             return true;
         }
 

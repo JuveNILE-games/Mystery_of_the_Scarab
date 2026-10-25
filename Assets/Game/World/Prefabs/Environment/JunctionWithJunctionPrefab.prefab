@@ -1,0 +1,461 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &282305570297825166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4086079254022556523}
+  m_Layer: 0
+  m_Name: JunctionWithJunctionPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4086079254022556523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282305570297825166}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2075922107164212959}
+  - {fileID: 415302474710977440}
+  - {fileID: 1115455947092241828}
+  - {fileID: 1090723447772060762}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1598412878183423484
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4086079254022556523}
+    m_Modifications:
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 43.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_Name
+      value: WallStraightPrefab (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1615485513843445384}
+    - targetCorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1892010946148748008}
+  m_SourcePrefab: {fileID: 100100000, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+--- !u!4 &415302474710977440 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  m_PrefabInstance: {fileID: 1598412878183423484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3366482984771438578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  m_PrefabInstance: {fileID: 1598412878183423484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1615485513843445384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366482984771438578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4d9818342379f418fa30b7c1c9b97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: JuveNILE.Core::Core.Tools.PrefabBrush.PrefabBrushObject
+  SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  PlacementGroup: LevelGeneration
+  PlacementTime: 2026-09-21T12:44:41.4971224Z
+  RuleTag: Wall
+  RuleSet: {fileID: 11400000, guid: 4d314871909004d4a820cf38ceea8fb9, type: 2}
+  SurfaceNormal: {x: 0, y: 1, z: 0}
+--- !u!114 &1892010946148748008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366482984771438578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3923c8801ab54a346b7404c8520f02a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Runtime.RoomShellSlotAnchor
+  Cell: {x: 29, y: 30}
+  Role: 0
+  SlotId: 
+--- !u!1001 &2060152923143470072
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4086079254022556523}
+    m_Modifications:
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_Name
+      value: WallStraightPrefab (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2892167054127188190}
+    - targetCorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5777004582983013480}
+  m_SourcePrefab: {fileID: 100100000, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+--- !u!4 &1115455947092241828 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  m_PrefabInstance: {fileID: 2060152923143470072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2594548719861391862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  m_PrefabInstance: {fileID: 2060152923143470072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2892167054127188190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594548719861391862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4d9818342379f418fa30b7c1c9b97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: JuveNILE.Core::Core.Tools.PrefabBrush.PrefabBrushObject
+  SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  PlacementGroup: LevelGeneration
+  PlacementTime: 2026-09-21T12:44:41.4971224Z
+  RuleTag: Wall
+  RuleSet: {fileID: 11400000, guid: 4d314871909004d4a820cf38ceea8fb9, type: 2}
+  SurfaceNormal: {x: 0, y: 1, z: 0}
+--- !u!114 &5777004582983013480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594548719861391862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3923c8801ab54a346b7404c8520f02a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Runtime.RoomShellSlotAnchor
+  Cell: {x: 29, y: 30}
+  Role: 0
+  SlotId: 
+--- !u!1001 &2075807994050890246
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4086079254022556523}
+    m_Modifications:
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      propertyPath: m_Name
+      value: WallStraightPrefab (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4775512489416996832}
+    - targetCorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 63092831186374712}
+  m_SourcePrefab: {fileID: 100100000, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+--- !u!4 &1090723447772060762 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1436023128239461980, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  m_PrefabInstance: {fileID: 2075807994050890246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2618933498599919624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  m_PrefabInstance: {fileID: 2075807994050890246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4775512489416996832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618933498599919624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4d9818342379f418fa30b7c1c9b97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: JuveNILE.Core::Core.Tools.PrefabBrush.PrefabBrushObject
+  SourcePrefab: {fileID: 4077607571508861454, guid: 9d3a6cdd1f30be84dab48685264c35a3, type: 3}
+  PlacementGroup: LevelGeneration
+  PlacementTime: 2026-09-21T12:44:41.4971224Z
+  RuleTag: Wall
+  RuleSet: {fileID: 11400000, guid: 4d314871909004d4a820cf38ceea8fb9, type: 2}
+  SurfaceNormal: {x: 0, y: 1, z: 0}
+--- !u!114 &63092831186374712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618933498599919624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3923c8801ab54a346b7404c8520f02a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Runtime.RoomShellSlotAnchor
+  Cell: {x: 29, y: 30}
+  Role: 0
+  SlotId: 
+--- !u!1001 &3075573211756908323
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4086079254022556523}
+    m_Modifications:
+    - target: {fileID: 2126291044378984295, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_Name
+      value: WallTjunctionPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2126291044378984295, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7511518370167842710}
+    - targetCorrespondingSourceObject: {fileID: 2126291044378984295, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7808904300637078309}
+  m_SourcePrefab: {fileID: 100100000, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+--- !u!4 &2075922107164212959 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3918564480163607036, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+  m_PrefabInstance: {fileID: 3075573211756908323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3975759253648961604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2126291044378984295, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+  m_PrefabInstance: {fileID: 3075573211756908323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7511518370167842710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3975759253648961604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4d9818342379f418fa30b7c1c9b97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: JuveNILE.Core::Core.Tools.PrefabBrush.PrefabBrushObject
+  SourcePrefab: {fileID: 2126291044378984295, guid: 0bea21f49ef067d49be11df8437b9afe, type: 3}
+  PlacementGroup: LevelGeneration
+  PlacementTime: 2026-09-21T12:44:41.4054437Z
+  RuleTag: Wall
+  RuleSet: {fileID: 11400000, guid: 4d314871909004d4a820cf38ceea8fb9, type: 2}
+  SurfaceNormal: {x: 0, y: 1, z: 0}
+--- !u!114 &7808904300637078309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3975759253648961604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3923c8801ab54a346b7404c8520f02a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryOfTheScarab::Game.Systems.LevelSystem.Runtime.RoomShellSlotAnchor
+  Cell: {x: 14, y: -1}
+  Role: 0
+  SlotId: 
