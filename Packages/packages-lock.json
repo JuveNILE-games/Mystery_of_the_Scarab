@@ -43,9 +43,9 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-        "com.gitamend.improvedtimers": "https://github.com/adammyhre/Unity-Improved-Timers.git",
-        "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git",
+        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#ceac8d6946b1125fe782cd171fbcb245b567dbf9",
+        "com.gitamend.improvedtimers": "https://github.com/adammyhre/Unity-Improved-Timers.git#0c93083e7968e5d2a7746b38d6d5a477d2b5b3ac",
+        "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git#a6416dda307ebfcd0243c58876a101af9a6e5d14",
         "com.mirovsky.fluent-ui": "https://github.com/Mirovsky/fluent-ui.git?path=/UnityProject/Packages/com.mirovsky.fluent-ui#19ec2a5703424e29126715492c12eb995d77f31f",
         "com.eflatun.scenereference": "4.1.1",
         "com.unity.addressables": "2.7.6",
@@ -65,8 +65,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.juvenile.games.core": "1.0.1",
-        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+        "com.juvenile.games.core": "1.2.2",
+        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#ceac8d6946b1125fe782cd171fbcb245b567dbf9",
         "dev.purrnet.purrnet": "1.22.0"
       }
     },
