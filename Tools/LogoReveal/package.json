@@ -1,0 +1,29 @@
+{
+  "name": "juvenile-logo-reveal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JuveNILE Games studio logo reveal (splash screen) built with Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "build:paths": "node scripts/build-logo-paths.mjs",
+    "render": "remotion render LogoReveal out/JuveNILE_LogoReveal.mp4",
+    "render:alpha": "remotion render LogoRevealTransparent out/JuveNILE_LogoReveal_Alpha.webm --codec=vp8 --pixel-format=yuva420p --image-format=png",
+    "still": "remotion still LogoReveal out/JuveNILE_LogoReveal_poster.png --frame=180",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.539",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.539"
+  },
+  "devDependencies": {
+    "@fontsource/quicksand": "5.3.0",
+    "@types/react": "19.3.0",
+    "jimp": "0.14.0",
+    "opentype.js": "2.0.0",
+    "pngjs": "7.0.0",
+    "potrace": "2.1.8",
+    "typescript": "5.9.3"
+  }
+}

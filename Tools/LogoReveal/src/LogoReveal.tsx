@@ -1,0 +1,111 @@
+import React from 'react';
+import {AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {Background} from './Background';
+import {Beetle, BeetleCenter} from './Beetle';
+import {LogoSize} from './logoPaths';
+import {Highlight} from './theme';
+import {seconds, Timeline} from './timeline';
+import {Wordmark} from './Wordmark';
+
+export type LogoRevealProps = {
+    // true: no background and the fade-out goes to alpha (for a VP8/alpha WebM overlay).
+    transparent: boolean;
+};
+
+// Width of the finished lockup as a fraction of the frame width.
+const LogoWidthFraction = 0.64;
+// The beetle starts centred on screen at this size relative to its final size.
+const IntroScale = 1.9;
+
+export const LogoReveal: React.FC<LogoRevealProps> = ({transparent}) => {
+    const frame = useCurrentFrame();
+    const {fps, width, height} = useVideoConfig();
+    const t = frame / fps;
+
+    const scale = (width * LogoWidthFraction) / LogoSize.width;
+
+    // The beetle starts in the middle of the screen, then glides into its slot in the lockup.
+    const lockup = spring({
+        frame: frame - seconds(Timeline.lockupStart, fps),
+        fps,
+        config: {damping: 20, stiffness: 70, mass: 0.9},
+    });
+    const centreOffset = LogoSize.width / 2 - BeetleCenter.x;
+    const lockupX = (1 - lockup) * centreOffset;
+    const beetleScale = interpolate(lockup, [0, 1], [IntroScale, 1]);
+
+    const shine = interpolate(t, [Timeline.shineStart, Timeline.shineStart + Timeline.shineDuration], [-200, LogoSize.width + 200], {
+        easing: Easing.inOut(Easing.quad),
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+    });
+    const shineVisible = t >= Timeline.shineStart && t <= Timeline.shineStart + Timeline.shineDuration;
+
+    const fade = interpolate(t, [Timeline.fadeOutStart, Timeline.end], [1, 0], {
+        easing: Easing.in(Easing.quad),
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+    });
+
+    // A short jolt of the whole lockup when the magnetic halves slam together.
+    const sinceSnap = t - Timeline.snap;
+    const shake = sinceSnap >= 0 ? Math.exp(-sinceSnap * 16) * 7 : 0;
+    const shakeX = Math.sin(sinceSnap * 83) * shake;
+    const shakeY = Math.cos(sinceSnap * 71) * shake * 0.6;
+
+    const beetleTransform = `translate(${BeetleCenter.x} ${BeetleCenter.y}) scale(${beetleScale}) translate(${-BeetleCenter.x} ${-BeetleCenter.y})`;
+
+    return (
+        <AbsoluteFill style={{opacity: transparent ? fade : 1, backgroundColor: transparent ? undefined : 'black'}}>
+            <AbsoluteFill style={{opacity: fade}}>
+                <Background transparent={transparent} />
+                <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{position: 'absolute'}}>
+                    <defs>
+                        <linearGradient
+                            id="shine"
+                            gradientUnits="userSpaceOnUse"
+                            x1={shine - 90}
+                            y1={0}
+                            x2={shine + 90}
+                            y2={60}
+                        >
+                            <stop offset="0" stopColor={Highlight} stopOpacity={0} />
+                            <stop offset="0.5" stopColor={Highlight} stopOpacity={0.85} />
+                            <stop offset="1" stopColor={Highlight} stopOpacity={0} />
+                        </linearGradient>
+                        {shineVisible && (
+                            <mask id="logo-mask" maskUnits="userSpaceOnUse" x={-300} y={-300} width={LogoSize.width + 600} height={700}>
+                                <g transform={`translate(${lockupX} 0)`}>
+                                    <g transform={beetleTransform}>
+                                        <Beetle idPrefix="mask" fill="white" shapeOnly />
+                                    </g>
+                                    <Wordmark idPrefix="mask" fill="white" />
+                                </g>
+                            </mask>
+                        )}
+                    </defs>
+                    <g
+                        transform={`translate(${width / 2 + shakeX} ${height / 2 + shakeY}) scale(${scale}) translate(${-LogoSize.width / 2} ${-LogoSize.height / 2})`}
+                    >
+                        <g transform={`translate(${lockupX} 0)`}>
+                            <Wordmark idPrefix="main" />
+                            <g transform={beetleTransform}>
+                                <Beetle idPrefix="main" />
+                            </g>
+                        </g>
+                        {shineVisible && (
+                            <rect
+                                x={-300}
+                                y={-300}
+                                width={LogoSize.width + 600}
+                                height={700}
+                                fill="url(#shine)"
+                                mask="url(#logo-mask)"
+                            />
+                        )}
+                    </g>
+                </svg>
+            </AbsoluteFill>
+        </AbsoluteFill>
+    );
+};
