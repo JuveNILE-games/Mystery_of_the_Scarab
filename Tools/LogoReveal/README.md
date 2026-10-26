@@ -1,7 +1,7 @@
 # JuveNILE Games — Logo Reveal
 
 Studio splash animation for the games, built with [Remotion](https://www.remotion.dev).
-~4 seconds, 1920×1080 @ 60 fps.
+~4 seconds, 1920×1080 @ 60 fps, with a synthesised soundtrack.
 
 1. **Magnetic halves**: two plain scarab shell halves hover apart, tilted open like wing cases.
    An inverse-square attraction (`src/magnet.ts`) pulls them in: barely moving at first, then
@@ -14,22 +14,45 @@ Studio splash animation for the games, built with [Remotion](https://www.remotio
 
 ## Output
 
-| Composition             | File                                   | Use                                                   |
-| ----------------------- | -------------------------------------- | ----------------------------------------------------- |
-| `LogoReveal`            | `out/JuveNILE_LogoReveal.mp4`          | Full-screen splash on the warm dark background (H.264) |
-| `LogoRevealTransparent` | `out/JuveNILE_LogoReveal_Alpha.webm`   | Same animation with alpha (VP8), to overlay on your own background |
+| File                                 | Composition             | Contents                                                        |
+| ------------------------------------ | ----------------------- | --------------------------------------------------------------- |
+| `out/JuveNILE_LogoReveal.mp4`        | `LogoReveal`            | Full-screen splash on the warm dark background. H.264 + AAC sound |
+| `out/JuveNILE_LogoReveal_Alpha.webm` | `LogoRevealTransparent` | Transparent background (VP8 alpha) + Opus sound, to overlay on your own background |
+| `out/JuveNILE_LogoReveal.wav`        | –                       | The soundtrack alone (48 kHz stereo, -17 LUFS), frame-aligned with both videos |
 
-Copies of both renders live in `Assets/Videos/Splash/`. In Unity, play them with a `VideoPlayer`
-(Render Mode: Camera Far Plane / Render Texture). For the WebM, enable **Keep Alpha** in the
-clip's import settings.
+Copies live in the Unity project: the videos in `Assets/Videos/Splash/`, the WAV in
+`Assets/Audio/SFX/Splash/`. Play the videos with a `VideoPlayer` (Render Mode: Camera Far
+Plane / Render Texture); for the WebM, enable **Keep Alpha** in the clip's import settings.
+To route the splash sound through the game's audio mixer/volume settings instead, set the
+VideoPlayer's Audio Output Mode to *None* and play the WAV through the audio service at the
+same time. For a silent render, add `--muted` to a render command.
+
+## Sound
+
+`scripts/build-sfx.mjs` synthesises the soundtrack in code (no samples, so no licensing) and
+reads its timing from `src/timeline.ts` and the attraction curve from `src/magnet.ts`, so it
+stays in sync when the animation changes. Re-run `npm run build:sfx` after editing the timeline.
+
+- **Attraction**: a buzzing hum rising in pitch with a speeding tremolo, a noise riser and
+  crackling sparks, all following the same magnetic curve as the halves.
+- **Snap**: low boom, transient click and a metallic clank.
+- **Controller powers on**: a retro square-wave blip as the d-pad and each button open.
+- **Legs**: a click per leg, then a skittering scuttle panned left/right.
+- **Glide**: a soft whoosh moving left with the beetle.
+- **Letters**: an ascending harp run in D Phrygian dominant (the "Egyptian" scale), one note
+  per letter, panned with the letter, plus a grain of sand each.
+- **Glint**: sparkling bells sweeping left to right with the shine, over a warm D major pad
+  that fades out with the picture.
 
 ## Commands
 
 ```bash
 npm install
 npm run studio        # live preview / scrub in the browser
-npm run render        # MP4
-npm run render:alpha  # transparent WebM
+npm run build:sfx     # regenerate public/logo-reveal-sfx.wav
+npm run render        # MP4 with sound
+npm run render:alpha  # transparent WebM with sound
+npm run render:all    # all of the above + out/JuveNILE_LogoReveal.wav
 npm run still         # poster frame PNG (finished logo)
 npm run typecheck
 ```

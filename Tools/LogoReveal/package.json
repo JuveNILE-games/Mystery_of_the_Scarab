@@ -6,8 +6,10 @@
   "scripts": {
     "studio": "remotion studio",
     "build:paths": "node scripts/build-logo-paths.mjs",
-    "render": "remotion render LogoReveal out/JuveNILE_LogoReveal.mp4",
-    "render:alpha": "remotion render LogoRevealTransparent out/JuveNILE_LogoReveal_Alpha.webm --codec=vp8 --pixel-format=yuva420p --image-format=png",
+    "build:sfx": "node --no-warnings scripts/build-sfx.mjs",
+    "render": "remotion render LogoReveal out/JuveNILE_LogoReveal.mp4 --audio-codec=aac --audio-bitrate=256k",
+    "render:alpha": "remotion render LogoRevealTransparent out/JuveNILE_LogoReveal_Alpha.webm --codec=vp8 --pixel-format=yuva420p --image-format=png --audio-codec=opus --audio-bitrate=192k",
+    "render:all": "npm run build:sfx && npm run render && npm run render:alpha && cp public/logo-reveal-sfx.wav out/JuveNILE_LogoReveal.wav",
     "still": "remotion still LogoReveal out/JuveNILE_LogoReveal_poster.png --frame=180",
     "typecheck": "tsc --noEmit"
   },

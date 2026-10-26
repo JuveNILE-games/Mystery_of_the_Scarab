@@ -8,7 +8,7 @@ const Duration = Math.round(Timeline.end * Fps);
 
 export const RemotionRoot: React.FC = () => (
     <>
-        {/* Full-screen splash on the warm dark background. */}
+        {/* Full-screen splash on the warm dark background, with sound. Render with --muted for a silent cut. */}
         <Composition
             id="LogoReveal"
             component={LogoReveal}
@@ -16,9 +16,9 @@ export const RemotionRoot: React.FC = () => (
             fps={Fps}
             width={1920}
             height={1080}
-            defaultProps={{transparent: false}}
+            defaultProps={{transparent: false, sound: true}}
         />
-        {/* Same animation without background, for compositing over a custom splash in Unity. */}
+        {/* Same animation and sound without background, for compositing over a custom splash in Unity. */}
         <Composition
             id="LogoRevealTransparent"
             component={LogoReveal}
@@ -26,7 +26,7 @@ export const RemotionRoot: React.FC = () => (
             fps={Fps}
             width={1920}
             height={1080}
-            defaultProps={{transparent: true}}
+            defaultProps={{transparent: true, sound: true}}
         />
     </>
 );
