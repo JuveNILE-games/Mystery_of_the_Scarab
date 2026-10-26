@@ -23,6 +23,11 @@ Studio splash animation for the games, built with [Remotion](https://www.remotio
 Copies live in the Unity project: the videos in `Assets/Videos/Splash/`, the WAV in
 `Assets/Audio/SFX/Splash/`. Play the videos with a `VideoPlayer` (Render Mode: Camera Far
 Plane / Render Texture); for the WebM, enable **Keep Alpha** in the clip's import settings.
+Preview the WebM in Chrome or in Unity: most desktop players (Windows Films & TV, VLC)
+ignore VP8 alpha and show the logo on black instead. The transparent version leaves out the
+full-screen glow of the opaque one, since a huge faint alpha gradient bands in 8-bit alpha.
+`remotion.config.ts` gives VP8 a high bitrate ceiling and a capped quantizer: by default
+Remotion's VP8 output is starved to ~2 Mbit/s and turns blocky.
 To route the splash sound through the game's audio mixer/volume settings instead, set the
 VideoPlayer's Audio Output Mode to *None* and play the WAV through the audio service at the
 same time. For a silent render, add `--muted` to a render command.

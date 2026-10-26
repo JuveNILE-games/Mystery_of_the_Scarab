@@ -21,17 +21,21 @@ export const Background: React.FC<{transparent: boolean}> = ({transparent}) => {
 
     return (
         <AbsoluteFill>
+            {/* Background and full-screen bloom are opaque-only: in the transparent version a huge,
+                very faint alpha gradient bands in 8-bit alpha and smears in players that ignore alpha. */}
             {!transparent && (
-                <AbsoluteFill
-                    style={{background: `radial-gradient(ellipse at 50% 50%, ${BackgroundInner} 0%, ${BackgroundOuter} 70%)`}}
-                />
+                <>
+                    <AbsoluteFill
+                        style={{background: `radial-gradient(ellipse at 50% 50%, ${BackgroundInner} 0%, ${BackgroundOuter} 70%)`}}
+                    />
+                    <AbsoluteFill
+                        style={{
+                            background: `radial-gradient(ellipse 40% 30% at 50% 50%, ${Gold}33 0%, transparent 100%)`,
+                            opacity: bloom,
+                        }}
+                    />
+                </>
             )}
-            <AbsoluteFill
-                style={{
-                    background: `radial-gradient(ellipse 40% 30% at 50% 50%, ${Gold}33 0%, transparent 100%)`,
-                    opacity: bloom,
-                }}
-            />
             <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{position: 'absolute'}}>
                 {Array.from({length: DustCount}, (_, i) => {
                     const x0 = random(`dust-x-${i}`) * width;
